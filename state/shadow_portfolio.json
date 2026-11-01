@@ -38,6 +38,19 @@
       "tp2_price": 77742.9,
       "filter_reason": "DUPLICATE_SYMBOL",
       "created_at": "2026-11-01T16:58:12Z"
+    },
+    {
+      "shadow_id": "SHD-XAU-7EB73E",
+      "coin": "XAU",
+      "side": "LONG",
+      "regime": "RANGING",
+      "score": 55.84,
+      "entry_price": 3897.032286,
+      "stop_loss": 3891.771292,
+      "tp1_price": 3903.082429,
+      "tp2_price": 3906.239026,
+      "filter_reason": "LOW_CONFLUENCE_SCORE",
+      "created_at": "2026-11-01T17:22:43Z"
     }
   ],
   "resolved_shadows": [
@@ -103,10 +116,10 @@
     }
   ],
   "stats": {
-    "total_filtered": 7,
+    "total_filtered": 8,
     "saved_from_loss": 3,
     "missed_winners": 1,
     "shield_accuracy": 75.0
   },
-  "last_updated": "2026-11-01T16:58:14Z"
+  "last_updated": "2026-11-01T17:22:43Z"
 }
