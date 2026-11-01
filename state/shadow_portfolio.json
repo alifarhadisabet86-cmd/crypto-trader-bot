@@ -12,6 +12,19 @@
       "tp2_price": 77695.5,
       "filter_reason": "LOW_CONFLUENCE_SCORE",
       "created_at": "2026-11-01T13:17:14Z"
+    },
+    {
+      "shadow_id": "SHD-XRP-7AD43F",
+      "coin": "XRP",
+      "side": "SHORT",
+      "regime": "RANGING",
+      "score": 58.41,
+      "entry_price": 1.253355,
+      "stop_loss": 1.257292,
+      "tp1_price": 1.248827,
+      "tp2_price": 1.24573,
+      "filter_reason": "LOW_CONFLUENCE_SCORE",
+      "created_at": "2026-11-01T15:14:33Z"
     }
   ],
   "resolved_shadows": [
@@ -62,10 +75,10 @@
     }
   ],
   "stats": {
-    "total_filtered": 4,
+    "total_filtered": 5,
     "saved_from_loss": 2,
     "missed_winners": 1,
     "shield_accuracy": 66.67
   },
-  "last_updated": "2026-11-01T14:42:05Z"
+  "last_updated": "2026-11-01T15:14:34Z"
 }

@@ -5,56 +5,56 @@
       "strategy": "LIQUIDITY_SWEEP_RANGE",
       "tradable": true,
       "htf_bias": "BEARISH",
-      "trend_strength": 38.62,
-      "atr_ratio": 0.74,
-      "ema20_1h": 77847.676572,
-      "ema50_1h": 77868.392203,
-      "reason": "Mean-reverting / ranging structure (Strength 38.62)"
+      "trend_strength": 39.24,
+      "atr_ratio": 0.75,
+      "ema20_1h": 77869.323805,
+      "ema50_1h": 77888.765447,
+      "reason": "Mean-reverting / ranging structure (Strength 39.24)"
     },
     "ETH": {
-      "regime": "RANGING",
-      "strategy": "LIQUIDITY_SWEEP_RANGE",
+      "regime": "TRENDING_BULL",
+      "strategy": "TREND_PULLBACK",
       "tradable": true,
-      "htf_bias": "BEARISH",
-      "trend_strength": 27.52,
-      "atr_ratio": 0.85,
-      "ema20_1h": 2264.792017,
-      "ema50_1h": 2261.863417,
-      "reason": "Mean-reverting / ranging structure (Strength 27.52)"
+      "htf_bias": "NEUTRAL",
+      "trend_strength": 28.01,
+      "atr_ratio": 0.82,
+      "ema20_1h": 2265.567779,
+      "ema50_1h": 2262.524124,
+      "reason": "Strong bullish trend (Strength 28.01 >= 28, Price > EMA20 > EMA50)"
     },
     "SOL": {
       "regime": "RANGING",
       "strategy": "LIQUIDITY_SWEEP_RANGE",
       "tradable": true,
       "htf_bias": "BEARISH",
-      "trend_strength": 8.31,
+      "trend_strength": 13.19,
       "atr_ratio": 0.83,
-      "ema20_1h": 95.454092,
-      "ema50_1h": 95.980455,
-      "reason": "Mean-reverting / ranging structure (Strength 8.31)"
+      "ema20_1h": 95.401165,
+      "ema50_1h": 95.948028,
+      "reason": "Mean-reverting / ranging structure (Strength 13.19)"
     },
     "XRP": {
       "regime": "RANGING",
       "strategy": "LIQUIDITY_SWEEP_RANGE",
       "tradable": true,
       "htf_bias": "BEARISH",
-      "trend_strength": 4.28,
-      "atr_ratio": 0.92,
-      "ema20_1h": 1.252381,
-      "ema50_1h": 1.25394,
-      "reason": "Mean-reverting / ranging structure (Strength 4.28)"
+      "trend_strength": 5.52,
+      "atr_ratio": 0.91,
+      "ema20_1h": 1.252515,
+      "ema50_1h": 1.254034,
+      "reason": "Mean-reverting / ranging structure (Strength 5.52)"
     },
     "XAU": {
       "regime": "DEAD_MARKET",
       "strategy": "NONE",
       "tradable": false,
       "htf_bias": "BEARISH",
-      "trend_strength": 9.0,
-      "atr_ratio": 0.39,
-      "ema20_1h": 3898.872764,
-      "ema50_1h": 3914.022819,
-      "reason": "Dead market / ultra-low volatility (ATR ratio 0.39 <= 0.4)"
+      "trend_strength": 4.6,
+      "atr_ratio": 0.4,
+      "ema20_1h": 3898.846361,
+      "ema50_1h": 3913.54781,
+      "reason": "Dead market / ultra-low volatility (ATR ratio 0.4 <= 0.4)"
     }
   },
-  "last_updated": "2026-11-01T14:42:05Z"
+  "last_updated": "2026-11-01T15:14:34Z"
 }
