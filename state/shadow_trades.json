@@ -58,5 +58,50 @@
     "created_at": "2026-11-01T13:17:14Z",
     "outcome": "SHIELD_SAVED_LOSS",
     "resolved_at": "2026-11-01T15:43:47Z"
+  },
+  {
+    "shadow_id": "SHD-XRP-7AD43F",
+    "coin": "XRP",
+    "side": "SHORT",
+    "regime": "RANGING",
+    "score": 58.41,
+    "entry_price": 1.253355,
+    "stop_loss": 1.257292,
+    "tp1_price": 1.248827,
+    "tp2_price": 1.24573,
+    "filter_reason": "LOW_CONFLUENCE_SCORE",
+    "created_at": "2026-11-01T15:14:33Z",
+    "outcome": "MISSED_OPPORTUNITY",
+    "resolved_at": "2026-11-01T18:21:40Z"
+  },
+  {
+    "shadow_id": "SHD-ETH-6C0793",
+    "coin": "ETH",
+    "side": "SHORT",
+    "regime": "RANGING",
+    "score": 63.05,
+    "entry_price": 2269.906071,
+    "stop_loss": 2275.045714,
+    "tp1_price": 2263.995482,
+    "tp2_price": 2255.6,
+    "filter_reason": "LOW_CONFLUENCE_SCORE",
+    "created_at": "2026-11-01T16:16:06Z",
+    "outcome": "MISSED_OPPORTUNITY",
+    "resolved_at": "2026-11-01T18:21:40Z"
+  },
+  {
+    "shadow_id": "SHD-BTC-6B7DA8",
+    "coin": "BTC",
+    "side": "SHORT",
+    "regime": "RANGING",
+    "score": 82.86,
+    "entry_price": 78142.07,
+    "stop_loss": 78251.718929,
+    "tp1_price": 78015.973732,
+    "tp2_price": 77742.9,
+    "filter_reason": "DUPLICATE_SYMBOL",
+    "created_at": "2026-11-01T16:58:12Z",
+    "outcome": "MISSED_OPPORTUNITY",
+    "resolved_at": "2026-11-01T18:21:40Z"
   }
 ]
