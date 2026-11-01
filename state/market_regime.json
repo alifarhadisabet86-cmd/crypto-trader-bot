@@ -5,56 +5,56 @@
       "strategy": "LIQUIDITY_SWEEP_RANGE",
       "tradable": true,
       "htf_bias": "BEARISH",
-      "trend_strength": 29.36,
-      "atr_ratio": 0.76,
-      "ema20_1h": 77878.774681,
-      "ema50_1h": 77933.820302,
-      "reason": "Mean-reverting / ranging structure (Strength 29.36)"
+      "trend_strength": 35.24,
+      "atr_ratio": 0.8,
+      "ema20_1h": 77889.793728,
+      "ema50_1h": 77938.357557,
+      "reason": "Mean-reverting / ranging structure (Strength 35.24)"
     },
     "ETH": {
       "regime": "RANGING",
       "strategy": "LIQUIDITY_SWEEP_RANGE",
       "tradable": true,
       "htf_bias": "BEARISH",
-      "trend_strength": 13.38,
-      "atr_ratio": 0.82,
-      "ema20_1h": 2265.588712,
-      "ema50_1h": 2263.499363,
-      "reason": "Mean-reverting / ranging structure (Strength 13.38)"
+      "trend_strength": 13.22,
+      "atr_ratio": 0.83,
+      "ema20_1h": 2265.578236,
+      "ema50_1h": 2263.495049,
+      "reason": "Mean-reverting / ranging structure (Strength 13.22)"
     },
     "SOL": {
       "regime": "TRENDING_BEAR",
       "strategy": "TREND_PULLBACK",
       "tradable": true,
       "htf_bias": "BEARISH",
-      "trend_strength": 31.23,
+      "trend_strength": 32.62,
       "atr_ratio": 0.83,
-      "ema20_1h": 95.317653,
-      "ema50_1h": 95.940581,
-      "reason": "Strong bearish trend (Strength 31.23 >= 28, Price < EMA20 < EMA50)"
+      "ema20_1h": 95.314795,
+      "ema50_1h": 95.939405,
+      "reason": "Strong bearish trend (Strength 32.62 >= 28, Price < EMA20 < EMA50)"
     },
     "XRP": {
       "regime": "RANGING",
       "strategy": "LIQUIDITY_SWEEP_RANGE",
       "tradable": true,
       "htf_bias": "BEARISH",
-      "trend_strength": 11.36,
-      "atr_ratio": 0.88,
-      "ema20_1h": 1.252103,
-      "ema50_1h": 1.254369,
-      "reason": "Mean-reverting / ranging structure (Strength 11.36)"
+      "trend_strength": 14.65,
+      "atr_ratio": 0.9,
+      "ema20_1h": 1.251993,
+      "ema50_1h": 1.254323,
+      "reason": "Mean-reverting / ranging structure (Strength 14.65)"
     },
     "XAU": {
       "regime": "RANGING",
       "strategy": "LIQUIDITY_SWEEP_RANGE",
       "tradable": true,
       "htf_bias": "BEARISH",
-      "trend_strength": 6.72,
+      "trend_strength": 5.53,
       "atr_ratio": 0.44,
-      "ema20_1h": 3898.527987,
-      "ema50_1h": 3912.909261,
-      "reason": "Mean-reverting / ranging structure (Strength 6.72)"
+      "ema20_1h": 3898.547035,
+      "ema50_1h": 3912.917104,
+      "reason": "Mean-reverting / ranging structure (Strength 5.53)"
     }
   },
-  "last_updated": "2026-11-01T16:16:08Z"
+  "last_updated": "2026-11-01T16:58:14Z"
 }
