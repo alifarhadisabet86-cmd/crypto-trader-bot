@@ -9,6 +9,10 @@ on:
         description: "Optional coin to render on-demand radar chart (BTC, ETH, SOL, XRP, XAU)"
         required: false
         default: ""
+      telegram_command:
+        description: "Direct command from Telegram Webhook (/status, /nightly, ACT_RISK_FREE, ACT_SAVE_50)"
+        required: false
+        default: ""
 
 permissions:
   contents: write
@@ -44,6 +48,7 @@ jobs:
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
           TARGET_ANALYZE_COIN: ${{ github.event.inputs.analyze_coin }}
+          DIRECT_TELEGRAM_CMD: ${{ github.event.inputs.telegram_command }}
         run: |
           python cloud_runner.py
 

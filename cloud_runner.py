@@ -60,16 +60,10 @@ def _generate_synthetic_ohlcv(base_price: float, bars: int = 80) -> pd.DataFrame
 def run_institutional_cycle(
     dry_run: bool = False,
     target_analyze_coin: Optional[str] = None,
+    direct_telegram_cmd: Optional[str] = None,
 ) -> Dict[str, Any]:
     """
-    اجرای یک چرخه کامل ۱۵ دقیقه‌ای ربات سازمانی V2.5 Pro:
-    1. بارگذاری ۸ فایل وضعیت و بررسی ریست روزانه/هفتگی و دروازه ۵۰ معامله
-    2. دریافت دیتا از KuCoin (یا دیتای شبیه‌سازی در حالت dry_run)
-    3. پردازش دستورات و دکمه‌های شیشه‌ای تلگرام (چارت ۵ ارز، ریسک‌فری سریع، سیو سود ۵۰٪)
-    4. مدیریت پوزیشن‌های باز (TP1، تریلینگ استاپ ساختاری، TP2، SL) و ارسال کارت PnL
-    5. بررسی سپر تقویم اقتصادی فارکس (اخبار قرمز USD) و مدارشکن روزانه/هفتگی
-    6. اسکن ساختار ۱۵ دقیقه، رنج سشن آسیا، امتیاز فازی، ماشین زمان و ثبت شکار جدید
-    7. ارسال بیلان شبانه جمع‌وجور در آغاز روز جدید UTC و ذخیره اتمیک وضعیت‌ها
+    اجرای یک چرخه کامل ۱۵ دقیقه‌ای ربات سازمانی V2.5 Pro یا اجرای فوری دستور تلگرام با عکس و دیتای زنده.
     """
     t0 = time.time()
     now_utc = datetime.now(timezone.utc)
@@ -97,8 +91,10 @@ def run_institutional_cycle(
     strategy_memory = state_mgr.load_strategy_memory()
     shadow_portfolio = state_mgr.load_shadow_portfolio()
 
-    # اگر فراخوانی صرفاً برای ارسال فوری چارت تحلیلی یک ارز خاص باشد (از سمت وب‌هوک یا اکشن)
+    # بررسی دستور مستقیم ارسال‌شده از وب‌هوک کلودفلر
     env_target_coin = (target_analyze_coin or os.getenv("TARGET_ANALYZE_COIN", "")).strip().upper()
+    env_direct_cmd = (direct_telegram_cmd or os.getenv("DIRECT_TELEGRAM_CMD", "")).strip()
+
     if env_target_coin and env_target_coin in WATCHLIST and not dry_run:
         alerts_skill._send_cached_or_live_asset_analysis(env_target_coin, state_mgr, bot_config)
         return {
@@ -153,43 +149,11 @@ def run_institutional_cycle(
     killzone = intel_skill.check_killzone_session(now_utc.hour)
     smt_data = intel_skill.analyze_correlation_and_smt(data_15m.get("BTC"), data_15m.get("ETH"))
 
-    # ۵. پردازش دستورات و کالبک‌های شیشه‌ای تلگرام
-    def _handle_on_demand_chart(req_coin: str) -> None:
-        df_c = data_15m.get(req_coin)
-        if df_c is None or df_c.empty:
-            alerts_skill._send_cached_or_live_asset_analysis(req_coin, state_mgr, bot_config)
-            return
-        reg_c = regime_skill.detect_regime(data_1h.get(req_coin), data_4h.get(req_coin))
-        scan_c = scanner_skill.scan_structure(df_c, reg_c)
-        side_c = scan_c.get("candidate_side", "LONG")
-        if side_c == "NONE":
-            side_c = "LONG" if reg_c.get("htf_bias") != "BEARISH" else "SHORT"
-        conf_c = scorer_skill.evaluate_confluence(
-            req_coin, side_c, reg_c, scan_c, orderbooks.get(req_coin), killzone, smt_data, strategy_memory
-        )
-        c_path = alerts_skill.generate_asset_analysis_chart(req_coin, df_c, scan_c, reg_c)
-        cap = alerts_skill.build_asset_analysis_caption(req_coin, reg_c, scan_c, conf_c, orderbooks.get(req_coin))
-        alerts_skill.send_photo(
-            c_path, caption=cap, bot_config=bot_config, custom_keyboard=alerts_skill.build_hunt_inline_keyboard(req_coin)
-        )
-
-    executed_commands: List[str] = []
-    if not dry_run and alerts_skill.is_configured:
-        executed_commands = alerts_skill.process_incoming_commands(
-            state_manager=state_mgr,
-            broker=broker_skill,
-            portfolio=portfolio,
-            bot_config=bot_config,
-            shadow_portfolio=shadow_portfolio,
-            live_prices=live_prices,
-            on_demand_callback=_handle_on_demand_chart,
-        )
-
-    # ۶. بروزرسانی پوزیشن‌های باز (TP1، تریلینگ استاپ ساختاری، TP2، SL)
+    # ۵. بروزرسانی پوزیشن‌های باز با قیمت‌های زنده صرافی (قبل از ارسال هرگونه گزارش استاتوس!)
     pos_update = broker_skill.update_open_positions(portfolio, data_15m)
     unrealized_pnl = float(pos_update["total_unrealized_pnl_usdt"])
 
-    # ارسال اعلان رویدادهای پوزیشن و کارت تصویری PnL به تلگرام
+    # ۶. ارسال اعلان رویدادهای پوزیشن و کارت تصویری PnL به تلگرام
     if not dry_run and alerts_skill.is_configured:
         for ev in pos_update["events"]:
             ev_type = ev.get("type", "")
@@ -229,7 +193,7 @@ def run_institutional_cycle(
                 )
                 alerts_skill.send_photo(pnl_card_path, caption=cap, bot_config=bot_config)
 
-    # ۷. ارزیابی رادار سایه و یادگیری ماشین بیزی در صورت بسته شدن معامله
+    # ۷. ارزیابی رادار سایه و یادگیری ماشین بیزی
     ml_skill.evaluate_active_shadows(shadow_portfolio, data_15m)
     if pos_update["closed_trades"]:
         strategy_memory = ml_skill.update_strategy_memory(
@@ -248,7 +212,6 @@ def run_institutional_cycle(
 
     # ۹. حلقه اسکن، تحلیل و شکار روی ۵ دارایی واچ‌لیست
     regimes_snapshot: Dict[str, Any] = {}
-    active_setups_snapshot: List[Dict[str, Any]] = []
     opened_positions_count = 0
 
     for coin in WATCHLIST.keys():
@@ -279,7 +242,6 @@ def run_institutional_cycle(
             strategy_memory=strategy_memory,
         )
 
-        # ذخیره اسنپ‌شات غنی رادار برای نمایش در /status و دکمه‌های شیشه‌ای
         regimes_snapshot[coin] = {
             "regime": reg_res.get("regime", "RANGING"),
             "strategy": reg_res.get("strategy", "NONE"),
@@ -297,7 +259,6 @@ def run_institutional_cycle(
         if not reg_res.get("tradable", False) or cand_side not in ("LONG", "SHORT"):
             continue
 
-        # طراحی نقشه خروج اولیه برای ثبت در رادار سایه در صورت فیلتر شدن
         prelim_exit = exit_skill.plan_exit(
             entry_price=float(scan_res["current_price"]),
             side=cand_side,
@@ -306,7 +267,6 @@ def run_institutional_cycle(
             regime_data=reg_res,
         )
 
-        # الف) فیلتر پیشگیرانه تقویم اقتصادی فارکس (اخبار قرمز USD)
         if news_status.get("news_shield_active", False):
             ml_skill.record_filtered_signal(
                 shadow_portfolio, coin, cand_side,
@@ -316,7 +276,6 @@ def run_institutional_cycle(
             )
             continue
 
-        # ب) فیلتر امتیاز هم‌گرایی فازی (حداقل ۶۵)
         if not conf_preview["passed"]:
             ml_skill.record_filtered_signal(
                 shadow_portfolio, coin, cand_side,
@@ -326,7 +285,6 @@ def run_institutional_cycle(
             )
             continue
 
-        # ج) فیلتر ماشه کندلی ۵ دقیقه یا Limit Sniper
         trig_res = entry_skill.evaluate_entry_trigger(
             df_5m=df_5,
             candidate_side=cand_side,
@@ -336,7 +294,6 @@ def run_institutional_cycle(
         if not trig_res["triggered"]:
             continue
 
-        # د) طراحی دقیق نقشه خروج بر اساس قیمت ورود Maker
         exit_plan = exit_skill.plan_exit(
             entry_price=float(trig_res["limit_entry_price"]),
             side=cand_side,
@@ -347,7 +304,6 @@ def run_institutional_cycle(
         if not exit_plan["valid"]:
             continue
 
-        # هـ) فیلتر شبیه‌ساز مونت‌کارلو (ماشین زمان ۱۰۰۰ مسیر)
         tm_res = tm_skill.run_simulation(
             df_15m=df_15,
             exit_plan=exit_plan,
@@ -363,7 +319,6 @@ def run_institutional_cycle(
             )
             continue
 
-        # و) فیلتر بودجه، ۵ اسلات، سپر همبستگی و مدارشکن‌ها
         alloc_res = budget_skill.allocate_budget(
             portfolio=portfolio,
             coin=coin,
@@ -382,7 +337,6 @@ def run_institutional_cycle(
             )
             continue
 
-        # ز) اجرای نهایی و گارد اسپرد ۵٪
         open_res = broker_skill.open_paper_position(
             portfolio=portfolio,
             coin=coin,
@@ -404,9 +358,7 @@ def run_institutional_cycle(
             continue
 
         opened_positions_count += 1
-        active_setups_snapshot.append(open_res["position"])
 
-        # ح) رندر چارت دوطبقه (کندل + حجم + سشن آسیا) و ارسال شکار جدید به تلگرام
         if not dry_run and alerts_skill.is_configured:
             chart_path = alerts_skill.generate_setup_chart(
                 coin=coin,
@@ -438,7 +390,81 @@ def run_institutional_cycle(
                 custom_keyboard=alerts_skill.build_hunt_inline_keyboard(coin),
             )
 
-    # ۱۰. ارسال خودکار «بیلان شبانه جمع‌وجور» یک بار در آغاز هر روز UTC
+    # ۱۰. پردازش دستورات تلگرام (چه از طریق DIRECT_TELEGRAM_CMD وب‌هوک، چه از طریق Polling)
+    def _handle_on_demand_chart(req_coin: str) -> None:
+        df_c = data_15m.get(req_coin)
+        if df_c is None or df_c.empty:
+            alerts_skill._send_cached_or_live_asset_analysis(req_coin, state_mgr, bot_config)
+            return
+        reg_c = regime_skill.detect_regime(data_1h.get(req_coin), data_4h.get(req_coin))
+        scan_c = scanner_skill.scan_structure(df_c, reg_c)
+        side_c = scan_c.get("candidate_side", "LONG")
+        if side_c == "NONE":
+            side_c = "LONG" if reg_c.get("htf_bias") != "BEARISH" else "SHORT"
+        conf_c = scorer_skill.evaluate_confluence(
+            req_coin, side_c, reg_c, scan_c, orderbooks.get(req_coin), killzone, smt_data, strategy_memory
+        )
+        c_path = alerts_skill.generate_asset_analysis_chart(req_coin, df_c, scan_c, reg_c)
+        cap = alerts_skill.build_asset_analysis_caption(req_coin, reg_c, scan_c, conf_c, orderbooks.get(req_coin))
+        alerts_skill.send_photo(
+            c_path, caption=cap, bot_config=bot_config, custom_keyboard=alerts_skill.build_hunt_inline_keyboard(req_coin)
+        )
+
+    executed_commands: List[str] = []
+    if not dry_run and alerts_skill.is_configured:
+        # الف) اگر دستوری مستقیماً از وب‌هوک کلودفلر ارسال شده باشد:
+        if env_direct_cmd:
+            cmd_clean = env_direct_cmd.split("@")[0].strip().lower()
+            if cmd_clean in ("/status", "/start"):
+                eq_chart = alerts_skill.generate_equity_chart(portfolio)
+                caption = alerts_skill.build_status_report(
+                    portfolio=portfolio,
+                    bot_config=bot_config,
+                    shadow_portfolio=shadow_portfolio,
+                    sentiment_data=sentiment,
+                    market_regimes=regimes_snapshot,
+                    strategy_memory=strategy_memory,
+                    news_status=news_status,
+                    killzone_status=killzone,
+                )
+                alerts_skill.send_photo(eq_chart, caption=caption, bot_config=bot_config)
+                executed_commands.append("DIRECT_STATUS_WITH_PHOTO")
+            elif cmd_clean == "/nightly":
+                eq_chart = alerts_skill.generate_equity_chart(portfolio)
+                caption = alerts_skill.build_nightly_pulse_report(
+                    portfolio=portfolio,
+                    bot_config=bot_config,
+                    shadow_portfolio=shadow_portfolio,
+                    sentiment_data=sentiment,
+                )
+                alerts_skill.send_photo(eq_chart, caption=caption, bot_config=bot_config)
+                executed_commands.append("DIRECT_NIGHTLY_WITH_PHOTO")
+            else:
+                act = alerts_skill._execute_single_command(
+                    raw_cmd=env_direct_cmd,
+                    state_manager=state_mgr,
+                    broker=broker_skill,
+                    portfolio=portfolio,
+                    bot_config=bot_config,
+                    shadow_portfolio=shadow_portfolio,
+                    live_prices=live_prices,
+                    on_demand_callback=_handle_on_demand_chart,
+                )
+                if act:
+                    executed_commands.append(act)
+        else:
+            # ب) در صورت عدم استفاده از وب‌هوک (Polling)
+            executed_commands = alerts_skill.process_incoming_commands(
+                state_manager=state_mgr,
+                broker=broker_skill,
+                portfolio=portfolio,
+                bot_config=bot_config,
+                shadow_portfolio=shadow_portfolio,
+                live_prices=live_prices,
+                on_demand_callback=_handle_on_demand_chart,
+            )
+
+    # ۱۱. ارسال خودکار «بیلان شبانه جمع‌وجور» یک بار در آغاز هر روز UTC
     if not dry_run and alerts_skill.is_configured:
         if bot_config.get("last_daily_report_date") != today_str:
             eq_chart = alerts_skill.generate_equity_chart(portfolio)
@@ -451,7 +477,7 @@ def run_institutional_cycle(
             if alerts_skill.send_photo(eq_chart, caption=nightly_text, bot_config=bot_config):
                 bot_config["last_daily_report_date"] = today_str
 
-    # ۱۱. ذخیره اتمیک تمام فایل‌های وضعیت
+    # ۱۲. ذخیره اتمیک تمام فایل‌های وضعیت
     state_mgr.save_portfolio(portfolio)
     state_mgr.save_bot_config(bot_config)
     state_mgr.save_strategy_memory(strategy_memory)
@@ -478,10 +504,12 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Institutional Trading Bot V2.5 - Cloud Orchestrator")
     parser.add_argument("--dry-run", action="store_true", help="اجرای آزمایشی آفلاین بدون شبکه")
     parser.add_argument("--analyze-coin", type=str, default="", help="ارسال فوری چارت و رادار یک ارز خاص")
+    parser.add_argument("--telegram-cmd", type=str, default="", help="اجرای مستقیم دستور تلگرام")
     args = parser.parse_args()
 
     result = run_institutional_cycle(
         dry_run=args.dry_run,
         target_analyze_coin=args.analyze_coin if args.analyze_coin else None,
+        direct_telegram_cmd=args.telegram_cmd if args.telegram_cmd else None,
     )
     print(f"✅ [CloudRunner V2.5] Summary: {result}")
