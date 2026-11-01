@@ -1,14 +1,45 @@
 {
   "version": "2.0",
-  "balance_usdt": 995.1422,
+  "balance_usdt": 994.6689,
   "initial_balance_usdt": 1000.0,
   "day_start_date": "2026-11-01",
   "day_start_equity": 1000.0,
-  "daily_pnl_usdt": -4.8578,
+  "daily_pnl_usdt": -5.3311,
   "daily_circuit_breaker": false,
   "consecutive_wins": 0,
   "consecutive_losses": 1,
-  "open_positions": [],
+  "open_positions": [
+    {
+      "position_id": "POS-BTC-917A60",
+      "coin": "BTC",
+      "symbol": "BTC/USDT",
+      "side": "SHORT",
+      "regime": "RANGING",
+      "strategy": "LIQUIDITY_SWEEP_RANGE",
+      "trigger_type": "5M_WICK_REJECTION",
+      "score": 70.25,
+      "tier": "STANDARD_SIZE (75%)",
+      "slot_type": "STANDARD_SLOT",
+      "entry_price": 78076.996429,
+      "initial_stop_loss": 78200.106786,
+      "current_stop_loss": 78200.106786,
+      "tp1_price": 77935.419518,
+      "tp2_price": 77742.9,
+      "initial_quantity": 0.030313,
+      "remaining_quantity": 0.030313,
+      "notional_usdt": 2366.748,
+      "margin_used_usdt": 236.6709,
+      "leverage": 10,
+      "risk_amount_usdt": 3.7318,
+      "effective_risk_pct": 0.375,
+      "tp1_hit": false,
+      "risk_free": false,
+      "realized_partial_pnl": -0.4733,
+      "entry_fee_usdt": 0.4733,
+      "opened_at": "2026-11-01T15:43:48Z",
+      "last_checked": "2026-11-01T15:43:48Z"
+    }
+  ],
   "trade_history": [
     {
       "position_id": "POS-XRP-A9D2C9",
@@ -50,5 +81,5 @@
     "total_pnl_usdt": -4.8578,
     "max_drawdown_pct": 0.49
   },
-  "last_updated": "2026-11-01T15:14:34Z"
+  "last_updated": "2026-11-01T15:43:54Z"
 }

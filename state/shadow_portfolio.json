@@ -1,19 +1,6 @@
 {
   "active_shadows": [
     {
-      "shadow_id": "SHD-BTC-94914A",
-      "coin": "BTC",
-      "side": "SHORT",
-      "regime": "RANGING",
-      "score": 64.89,
-      "entry_price": 77991.980714,
-      "stop_loss": 78097.269888,
-      "tp1_price": 77870.898164,
-      "tp2_price": 77695.5,
-      "filter_reason": "LOW_CONFLUENCE_SCORE",
-      "created_at": "2026-11-01T13:17:14Z"
-    },
-    {
       "shadow_id": "SHD-XRP-7AD43F",
       "coin": "XRP",
       "side": "SHORT",
@@ -72,13 +59,28 @@
       "created_at": "2026-11-01T11:44:39Z",
       "outcome": "SHIELD_SAVED_LOSS",
       "resolved_at": "2026-11-01T12:15:57Z"
+    },
+    {
+      "shadow_id": "SHD-BTC-94914A",
+      "coin": "BTC",
+      "side": "SHORT",
+      "regime": "RANGING",
+      "score": 64.89,
+      "entry_price": 77991.980714,
+      "stop_loss": 78097.269888,
+      "tp1_price": 77870.898164,
+      "tp2_price": 77695.5,
+      "filter_reason": "LOW_CONFLUENCE_SCORE",
+      "created_at": "2026-11-01T13:17:14Z",
+      "outcome": "SHIELD_SAVED_LOSS",
+      "resolved_at": "2026-11-01T15:43:47Z"
     }
   ],
   "stats": {
     "total_filtered": 5,
-    "saved_from_loss": 2,
+    "saved_from_loss": 3,
     "missed_winners": 1,
-    "shield_accuracy": 66.67
+    "shield_accuracy": 75.0
   },
-  "last_updated": "2026-11-01T15:14:34Z"
+  "last_updated": "2026-11-01T15:43:54Z"
 }
