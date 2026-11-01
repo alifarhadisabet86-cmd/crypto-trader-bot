@@ -1,14 +1,45 @@
 {
   "version": "2.0",
-  "balance_usdt": 1000.0,
+  "balance_usdt": 999.7236,
   "initial_balance_usdt": 1000.0,
   "day_start_date": "2026-11-01",
   "day_start_equity": 1000.0,
-  "daily_pnl_usdt": 0.0,
+  "daily_pnl_usdt": -0.2764,
   "daily_circuit_breaker": false,
   "consecutive_wins": 0,
   "consecutive_losses": 0,
-  "open_positions": [],
+  "open_positions": [
+    {
+      "position_id": "POS-XRP-A9D2C9",
+      "coin": "XRP",
+      "symbol": "XRP/USDT",
+      "side": "SHORT",
+      "regime": "RANGING",
+      "strategy": "LIQUIDITY_SWEEP_RANGE",
+      "trigger_type": "5M_MICRO_CHOCH",
+      "score": 76.0,
+      "tier": "STANDARD_SIZE (75%)",
+      "slot_type": "GOLDEN_SLOT",
+      "entry_price": 1.252132,
+      "initial_stop_loss": 1.25553,
+      "current_stop_loss": 1.25553,
+      "tp1_price": 1.248224,
+      "tp2_price": 1.246185,
+      "initial_quantity": 1103.590347,
+      "remaining_quantity": 1103.590347,
+      "notional_usdt": 1381.8408,
+      "margin_used_usdt": 138.1841,
+      "leverage": 10,
+      "risk_amount_usdt": 3.75,
+      "effective_risk_pct": 0.375,
+      "tp1_hit": false,
+      "risk_free": false,
+      "realized_partial_pnl": -0.2764,
+      "entry_fee_usdt": 0.2764,
+      "opened_at": "2026-11-01T08:13:39Z",
+      "last_checked": "2026-11-01T08:13:39Z"
+    }
+  ],
   "trade_history": [],
   "equity_curve": [
     {
@@ -24,5 +55,5 @@
     "total_pnl_usdt": 0.0,
     "max_drawdown_pct": 0.0
   },
-  "last_updated": "2026-11-01T07:52:20Z"
+  "last_updated": "2026-11-01T08:13:41Z"
 }

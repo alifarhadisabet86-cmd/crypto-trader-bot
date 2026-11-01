@@ -1,4 +1,60 @@
 {
-  "regimes": {},
-  "last_updated": "2026-10-31T09:02:10Z"
+  "regimes": {
+    "BTC": {
+      "regime": "RANGING",
+      "strategy": "LIQUIDITY_SWEEP_RANGE",
+      "tradable": true,
+      "htf_bias": "BEARISH",
+      "trend_strength": 31.18,
+      "atr_ratio": 0.45,
+      "ema20_1h": 77696.167241,
+      "ema50_1h": 77816.884323,
+      "reason": "Mean-reverting / ranging structure (Strength 31.18)"
+    },
+    "ETH": {
+      "regime": "TRENDING_BULL",
+      "strategy": "TREND_PULLBACK",
+      "tradable": true,
+      "htf_bias": "BEARISH",
+      "trend_strength": 44.95,
+      "atr_ratio": 0.61,
+      "ema20_1h": 2260.959197,
+      "ema50_1h": 2259.230058,
+      "reason": "Strong bullish trend (Strength 44.95 >= 28, Price > EMA20 > EMA50)"
+    },
+    "SOL": {
+      "regime": "RANGING",
+      "strategy": "LIQUIDITY_SWEEP_RANGE",
+      "tradable": true,
+      "htf_bias": "BEARISH",
+      "trend_strength": 16.73,
+      "atr_ratio": 0.66,
+      "ema20_1h": 95.638722,
+      "ema50_1h": 96.149546,
+      "reason": "Mean-reverting / ranging structure (Strength 16.73)"
+    },
+    "XRP": {
+      "regime": "RANGING",
+      "strategy": "LIQUIDITY_SWEEP_RANGE",
+      "tradable": true,
+      "htf_bias": "BEARISH",
+      "trend_strength": 5.03,
+      "atr_ratio": 0.66,
+      "ema20_1h": 1.251789,
+      "ema50_1h": 1.254423,
+      "reason": "Mean-reverting / ranging structure (Strength 5.03)"
+    },
+    "XAU": {
+      "regime": "DEAD_MARKET",
+      "strategy": "NONE",
+      "tradable": false,
+      "htf_bias": "BEARISH",
+      "trend_strength": 23.81,
+      "atr_ratio": 0.31,
+      "ema20_1h": 3899.786895,
+      "ema50_1h": 3919.049204,
+      "reason": "Dead market / ultra-low volatility (ATR ratio 0.31 <= 0.4)"
+    }
+  },
+  "last_updated": "2026-11-01T08:13:41Z"
 }
