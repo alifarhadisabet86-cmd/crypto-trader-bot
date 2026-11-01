@@ -37,7 +37,7 @@
       "realized_partial_pnl": -0.2764,
       "entry_fee_usdt": 0.2764,
       "opened_at": "2026-11-01T08:13:39Z",
-      "last_checked": "2026-11-01T09:28:39Z"
+      "last_checked": "2026-11-01T10:08:40Z"
     }
   ],
   "trade_history": [],
@@ -55,5 +55,5 @@
     "total_pnl_usdt": 0.0,
     "max_drawdown_pct": 0.0
   },
-  "last_updated": "2026-11-01T09:28:41Z"
+  "last_updated": "2026-11-01T10:08:42Z"
 }
