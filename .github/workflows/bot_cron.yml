@@ -1,0 +1,48 @@
+name: Institutional Trading Bot V2 (15m Cloud Cycle)
+
+on:
+  schedule:
+    # اجرای خودکار در هر ۱۵ دقیقه به صورت ۲۴ ساعته
+    - cron: '*/15 * * * *'
+  workflow_dispatch:
+    # امکان اجرای دستی در هر لحظه از تب Actions گیت‌هاب
+
+permissions:
+  contents: write
+
+jobs:
+  run-trading-cycle:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: 📥 Checkout Repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - name: 🐍 Set up Python 3.11 with Pip Cache
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+
+      - name: 📦 Install Dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: 🚀 Execute Institutional Trading Cycle V2
+        env:
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          PYTHONUNBUFFERED: "1"
+        run: |
+          python cloud_runner.py
+
+      - name: 💾 Auto-Commit & Sync Persistent State (state/*.json)
+        run: |
+          git config --local user.name "github-actions[bot]"
+          git config --local user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add state/*.json
+          git diff --staged --quiet || (git commit -m "chore(state): sync institutional portfolio & ML memory [skip ci]" && git push)

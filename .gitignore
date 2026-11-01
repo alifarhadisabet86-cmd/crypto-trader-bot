@@ -1,0 +1,25 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Virtual Environments
+venv/
+.venv/
+env/
+ENV/
+
+# Environment variables & Local Secrets
+.env
+.env.local
+
+# IDE & OS specific files
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Ignore generated chart images in git commits, but keep the directory & JSON states
+state/charts/*.png
+!state/charts/.gitkeep
+!state/*.json

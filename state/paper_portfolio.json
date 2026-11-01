@@ -1,0 +1,28 @@
+{
+  "version": "2.0",
+  "balance_usdt": 1000.0,
+  "initial_balance_usdt": 1000.0,
+  "day_start_date": "2026-11-01",
+  "day_start_equity": 1000.0,
+  "daily_pnl_usdt": 0.0,
+  "daily_circuit_breaker": false,
+  "consecutive_wins": 0,
+  "consecutive_losses": 0,
+  "open_positions": [],
+  "trade_history": [],
+  "equity_curve": [
+    {
+      "timestamp": "2026-10-31T09:02:10Z",
+      "equity": 1000.0
+    }
+  ],
+  "stats": {
+    "total_trades": 0,
+    "wins": 0,
+    "losses": 0,
+    "win_rate_pct": 0.0,
+    "total_pnl_usdt": 0.0,
+    "max_drawdown_pct": 0.0
+  },
+  "last_updated": "2026-11-01T07:52:20Z"
+}

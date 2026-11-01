@@ -1,0 +1,16 @@
+{
+  "regime_weights": {
+    "TRENDING_BULL": 1.0,
+    "TRENDING_BEAR": 1.0,
+    "RANGING": 1.0
+  },
+  "coin_multipliers": {
+    "BTC": 1.0,
+    "ETH": 1.0,
+    "SOL": 1.0,
+    "XRP": 1.0,
+    "XAU": 1.0
+  },
+  "total_feedback_cycles": 0,
+  "last_updated": "2026-10-31T09:02:10Z"
+}
