@@ -1,135 +1,165 @@
 """
-تنظیمات مرکزی و قوانین معاملاتی ربات (Single Source of Truth)
-Institutional Trading Bot V2 - Core Configuration
+تنظیمات مرکزی، واچ‌لیست، مدیریت ریسک، دروازه ۵۰ معامله و فرمت‌بندی قیمت‌ها (Core Configuration V2.5)
+Institutional Trading Bot V2.5 - Centralized Configuration
 """
 
 import os
 from pathlib import Path
 from typing import Dict, Any
 
-# ==============================================================================
-# ۱. مسیرهای پایه سیستم (سازگار با Windows و Linux در GitHub Actions)
-# ==============================================================================
+# مسیرهای پایه پروژه
 BASE_DIR: Path = Path(__file__).resolve().parent.parent
 STATE_DIR: Path = BASE_DIR / "state"
 CHARTS_DIR: Path = STATE_DIR / "charts"
 
-# اطمینان از وجود پوشه‌های حافظه و چارت در لحظه ایمپورت
 STATE_DIR.mkdir(parents=True, exist_ok=True)
 CHARTS_DIR.mkdir(parents=True, exist_ok=True)
 
-
-# ==============================================================================
-# ۲. سبد دارایی‌های هدف و گروه‌بندی همبستگی (WATCHLIST)
-# ==============================================================================
+# ۱. واچ‌لیست ۵ دارایی اصلی به همراه دقت اعشار استاندارد و لینک چارت زنده
 WATCHLIST: Dict[str, Dict[str, Any]] = {
     "BTC": {
         "symbol": "BTC/USDT",
-        "category": "CRYPTO_MAJOR",
-        "correlation_group": "CRYPTO_HIGH",
-        "min_tick": 0.1,
+        "name": "Bitcoin",
+        "decimals": 1,
+        "correlated_group": "CRYPTO_MAJOR",
+        "tv_url": "https://www.tradingview.com/chart/?symbol=KUCOIN:BTCUSDT",
     },
     "ETH": {
         "symbol": "ETH/USDT",
-        "category": "CRYPTO_MAJOR",
-        "correlation_group": "CRYPTO_HIGH",
-        "min_tick": 0.01,
+        "name": "Ethereum",
+        "decimals": 2,
+        "correlated_group": "ALT_HIGH_BETA",
+        "tv_url": "https://www.tradingview.com/chart/?symbol=KUCOIN:ETHUSDT",
     },
     "SOL": {
         "symbol": "SOL/USDT",
-        "category": "CRYPTO_ALT",
-        "correlation_group": "CRYPTO_HIGH",
-        "min_tick": 0.01,
+        "name": "Solana",
+        "decimals": 2,
+        "correlated_group": "ALT_HIGH_BETA",
+        "tv_url": "https://www.tradingview.com/chart/?symbol=KUCOIN:SOLUSDT",
     },
     "XRP": {
         "symbol": "XRP/USDT",
-        "category": "CRYPTO_ALT",
-        "correlation_group": "CRYPTO_MED",
-        "min_tick": 0.0001,
+        "name": "Ripple",
+        "decimals": 4,
+        "correlated_group": "ALT_HIGH_BETA",
+        "tv_url": "https://www.tradingview.com/chart/?symbol=KUCOIN:XRPUSDT",
     },
     "XAU": {
-        "symbol": "PAXG/USDT",  # معادل دقیق ۱ اونس طلای جهانی (XAUUSD) در صرافی
-        "category": "COMMODITY",
-        "correlation_group": "SAFE_HAVEN",
-        "min_tick": 0.1,
+        "symbol": "PAXG/USDT",
+        "name": "Gold (XAUUSD)",
+        "decimals": 2,
+        "correlated_group": "SAFE_HAVEN_GOLD",
+        "tv_url": "https://www.tradingview.com/chart/?symbol=OANDA:XAUUSD",
     },
 }
 
+# لینک‌های مستقیم پنل کاربری صرافی و بروکر برای دکمه‌های شیشه‌ای تلگرام
+BROKER_URLS: Dict[str, str] = {
+    "bitunix": "https://www.bitunix.com/ftrade",
+    "opofinance": "https://my.opofinance.com/",
+    "kucoin": "https://www.kucoin.com/trade/BTC-USDT",
+    "tradingview_gold": "https://www.tradingview.com/chart/?symbol=OANDA:XAUUSD",
+}
 
-# ==============================================================================
-# ۳. ساختار تایم‌فریم‌های مولتی‌تایم‌فریم (TIMEFRAMES)
-# ==============================================================================
+# ۲. تایم‌فریم‌های چهارگانه تحلیلی
 TIMEFRAMES: Dict[str, str] = {
-    "HTF_STRUCTURE": "4h",   # تایم‌فریم ساختار کلان و بایاس اصلی
-    "MTF_REGIME": "1h",      # تایم‌فریم تشخیص رژیم بازار (روند یا رنج) و فیلتر شوک خبری
-    "LTF_SETUP": "15m",      # تایم‌فریم استخراج FVG، شکار نقدینگی (Sweep) و ناحیه ورود
-    "MICRO_TRIGGER": "5m",   # تایم‌فریم تاییدیه کندلی و ماشه شلیک (CHoCH / Pinbar / Engulfing)
+    "HTF_STRUCTURE": "4h",
+    "MTF_REGIME": "1h",
+    "LTF_SETUP": "15m",
+    "MICRO_TRIGGER": "5m",
 }
 
-
-# ==============================================================================
-# ۴. قوانین مدیریت ریسک، سرمایه و ماتریس اسلات‌ها (RISK_RULES)
-# ==============================================================================
-RISK_RULES: Dict[str, Any] = {
-    "initial_balance_usdt": 1000.0,       # موجودی اولیه پرتفوی (دلار/تتر)
-    "base_risk_per_trade_pct": 0.5,       # ریسک پایه در هر معامله (۰.۵٪ در حالت عادی)
-    "winning_streak_risk_pct": 0.8,       # افزایش ریسک به ۰.۸٪ پس از ۲ برد متوالی (یا حالت تهاجمی)
-    "losing_streak_risk_pct": 0.25,       # کاهش ریسک به ۰.۲۵٪ پس از ۲ باخت متوالی (یا حالت محافظه‌کارانه)
-    "max_daily_drawdown_pct": 2.0,        # مدارشکن روزانه (قفل شدن معاملات جدید در صورت ۲٪ ضرر روزانه)
-    "max_concurrent_positions": 5,        # حداکثر ۵ پوزیشن باز همزمان
-    "max_normal_score_slots": 2,          # حداکثر ۲ اسلات برای ستاپ‌های با امتیاز عادی (۶۵ تا ۷۴.۹)
-    "golden_score_threshold": 75.0,       # حد نصاب ستاپ‌های طلایی برای استفاده از ۳ اسلات رزرو شده
-    "max_crypto_correlated_same_side": 3, # حداکثر ۳ پوزیشن هم‌جهت فعال در گروه کریپتو (سپر همبستگی)
-    "max_leverage": 10,                   # حداکثر اهرم مجاز
-    "max_margin_per_trade_pct": 25.0,     # حداکثر مارجین درگیر در یک معامله (۲۵٪ کل موجودی)
+# ۳. تنظیمات صرافی مرجع دیتا و قوانین اجرایی
+EXCHANGE_CONFIG: Dict[str, Any] = {
+    "exchange_id": "kucoin",
+    "timeout_ms": 15000,
+    "enable_rate_limit": True,
+    "MAKER_FEE_RATE": 0.0002,
+    "TAKER_FEE_RATE": 0.0006,
+    "MAX_SPREAD_TO_TP_RATIO": 0.05,
+    "MAKER_OFFSET_ATR_5M": 0.10,
+    "SL_MIN_ATR_MULT": 0.85,
+    "SL_MAX_ATR_MULT": 2.20,
+    "SL_BUFFER_ATR_MULT": 0.20,
+    "TP1_R_MULTIPLE": 1.15,
+    "TP1_CLOSE_PCT": 0.50,
+    "MIN_RR_RANGING": 1.75,
+    "MIN_RR_TRENDING": 2.30,
 }
+EXECUTION_RULES: Dict[str, Any] = EXCHANGE_CONFIG
+EXCHANGE_RULES: Dict[str, Any] = EXCHANGE_CONFIG
 
-
-# ==============================================================================
-# ۵. قوانین اجرایی بروکر، کارمزدها و گارد اسپرد (EXECUTION_RULES)
-# ==============================================================================
-EXECUTION_RULES: Dict[str, Any] = {
-    "primary_crypto_exchange": "bitunix", # صرافی هدف برای اجرای سفارشات کریپتو
-    "cloud_data_feed": "kucoin",          # فید دیتای کلود (بدون محدودیت IP برای سرورهای گیت‌هاب)
-    "gold_broker": "opofinance",          # بروکر مرجع برای معاملات طلا
-    "entry_order_type": "LIMIT",          # نوع سفارش ورود و تارگت (Maker)
-    "sl_order_type": "MARKET",            # نوع سفارش حد ضرر (Taker)
-    "maker_fee": 0.0002,                  # کارمزد Maker: ۰.۰۲٪
-    "taker_fee": 0.0006,                  # کارمزد Taker: ۰.۰۶٪
-    "max_spread_to_target_ratio": 0.05,   # گارد اسپرد: حداکثر نسبت اسپرد به کل فاصله تارگت (۵٪)
+# ۴. قوانین مدیریت سرمایه، ۵ اسلات، مدارشکن روزانه/هفتگی و دروازه ۵۰ معامله
+RISK_CONFIG: Dict[str, Any] = {
+    "INITIAL_BALANCE_USDT": 1000.0,
+    "DEFAULT_LEVERAGE": 5,
+    "MAX_OPEN_POSITIONS": 5,
+    "MAX_CORRELATED_ALTS": 3,
+    "STANDARD_SLOTS": 3,
+    "GOLDEN_SLOTS_MIN_SCORE": 80.0,
+    "MIN_CONFLUENCE_SCORE": 65.0,
+    "BASE_RISK_PCT": 0.50,
+    "WIN_STREAK_RISK_PCT": 0.80,
+    "LOSS_STREAK_RISK_PCT": 0.25,
+    "MAX_DAILY_DRAWDOWN_PCT": 2.0,
+    "MAX_WEEKLY_DRAWDOWN_PCT": 5.0,
+    "MAX_MARGIN_USAGE_PER_TRADE_PCT": 25.0,
+    "MAKER_FEE_RATE": 0.0002,
+    "TAKER_FEE_RATE": 0.0006,
+    "MAX_SPREAD_TO_TP_RATIO": 0.05,
+    "PAPER_GATE_TARGET_TRADES": 50,
 }
+RISK_RULES: Dict[str, Any] = RISK_CONFIG
 
-
-# ==============================================================================
-# ۶. قوانین امتیازدهی فازی و ماشین زمان (SCORING_RULES)
-# ==============================================================================
-SCORING_RULES: Dict[str, Any] = {
-    "min_score_to_trade": 65.0,           # حداقل امتیاز فازی برای تایید ستاپ
-    "full_size_score_threshold": 80.0,    # حد نصاب امتیاز برای ورود با ۱۰۰٪ حجم استاندارد
-    "min_timemachine_winrate": 42.0,      # حداقل وین‌ریت مورد نیاز در شبیه‌ساز مونت‌کارلو (۴۲٪)
-    "min_timemachine_ev_r": 0.05,         # حداقل امید ریاضی (Expected Value) بر حسب R
-    "target_sample_size_paper": 50,       # تعداد معاملات هدف برای ارزیابی آماری پرتفوی
+# ۵. تنظیمات امتیازدهی و شبیه‌ساز مونت‌کارلو (ماشین زمان)
+TIMEMACHINE_CONFIG: Dict[str, Any] = {
+    "NUM_PATHS": 1000,
+    "HORIZON_CANDLES_15M": 16,
+    "MIN_WIN_RATE_PCT": 42.0,
+    "MIN_EXPECTED_VALUE_R": 0.05,
+    "MONTE_CARLO_PATHS": 1000,
+    "MONTE_CARLO_HORIZON_CANDLES": 16,
+    "MIN_MONTE_CARLO_WINRATE": 42.0,
+    "MIN_CONFLUENCE_SCORE": 65.0,
+    "GOLDEN_CONFLUENCE_SCORE": 80.0,
+    "SNIPER_LIMIT_MIN_SCORE": 75.0,
 }
+TIMEMACHINE_RULES: Dict[str, Any] = TIMEMACHINE_CONFIG
+SCORING_RULES: Dict[str, Any] = TIMEMACHINE_CONFIG
 
-
-# ==============================================================================
-# ۷. ضرایب پایه یادگیری ماشین بیزی (ML DEFAULT WEIGHTS)
-# ==============================================================================
+# ۶. تنظیمات یادگیری ماشین (ML Feedback Defaults)
+DEFAULT_COIN_MULTIPLIERS: Dict[str, float] = {coin: 1.0 for coin in WATCHLIST.keys()}
 DEFAULT_REGIME_WEIGHTS: Dict[str, float] = {
     "TRENDING_BULL": 1.0,
     "TRENDING_BEAR": 1.0,
     "RANGING": 1.0,
 }
 
-DEFAULT_COIN_MULTIPLIERS: Dict[str, float] = {
-    coin: 1.0 for coin in WATCHLIST.keys()
-}
-
-
-# ==============================================================================
-# ۸. تنظیمات ارتباطی اتاق فرمان تلگرام (TELEGRAM_CONFIG)
-# ==============================================================================
+# ۷. تنظیمات تلگرام
 TELEGRAM_CONFIG: Dict[str, str] = {
     "bot_token": os.getenv("TELEGRAM_BOT_TOKEN", ""),
     "chat_id": os.getenv("TELEGRAM_CHAT_ID", ""),
 }
+
+
+def format_price(value: float | int | None, coin: str = "BTC") -> str:
+    """
+    فرمت‌بندی و گرد کردن هوشمند قیمت بر اساس دارایی برای جلوگیری از اعشارهای طولانی در تلگرام.
+    - BTC: 1 رقم اعشار (مثلاً 79200.7)
+    - ETH, SOL, XAU: 2 رقم اعشار (مثلاً 3986.98)
+    - XRP: 4 رقم اعشار (مثلاً 1.2951)
+    """
+    if value is None:
+        return "0.00"
+    try:
+        val = float(value)
+    except (ValueError, TypeError):
+        return str(value)
+
+    clean_coin = str(coin).strip().upper().replace("/USDT", "").replace("PAXG", "XAU")
+    decimals = WATCHLIST.get(clean_coin, {}).get("decimals", 2)
+
+    if decimals == 0:
+        return f"{val:.0f}"
+    return f"{val:.{decimals}f}"

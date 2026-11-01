@@ -1,19 +1,20 @@
 """
-ارکستراتور اصلی ابری V2 (Cloud Orchestrator - Institutional Trading Cycle)
-Institutional Trading Bot V2 - Main Execution Pipeline
+ارکستراتور اصلی ابری نسخه V2.5 Pro (Cloud Runner - 15m Institutional Execution Pipeline)
+Institutional Trading Bot V2.5 - Full End-to-End Orchestrator
 """
 
+import argparse
+import os
 import time
-import traceback
 from datetime import datetime, timezone
 from typing import Dict, Any, List, Optional
 
+import numpy as np
 import pandas as pd
 
-from core.config import WATCHLIST, TIMEFRAMES
+from core.config import WATCHLIST, TIMEFRAMES, format_price
 from core.data_engine import DataEngine
 from core.state_manager import StateManager
-
 from skills.alerts import TelegramAlertsSkill
 from skills.broker import BrokerExecutionSkill
 from skills.budget import BudgetAllocationSkill
@@ -28,26 +29,53 @@ from skills.scanner import MarketScannerSkill
 from skills.timemachine import TimeMachineSkill
 
 
-def run_institutional_cycle(dry_run: bool = False) -> Dict[str, Any]:
-    """
-    اجرای یک چرخه کامل ۱۵ دقیقه‌ای ربات معامله‌گر سازمانی V2.
-    اگر dry_run=True باشد، چرخه بدون فراخوانی شبکه خارجی (برای تست سلامت معماری) اجرا می‌شود.
-    """
-    start_ts = time.time()
-    now_utc = datetime.now(timezone.utc)
-    cycle_summary: Dict[str, Any] = {
-        "timestamp": now_utc.strftime("%Y-%m-%dT%H:%M:%SZ"),
-        "status": "STARTED",
-        "commands_executed": [],
-        "position_events": [],
-        "opened_trades": [],
-        "shadow_recorded": [],
-        "regimes": {},
-        "active_setups": [],
-        "duration_sec": 0.0,
-    }
+def _generate_synthetic_ohlcv(base_price: float, bars: int = 80) -> pd.DataFrame:
+    """تولید دیتای استاندارد آفلاین برای حالت تست (Dry-Run)."""
+    rng = np.random.default_rng(42)
+    closes = base_price + np.cumsum(rng.normal(0, base_price * 0.002, bars))
+    opens = np.roll(closes, 1)
+    opens[0] = base_price
+    highs = np.maximum(opens, closes) + abs(rng.normal(0, base_price * 0.0015, bars))
+    lows = np.minimum(opens, closes) - abs(rng.normal(0, base_price * 0.0015, bars))
+    vols = rng.uniform(100, 500, bars)
+    df = pd.DataFrame({
+        "open": opens,
+        "high": highs,
+        "low": lows,
+        "close": closes,
+        "volume": vols,
+    })
+    tr = pd.concat(
+        [
+            (df["high"] - df["low"]).abs(),
+            (df["high"] - df["close"].shift(1)).abs(),
+            (df["low"] - df["close"].shift(1)).abs(),
+        ],
+        axis=1,
+    ).max(axis=1)
+    df["atr"] = tr.ewm(alpha=1.0 / 14.0, adjust=False).mean()
+    return df
 
-    # ۱. مقداردهی اولیه هسته و ۱۲ مهارت
+
+def run_institutional_cycle(
+    dry_run: bool = False,
+    target_analyze_coin: Optional[str] = None,
+) -> Dict[str, Any]:
+    """
+    اجرای یک چرخه کامل ۱۵ دقیقه‌ای ربات سازمانی V2.5 Pro:
+    1. بارگذاری ۸ فایل وضعیت و بررسی ریست روزانه/هفتگی و دروازه ۵۰ معامله
+    2. دریافت دیتا از KuCoin (یا دیتای شبیه‌سازی در حالت dry_run)
+    3. پردازش دستورات و دکمه‌های شیشه‌ای تلگرام (چارت ۵ ارز، ریسک‌فری سریع، سیو سود ۵۰٪)
+    4. مدیریت پوزیشن‌های باز (TP1، تریلینگ استاپ ساختاری، TP2، SL) و ارسال کارت PnL
+    5. بررسی سپر تقویم اقتصادی فارکس (اخبار قرمز USD) و مدارشکن روزانه/هفتگی
+    6. اسکن ساختار ۱۵ دقیقه، رنج سشن آسیا، امتیاز فازی، ماشین زمان و ثبت شکار جدید
+    7. ارسال بیلان شبانه جمع‌وجور در آغاز روز جدید UTC و ذخیره اتمیک وضعیت‌ها
+    """
+    t0 = time.time()
+    now_utc = datetime.now(timezone.utc)
+    today_str = now_utc.strftime("%Y-%m-%d")
+
+    # ۱. نمونه‌سازی هسته و هر ۱۲ مهارت تخصصی
     state_mgr = StateManager()
     data_engine = DataEngine()
     regime_skill = RegimeDetectorSkill()
@@ -56,359 +84,404 @@ def run_institutional_cycle(dry_run: bool = False) -> Dict[str, Any]:
     scorer_skill = ConfluenceScorerSkill()
     entry_skill = EntryTriggerSkill()
     exit_skill = ExitPlannerSkill()
-    timemachine_skill = TimeMachineSkill()
+    tm_skill = TimeMachineSkill()
     risk_skill = RiskGuardianSkill()
     budget_skill = BudgetAllocationSkill()
     broker_skill = BrokerExecutionSkill()
     ml_skill = MLFeedbackSkill()
     alerts_skill = TelegramAlertsSkill()
 
-    # ۲. بارگذاری وضعیت‌های پایدار از پوشه state/
+    # ۲. بارگذاری حافظه پایدار
     portfolio = state_mgr.load_portfolio()
     bot_config = state_mgr.load_bot_config()
     strategy_memory = state_mgr.load_strategy_memory()
     shadow_portfolio = state_mgr.load_shadow_portfolio()
 
+    # اگر فراخوانی صرفاً برای ارسال فوری چارت تحلیلی یک ارز خاص باشد (از سمت وب‌هوک یا اکشن)
+    env_target_coin = (target_analyze_coin or os.getenv("TARGET_ANALYZE_COIN", "")).strip().upper()
+    if env_target_coin and env_target_coin in WATCHLIST and not dry_run:
+        alerts_skill._send_cached_or_live_asset_analysis(env_target_coin, state_mgr, bot_config)
+        return {
+            "status": f"ON_DEMAND_ANALYSIS_SENT_{env_target_coin}",
+            "duration_sec": round(time.time() - t0, 2),
+        }
+
+    # ۳. دریافت دیتای چندتایم‌فریمی برای ۵ دارایی
+    data_4h: Dict[str, pd.DataFrame] = {}
+    data_1h: Dict[str, pd.DataFrame] = {}
+    data_15m: Dict[str, pd.DataFrame] = {}
+    data_5m: Dict[str, pd.DataFrame] = {}
+    spreads: Dict[str, Dict[str, Any]] = {}
+    orderbooks: Dict[str, Dict[str, Any]] = {}
+    live_prices: Dict[str, float] = {}
+
+    base_map = {"BTC": 80000.0, "ETH": 2200.0, "SOL": 110.0, "XRP": 1.30, "XAU": 3980.0}
+
+    for coin in WATCHLIST.keys():
+        if dry_run:
+            b_price = base_map.get(coin, 100.0)
+            data_4h[coin] = _generate_synthetic_ohlcv(b_price, 60)
+            data_1h[coin] = _generate_synthetic_ohlcv(b_price, 80)
+            data_15m[coin] = _generate_synthetic_ohlcv(b_price, 80)
+            data_5m[coin] = _generate_synthetic_ohlcv(b_price, 80)
+            spreads[coin] = {"valid": True, "spread_abs": b_price * 0.0001}
+            orderbooks[coin] = {"valid": True, "buy_pressure_pct": 56.0}
+            live_prices[coin] = float(data_15m[coin]["close"].iloc[-1])
+        else:
+            data_4h[coin] = data_engine.fetch_ohlcv(coin, TIMEFRAMES["HTF_STRUCTURE"], limit=60)
+            data_1h[coin] = data_engine.fetch_ohlcv(coin, TIMEFRAMES["MTF_REGIME"], limit=80)
+            data_15m[coin] = data_engine.fetch_ohlcv(coin, TIMEFRAMES["LTF_SETUP"], limit=80)
+            data_5m[coin] = data_engine.fetch_ohlcv(coin, TIMEFRAMES["MICRO_TRIGGER"], limit=60)
+            spreads[coin] = data_engine.fetch_live_spread(coin)
+            orderbooks[coin] = data_engine.fetch_order_book_imbalance(coin)
+            if not data_15m[coin].empty:
+                live_prices[coin] = float(data_15m[coin]["close"].iloc[-1])
+
+    # ۴. دریافت اطلاعات کلان بازار (سنتیمنت، سشن Killzone، تقویم اقتصادی فارکس و واگرایی SMT)
     if dry_run:
-        cycle_summary["status"] = "DRY_RUN_COMPLETED"
-        cycle_summary["duration_sec"] = round(time.time() - start_ts, 3)
-        return cycle_summary
+        sentiment = {"value": 48, "classification": "Neutral", "bar": "🟨🟨🟨🟨🟨⬜⬜⬜⬜⬜"}
+        news_status = {
+            "news_shield_active": False,
+            "active_event": None,
+            "upcoming_events": [],
+            "summary_fa": "🟢 بدون خبر قرمز قریب‌الوقوع (ایمن برای ترید)",
+        }
+    else:
+        sentiment = intel_skill.fetch_sentiment()
+        news_status = intel_skill.check_economic_news_shield(now_utc)
 
-    try:
-        # ۳. دریافت سنتیمنت بازار (Fear & Greed) و تشخیص سشن Killzone
-        sentiment_data = intel_skill.fetch_sentiment()
-        killzone_data = intel_skill.check_killzone_session(now_utc.hour)
+    killzone = intel_skill.check_killzone_session(now_utc.hour)
+    smt_data = intel_skill.analyze_correlation_and_smt(data_15m.get("BTC"), data_15m.get("ETH"))
 
-        # ۴. دریافت کندل‌های ۵ دقیقه و ۱۵ دقیقه برای ارزهای واچ‌لیست
-        market_5m: Dict[str, pd.DataFrame] = {}
-        market_15m: Dict[str, pd.DataFrame] = {}
-        live_prices: Dict[str, float] = {}
+    # ۵. پردازش دستورات و کالبک‌های شیشه‌ای تلگرام
+    def _handle_on_demand_chart(req_coin: str) -> None:
+        df_c = data_15m.get(req_coin)
+        if df_c is None or df_c.empty:
+            alerts_skill._send_cached_or_live_asset_analysis(req_coin, state_mgr, bot_config)
+            return
+        reg_c = regime_skill.detect_regime(data_1h.get(req_coin), data_4h.get(req_coin))
+        scan_c = scanner_skill.scan_structure(df_c, reg_c)
+        side_c = scan_c.get("candidate_side", "LONG")
+        if side_c == "NONE":
+            side_c = "LONG" if reg_c.get("htf_bias") != "BEARISH" else "SHORT"
+        conf_c = scorer_skill.evaluate_confluence(
+            req_coin, side_c, reg_c, scan_c, orderbooks.get(req_coin), killzone, smt_data, strategy_memory
+        )
+        c_path = alerts_skill.generate_asset_analysis_chart(req_coin, df_c, scan_c, reg_c)
+        cap = alerts_skill.build_asset_analysis_caption(req_coin, reg_c, scan_c, conf_c, orderbooks.get(req_coin))
+        alerts_skill.send_photo(
+            c_path, caption=cap, bot_config=bot_config, custom_keyboard=alerts_skill.build_hunt_inline_keyboard(req_coin)
+        )
 
-        for coin_key in WATCHLIST.keys():
-            df_5m = data_engine.fetch_ohlcv(
-                coin_key, timeframe=TIMEFRAMES["MICRO_TRIGGER"], limit=60
-            )
-            df_15m = data_engine.fetch_ohlcv(
-                coin_key, timeframe=TIMEFRAMES["LTF_SETUP"], limit=85
-            )
-            if not df_5m.empty:
-                market_5m[coin_key] = df_5m
-                live_prices[coin_key] = float(df_5m["close"].iloc[-1])
-            if not df_15m.empty:
-                market_15m[coin_key] = df_15m
-                if coin_key not in live_prices:
-                    live_prices[coin_key] = float(df_15m["close"].iloc[-1])
-
-        # ۵. پردازش دستورات از راه دور تلگرام (/status, /panic, /pause, /resume, ...)
-        cmds = alerts_skill.process_incoming_commands(
+    executed_commands: List[str] = []
+    if not dry_run and alerts_skill.is_configured:
+        executed_commands = alerts_skill.process_incoming_commands(
             state_manager=state_mgr,
             broker=broker_skill,
             portfolio=portfolio,
             bot_config=bot_config,
             shadow_portfolio=shadow_portfolio,
-            sentiment_data=sentiment_data,
             live_prices=live_prices,
+            on_demand_callback=_handle_on_demand_chart,
         )
-        cycle_summary["commands_executed"] = cmds
 
-        # ۶. مدیریت پوزیشن‌های باز (بررسی برخورد به TP1 / TP2 / SL)
-        pos_events = broker_skill.manage_open_positions(portfolio, market_5m)
-        cycle_summary["position_events"] = pos_events
+    # ۶. بروزرسانی پوزیشن‌های باز (TP1، تریلینگ استاپ ساختاری، TP2، SL)
+    pos_update = broker_skill.update_open_positions(portfolio, data_15m)
+    unrealized_pnl = float(pos_update["total_unrealized_pnl_usdt"])
 
-        for ev in pos_events:
-            ev_type = ev.get("event_type", "")
+    # ارسال اعلان رویدادهای پوزیشن و کارت تصویری PnL به تلگرام
+    if not dry_run and alerts_skill.is_configured:
+        for ev in pos_update["events"]:
+            ev_type = ev.get("type", "")
             c_name = ev.get("coin", "")
-            c_side = ev.get("side", "")
-            if ev_type == "TP1_PARTIAL_AND_RISK_FREE":
-                p_pnl = float(ev.get("partial_pnl_usdt", 0.0))
-                new_sl = float(ev.get("new_sl", 0.0))
-                alerts_skill.send_message(
-                    f"🛡️ <b>تارگت اول (TP1) شکار شد و پوزیشن Risk-Free گردید!</b>\n"
-                    f"━━━━━━━━━━━━━━━━━━━━━━\n"
-                    f"🪙 <b>دارایی:</b> <code>{c_name} ({c_side})</code>\n"
-                    f"💵 <b>سود سیوشده (50% حجم):</b> <code>{p_pnl:+.2f}$</code>\n"
-                    f"🔒 <b>استاپ جدید (نقطه ورود):</b> <code>{new_sl:.4f}</code>",
-                    bot_config=bot_config,
-                )
-            elif ev_type == "POSITION_CLOSED":
-                tot_pnl = float(ev.get("pnl_usdt", 0.0))
-                reason_str = ev.get("reason", "")
-                icon = "✅" if tot_pnl >= 0 else "❌"
-                alerts_skill.send_message(
-                    f"{icon} <b>پوزیشن بسته شد | {c_name} ({c_side})</b>\n"
-                    f"━━━━━━━━━━━━━━━━━━━━━━\n"
-                    f"📌 <b>دلیل خروج:</b> <code>{reason_str}</code>\n"
-                    f"💰 <b>برآیند خالص معامله:</b> <code>{tot_pnl:+.2f}$</code>\n"
-                    f"🏦 <b>موجودی جدید حساب:</b> <code>${float(portfolio.get('balance_usdt', 1000.0)):,.2f}</code>",
-                    bot_config=bot_config,
-                )
+            s_name = ev.get("side", "")
 
-        # ۷. ارزیابی رادار سایه و به‌روزرسانی وزن‌های بیزی یادگیری ماشین
-        ml_skill.evaluate_active_shadows(shadow_portfolio, market_5m)
-        strategy_memory = ml_skill.update_strategy_weights(portfolio, strategy_memory)
+            if ev_type == "TP1_PARTIAL_AND_BREAKEVEN":
+                det = ev.get("details", {})
+                msg = (
+                    f"🛡️ <b>تارگت اول (TP1) و ریسک‌فری فعال شد | {c_name} ({s_name})</b>\n"
+                    f"• ۵۰٪ حجم پوزیشن با سود خالص <code>+${det.get('net_partial_pnl_usdt', 0.0):.2f}</code> نقد شد.\n"
+                    f"• حد ضرر ۵۰٪ باقی‌مانده به نقطه ورود (<code>{format_price(det.get('new_stop_loss'), c_name)}</code>) منتقل گردید."
+                )
+                alerts_skill.send_message(msg, bot_config=bot_config)
 
-        # ۸. تحلیل همبستگی پیرسون و واگرایی SMT بین BTC و ETH
-        smt_global = intel_skill.analyze_correlation_and_smt(
-            market_15m.get("BTC"), market_15m.get("ETH")
+            elif ev_type == "STRUCTURAL_TRAILING_UPDATED":
+                msg = (
+                    f"🚀 <b>تریلینگ استاپ ساختاری ارتقا یافت | {c_name} ({s_name})</b>\n"
+                    f"• استاپ از <code>{format_price(ev.get('old_sl'), c_name)}</code> به پشت سوئینگ جدید در <code>{format_price(ev.get('new_sl'), c_name)}</code> قفل شد."
+                )
+                alerts_skill.send_message(msg, bot_config=bot_config)
+
+            elif "trade" in ev:
+                tr_rec = ev["trade"]
+                pnl_card_path = alerts_skill.generate_pnl_card(tr_rec, portfolio)
+                gate = state_mgr.get_paper_gate_progress(portfolio)
+                pnl_val = float(tr_rec.get("net_pnl_usdt", 0.0))
+                r_val = float(tr_rec.get("r_multiple", 0.0))
+                badge = "✅ سود نهایی" if pnl_val >= 0 else "🛑 حد ضرر"
+                cap = (
+                    f"{badge} | <b>{c_name} ({s_name})</b> بسته شد\n"
+                    f"━━━━━━━━━━━━━━━━━━\n"
+                    f"• <b>علت خروج:</b> <code>{ev_type}</code>\n"
+                    f"• <b>نتیجه مالی:</b> <code>{pnl_val:+.2f}$ ({r_val:+.2f}R)</code>\n"
+                    f"• <b>موجودی جدید:</b> <code>${float(portfolio['balance_usdt']):,.2f}</code>\n"
+                    f"• <b>دروازه ۵۰ معامله کاغذی:</b> <code>{gate['completed_trades']}/{gate['target_trades']}</code> ({gate['progress_pct']:.0f}%)"
+                )
+                alerts_skill.send_photo(pnl_card_path, caption=cap, bot_config=bot_config)
+
+    # ۷. ارزیابی رادار سایه و یادگیری ماشین بیزی در صورت بسته شدن معامله
+    ml_skill.evaluate_active_shadows(shadow_portfolio, data_15m)
+    if pos_update["closed_trades"]:
+        strategy_memory = ml_skill.update_strategy_memory(
+            strategy_memory, portfolio.get("closed_trades", [])
         )
 
-        # ۹. اسکن ۵ دارایی واچ‌لیست برای شکار ستاپ‌های جدید
-        regimes_map: Dict[str, Any] = {}
-        active_setups_list: List[Dict[str, Any]] = []
+    # ۸. بررسی مدارشکن روزانه (۲٪) و هفتگی (۵٪)
+    cb_info = risk_skill.check_circuit_breaker(portfolio, unrealized_pnl)
+    state_mgr.save_risk_status({
+        "circuit_breaker": cb_info["daily_locked"],
+        "weekly_circuit_breaker": cb_info["weekly_locked"],
+        "daily_drawdown_pct": cb_info["daily_drawdown_pct"],
+        "weekly_drawdown_pct": cb_info["weekly_drawdown_pct"],
+        "active_slots": len(portfolio.get("open_positions", [])),
+    })
 
-        for coin_key, coin_meta in WATCHLIST.items():
-            symbol = str(coin_meta["symbol"])
-            df_4h = data_engine.fetch_ohlcv(
-                coin_key, timeframe=TIMEFRAMES["HTF_STRUCTURE"], limit=75
+    # ۹. حلقه اسکن، تحلیل و شکار روی ۵ دارایی واچ‌لیست
+    regimes_snapshot: Dict[str, Any] = {}
+    active_setups_snapshot: List[Dict[str, Any]] = []
+    opened_positions_count = 0
+
+    for coin in WATCHLIST.keys():
+        df_15 = data_15m.get(coin)
+        df_1 = data_1h.get(coin)
+        df_4 = data_4h.get(coin)
+        df_5 = data_5m.get(coin)
+
+        if df_15 is None or df_15.empty or df_1 is None or df_1.empty:
+            regimes_snapshot[coin] = {"regime": "NO_DATA", "tradable": False}
+            continue
+
+        reg_res = regime_skill.detect_regime(df_1, df_4)
+        scan_res = scanner_skill.scan_structure(df_15, reg_res)
+        cand_side = scan_res.get("candidate_side", "NONE")
+
+        eval_side = cand_side if cand_side in ("LONG", "SHORT") else (
+            "LONG" if reg_res.get("htf_bias") != "BEARISH" else "SHORT"
+        )
+        conf_preview = scorer_skill.evaluate_confluence(
+            coin=coin,
+            candidate_side=eval_side,
+            regime_data=reg_res,
+            scan_data=scan_res,
+            orderbook_data=orderbooks.get(coin),
+            killzone_data=killzone,
+            smt_data=smt_data,
+            strategy_memory=strategy_memory,
+        )
+
+        # ذخیره اسنپ‌شات غنی رادار برای نمایش در /status و دکمه‌های شیشه‌ای
+        regimes_snapshot[coin] = {
+            "regime": reg_res.get("regime", "RANGING"),
+            "strategy": reg_res.get("strategy", "NONE"),
+            "htf_bias": reg_res.get("htf_bias", "NEUTRAL"),
+            "adx": reg_res.get("adx", 0.0),
+            "tradable": reg_res.get("tradable", False),
+            "current_price": scan_res.get("current_price", 0.0),
+            "candidate_side": cand_side,
+            "confluence_score": conf_preview.get("final_score", 0.0),
+            "zone": scan_res.get("zone", "EQUILIBRIUM"),
+            "asian_range": scan_res.get("asian_range", {}),
+            "xray_summary_fa": conf_preview.get("xray_summary_fa", ""),
+        }
+
+        if not reg_res.get("tradable", False) or cand_side not in ("LONG", "SHORT"):
+            continue
+
+        # طراحی نقشه خروج اولیه برای ثبت در رادار سایه در صورت فیلتر شدن
+        prelim_exit = exit_skill.plan_exit(
+            entry_price=float(scan_res["current_price"]),
+            side=cand_side,
+            atr_15m=float(scan_res["atr_15m"]),
+            scan_data=scan_res,
+            regime_data=reg_res,
+        )
+
+        # الف) فیلتر پیشگیرانه تقویم اقتصادی فارکس (اخبار قرمز USD)
+        if news_status.get("news_shield_active", False):
+            ml_skill.record_filtered_signal(
+                shadow_portfolio, coin, cand_side,
+                prelim_exit["entry_price"], prelim_exit["stop_loss"], prelim_exit["tp2_final"],
+                filter_reason="ECONOMIC_NEWS_BLOCKED",
+                confluence_score=conf_preview["final_score"],
             )
-            df_1h = data_engine.fetch_ohlcv(
-                coin_key, timeframe=TIMEFRAMES["MTF_REGIME"], limit=75
+            continue
+
+        # ب) فیلتر امتیاز هم‌گرایی فازی (حداقل ۶۵)
+        if not conf_preview["passed"]:
+            ml_skill.record_filtered_signal(
+                shadow_portfolio, coin, cand_side,
+                prelim_exit["entry_price"], prelim_exit["stop_loss"], prelim_exit["tp2_final"],
+                filter_reason="LOW_CONFLUENCE_SCORE",
+                confluence_score=conf_preview["final_score"],
             )
-            df_15m = market_15m.get(coin_key)
-            df_5m = market_5m.get(coin_key)
+            continue
 
-            if df_1h.empty or df_15m is None or df_15m.empty or df_5m is None or df_5m.empty:
-                continue
+        # ج) فیلتر ماشه کندلی ۵ دقیقه یا Limit Sniper
+        trig_res = entry_skill.evaluate_entry_trigger(
+            df_5m=df_5,
+            candidate_side=cand_side,
+            confluence_score=conf_preview["final_score"],
+            active_fvg=scan_res.get("active_fvg"),
+        )
+        if not trig_res["triggered"]:
+            continue
 
-            # الف) تشخیص رژیم بازار در ۴ ساعته و ۱ ساعته
-            reg_info = regime_skill.detect_regime(df_4h, df_1h)
-            regimes_map[coin_key] = reg_info
+        # د) طراحی دقیق نقشه خروج بر اساس قیمت ورود Maker
+        exit_plan = exit_skill.plan_exit(
+            entry_price=float(trig_res["limit_entry_price"]),
+            side=cand_side,
+            atr_15m=float(scan_res["atr_15m"]),
+            scan_data=scan_res,
+            regime_data=reg_res,
+        )
+        if not exit_plan["valid"]:
+            continue
 
-            if not bool(reg_info.get("tradable", False)):
-                continue
-
-            # ب) اسکن ساختار ۱۵ دقیقه (FVG, Liquidity Sweep, Premium/Discount)
-            scan_info = scanner_skill.scan_structure(df_15m, reg_info)
-            if not bool(scan_info.get("valid", False)):
-                continue
-
-            cand_side = str(scan_info.get("candidate_side", "NONE"))
-            if cand_side not in ("LONG", "SHORT"):
-                continue
-
-            # ج) دریافت جریان سفارشات (OrderBook Imbalance)
-            ob_info = data_engine.fetch_order_book_imbalance(coin_key)
-
-            # د) محاسبه امتیاز هم‌گرایی فازی + ضرایب یادگیری ماشین
-            conf_info = scorer_skill.evaluate_confluence(
-                coin=coin_key,
-                candidate_side=cand_side,
-                regime_data=reg_info,
-                scan_data=scan_info,
-                orderbook_data=ob_info,
-                killzone_data=killzone_data,
-                smt_data=smt_global,
-                strategy_memory=strategy_memory,
+        # هـ) فیلتر شبیه‌ساز مونت‌کارلو (ماشین زمان ۱۰۰۰ مسیر)
+        tm_res = tm_skill.run_simulation(
+            df_15m=df_15,
+            exit_plan=exit_plan,
+            confluence_score=conf_preview["final_score"],
+            regime_data=reg_res,
+        )
+        if not tm_res["approved"]:
+            ml_skill.record_filtered_signal(
+                shadow_portfolio, coin, cand_side,
+                exit_plan["entry_price"], exit_plan["stop_loss"], exit_plan["tp2_final"],
+                filter_reason="TIMEMACHINE_REJECTED",
+                confluence_score=conf_preview["final_score"],
             )
+            continue
 
-            final_score = float(conf_info.get("final_score", 0.0))
-
-            # هـ) بررسی ماشه شلیک ۵ دقیقه و محاسبه قیمت ورود Limit Maker
-            trig_info = entry_skill.evaluate_entry_trigger(
-                df_5m=df_5m,
-                candidate_side=cand_side,
-                confluence_score=final_score,
-                active_fvg=scan_info.get("active_fvg"),
+        # و) فیلتر بودجه، ۵ اسلات، سپر همبستگی و مدارشکن‌ها
+        alloc_res = budget_skill.allocate_budget(
+            portfolio=portfolio,
+            coin=coin,
+            side=cand_side,
+            confluence_data=conf_preview,
+            exit_plan=exit_plan,
+            bot_config=bot_config,
+            unrealized_pnl_usdt=unrealized_pnl,
+        )
+        if not alloc_res["approved"]:
+            ml_skill.record_filtered_signal(
+                shadow_portfolio, coin, cand_side,
+                exit_plan["entry_price"], exit_plan["stop_loss"], exit_plan["tp2_final"],
+                filter_reason="RISK_GUARDIAN_BLOCKED",
+                confluence_score=conf_preview["final_score"],
             )
+            continue
 
-            entry_price = float(
-                trig_info.get("limit_entry_price") or scan_info.get("current_price", 0.0)
+        # ز) اجرای نهایی و گارد اسپرد ۵٪
+        open_res = broker_skill.open_paper_position(
+            portfolio=portfolio,
+            coin=coin,
+            side=cand_side,
+            entry_plan=trig_res,
+            exit_plan=exit_plan,
+            allocation=alloc_res,
+            regime_data=reg_res,
+            confluence_data=conf_preview,
+            spread_data=spreads.get(coin),
+        )
+        if not open_res["opened"]:
+            ml_skill.record_filtered_signal(
+                shadow_portfolio, coin, cand_side,
+                exit_plan["entry_price"], exit_plan["stop_loss"], exit_plan["tp2_final"],
+                filter_reason="SPREAD_GUARD_5PCT_BLOCKED",
+                confluence_score=conf_preview["final_score"],
             )
-            exit_plan = exit_skill.plan_exit(
-                entry_price=entry_price,
-                side=cand_side,
-                atr_15m=float(scan_info.get("atr_15m", 0.0)),
-                scan_data=scan_info,
-                regime_data=reg_info,
-            )
+            continue
 
-            setup_snapshot = {
-                "coin": coin_key,
-                "symbol": symbol,
-                "side": cand_side,
-                "regime": reg_info.get("regime"),
-                "score": final_score,
-                "tier": conf_info.get("tier"),
-                "triggered_5m": bool(trig_info.get("triggered", False)),
-                "trigger_type": trig_info.get("trigger_type", "NONE"),
-                "entry_price": entry_price,
-                "stop_loss": exit_plan.get("stop_loss"),
-                "tp1_price": exit_plan.get("tp1_breakeven"),
-                "tp2_price": exit_plan.get("tp2_final"),
-            }
-            active_setups_list.append(setup_snapshot)
+        opened_positions_count += 1
+        active_setups_snapshot.append(open_res["position"])
 
-            # اگر امتیاز فازی زیر ۶۵ بود، در صورتی که بالای ۵۲ بود در رادار سایه ثبت شود تا دقت فیلتر سنجیده شود
-            if not bool(conf_info.get("passed", False)):
-                if final_score >= 52.0 and bool(trig_info.get("triggered", False)):
-                    shd = broker_skill.record_shadow_trade(
-                        shadow_portfolio=shadow_portfolio,
-                        coin=coin_key,
-                        side=cand_side,
-                        entry_price=entry_price,
-                        stop_loss=float(exit_plan["stop_loss"]),
-                        tp1_price=float(exit_plan["tp1_breakeven"]),
-                        tp2_price=float(exit_plan["tp2_final"]),
-                        filter_reason="LOW_CONFLUENCE_SCORE",
-                        score=final_score,
-                        regime=str(reg_info.get("regime", "RANGING")),
-                    )
-                    cycle_summary["shadow_recorded"].append(shd["shadow_id"])
-                continue
-
-            # اگر امتیاز >= 65 است اما هنوز ماشه ۵ دقیقه شلیک نشده، منتظر چرخه بعدی می‌ماند
-            if not bool(trig_info.get("triggered", False)):
-                continue
-
-            # و) شبیه‌سازی مونت‌کارلو در ماشین زمان (۱,۰۰۰ مسیر آینده)
-            tm_info = timemachine_skill.run_simulation(
-                df_15m=df_15m,
-                exit_plan=exit_plan,
-                confluence_score=final_score,
-                regime_data=reg_info,
-            )
-            if not bool(tm_info.get("approved", False)):
-                shd = broker_skill.record_shadow_trade(
-                    shadow_portfolio=shadow_portfolio,
-                    coin=coin_key,
-                    side=cand_side,
-                    entry_price=entry_price,
-                    stop_loss=float(exit_plan["stop_loss"]),
-                    tp1_price=float(exit_plan["tp1_breakeven"]),
-                    tp2_price=float(exit_plan["tp2_final"]),
-                    filter_reason="TIMEMACHINE_REJECTED",
-                    score=final_score,
-                    regime=str(reg_info.get("regime", "RANGING")),
-                )
-                cycle_summary["shadow_recorded"].append(shd["shadow_id"])
-                continue
-
-            # ز) بررسی نگهبان ریسک، ماتریس ۵ اسلات هوشمند و سپر همبستگی
-            risk_info = budget_skill.allocate_budget(
-                portfolio=portfolio,
-                candidate_coin=coin_key,
-                candidate_side=cand_side,
-                confluence_data=conf_info,
-                exit_plan=exit_plan,
-                bot_config=bot_config,
-            )
-            if not bool(risk_info.get("approved", False)):
-                shd = broker_skill.record_shadow_trade(
-                    shadow_portfolio=shadow_portfolio,
-                    coin=coin_key,
-                    side=cand_side,
-                    entry_price=entry_price,
-                    stop_loss=float(exit_plan["stop_loss"]),
-                    tp1_price=float(exit_plan["tp1_breakeven"]),
-                    tp2_price=float(exit_plan["tp2_final"]),
-                    filter_reason=str(risk_info.get("reason", "RISK_GUARDIAN_BLOCKED")),
-                    score=final_score,
-                    regime=str(reg_info.get("regime", "RANGING")),
-                )
-                cycle_summary["shadow_recorded"].append(shd["shadow_id"])
-                continue
-
-            # ح) بررسی گارد اسپرد ۵٪ (Spread Guard)
-            spread_live = data_engine.fetch_live_spread(coin_key)
-            spread_check = broker_skill.check_spread_guard(
-                spread_data=spread_live,
-                entry_price=entry_price,
-                tp2_price=float(exit_plan["tp2_final"]),
-            )
-            if not bool(spread_check.get("passed", False)):
-                shd = broker_skill.record_shadow_trade(
-                    shadow_portfolio=shadow_portfolio,
-                    coin=coin_key,
-                    side=cand_side,
-                    entry_price=entry_price,
-                    stop_loss=float(exit_plan["stop_loss"]),
-                    tp1_price=float(exit_plan["tp1_breakeven"]),
-                    tp2_price=float(exit_plan["tp2_final"]),
-                    filter_reason="SPREAD_GUARD_5PCT_BLOCKED",
-                    score=final_score,
-                    regime=str(reg_info.get("regime", "RANGING")),
-                )
-                cycle_summary["shadow_recorded"].append(shd["shadow_id"])
-                continue
-
-            # ط) شلیک نهایی سفارش، ثبت در پرتفوی، رسم چارت ۱۵ دقیقه و ارسال به تلگرام
-            opened_pos = broker_skill.open_position(
-                portfolio=portfolio,
-                coin=coin_key,
-                symbol=symbol,
-                side=cand_side,
-                entry_price=entry_price,
-                exit_plan=exit_plan,
-                risk_info=risk_info,
-                confluence_info=conf_info,
-                regime_info=reg_info,
-                trigger_info=trig_info,
-            )
-            cycle_summary["opened_trades"].append(opened_pos["position_id"])
-
+        # ح) رندر چارت دوطبقه (کندل + حجم + سشن آسیا) و ارسال شکار جدید به تلگرام
+        if not dry_run and alerts_skill.is_configured:
             chart_path = alerts_skill.generate_setup_chart(
-                coin=coin_key,
-                df_15m=df_15m,
+                coin=coin,
+                df_15m=df_15,
                 side=cand_side,
-                entry_price=entry_price,
-                stop_loss=float(exit_plan["stop_loss"]),
-                tp1_price=float(exit_plan["tp1_breakeven"]),
-                tp2_price=float(exit_plan["tp2_final"]),
-                active_fvg=scan_info.get("active_fvg"),
-                score=final_score,
-                regime=str(reg_info.get("regime", "RANGING")),
+                entry_price=exit_plan["entry_price"],
+                stop_loss=exit_plan["stop_loss"],
+                tp1_price=exit_plan["tp1_breakeven"],
+                tp2_price=exit_plan["tp2_final"],
+                active_fvg=scan_res.get("active_fvg"),
+                regime=reg_res.get("regime", "RANGING"),
+                asian_range=scan_res.get("asian_range"),
             )
-            caption = alerts_skill.build_trade_opened_caption(
-                pos=opened_pos,
-                timemachine_data=tm_info,
-                spread_data=spread_check,
+            hunt_caption = alerts_skill.build_hunt_caption(
+                coin=coin,
+                side=cand_side,
+                regime_data=reg_res,
+                confluence_data=conf_preview,
+                entry_plan=trig_res,
+                exit_plan=exit_plan,
+                tm_data=tm_res,
+                allocation=alloc_res,
+                sentiment_data=sentiment,
             )
-            alerts_skill.send_photo(chart_path, caption=caption, bot_config=bot_config)
+            alerts_skill.send_photo(
+                chart_path,
+                caption=hunt_caption,
+                bot_config=bot_config,
+                custom_keyboard=alerts_skill.build_hunt_inline_keyboard(coin),
+            )
 
-        # ۱۰. بررسی ارسال بیلان شبانه خودکار (ساعت ۲۱ تا ۲۳ UTC — یک بار در هر روز)
-        today_str = now_utc.strftime("%Y-%m-%d")
-        if 21 <= now_utc.hour <= 23 and bot_config.get("last_daily_report_date") != today_str:
-            nightly_report = alerts_skill.build_status_report(
+    # ۱۰. ارسال خودکار «بیلان شبانه جمع‌وجور» یک بار در آغاز هر روز UTC
+    if not dry_run and alerts_skill.is_configured:
+        if bot_config.get("last_daily_report_date") != today_str:
+            eq_chart = alerts_skill.generate_equity_chart(portfolio)
+            nightly_text = alerts_skill.build_nightly_pulse_report(
                 portfolio=portfolio,
                 bot_config=bot_config,
                 shadow_portfolio=shadow_portfolio,
-                sentiment_data=sentiment_data,
-                title="🌙 بیلان شبانه و وضعیت پوزیشن‌های باز (Institutional Bot V2)",
+                sentiment_data=sentiment,
             )
-            eq_chart = alerts_skill.generate_equity_chart(portfolio)
-            alerts_skill.send_photo(eq_chart, caption=nightly_report, bot_config=bot_config)
-            bot_config["last_daily_report_date"] = today_str
+            if alerts_skill.send_photo(eq_chart, caption=nightly_text, bot_config=bot_config):
+                bot_config["last_daily_report_date"] = today_str
 
-        # ۱۱. ذخیره اتمیک تمام فایل‌های وضعیت در پوشه state/
-        state_mgr.save_portfolio(portfolio)
-        state_mgr.save_bot_config(bot_config)
-        state_mgr.save_strategy_memory(strategy_memory)
-        state_mgr.save_shadow_portfolio(shadow_portfolio)
-        state_mgr.save_market_regime(regimes_map)
-        state_mgr.save_active_setups(active_setups_list)
+    # ۱۱. ذخیره اتمیک تمام فایل‌های وضعیت
+    state_mgr.save_portfolio(portfolio)
+    state_mgr.save_bot_config(bot_config)
+    state_mgr.save_strategy_memory(strategy_memory)
+    state_mgr.save_shadow_portfolio(shadow_portfolio)
+    state_mgr.save_market_regime(regimes_snapshot)
+    state_mgr.save_active_setups(portfolio.get("open_positions", []))
 
-        cycle_summary["regimes"] = {k: v.get("regime") for k, v in regimes_map.items()}
-        cycle_summary["active_setups"] = active_setups_list
-        cycle_summary["status"] = "COMPLETED_SUCCESS"
+    gate_info = state_mgr.get_paper_gate_progress(portfolio)
+    duration = round(time.time() - t0, 2)
 
-    except Exception as e:
-        cycle_summary["status"] = "ERROR"
-        cycle_summary["error"] = str(e)
-        print(f"❌ [CloudRunner] Critical error during institutional cycle: {e}")
-        traceback.print_exc()
-        # ذخیره وضعیت‌های فعلی حتی در صورت بروز خطا
-        state_mgr.save_portfolio(portfolio)
-        state_mgr.save_bot_config(bot_config)
-        state_mgr.save_shadow_portfolio(shadow_portfolio)
-
-    cycle_summary["duration_sec"] = round(time.time() - start_ts, 2)
-    print(
-        f"✅ [CloudRunner] Cycle finished in {cycle_summary['duration_sec']}s | "
-        f"Status: {cycle_summary['status']} | Opened: {len(cycle_summary['opened_trades'])} | "
-        f"Shadows: {len(cycle_summary['shadow_recorded'])}"
-    )
-    return cycle_summary
+    return {
+        "status": "CYCLE_COMPLETED_V2_5",
+        "duration_sec": duration,
+        "opened_positions": opened_positions_count,
+        "active_positions": len(portfolio.get("open_positions", [])),
+        "paper_gate": f"{gate_info['completed_trades']}/{gate_info['target_trades']}",
+        "news_shield_active": news_status.get("news_shield_active", False),
+        "executed_telegram_commands": executed_commands,
+        "regimes": {k: v.get("regime") for k, v in regimes_snapshot.items()},
+    }
 
 
 if __name__ == "__main__":
-    run_institutional_cycle()
+    parser = argparse.ArgumentParser(description="Institutional Trading Bot V2.5 - Cloud Orchestrator")
+    parser.add_argument("--dry-run", action="store_true", help="اجرای آزمایشی آفلاین بدون شبکه")
+    parser.add_argument("--analyze-coin", type=str, default="", help="ارسال فوری چارت و رادار یک ارز خاص")
+    args = parser.parse_args()
+
+    result = run_institutional_cycle(
+        dry_run=args.dry_run,
+        target_analyze_coin=args.analyze_coin if args.analyze_coin else None,
+    )
+    print(f"✅ [CloudRunner V2.5] Summary: {result}")

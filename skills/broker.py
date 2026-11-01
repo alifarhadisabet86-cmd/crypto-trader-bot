@@ -1,528 +1,555 @@
 """
-مهارت دهم: گارد اسپرد ۵٪، اجرای سفارش، مدیریت TP1/TP2/SL و رادار سایه (Broker Execution Skill)
-Institutional Trading Bot V2 - Order Execution, Lifecycle & Shadow Recorder Engine
+مهارت دهم (نسخه V2.5): اجرای سفارشات، گارد اسپرد ۵٪، تریلینگ استاپ ساختاری و اکشن‌های فوری تلگرام
+Institutional Trading Bot V2.5 - Broker Execution, Structural Trailing Stop & Quick Actions
 """
 
-import uuid
 from datetime import datetime, timezone
 from typing import Dict, Any, List, Optional
+import uuid
 
 import pandas as pd
 
-from core.config import EXECUTION_RULES, RISK_RULES
+from core.config import RISK_CONFIG
 
 
 class BrokerExecutionSkill:
     """
-    کلاس اجرای سفارشات، بررسی گارد اسپرد ۵٪، مدیریت پوزیشن‌های باز (صرفاً بر اساس TP1/TP2/SL
-    و بدون خروج زمانی)، بستن اضطراری (/panic) و ثبت ستاپ‌های فیلترشده در رادار سایه.
+    کلاس مدیریت چرخه حیات پوزیشن‌ها در پرتفوی شامل:
+    - گارد اسپرد ۵٪ و باز کردن پوزیشن با کارمزد Maker (0.02%)
+    - مدیریت خودکار TP1 (50% Partial Close + Break-Even)
+    - تریلینگ استاپ ساختاری (Structural Trailing Stop) پس از عبور از 1.6R
+    - اکشن‌های فوری تلگرام: ریسک‌فری سریع (Instant Break-Even) و سیو سود پله‌ای ۵۰٪
     """
 
     def __init__(self) -> None:
-        self.maker_fee: float = float(EXECUTION_RULES.get("maker_fee", 0.0002))
-        self.taker_fee: float = float(EXECUTION_RULES.get("taker_fee", 0.0006))
-        self.max_spread_ratio: float = float(
-            EXECUTION_RULES.get("max_spread_to_target_ratio", 0.05)
-        )
-        self.max_daily_dd_pct: float = float(RISK_RULES.get("max_daily_drawdown_pct", 2.0))
+        self.maker_fee: float = float(RISK_CONFIG["MAKER_FEE_RATE"])
+        self.taker_fee: float = float(RISK_CONFIG["TAKER_FEE_RATE"])
+        self.max_spread_ratio: float = float(RISK_CONFIG["MAX_SPREAD_TO_TP_RATIO"])
 
     @staticmethod
-    def _utc_now_iso() -> str:
+    def _now_utc_iso() -> str:
         return datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
 
     # ==========================================================================
-    # ۱. گارد اسپرد ۵٪ (Spread Guard)
+    # ۱. گارد اسپرد ۵٪ (5% Spread-to-Profit Guard)
     # ==========================================================================
     def check_spread_guard(
         self,
         spread_data: Dict[str, Any],
         entry_price: float,
-        tp2_price: float,
+        tp2_final: float,
     ) -> Dict[str, Any]:
-        """
-        بررسی نسبت اسپرد لحظه‌ای به فاصله تارگت نهایی:
-        spread_abs / abs(tp2 - entry) <= 0.05 (5%)
-        """
         spread_abs = float(spread_data.get("spread_abs", 0.0))
-        target_dist = abs(float(tp2_price) - float(entry_price))
+        target_dist = abs(float(tp2_final) - float(entry_price))
 
-        if target_dist <= 1e-12:
+        if target_dist <= 1e-8:
             return {
                 "passed": False,
-                "spread_ratio": 1.0,
-                "spread_ratio_pct": 100.0,
-                "max_allowed_pct": self.max_spread_ratio * 100.0,
-                "details": "Invalid target distance (zero).",
+                "spread_to_tp_ratio": 1.0,
+                "spread_to_tp_pct": 100.0,
+                "reason": "ZERO_TARGET_DISTANCE",
             }
 
-        spread_ratio = spread_abs / target_dist
-        passed = spread_ratio <= self.max_spread_ratio
+        ratio = spread_abs / target_dist
+        passed = bool(ratio <= self.max_spread_ratio + 1e-9)
 
         return {
-            "passed": bool(passed),
-            "spread_abs": round(spread_abs, 8),
+            "passed": passed,
+            "spread_abs": round(spread_abs, 6),
             "target_distance": round(target_dist, 6),
-            "spread_ratio": round(spread_ratio, 4),
-            "spread_ratio_pct": round(spread_ratio * 100.0, 2),
+            "spread_to_tp_ratio": round(ratio, 4),
+            "spread_to_tp_pct": round(ratio * 100.0, 2),
             "max_allowed_pct": round(self.max_spread_ratio * 100.0, 2),
-            "details": (
-                f"Spread Ratio: {spread_ratio * 100.0:.2f}% "
-                f"({'<= ' if passed else '> '}{self.max_spread_ratio * 100.0:.1f}% limit)"
-            ),
+            "reason": "OK" if passed else "SPREAD_GUARD_5PCT_BLOCKED",
         }
 
     # ==========================================================================
-    # ۲. باز کردن پوزیشن جدید (Open Position)
+    # ۲. باز کردن پوزیشن جدید
     # ==========================================================================
-    def open_position(
+    def open_paper_position(
         self,
         portfolio: Dict[str, Any],
         coin: str,
-        symbol: str,
         side: str,
-        entry_price: float,
+        entry_plan: Dict[str, Any],
         exit_plan: Dict[str, Any],
-        risk_info: Dict[str, Any],
-        confluence_info: Dict[str, Any],
-        regime_info: Dict[str, Any],
-        trigger_info: Optional[Dict[str, Any]] = None,
+        allocation: Dict[str, Any],
+        regime_data: Dict[str, Any],
+        confluence_data: Dict[str, Any],
+        spread_data: Optional[Dict[str, Any]] = None,
     ) -> Dict[str, Any]:
-        """
-        ساخت رکورد پوزیشن جدید با شناسه یکتا، کسر کارمزد ورود Maker و افزودن به open_positions.
-        """
-        clean_side = str(side).strip().upper()
-        entry = float(entry_price)
-        qty = float(risk_info.get("quantity", 0.0))
-        notional = round(entry * qty, 4)
+        entry_price = float(exit_plan["entry_price"])
+        tp2_final = float(exit_plan["tp2_final"])
 
-        # کارمزد ورود با سفارش Limit (Maker: 0.02%)
-        entry_fee = round(notional * self.maker_fee, 4)
+        if spread_data is not None:
+            guard = self.check_spread_guard(spread_data, entry_price, tp2_final)
+            if not guard["passed"]:
+                return {"opened": False, "reason": guard["reason"], "guard": guard}
 
-        pos_id = f"POS-{coin}-{uuid.uuid4().hex[:6].upper()}"
-        now_iso = self._utc_now_iso()
+        notional_usdt = float(allocation["notional_usdt"])
+        qty = float(allocation["qty"])
+        entry_fee_usdt = notional_usdt * self.maker_fee
 
-        position_record: Dict[str, Any] = {
-            "position_id": pos_id,
-            "coin": coin,
-            "symbol": symbol,
-            "side": clean_side,
-            "regime": str(regime_info.get("regime", "RANGING")),
-            "strategy": str(regime_info.get("strategy", "TREND_PULLBACK")),
-            "trigger_type": str((trigger_info or {}).get("trigger_type", "LIMIT_SNIPER")),
-            "score": float(confluence_info.get("final_score", 0.0)),
-            "tier": str(confluence_info.get("tier", "STANDARD_SIZE (75%)")),
-            "slot_type": str(risk_info.get("slot_type", "STANDARD_SLOT")),
-            "entry_price": round(entry, 6),
-            "initial_stop_loss": float(exit_plan.get("stop_loss", 0.0)),
-            "current_stop_loss": float(exit_plan.get("stop_loss", 0.0)),
-            "tp1_price": float(exit_plan.get("tp1_breakeven", 0.0)),
-            "tp2_price": float(exit_plan.get("tp2_final", 0.0)),
-            "initial_quantity": round(qty, 6),
-            "remaining_quantity": round(qty, 6),
-            "notional_usdt": notional,
-            "margin_used_usdt": float(risk_info.get("margin_used_usdt", 0.0)),
-            "leverage": int(risk_info.get("leverage", 10)),
-            "risk_amount_usdt": float(risk_info.get("risk_amount_usdt", 0.0)),
-            "effective_risk_pct": float(risk_info.get("effective_risk_pct", 0.5)),
+        portfolio["balance_usdt"] = round(float(portfolio["balance_usdt"]) - entry_fee_usdt, 4)
+        portfolio["daily_pnl_usdt"] = round(float(portfolio.get("daily_pnl_usdt", 0.0)) - entry_fee_usdt, 4)
+        portfolio["weekly_pnl_usdt"] = round(float(portfolio.get("weekly_pnl_usdt", 0.0)) - entry_fee_usdt, 4)
+        portfolio["stats"]["total_fees_paid_usdt"] = round(
+            float(portfolio["stats"].get("total_fees_paid_usdt", 0.0)) + entry_fee_usdt, 4
+        )
+
+        pos_id = f"POS-{coin.upper()}-{uuid.uuid4().hex[:6].upper()}"
+        stop_loss = float(exit_plan["stop_loss"])
+        stop_dist = max(abs(entry_price - stop_loss), 1e-8)
+
+        position_obj: Dict[str, Any] = {
+            "id": pos_id,
+            "coin": str(coin).upper(),
+            "side": str(side).upper(),
+            "order_type": entry_plan.get("order_type", "LIMIT"),
+            "trigger_type": entry_plan.get("trigger_type", "LIMIT_MAKER"),
+            "regime": regime_data.get("regime", "RANGING"),
+            "confluence_score": float(confluence_data.get("final_score", 70.0)),
+            "xray_summary_fa": confluence_data.get("xray_summary_fa", ""),
+            "slot_type": allocation.get("slot_type", "STANDARD_SLOT"),
+            "entry_price": round(entry_price, 6),
+            "current_price": round(entry_price, 6),
+            "stop_loss": round(stop_loss, 6),
+            "initial_stop_loss": round(stop_loss, 6),
+            "stop_distance": round(stop_dist, 6),
+            "tp1_breakeven": round(float(exit_plan["tp1_breakeven"]), 6),
+            "tp2_final": round(tp2_final, 6),
+            "initial_qty": round(qty, 6),
+            "remaining_qty": round(qty, 6),
+            "initial_notional_usdt": round(notional_usdt, 2),
+            "remaining_notional_usdt": round(notional_usdt, 2),
+            "margin_used_usdt": round(float(allocation["margin_used_usdt"]), 2),
+            "initial_risk_usdt": round(float(allocation["risk_amount_usdt"]), 2),
             "tp1_hit": False,
-            "risk_free": False,
-            "realized_partial_pnl": round(-entry_fee, 4),
-            "entry_fee_usdt": entry_fee,
-            "opened_at": now_iso,
-            "last_checked": now_iso,
+            "is_risk_free": False,
+            "trailing_active": False,
+            "realized_pnl_usdt": round(-entry_fee_usdt, 4),
+            "unrealized_pnl_usdt": 0.0,
+            "fees_paid_usdt": round(entry_fee_usdt, 4),
+            "opened_at": self._now_utc_iso(),
         }
 
-        # اعمال کارمزد ورود روی موجودی و سود روزانه
-        portfolio["balance_usdt"] = round(float(portfolio.get("balance_usdt", 1000.0)) - entry_fee, 4)
-        portfolio["daily_pnl_usdt"] = round(float(portfolio.get("daily_pnl_usdt", 0.0)) - entry_fee, 4)
-
-        if "open_positions" not in portfolio or not isinstance(portfolio["open_positions"], list):
-            portfolio["open_positions"] = []
-        portfolio["open_positions"].append(position_record)
-
-        return position_record
+        portfolio.setdefault("open_positions", []).append(position_obj)
+        return {"opened": True, "position": position_obj, "reason": "OK"}
 
     # ==========================================================================
-    # ۳. مدیریت پوزیشن‌های باز (صرفاً بر اساس برخورد به TP1 / TP2 / SL)
+    # ۳. مدیریت پوزیشن‌های باز + تریلینگ استاپ ساختاری (بدون خروج زمانی)
     # ==========================================================================
-    def manage_open_positions(
+    def update_open_positions(
         self,
         portfolio: Dict[str, Any],
-        market_data_5m: Dict[str, pd.DataFrame],
-    ) -> List[Dict[str, Any]]:
-        """
-        بررسی پوزیشن‌های باز با کندل‌های ۵ دقیقه:
-        - پوزیشن‌ها فقط با برخورد به SL یا TP2 بسته می‌شوند (بدون هیچ گونه Time-Stop).
-        - در صورت برخورد به TP1: بستن ۵۰٪ حجم با کارمزد Maker، ثبت در realized_partial_pnl،
-          تغییر tp1_hit = True و انتقال current_stop_loss به entry_price (Risk-Free).
-        """
-        open_positions = portfolio.get("open_positions", [])
+        market_data_15m: Dict[str, pd.DataFrame],
+    ) -> Dict[str, Any]:
+        open_positions: List[Dict[str, Any]] = portfolio.get("open_positions", [])
         if not open_positions:
-            return []
+            return {"events": [], "closed_trades": [], "total_unrealized_pnl_usdt": 0.0}
 
-        events: List[Dict[str, Any]] = []
         still_open: List[Dict[str, Any]] = []
-        now_iso = self._utc_now_iso()
+        closed_this_cycle: List[Dict[str, Any]] = []
+        events: List[Dict[str, Any]] = []
+        total_unrealized = 0.0
 
         for pos in open_positions:
-            coin = str(pos.get("coin", ""))
-            df_5m = market_data_5m.get(coin)
-            if df_5m is None or (isinstance(df_5m, pd.DataFrame) and df_5m.empty):
-                df_5m = market_data_5m.get(pos.get("symbol", ""))
-
-            if df_5m is None or len(df_5m) == 0:
+            coin = pos["coin"]
+            df = market_data_15m.get(coin)
+            if df is None or df.empty:
                 still_open.append(pos)
                 continue
 
-            # بررسی آخرین کندل‌های ۵ دقیقه (حداکثر ۳ کندل اخیر در چرخه ۱۵ دقیقه‌ای)
-            recent_bars = df_5m.tail(3)
-            bar_high = float(recent_bars["high"].astype(float).max())
-            bar_low = float(recent_bars["low"].astype(float).min())
+            last_row = df.iloc[-1]
+            c_high = float(last_row["high"])
+            c_low = float(last_row["low"])
+            c_close = float(last_row["close"])
+            pos["current_price"] = round(c_close, 6)
 
-            side = str(pos.get("side", "LONG")).upper()
-            entry = float(pos.get("entry_price", 0.0))
-            curr_sl = float(pos.get("current_stop_loss", 0.0))
-            tp1 = float(pos.get("tp1_price", 0.0))
-            tp2 = float(pos.get("tp2_price", 0.0))
-            init_qty = float(pos.get("initial_quantity", 0.0))
-            rem_qty = float(pos.get("remaining_quantity", init_qty))
-            tp1_hit = bool(pos.get("tp1_hit", False))
+            side = pos["side"]
+            entry = float(pos["entry_price"])
+            sl = float(pos["stop_loss"])
+            tp1 = float(pos["tp1_breakeven"])
+            tp2 = float(pos["tp2_final"])
+            rem_qty = float(pos["remaining_qty"])
 
-            pos["last_checked"] = now_iso
-            closed_completely = False
+            # ۱. بررسی برخورد با حد ضرر (Stop-Loss یا Break-Even یا Trailing Stop)
+            sl_hit = (side == "LONG" and c_low <= sl) or (side == "SHORT" and c_high >= sl)
+            if sl_hit:
+                exit_price = sl
+                if pos.get("trailing_active"):
+                    reason = "TRAILING_STOP_PROFIT"
+                elif pos.get("is_risk_free"):
+                    reason = "BREAKEVEN_STOP"
+                else:
+                    reason = "STOP_LOSS"
+                closed_record = self._execute_full_close(portfolio, pos, exit_price, reason)
+                closed_this_cycle.append(closed_record)
+                events.append({"type": reason, "coin": coin, "side": side, "trade": closed_record})
+                continue
 
-            # الف) بررسی برخورد به حد ضرر فعلی (SL یا نقطه سر‌به‌سر پس از TP1)
-            sl_triggered = (side == "LONG" and bar_low <= curr_sl) or (
-                side == "SHORT" and bar_high >= curr_sl
+            # ۲. بررسی برخورد با تارگت اول (TP1: بستن ۵۰٪ حجم + انتقال استاپ به نقطه ورود)
+            if not pos.get("tp1_hit", False):
+                tp1_reached = (side == "LONG" and c_high >= tp1) or (
+                    side == "SHORT" and c_low <= tp1
+                )
+                if tp1_reached:
+                    partial_info = self._execute_partial_tp1(portfolio, pos, tp1)
+                    events.append({
+                        "type": "TP1_PARTIAL_AND_BREAKEVEN",
+                        "coin": coin,
+                        "side": side,
+                        "details": partial_info,
+                    })
+                    rem_qty = float(pos["remaining_qty"])
+
+            # ۳. بررسی تریلینگ استاپ ساختاری (Structural Trailing Stop پس از ریسک‌فری شدن)
+            if pos.get("is_risk_free", False) and len(df) >= 6:
+                trail_event = self._apply_structural_trailing_stop(pos, df, c_close)
+                if trail_event is not None:
+                    events.append(trail_event)
+
+            # ۴. بررسی برخورد با تارگت نهایی (TP2)
+            tp2_reached = (side == "LONG" and c_high >= tp2) or (
+                side == "SHORT" and c_low <= tp2
             )
-
-            if sl_triggered:
-                exit_price = curr_sl
-                gross_pnl = (
-                    (exit_price - entry) * rem_qty
-                    if side == "LONG"
-                    else (entry - exit_price) * rem_qty
-                )
-                exit_fee = (exit_price * rem_qty) * self.taker_fee
-                net_leg_pnl = round(gross_pnl - exit_fee, 4)
-
-                # بروزرسانی موجودی و آمار نهایی معامله
-                portfolio["balance_usdt"] = round(float(portfolio["balance_usdt"]) + net_leg_pnl, 4)
-                portfolio["daily_pnl_usdt"] = round(float(portfolio["daily_pnl_usdt"]) + net_leg_pnl, 4)
-
-                total_trade_pnl = round(float(pos.get("realized_partial_pnl", 0.0)) + net_leg_pnl, 4)
-                close_reason = "BREAKEVEN_STOP_AFTER_TP1" if tp1_hit else "STOP_LOSS_HIT"
-
-                closed_record = self._finalize_closed_trade(
-                    portfolio=portfolio,
-                    pos=pos,
-                    exit_price=exit_price,
-                    total_pnl_usdt=total_trade_pnl,
-                    close_reason=close_reason,
-                )
+            if tp2_reached:
+                closed_record = self._execute_full_close(portfolio, pos, tp2, "TP2_FINAL_TARGET")
+                closed_this_cycle.append(closed_record)
                 events.append({
-                    "event_type": "POSITION_CLOSED",
-                    "reason": close_reason,
+                    "type": "TP2_FINAL_TARGET",
                     "coin": coin,
                     "side": side,
-                    "pnl_usdt": total_trade_pnl,
                     "trade": closed_record,
                 })
-                closed_completely = True
+                continue
 
-            # ب) اگر استاپ نخورده، بررسی برخورد به TP1 (در صورتی که قبلاً TP1 نخورده باشد)
-            if not closed_completely and not tp1_hit:
-                tp1_triggered = (side == "LONG" and bar_high >= tp1) or (
-                    side == "SHORT" and bar_low <= tp1
-                )
-                if tp1_triggered:
-                    half_qty = round(init_qty * 0.50, 6)
-                    rem_qty = round(max(0.0, init_qty - half_qty), 6)
+            # ۵. بروزرسانی سود/زیان شناور (Unrealized PnL)
+            if side == "LONG":
+                u_pnl = (c_close - entry) * rem_qty
+            else:
+                u_pnl = (entry - c_close) * rem_qty
 
-                    gross_partial = (
-                        (tp1 - entry) * half_qty
-                        if side == "LONG"
-                        else (entry - tp1) * half_qty
-                    )
-                    partial_fee = (tp1 * half_qty) * self.maker_fee
-                    net_partial_pnl = round(gross_partial - partial_fee, 4)
-
-                    portfolio["balance_usdt"] = round(
-                        float(portfolio["balance_usdt"]) + net_partial_pnl, 4
-                    )
-                    portfolio["daily_pnl_usdt"] = round(
-                        float(portfolio["daily_pnl_usdt"]) + net_partial_pnl, 4
-                    )
-
-                    pos["tp1_hit"] = True
-                    pos["risk_free"] = True
-                    pos["remaining_quantity"] = rem_qty
-                    pos["current_stop_loss"] = entry  # انتقال استاپ به نقطه ورود (Risk-Free)
-                    pos["realized_partial_pnl"] = round(
-                        float(pos.get("realized_partial_pnl", 0.0)) + net_partial_pnl, 4
-                    )
-                    pos["margin_used_usdt"] = round(float(pos.get("margin_used_usdt", 0.0)) * 0.5, 4)
-                    tp1_hit = True
-
-                    events.append({
-                        "event_type": "TP1_PARTIAL_AND_RISK_FREE",
-                        "reason": "TP1_HIT",
-                        "coin": coin,
-                        "side": side,
-                        "partial_pnl_usdt": net_partial_pnl,
-                        "new_sl": entry,
-                        "position": dict(pos),
-                    })
-
-            # ج) بررسی برخورد به تارگت نهایی (TP2)
-            if not closed_completely:
-                tp2_triggered = (side == "LONG" and bar_high >= tp2) or (
-                    side == "SHORT" and bar_low <= tp2
-                )
-                if tp2_triggered:
-                    exit_price = tp2
-                    gross_final = (
-                        (exit_price - entry) * rem_qty
-                        if side == "LONG"
-                        else (entry - exit_price) * rem_qty
-                    )
-                    final_fee = (exit_price * rem_qty) * self.maker_fee
-                    net_final_pnl = round(gross_final - final_fee, 4)
-
-                    portfolio["balance_usdt"] = round(
-                        float(portfolio["balance_usdt"]) + net_final_pnl, 4
-                    )
-                    portfolio["daily_pnl_usdt"] = round(
-                        float(portfolio["daily_pnl_usdt"]) + net_final_pnl, 4
-                    )
-
-                    total_trade_pnl = round(
-                        float(pos.get("realized_partial_pnl", 0.0)) + net_final_pnl, 4
-                    )
-                    closed_record = self._finalize_closed_trade(
-                        portfolio=portfolio,
-                        pos=pos,
-                        exit_price=exit_price,
-                        total_pnl_usdt=total_trade_pnl,
-                        close_reason="TP2_FINAL_TARGET_HIT",
-                    )
-                    events.append({
-                        "event_type": "POSITION_CLOSED",
-                        "reason": "TP2_FINAL_TARGET_HIT",
-                        "coin": coin,
-                        "side": side,
-                        "pnl_usdt": total_trade_pnl,
-                        "trade": closed_record,
-                    })
-                    closed_completely = True
-
-            if not closed_completely:
-                still_open.append(pos)
+            pos["unrealized_pnl_usdt"] = round(u_pnl, 2)
+            total_unrealized += u_pnl
+            still_open.append(pos)
 
         portfolio["open_positions"] = still_open
-        self._check_and_update_circuit_breaker(portfolio)
-        return events
+        self._update_peak_and_drawdown(portfolio, total_unrealized)
+
+        return {
+            "events": events,
+            "closed_trades": closed_this_cycle,
+            "total_unrealized_pnl_usdt": round(total_unrealized, 2),
+        }
+
+    def _apply_structural_trailing_stop(
+        self, pos: Dict[str, Any], df_15m: pd.DataFrame, current_price: float
+    ) -> Optional[Dict[str, Any]]:
+        """
+        تریلینگ استاپ ساختاری بر اساس آخرین سوئینگ ۱۵ دقیقه:
+        وقتی قیمت بیش از 1.6R در سود حرکت کند، استاپ را از نقطه ورود به پشت آخرین کف/سقف
+        ۵ کندل اخیر ارتقا می‌دهد تا سود قفل شود.
+        """
+        side = pos["side"]
+        entry = float(pos["entry_price"])
+        curr_sl = float(pos["stop_loss"])
+        stop_dist = max(float(pos.get("stop_distance", abs(entry - float(pos.get("initial_stop_loss", entry))))), 1e-8)
+
+        recent_5 = df_15m.iloc[-6:-1]
+        if recent_5.empty:
+            return None
+
+        if side == "LONG":
+            current_r = (current_price - entry) / stop_dist
+            if current_r >= 1.60:
+                swing_low = float(recent_5["low"].min())
+                min_locked_sl = entry + (0.50 * stop_dist)
+                candidate_sl = max(swing_low, min_locked_sl)
+                if candidate_sl > curr_sl + (0.10 * stop_dist) and candidate_sl < current_price:
+                    old_sl = curr_sl
+                    pos["stop_loss"] = round(candidate_sl, 6)
+                    pos["trailing_active"] = True
+                    return {
+                        "type": "STRUCTURAL_TRAILING_UPDATED",
+                        "coin": pos["coin"],
+                        "side": side,
+                        "old_sl": old_sl,
+                        "new_sl": pos["stop_loss"],
+                    }
+        else:
+            current_r = (entry - current_price) / stop_dist
+            if current_r >= 1.60:
+                swing_high = float(recent_5["high"].max())
+                min_locked_sl = entry - (0.50 * stop_dist)
+                candidate_sl = min(swing_high, min_locked_sl)
+                if candidate_sl < curr_sl - (0.10 * stop_dist) and candidate_sl > current_price:
+                    old_sl = curr_sl
+                    pos["stop_loss"] = round(candidate_sl, 6)
+                    pos["trailing_active"] = True
+                    return {
+                        "type": "STRUCTURAL_TRAILING_UPDATED",
+                        "coin": pos["coin"],
+                        "side": side,
+                        "old_sl": old_sl,
+                        "new_sl": pos["stop_loss"],
+                    }
+        return None
 
     # ==========================================================================
-    # ۴. بستن اضطراری تمام پوزیشن‌ها (/panic یا /close_all)
+    # ۴. اکشن‌های فوری اتاق فرمان تلگرام (دکمه‌های شیشه‌ای ردیف چهارم)
     # ==========================================================================
-    def close_all_panic(
+    def risk_free_all_in_profit(
         self,
         portfolio: Dict[str, Any],
-        bot_config: Dict[str, Any],
         live_prices: Optional[Dict[str, float]] = None,
-        lock_panic: bool = True,
-    ) -> List[Dict[str, Any]]:
+    ) -> Dict[str, Any]:
         """
-        بستن فوری تمام پوزیشن‌های باز با قیمت مارکت (یا قیمت ورود در صورت عدم دسترسی به قیمت لحظه‌ای)
-        و قفل کردن ربات در صورت lock_panic = True.
+        مخصوص دکمه [ 🛡️ ریسک‌فری سریع ]:
+        انتقال فوری حد ضرر تمام پوزیشن‌هایی که در سود هستند به نقطه ورود (Break-Even).
         """
+        prices = live_prices or {}
         open_positions = portfolio.get("open_positions", [])
-        closed_events: List[Dict[str, Any]] = []
+        updated_coins: List[str] = []
+
+        for pos in open_positions:
+            if pos.get("is_risk_free", False):
+                continue
+
+            coin = pos["coin"]
+            side = pos["side"]
+            entry = float(pos["entry_price"])
+            curr_price = float(prices.get(coin, pos.get("current_price", entry)))
+            pos["current_price"] = round(curr_price, 6)
+
+            in_profit = (side == "LONG" and curr_price > entry) or (
+                side == "SHORT" and curr_price < entry
+            ) or float(pos.get("unrealized_pnl_usdt", 0.0)) > 0.0
+
+            if in_profit:
+                pos["stop_loss"] = round(entry, 6)
+                pos["is_risk_free"] = True
+                updated_coins.append(coin)
+
+        return {
+            "updated_count": len(updated_coins),
+            "updated_coins": updated_coins,
+        }
+
+    def partial_close_all_in_profit(
+        self,
+        portfolio: Dict[str, Any],
+        close_fraction: float = 0.50,
+        live_prices: Optional[Dict[str, float]] = None,
+    ) -> Dict[str, Any]:
+        """
+        مخصوص دکمه [ 💰 سیو سود پله‌ای (۵۰٪) ]:
+        نقد کردن فوری ۵۰٪ از حجم تمام پوزیشن‌های در سود روی قیمت فعلی بازار،
+        افزودن سود قطعی به موجودی حساب، و ریسک‌فری کردن ۵۰٪ باقی‌مانده.
+        """
+        prices = live_prices or {}
+        open_positions = portfolio.get("open_positions", [])
+        fraction = max(0.10, min(0.90, float(close_fraction)))
+
+        closed_coins: List[str] = []
+        total_locked_pnl = 0.0
+
+        for pos in open_positions:
+            coin = pos["coin"]
+            side = pos["side"]
+            entry = float(pos["entry_price"])
+            rem_qty = float(pos["remaining_qty"])
+            curr_price = float(prices.get(coin, pos.get("current_price", entry)))
+            pos["current_price"] = round(curr_price, 6)
+
+            raw_u_pnl = (curr_price - entry) * rem_qty if side == "LONG" else (entry - curr_price) * rem_qty
+            if raw_u_pnl <= 0.05 or rem_qty <= 1e-8:
+                continue
+
+            close_qty = rem_qty * fraction
+            rem_after = rem_qty - close_qty
+            gross_pnl = (curr_price - entry) * close_qty if side == "LONG" else (entry - curr_price) * close_qty
+            fee_usdt = (close_qty * curr_price) * self.taker_fee
+            net_pnl = gross_pnl - fee_usdt
+
+            portfolio["balance_usdt"] = round(float(portfolio["balance_usdt"]) + net_pnl, 4)
+            portfolio["daily_pnl_usdt"] = round(float(portfolio.get("daily_pnl_usdt", 0.0)) + net_pnl, 4)
+            portfolio["weekly_pnl_usdt"] = round(float(portfolio.get("weekly_pnl_usdt", 0.0)) + net_pnl, 4)
+            portfolio["stats"]["total_fees_paid_usdt"] = round(
+                float(portfolio["stats"].get("total_fees_paid_usdt", 0.0)) + fee_usdt, 4
+            )
+
+            pos["remaining_qty"] = round(rem_after, 6)
+            pos["remaining_notional_usdt"] = round(rem_after * entry, 2)
+            pos["margin_used_usdt"] = round(float(pos["margin_used_usdt"]) * (1.0 - fraction), 2)
+            pos["realized_pnl_usdt"] = round(float(pos["realized_pnl_usdt"]) + net_pnl, 4)
+            pos["fees_paid_usdt"] = round(float(pos["fees_paid_usdt"]) + fee_usdt, 4)
+            pos["unrealized_pnl_usdt"] = round(raw_u_pnl * (1.0 - fraction), 2)
+
+            # همزمان استاپ نیمه باقی‌مانده را ریسک‌فری می‌کنیم
+            pos["stop_loss"] = round(entry, 6)
+            pos["is_risk_free"] = True
+            pos["tp1_hit"] = True
+
+            closed_coins.append(coin)
+            total_locked_pnl += net_pnl
+
+        return {
+            "closed_count": len(closed_coins),
+            "closed_coins": closed_coins,
+            "total_locked_pnl_usdt": round(total_locked_pnl, 2),
+        }
+
+    def close_all_positions(
+        self,
+        portfolio: Dict[str, Any],
+        live_prices: Optional[Dict[str, float]] = None,
+        reason: str = "MANUAL_PANIC_CLOSE",
+    ) -> List[Dict[str, Any]]:
+        open_positions = list(portfolio.get("open_positions", []))
+        closed_records: List[Dict[str, Any]] = []
         prices = live_prices or {}
 
         for pos in open_positions:
-            coin = str(pos.get("coin", ""))
-            side = str(pos.get("side", "LONG")).upper()
-            entry = float(pos.get("entry_price", 0.0))
-            rem_qty = float(pos.get("remaining_quantity", pos.get("initial_quantity", 0.0)))
-            exit_price = float(prices.get(coin) or prices.get(pos.get("symbol", "")) or entry)
-
-            gross_pnl = (
-                (exit_price - entry) * rem_qty
-                if side == "LONG"
-                else (entry - exit_price) * rem_qty
-            )
-            exit_fee = (exit_price * rem_qty) * self.taker_fee
-            net_leg_pnl = round(gross_pnl - exit_fee, 4)
-
-            portfolio["balance_usdt"] = round(float(portfolio["balance_usdt"]) + net_leg_pnl, 4)
-            portfolio["daily_pnl_usdt"] = round(float(portfolio["daily_pnl_usdt"]) + net_leg_pnl, 4)
-
-            total_trade_pnl = round(float(pos.get("realized_partial_pnl", 0.0)) + net_leg_pnl, 4)
-            reason = "PANIC_EMERGENCY_CLOSE" if lock_panic else "MANUAL_CLOSE_ALL"
-
-            closed_rec = self._finalize_closed_trade(
-                portfolio=portfolio,
-                pos=pos,
-                exit_price=exit_price,
-                total_pnl_usdt=total_trade_pnl,
-                close_reason=reason,
-            )
-            closed_events.append(closed_rec)
+            coin = pos["coin"]
+            exit_p = float(prices.get(coin, pos.get("current_price", pos["entry_price"])))
+            rec = self._execute_full_close(portfolio, pos, exit_p, reason)
+            closed_records.append(rec)
 
         portfolio["open_positions"] = []
-        if lock_panic:
-            bot_config["panic_mode"] = True
-            bot_config["is_paused"] = True
-
-        self._check_and_update_circuit_breaker(portfolio)
-        return closed_events
+        return closed_records
 
     # ==========================================================================
-    # ۵. ثبت سیگنال‌های فیلترشده در رادار سایه (Shadow Portfolio Recorder)
+    # متدهای داخلی تسویه حساب
     # ==========================================================================
-    def record_shadow_trade(
-        self,
-        shadow_portfolio: Dict[str, Any],
-        coin: str,
-        side: str,
-        entry_price: float,
-        stop_loss: float,
-        tp1_price: float,
-        tp2_price: float,
-        filter_reason: str,
-        score: float = 0.0,
-        regime: str = "RANGING",
+    def _execute_partial_tp1(
+        self, portfolio: Dict[str, Any], pos: Dict[str, Any], tp1_price: float
     ) -> Dict[str, Any]:
-        """
-        ثبت ستاپ ردشده در لیست active_shadows فایل shadow_portfolio.json جهت ارزیابی بعدی توسط ML.
-        """
-        if "active_shadows" not in shadow_portfolio or not isinstance(
-            shadow_portfolio["active_shadows"], list
-        ):
-            shadow_portfolio["active_shadows"] = []
+        side = pos["side"]
+        entry = float(pos["entry_price"])
+        rem_qty = float(pos["remaining_qty"])
+        close_qty = rem_qty * 0.50
+        left_qty = rem_qty - close_qty
 
-        # جلوگیری از ثبت سایه تکراری روی همان ارز و همان جهت در یک زمان
-        for existing in shadow_portfolio["active_shadows"]:
-            if existing.get("coin") == coin and existing.get("side") == side:
-                return existing
+        if side == "LONG":
+            gross_pnl = (tp1_price - entry) * close_qty
+        else:
+            gross_pnl = (entry - tp1_price) * close_qty
 
-        shadow_item: Dict[str, Any] = {
-            "shadow_id": f"SHD-{coin}-{uuid.uuid4().hex[:6].upper()}",
-            "coin": coin,
-            "side": str(side).upper(),
-            "regime": regime,
-            "score": round(float(score), 2),
-            "entry_price": round(float(entry_price), 6),
-            "stop_loss": round(float(stop_loss), 6),
-            "tp1_price": round(float(tp1_price), 6),
-            "tp2_price": round(float(tp2_price), 6),
-            "filter_reason": filter_reason,
-            "created_at": self._utc_now_iso(),
+        exit_notional = close_qty * tp1_price
+        fee_usdt = exit_notional * self.maker_fee
+        net_partial_pnl = gross_pnl - fee_usdt
+
+        portfolio["balance_usdt"] = round(float(portfolio["balance_usdt"]) + net_partial_pnl, 4)
+        portfolio["daily_pnl_usdt"] = round(float(portfolio.get("daily_pnl_usdt", 0.0)) + net_partial_pnl, 4)
+        portfolio["weekly_pnl_usdt"] = round(float(portfolio.get("weekly_pnl_usdt", 0.0)) + net_partial_pnl, 4)
+        portfolio["stats"]["total_fees_paid_usdt"] = round(
+            float(portfolio["stats"].get("total_fees_paid_usdt", 0.0)) + fee_usdt, 4
+        )
+
+        pos["remaining_qty"] = round(left_qty, 6)
+        pos["remaining_notional_usdt"] = round(left_qty * entry, 2)
+        pos["margin_used_usdt"] = round(float(pos["margin_used_usdt"]) * 0.50, 2)
+        pos["realized_pnl_usdt"] = round(float(pos["realized_pnl_usdt"]) + net_partial_pnl, 4)
+        pos["fees_paid_usdt"] = round(float(pos["fees_paid_usdt"]) + fee_usdt, 4)
+        pos["tp1_hit"] = True
+        pos["is_risk_free"] = True
+        pos["stop_loss"] = round(entry, 6)
+
+        return {
+            "closed_qty": round(close_qty, 6),
+            "net_partial_pnl_usdt": round(net_partial_pnl, 2),
+            "new_stop_loss": pos["stop_loss"],
         }
 
-        shadow_portfolio["active_shadows"].append(shadow_item)
-        if "stats" in shadow_portfolio and isinstance(shadow_portfolio["stats"], dict):
-            shadow_portfolio["stats"]["total_filtered"] = (
-                int(shadow_portfolio["stats"].get("total_filtered", 0)) + 1
-            )
-
-        return shadow_item
-
-    # ==========================================================================
-    # متدهای کمکی محاسبه آمار پرتفوی، منحنی سرمایه و مدارشکن
-    # ==========================================================================
-    def _finalize_closed_trade(
+    def _execute_full_close(
         self,
         portfolio: Dict[str, Any],
         pos: Dict[str, Any],
         exit_price: float,
-        total_pnl_usdt: float,
-        close_reason: str,
+        exit_reason: str,
     ) -> Dict[str, Any]:
-        """ثبت معامله بسته‌شده در تاریخچه، آپدیت برد/باخت متوالی، آمار کل و منحنی سرمایه."""
-        now_iso = self._utc_now_iso()
-        risk_amt = max(float(pos.get("risk_amount_usdt", 5.0)), 1e-6)
-        realized_r = round(total_pnl_usdt / risk_amt, 2)
-        is_win = total_pnl_usdt >= 0.0
+        side = pos["side"]
+        entry = float(pos["entry_price"])
+        rem_qty = float(pos["remaining_qty"])
 
-        closed_record: Dict[str, Any] = {
-            "position_id": pos.get("position_id", ""),
-            "coin": pos.get("coin", ""),
-            "symbol": pos.get("symbol", ""),
-            "side": pos.get("side", "LONG"),
+        if side == "LONG":
+            gross_pnl = (exit_price - entry) * rem_qty
+        else:
+            gross_pnl = (entry - exit_price) * rem_qty
+
+        exit_notional = rem_qty * exit_price
+        fee_rate = self.maker_fee if "TP2" in exit_reason else self.taker_fee
+        fee_usdt = exit_notional * fee_rate
+        net_leg_pnl = gross_pnl - fee_usdt
+
+        portfolio["balance_usdt"] = round(float(portfolio["balance_usdt"]) + net_leg_pnl, 4)
+        portfolio["daily_pnl_usdt"] = round(float(portfolio.get("daily_pnl_usdt", 0.0)) + net_leg_pnl, 4)
+        portfolio["weekly_pnl_usdt"] = round(float(portfolio.get("weekly_pnl_usdt", 0.0)) + net_leg_pnl, 4)
+
+        total_trade_pnl = float(pos["realized_pnl_usdt"]) + net_leg_pnl
+        total_fees = float(pos["fees_paid_usdt"]) + fee_usdt
+        init_risk = max(float(pos.get("initial_risk_usdt", 5.0)), 1e-8)
+        r_multiple = total_trade_pnl / init_risk
+
+        stats = portfolio["stats"]
+        stats["total_trades"] = int(stats.get("total_trades", 0)) + 1
+        stats["total_fees_paid_usdt"] = round(float(stats.get("total_fees_paid_usdt", 0.0)) + fee_usdt, 4)
+
+        if total_trade_pnl > 0:
+            stats["wins"] = int(stats.get("wins", 0)) + 1
+            stats["consecutive_wins"] = int(stats.get("consecutive_wins", 0)) + 1
+            stats["consecutive_losses"] = 0
+            outcome = "WIN"
+        else:
+            stats["losses"] = int(stats.get("losses", 0)) + 1
+            stats["consecutive_losses"] = int(stats.get("consecutive_losses", 0)) + 1
+            stats["consecutive_wins"] = 0
+            outcome = "LOSS"
+
+        stats["win_rate_pct"] = round((stats["wins"] / max(stats["total_trades"], 1)) * 100.0, 2)
+
+        now_iso = self._now_utc_iso()
+        closed_record = {
+            "id": pos["id"],
+            "coin": pos["coin"],
+            "side": side,
             "regime": pos.get("regime", "RANGING"),
-            "strategy": pos.get("strategy", ""),
-            "score": pos.get("score", 0.0),
-            "entry_price": pos.get("entry_price", 0.0),
-            "exit_price": round(float(exit_price), 6),
-            "stop_loss": pos.get("initial_stop_loss", 0.0),
-            "tp1_price": pos.get("tp1_price", 0.0),
-            "tp2_price": pos.get("tp2_price", 0.0),
+            "confluence_score": pos.get("confluence_score", 70.0),
+            "entry_price": entry,
+            "exit_price": round(exit_price, 6),
+            "exit_reason": exit_reason,
             "tp1_hit": bool(pos.get("tp1_hit", False)),
-            "pnl_usdt": round(total_pnl_usdt, 4),
-            "realized_r": realized_r,
-            "result": "WIN" if is_win else "LOSS",
-            "close_reason": close_reason,
+            "trailing_active": bool(pos.get("trailing_active", False)),
+            "net_pnl_usdt": round(total_trade_pnl, 2),
+            "r_multiple": round(r_multiple, 2),
+            "fees_paid_usdt": round(total_fees, 4),
+            "outcome": outcome,
             "opened_at": pos.get("opened_at", now_iso),
             "closed_at": now_iso,
         }
 
-        if "trade_history" not in portfolio or not isinstance(portfolio["trade_history"], list):
-            portfolio["trade_history"] = []
-        portfolio["trade_history"].append(closed_record)
+        portfolio.setdefault("closed_trades", []).append(closed_record)
+        portfolio.setdefault("equity_curve", []).append({
+            "timestamp": now_iso,
+            "equity": round(float(portfolio["balance_usdt"]), 2),
+            "event": f"{pos['coin']}_{exit_reason}",
+        })
 
-        # بروزرسانی برد و باخت‌های متوالی
-        if is_win:
-            portfolio["consecutive_wins"] = int(portfolio.get("consecutive_wins", 0)) + 1
-            portfolio["consecutive_losses"] = 0
-        else:
-            portfolio["consecutive_losses"] = int(portfolio.get("consecutive_losses", 0)) + 1
-            portfolio["consecutive_wins"] = 0
-
-        # بروزرسانی منحنی سرمایه (Equity Curve)
-        curr_bal = round(float(portfolio.get("balance_usdt", 1000.0)), 4)
-        if "equity_curve" not in portfolio or not isinstance(portfolio["equity_curve"], list):
-            portfolio["equity_curve"] = []
-        portfolio["equity_curve"].append({"timestamp": now_iso, "equity": curr_bal})
-
-        # بروزرسانی آمار کل (Stats)
-        stats = portfolio.get("stats", {})
-        total_trades = int(stats.get("total_trades", 0)) + 1
-        wins = int(stats.get("wins", 0)) + (1 if is_win else 0)
-        losses = int(stats.get("losses", 0)) + (0 if is_win else 1)
-        win_rate = round((wins / total_trades) * 100.0, 2) if total_trades > 0 else 0.0
-        total_pnl = round(float(stats.get("total_pnl_usdt", 0.0)) + total_pnl_usdt, 4)
-
-        # محاسبه حداکثر افت سرمایه تاریخی (Max Drawdown %)
-        equities = [float(pt.get("equity", curr_bal)) for pt in portfolio["equity_curve"]]
-        peak = equities[0] if equities else 1000.0
-        max_dd = float(stats.get("max_drawdown_pct", 0.0))
-        for eq in equities:
-            if eq > peak:
-                peak = eq
-            if peak > 0:
-                dd = ((peak - eq) / peak) * 100.0
-                if dd > max_dd:
-                    max_dd = round(dd, 2)
-
-        portfolio["stats"] = {
-            "total_trades": total_trades,
-            "wins": wins,
-            "losses": losses,
-            "win_rate_pct": win_rate,
-            "total_pnl_usdt": total_pnl,
-            "max_drawdown_pct": max_dd,
-        }
-
+        self._update_peak_and_drawdown(portfolio, 0.0)
         return closed_record
 
-    def _check_and_update_circuit_breaker(self, portfolio: Dict[str, Any]) -> None:
-        """بررسی فعال شدن مدارشکن روزانه پس از بسته شدن هر معامله."""
-        day_eq = float(portfolio.get("day_start_equity", 1000.0))
-        daily_pnl = float(portfolio.get("daily_pnl_usdt", 0.0))
-        if day_eq > 0 and daily_pnl < 0:
-            dd_pct = (abs(daily_pnl) / day_eq) * 100.0
-            if dd_pct >= self.max_daily_dd_pct:
-                portfolio["daily_circuit_breaker"] = True
+    @staticmethod
+    def _update_peak_and_drawdown(portfolio: Dict[str, Any], unrealized_pnl: float) -> None:
+        stats = portfolio["stats"]
+        curr_eq = float(portfolio["balance_usdt"]) + float(unrealized_pnl)
+        peak = float(stats.get("peak_equity_usdt", curr_eq))
+        if curr_eq > peak:
+            peak = curr_eq
+            stats["peak_equity_usdt"] = round(peak, 2)
+
+        if peak > 0:
+            dd_pct = max(0.0, ((peak - curr_eq) / peak) * 100.0)
+            stats["max_drawdown_pct"] = round(
+                max(float(stats.get("max_drawdown_pct", 0.0)), dd_pct), 2
+            )

@@ -1,194 +1,242 @@
 """
-مهارت هشتم: نگهبان ریسک، ماتریس ۵ اسلات، سپر همبستگی و سایزینگ پویا (Risk Guardian Skill)
-Institutional Trading Bot V2 - Portfolio Risk Guardian & Position Sizing Engine
+مهارت هشتم (نسخه V2.5): نگهبان ریسک، مدارشکن روزانه ۲٪، مدارشکن هفتگی ۵٪ و سپر همبستگی
+Institutional Trading Bot V2.5 - Risk Guardian & Dual Circuit Breakers
 """
 
 from typing import Dict, Any, Optional
+import numpy as np
 
-from core.config import RISK_RULES
+from core.config import RISK_CONFIG
 from core.slot_manager import can_open_new_position
 
 
 class RiskGuardianSkill:
     """
-    کلاس کنترل مدارشکن روزانه (۲٪)، ماتریس ۵ اسلات هوشمند، سپر همبستگی
-    و محاسبه حجم دقیق پوزیشن بر اساس دور برد/باخت و سقف مارجین ۲۵٪.
+    کلاس نگهبان ریسک پرتفوی شامل:
+    - مدارشکن روزانه (Daily Circuit Breaker 2.0%)
+    - مدارشکن هفتگی (Weekly Circuit Breaker 5.0%)
+    - محاسبه درصد ریسک پویا بر اساس Win/Loss Streak و مد ریسک تلگرام
+    - بررسی قوانین ماتریس ۵ اسلات و سپر همبستگی
     """
 
     def __init__(self) -> None:
-        self.base_risk_pct: float = float(RISK_RULES.get("base_risk_per_trade_pct", 0.5))
-        self.win_streak_risk_pct: float = float(RISK_RULES.get("winning_streak_risk_pct", 0.8))
-        self.loss_streak_risk_pct: float = float(RISK_RULES.get("losing_streak_risk_pct", 0.25))
-        self.max_daily_dd_pct: float = float(RISK_RULES.get("max_daily_drawdown_pct", 2.0))
-        self.max_leverage: int = int(RISK_RULES.get("max_leverage", 10))
-        self.max_margin_pct: float = float(RISK_RULES.get("max_margin_per_trade_pct", 25.0))
+        self.max_daily_dd_pct: float = float(RISK_CONFIG["MAX_DAILY_DRAWDOWN_PCT"])
+        self.max_weekly_dd_pct: float = float(RISK_CONFIG.get("MAX_WEEKLY_DRAWDOWN_PCT", 5.0))
+        self.base_risk_pct: float = float(RISK_CONFIG["BASE_RISK_PCT"])
+        self.win_streak_risk_pct: float = float(RISK_CONFIG["WIN_STREAK_RISK_PCT"])
+        self.loss_streak_risk_pct: float = float(RISK_CONFIG["LOSS_STREAK_RISK_PCT"])
+        self.max_margin_per_trade_pct: float = float(RISK_CONFIG["MAX_MARGIN_USAGE_PER_TRADE_PCT"])
+        self.default_leverage: int = int(RISK_CONFIG["DEFAULT_LEVERAGE"])
 
-    def check_circuit_breaker(self, portfolio: Dict[str, Any]) -> Dict[str, Any]:
-        """
-        بررسی وضعیت مدارشکن روزانه (Daily Circuit Breaker) بر اساس ۲٪ افت از موجودی اول روز.
-        """
-        day_start_eq = float(portfolio.get("day_start_equity", 1000.0))
-        daily_pnl = float(portfolio.get("daily_pnl_usdt", 0.0))
-        already_tripped = bool(portfolio.get("daily_circuit_breaker", False))
-
-        dd_pct = 0.0
-        if day_start_eq > 0 and daily_pnl < 0:
-            dd_pct = round((abs(daily_pnl) / day_start_eq) * 100.0, 2)
-
-        tripped = already_tripped or (dd_pct >= self.max_daily_dd_pct)
-        if tripped:
-            portfolio["daily_circuit_breaker"] = True
-
-        return {
-            "tripped": tripped,
-            "daily_drawdown_pct": dd_pct,
-            "max_allowed_dd_pct": self.max_daily_dd_pct,
-            "daily_pnl_usdt": round(daily_pnl, 4),
-            "day_start_equity": round(day_start_eq, 4),
-        }
-
-    def _determine_base_risk_pct(
+    # ==========================================================================
+    # ۱. بررسی مدارشکن روزانه ۲٪ و مدارشکن هفتگی ۵٪
+    # ==========================================================================
+    def check_circuit_breaker(
         self,
         portfolio: Dict[str, Any],
-        bot_config: Optional[Dict[str, Any]] = None,
-    ) -> float:
-        """
-        تعیین درصد ریسک پایه بین 0.25%، 0.50% و 0.80% بر اساس حالت ریسک تلگرام
-        و تعداد برد/باخت‌های متوالی پرتفوی.
-        """
-        cfg = bot_config or {}
-        risk_mode = str(cfg.get("risk_mode", "NORMAL")).strip().upper()
-
-        if risk_mode == "CONSERVATIVE":
-            return self.loss_streak_risk_pct
-        if risk_mode == "AGGRESSIVE":
-            return self.win_streak_risk_pct
-
-        cons_wins = int(portfolio.get("consecutive_wins", 0))
-        cons_losses = int(portfolio.get("consecutive_losses", 0))
-
-        if cons_losses >= 2:
-            return self.loss_streak_risk_pct
-        if cons_wins >= 2:
-            return self.win_streak_risk_pct
-        return self.base_risk_pct
-
-    def evaluate_risk_and_size(
-        self,
-        portfolio: Dict[str, Any],
-        candidate_coin: str,
-        candidate_side: str,
-        confluence_data: Dict[str, Any],
-        exit_plan: Dict[str, Any],
-        bot_config: Optional[Dict[str, Any]] = None,
+        unrealized_pnl_usdt: float = 0.0,
     ) -> Dict[str, Any]:
         """
-        بررسی تمام قوانین نگهبان ریسک (توقف ربات، مدارشکن روزانه، ماتریس ۵ اسلات و سپر همبستگی)
-        و محاسبه حجم دقیق پوزیشن، ریسک دلاری و مارجین مورد نیاز.
+        بررسی همزمان افت سرمایه روزانه (سقف ۲٪) و هفتگی (سقف ۵٪).
         """
+        # الف) محاسبه افت روزانه
+        daily_start = float(
+            portfolio.get(
+                "daily_start_balance_usdt",
+                portfolio.get("balance_usdt", RISK_CONFIG["INITIAL_BALANCE_USDT"]),
+            )
+        )
+        daily_start = max(daily_start, 1e-8)
+        realized_daily_pnl = float(portfolio.get("daily_pnl_usdt", 0.0))
+        total_daily_pnl = realized_daily_pnl + float(unrealized_pnl_usdt)
+
+        daily_dd_pct = 0.0
+        if total_daily_pnl < 0:
+            daily_dd_pct = abs(total_daily_pnl) / daily_start * 100.0
+
+        already_daily_locked = bool(portfolio.get("daily_circuit_breaker", False))
+        daily_triggered = already_daily_locked or (daily_dd_pct >= self.max_daily_dd_pct - 1e-6)
+        if daily_triggered:
+            portfolio["daily_circuit_breaker"] = True
+
+        # ب) محاسبه افت هفتگی
+        weekly_start = float(
+            portfolio.get(
+                "weekly_start_balance_usdt",
+                portfolio.get("balance_usdt", RISK_CONFIG["INITIAL_BALANCE_USDT"]),
+            )
+        )
+        weekly_start = max(weekly_start, 1e-8)
+        realized_weekly_pnl = float(portfolio.get("weekly_pnl_usdt", 0.0))
+        total_weekly_pnl = realized_weekly_pnl + float(unrealized_pnl_usdt)
+
+        weekly_dd_pct = 0.0
+        if total_weekly_pnl < 0:
+            weekly_dd_pct = abs(total_weekly_pnl) / weekly_start * 100.0
+
+        already_weekly_locked = bool(portfolio.get("weekly_circuit_breaker", False))
+        weekly_triggered = already_weekly_locked or (weekly_dd_pct >= self.max_weekly_dd_pct - 1e-6)
+        if weekly_triggered:
+            portfolio["weekly_circuit_breaker"] = True
+
+        any_locked = bool(daily_triggered or weekly_triggered)
+        reason = "OK"
+        if daily_triggered:
+            reason = "DAILY_CIRCUIT_BREAKER_2PCT_LOCKED"
+        elif weekly_triggered:
+            reason = "WEEKLY_CIRCUIT_BREAKER_5PCT_LOCKED"
+
+        return {
+            "locked": any_locked,
+            "daily_locked": bool(daily_triggered),
+            "weekly_locked": bool(weekly_triggered),
+            "daily_drawdown_pct": round(daily_dd_pct, 3),
+            "weekly_drawdown_pct": round(weekly_dd_pct, 3),
+            "total_daily_pnl_usdt": round(total_daily_pnl, 2),
+            "total_weekly_pnl_usdt": round(total_weekly_pnl, 2),
+            "max_allowed_dd_pct": self.max_daily_dd_pct,
+            "max_weekly_allowed_dd_pct": self.max_weekly_dd_pct,
+            "reason": reason,
+        }
+
+    # ==========================================================================
+    # ۲. محاسبه درصد ریسک پویا
+    # ==========================================================================
+    def compute_dynamic_risk_pct(
+        self,
+        portfolio: Dict[str, Any],
+        bot_config: Optional[Dict[str, Any]] = None,
+        size_multiplier: float = 1.0,
+    ) -> Dict[str, Any]:
+        stats = portfolio.get("stats", {})
+        c_wins = int(stats.get("consecutive_wins", 0))
+        c_losses = int(stats.get("consecutive_losses", 0))
+
+        if c_losses >= 2:
+            streak_state = "LOSS_STREAK_DEFENSIVE"
+            base_pct = self.loss_streak_risk_pct
+        elif c_wins >= 2:
+            streak_state = "WIN_STREAK_AGGRESSIVE"
+            base_pct = self.win_streak_risk_pct
+        else:
+            streak_state = "NORMAL_BASELINE"
+            base_pct = self.base_risk_pct
+
+        risk_mode = str((bot_config or {}).get("risk_mode", "NORMAL")).upper().strip()
+        mode_mult = 1.0
+        if risk_mode == "LOW":
+            mode_mult = 0.50
+        elif risk_mode == "HIGH":
+            mode_mult = 1.25
+
+        effective_risk_pct = float(
+            np.clip(base_pct * mode_mult * float(size_multiplier), 0.10, 1.20)
+        )
+
+        return {
+            "streak_state": streak_state,
+            "base_risk_pct": round(base_pct, 3),
+            "risk_mode": risk_mode,
+            "mode_multiplier": mode_mult,
+            "size_multiplier": round(float(size_multiplier), 2),
+            "effective_risk_pct": round(effective_risk_pct, 4),
+        }
+
+    # ==========================================================================
+    # ۳. ارزیابی کامل مجوز ریسک و محاسبه حجم پوزیشن
+    # ==========================================================================
+    def evaluate_trade_risk(
+        self,
+        portfolio: Dict[str, Any],
+        coin: str,
+        side: str,
+        confluence_score: float,
+        entry_price: float,
+        stop_loss: float,
+        size_multiplier: float = 1.0,
+        bot_config: Optional[Dict[str, Any]] = None,
+        unrealized_pnl_usdt: float = 0.0,
+    ) -> Dict[str, Any]:
         cfg = bot_config or {}
 
-        # ۱. بررسی وضعیت Panic یا Pause از سمت اتاق فرمان تلگرام
-        if bool(cfg.get("panic_mode", False)):
-            return {
-                "approved": False,
-                "reason": "PANIC_MODE_ACTIVE",
-                "details": "Bot is locked in PANIC MODE. Use /resume in Telegram to unlock.",
-            }
-        if bool(cfg.get("is_paused", False)):
-            return {
-                "approved": False,
-                "reason": "BOT_PAUSED",
-                "details": "Trading is paused via Telegram command (/pause).",
-            }
+        if cfg.get("panic_mode", False):
+            return self._reject("PANIC_MODE_ACTIVE")
+        if cfg.get("is_paused", False):
+            return self._reject("BOT_PAUSED_BY_USER")
 
-        # ۲. بررسی مدارشکن روزانه (Daily Circuit Breaker)
-        cb_status = self.check_circuit_breaker(portfolio)
-        if cb_status["tripped"]:
-            return {
-                "approved": False,
-                "reason": "DAILY_CIRCUIT_BREAKER",
-                "details": (
-                    f"Daily circuit breaker tripped: Drawdown {cb_status['daily_drawdown_pct']:.2f}% "
-                    f">= {self.max_daily_dd_pct:.2f}% limit."
-                ),
-            }
+        cb_status = self.check_circuit_breaker(portfolio, unrealized_pnl_usdt)
+        if cb_status["locked"]:
+            return self._reject(cb_status["reason"], cb_status)
 
-        # ۳. بررسی ماتریس ۵ اسلات هوشمند و سپر همبستگی (Correlation Shield)
         open_positions = portfolio.get("open_positions", [])
-        final_score = float(confluence_data.get("final_score", 0.0))
-        size_multiplier = float(confluence_data.get("size_multiplier", 0.0))
-
-        if size_multiplier <= 0.0 or final_score < 65.0:
-            return {
-                "approved": False,
-                "reason": "LOW_CONFLUENCE_SCORE",
-                "details": f"Confluence score {final_score:.1f} below minimum threshold (65.0).",
-            }
-
         slot_check = can_open_new_position(
             open_positions=open_positions,
-            candidate_coin=candidate_coin,
-            candidate_side=candidate_side,
-            candidate_score=final_score,
+            candidate_coin=coin,
+            candidate_side=side,
+            confluence_score=confluence_score,
         )
         if not slot_check["allowed"]:
-            return {
-                "approved": False,
-                "reason": slot_check["reason"],
-                "details": slot_check["details"],
-                "slot_metrics": slot_check.get("slot_metrics", {}),
-            }
+            return self._reject(slot_check["reason"], slot_check)
 
-        # ۴. محاسبه سایز پوزیشن، ارزش اسمی (Notional) و کنترل سقف مارجین ۲۵٪
-        balance = float(portfolio.get("balance_usdt", 1000.0))
-        entry_price = float(exit_plan.get("entry_price", 0.0))
-        stop_loss = float(exit_plan.get("stop_loss", 0.0))
-        sl_dist = abs(entry_price - stop_loss)
+        entry = float(entry_price)
+        sl = float(stop_loss)
+        stop_dist = abs(entry - sl)
+        if entry <= 0 or stop_dist <= 1e-8:
+            return self._reject("INVALID_STOP_DISTANCE")
 
-        if balance <= 10.0 or entry_price <= 0.0 or sl_dist <= 1e-12:
-            return {
-                "approved": False,
-                "reason": "INVALID_PRICING_OR_BALANCE",
-                "details": "Insufficient balance or invalid stop-loss distance.",
-            }
+        balance = float(portfolio.get("balance_usdt", 0.0))
+        if balance <= 10.0:
+            return self._reject("INSUFFICIENT_BALANCE")
 
-        base_risk_pct = self._determine_base_risk_pct(portfolio, cfg)
-        effective_risk_pct = round(base_risk_pct * size_multiplier, 4)
-        risk_amount_usdt = (balance * effective_risk_pct) / 100.0
+        risk_info = self.compute_dynamic_risk_pct(portfolio, cfg, size_multiplier)
+        effective_risk_pct = risk_info["effective_risk_pct"]
+        risk_amount_usdt = balance * (effective_risk_pct / 100.0)
 
-        # حجم اولیه بر اساس فاصله استاپ
-        raw_quantity = risk_amount_usdt / sl_dist
-        notional_usdt = raw_quantity * entry_price
-        margin_required_usdt = notional_usdt / float(self.max_leverage)
+        stop_dist_pct = stop_dist / entry
+        raw_notional_usdt = risk_amount_usdt / stop_dist_pct
 
-        # محدود کردن مارجین هر معامله به حداکثر ۲۵٪ کل موجودی حساب
-        max_margin_allowed = balance * (self.max_margin_pct / 100.0)
-        margin_capped = False
-        if margin_required_usdt > max_margin_allowed:
-            margin_required_usdt = max_margin_allowed
-            notional_usdt = margin_required_usdt * float(self.max_leverage)
-            raw_quantity = notional_usdt / entry_price
-            risk_amount_usdt = raw_quantity * sl_dist
-            effective_risk_pct = round((risk_amount_usdt / balance) * 100.0, 4)
-            margin_capped = True
+        leverage = self.default_leverage
+        max_margin_usdt = balance * (self.max_margin_per_trade_pct / 100.0)
+        max_notional_usdt = max_margin_usdt * leverage
+
+        capped_by_margin = False
+        if raw_notional_usdt > max_notional_usdt:
+            notional_usdt = max_notional_usdt
+            risk_amount_usdt = notional_usdt * stop_dist_pct
+            capped_by_margin = True
+        else:
+            notional_usdt = raw_notional_usdt
+
+        margin_used_usdt = notional_usdt / leverage
+        qty = notional_usdt / entry
 
         return {
             "approved": True,
-            "reason": "RISK_APPROVED",
-            "slot_type": slot_check.get("slot_type", "STANDARD_SLOT"),
-            "slot_metrics": slot_check.get("slot_metrics", {}),
-            "base_risk_pct": base_risk_pct,
-            "size_multiplier": size_multiplier,
-            "effective_risk_pct": effective_risk_pct,
-            "risk_amount_usdt": round(risk_amount_usdt, 4),
-            "quantity": round(raw_quantity, 6),
-            "notional_usdt": round(notional_usdt, 4),
-            "margin_used_usdt": round(margin_required_usdt, 4),
-            "leverage": self.max_leverage,
-            "margin_capped": margin_capped,
-            "details": (
-                f"Risk Approved: {effective_risk_pct:.3f}% (${risk_amount_usdt:.2f}) | "
-                f"Margin: ${margin_required_usdt:.2f} ({self.max_leverage}x)"
-            ),
+            "coin": str(coin).upper(),
+            "side": str(side).upper(),
+            "slot_type": slot_check["slot_type"],
+            "leverage": leverage,
+            "balance_usdt": round(balance, 2),
+            "effective_risk_pct": round(effective_risk_pct, 4),
+            "risk_amount_usdt": round(risk_amount_usdt, 2),
+            "notional_usdt": round(notional_usdt, 2),
+            "margin_used_usdt": round(margin_used_usdt, 2),
+            "qty": round(qty, 6),
+            "capped_by_margin": capped_by_margin,
+            "streak_state": risk_info["streak_state"],
+            "daily_drawdown_pct": cb_status["daily_drawdown_pct"],
+            "weekly_drawdown_pct": cb_status["weekly_drawdown_pct"],
+            "reason": "APPROVED",
+        }
+
+    @staticmethod
+    def _reject(reason: str, details: Optional[Dict[str, Any]] = None) -> Dict[str, Any]:
+        return {
+            "approved": False,
+            "reason": reason,
+            "details": details or {},
+            "risk_amount_usdt": 0.0,
+            "notional_usdt": 0.0,
+            "margin_used_usdt": 0.0,
+            "qty": 0.0,
         }

@@ -1,310 +1,334 @@
 """
-مدیریت حافظه پایدار، فایل‌های JSON و ریست روزانه مدارشکن (State Manager)
-Institutional Trading Bot V2 - Persistent State Management
+مدیریت حافظه پایدار، دروازه ۵۰ معامله کاغذی و ریست روزانه/هفتگی (State Manager V2.5)
+Institutional Trading Bot V2.5 - Atomic JSON State Persistence
 """
 
 import json
 import os
+import tempfile
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Dict, Any, List, Optional
 
-from core.config import (
-    STATE_DIR,
-    RISK_RULES,
-    DEFAULT_REGIME_WEIGHTS,
-    DEFAULT_COIN_MULTIPLIERS,
-)
+from core.config import STATE_DIR, RISK_CONFIG, WATCHLIST
 
 
 class StateManager:
     """
-    کلاس مدیریت خواندن و نوشتن اتمیک فایل‌های وضعیت در پوشه state/
+    مدیریت اتمیک و ضدکرش ۸ فایل JSON در پوشه state/ به همراه بررسی
+    دروازه ۵۰ معامله کاغذی (Paper Gate) و ریست خودکار مدارشکن روزانه و هفتگی.
     """
 
     def __init__(self, state_dir: Optional[Path] = None) -> None:
         self.state_dir: Path = state_dir if state_dir else STATE_DIR
         self.state_dir.mkdir(parents=True, exist_ok=True)
 
-        # مسیر دقیق تمام فایل‌های JSON معماری V2
-        self.portfolio_file: Path = self.state_dir / "paper_portfolio.json"
-        self.bot_config_file: Path = self.state_dir / "bot_config.json"
-        self.strategy_memory_file: Path = self.state_dir / "strategy_memory.json"
-        self.shadow_portfolio_file: Path = self.state_dir / "shadow_portfolio.json"
-        self.shadow_trades_file: Path = self.state_dir / "shadow_trades.json"
-        self.active_setups_file: Path = self.state_dir / "active_setups.json"
-        self.market_regime_file: Path = self.state_dir / "market_regime.json"
-        self.risk_status_file: Path = self.state_dir / "risk_status.json"
+        self.files: Dict[str, Path] = {
+            "portfolio": self.state_dir / "paper_portfolio.json",
+            "bot_config": self.state_dir / "bot_config.json",
+            "strategy_memory": self.state_dir / "strategy_memory.json",
+            "shadow_portfolio": self.state_dir / "shadow_portfolio.json",
+            "shadow_trades": self.state_dir / "shadow_trades.json",
+            "active_setups": self.state_dir / "active_setups.json",
+            "market_regime": self.state_dir / "market_regime.json",
+            "risk_status": self.state_dir / "risk_status.json",
+        }
+        self.ensure_all_state_files()
 
     @staticmethod
-    def _utc_now_iso() -> str:
-        """برگرداندن زمان فعلی UTC به فرمت استاندارد ISO-8601"""
+    def _now_utc_iso() -> str:
         return datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
 
     @staticmethod
-    def _utc_today_str() -> str:
-        """برگرداندن تاریخ روز فعلی UTC به فرمت YYYY-MM-DD"""
+    def _today_utc_str() -> str:
         return datetime.now(timezone.utc).strftime("%Y-%m-%d")
 
-    # ==========================================================================
-    # متدهای پایه خواندن و نوشتن ایمن (Atomic I/O)
-    # ==========================================================================
-    def _read_json(self, file_path: Path, default_data: Any) -> Any:
-        """خواندن ایمن فایل JSON؛ در صورت عدم وجود یا خرابی، مقدار پیش‌فرض را می‌سازد."""
-        if not file_path.exists():
-            self._write_json(file_path, default_data)
-            return json.loads(json.dumps(default_data))
-
-        try:
-            with open(file_path, "r", encoding="utf-8") as f:
-                content = f.read().strip()
-                if not content:
-                    self._write_json(file_path, default_data)
-                    return json.loads(json.dumps(default_data))
-                return json.loads(content)
-        except Exception as e:
-            print(f"⚠️ [StateManager] Error reading {file_path.name}: {e}. Restoring default.")
-            self._write_json(file_path, default_data)
-            return json.loads(json.dumps(default_data))
-
-    def _write_json(self, file_path: Path, data: Any) -> bool:
-        """نوشتن اتمیک اطلاعات در فایل JSON برای جلوگیری از ناقص شدن فایل در حین اجرا."""
-        temp_path = file_path.with_suffix(".json.tmp")
-        try:
-            with open(temp_path, "w", encoding="utf-8") as f:
-                json.dump(data, f, indent=2, ensure_ascii=False)
-            os.replace(temp_path, file_path)
-            return True
-        except Exception as e:
-            print(f"❌ [StateManager] Error writing {file_path.name}: {e}")
-            if temp_path.exists():
-                try:
-                    temp_path.unlink()
-                except OSError:
-                    pass
-            return False
+    @staticmethod
+    def _current_week_str() -> str:
+        now = datetime.now(timezone.utc)
+        iso_year, iso_week, _ = now.isocalendar()
+        return f"{iso_year}-W{iso_week:02d}"
 
     # ==========================================================================
-    # ۱. مدیریت پرتفوی اصلی و ریست روزانه مدارشکن (paper_portfolio.json)
+    # ساختارهای پیش‌فرض (Default Schemas V2.5)
     # ==========================================================================
     def get_default_portfolio(self) -> Dict[str, Any]:
-        """ساختار پیش‌فرض پرتفوی معاملاتی V2"""
-        initial_bal = float(RISK_RULES.get("initial_balance_usdt", 1000.0))
-        today_str = self._utc_today_str()
-        now_iso = self._utc_now_iso()
+        init_bal = float(RISK_CONFIG["INITIAL_BALANCE_USDT"])
+        today = self._today_utc_str()
+        curr_week = self._current_week_str()
+        now_iso = self._now_utc_iso()
+
         return {
-            "version": "2.0",
-            "balance_usdt": initial_bal,
-            "initial_balance_usdt": initial_bal,
-            "day_start_date": today_str,
-            "day_start_equity": initial_bal,
+            "trading_mode": "PAPER",  # تا تکمیل ۵۰ معامله کاغذی روی PAPER قفل است
+            "paper_gate_target": int(RISK_CONFIG.get("PAPER_GATE_TARGET_TRADES", 50)),
+            "paper_gate_unlocked": False,
+            "initial_balance_usdt": init_bal,
+            "balance_usdt": init_bal,
+            "daily_start_balance_usdt": init_bal,
             "daily_pnl_usdt": 0.0,
             "daily_circuit_breaker": False,
-            "consecutive_wins": 0,
-            "consecutive_losses": 0,
+            "last_reset_date": today,
+            "weekly_start_balance_usdt": init_bal,
+            "weekly_pnl_usdt": 0.0,
+            "weekly_circuit_breaker": False,
+            "last_reset_week": curr_week,
             "open_positions": [],
-            "trade_history": [],
+            "closed_trades": [],
             "equity_curve": [
-                {"timestamp": now_iso, "equity": initial_bal}
+                {"timestamp": now_iso, "equity": init_bal, "event": "INITIAL"}
             ],
             "stats": {
                 "total_trades": 0,
                 "wins": 0,
                 "losses": 0,
                 "win_rate_pct": 0.0,
-                "total_pnl_usdt": 0.0,
+                "consecutive_wins": 0,
+                "consecutive_losses": 0,
+                "peak_equity_usdt": init_bal,
                 "max_drawdown_pct": 0.0,
+                "total_fees_paid_usdt": 0.0,
             },
-            "last_updated": now_iso,
+            "updated_at": now_iso,
         }
 
-    def load_portfolio(self) -> Dict[str, Any]:
-        """
-        بارگذاری پرتفوی و بررسی تغییر تاریخ روز (UTC).
-        اگر وارد روز جدید شده باشیم، مدارشکن روزانه و سود/زیان روزانه ریست می‌شوند.
-        """
-        default_pf = self.get_default_portfolio()
-        portfolio = self._read_json(self.portfolio_file, default_pf)
-
-        # ترمیم کلیدهای احتمالی جاافتاده
-        for k, v in default_pf.items():
-            if k not in portfolio:
-                portfolio[k] = v
-        if "stats" not in portfolio or not isinstance(portfolio["stats"], dict):
-            portfolio["stats"] = default_pf["stats"]
-        else:
-            for sk, sv in default_pf["stats"].items():
-                if sk not in portfolio["stats"]:
-                    portfolio["stats"][sk] = sv
-
-        # بررسی تغییر روز به وقت UTC برای ریست مدارشکن روزانه
-        today_str = self._utc_today_str()
-        if portfolio.get("day_start_date") != today_str:
-            current_balance = float(portfolio.get("balance_usdt", default_pf["balance_usdt"]))
-            portfolio["day_start_date"] = today_str
-            portfolio["day_start_equity"] = round(current_balance, 4)
-            portfolio["daily_pnl_usdt"] = 0.0
-            portfolio["daily_circuit_breaker"] = False
-            portfolio["last_updated"] = self._utc_now_iso()
-            self.save_portfolio(portfolio)
-
-        return portfolio
-
-    def save_portfolio(self, portfolio: Dict[str, Any]) -> bool:
-        """ذخیره وضعیت پرتفوی و همگام‌سازی خودکار فایل risk_status.json"""
-        portfolio["last_updated"] = self._utc_now_iso()
-        saved = self._write_json(self.portfolio_file, portfolio)
-
-        # بروزرسانی همزمان خلاصه وضعیت ریسک
-        day_eq = float(portfolio.get("day_start_equity", 1000.0))
-        daily_pnl = float(portfolio.get("daily_pnl_usdt", 0.0))
-        dd_pct = round((abs(min(0.0, daily_pnl)) / day_eq) * 100.0, 2) if day_eq > 0 else 0.0
-
-        risk_summary = {
-            "day_start_date": portfolio.get("day_start_date", self._utc_today_str()),
-            "day_start_equity": day_eq,
-            "daily_pnl_usdt": round(daily_pnl, 4),
-            "daily_drawdown_pct": dd_pct,
-            "daily_circuit_breaker": bool(portfolio.get("daily_circuit_breaker", False)),
-            "consecutive_wins": int(portfolio.get("consecutive_wins", 0)),
-            "consecutive_losses": int(portfolio.get("consecutive_losses", 0)),
-            "open_positions_count": len(portfolio.get("open_positions", [])),
-            "last_updated": portfolio["last_updated"],
-        }
-        self._write_json(self.risk_status_file, risk_summary)
-        return saved
-
-    def reset_portfolio(self) -> Dict[str, Any]:
-        """ریست کامل پرتفوی به حالت اولیه ۱۰۰۰ دلاری (دستور /reset تلگرام)"""
-        fresh = self.get_default_portfolio()
-        self.save_portfolio(fresh)
-        return fresh
-
-    # ==========================================================================
-    # ۲. مدیریت تنظیمات کنترلی ربات و تلگرام (bot_config.json)
-    # ==========================================================================
     def get_default_bot_config(self) -> Dict[str, Any]:
         return {
             "is_paused": False,
             "panic_mode": False,
-            "risk_mode": "NORMAL",  # حالت‌ها: NORMAL | CONSERVATIVE | AGGRESSIVE
+            "risk_mode": "NORMAL",
+            "execution_mode": "PAPER",
             "last_update_id": 0,
             "last_daily_report_date": "",
-            "last_updated": self._utc_now_iso(),
+            "last_weekly_report_week": "",
+            "updated_at": self._now_utc_iso(),
         }
 
-    def load_bot_config(self) -> Dict[str, Any]:
-        default_cfg = self.get_default_bot_config()
-        cfg = self._read_json(self.bot_config_file, default_cfg)
-        for k, v in default_cfg.items():
-            if k not in cfg:
-                cfg[k] = v
-        return cfg
-
-    def save_bot_config(self, config: Dict[str, Any]) -> bool:
-        config["last_updated"] = self._utc_now_iso()
-        return self._write_json(self.bot_config_file, config)
-
-    # ==========================================================================
-    # ۳. مدیریت حافظه یادگیری ماشین بیزی (strategy_memory.json)
-    # ==========================================================================
     def get_default_strategy_memory(self) -> Dict[str, Any]:
         return {
-            "regime_weights": dict(DEFAULT_REGIME_WEIGHTS),
-            "coin_multipliers": dict(DEFAULT_COIN_MULTIPLIERS),
-            "total_feedback_cycles": 0,
-            "last_updated": self._utc_now_iso(),
+            "coin_multipliers": {coin: 1.0 for coin in WATCHLIST.keys()},
+            "regime_multipliers": {
+                "TRENDING_BULL": 1.0,
+                "TRENDING_BEAR": 1.0,
+                "RANGING": 1.0,
+            },
+            "coin_stats": {
+                coin: {"trades": 0, "wins": 0, "posterior_wr": 0.50, "avg_r": 0.0}
+                for coin in WATCHLIST.keys()
+            },
+            "updated_at": self._now_utc_iso(),
         }
 
-    def load_strategy_memory(self) -> Dict[str, Any]:
-        default_mem = self.get_default_strategy_memory()
-        mem = self._read_json(self.strategy_memory_file, default_mem)
-        if "regime_weights" not in mem or not isinstance(mem["regime_weights"], dict):
-            mem["regime_weights"] = dict(DEFAULT_REGIME_WEIGHTS)
-        else:
-            for rk, rv in DEFAULT_REGIME_WEIGHTS.items():
-                if rk not in mem["regime_weights"]:
-                    mem["regime_weights"][rk] = rv
-
-        if "coin_multipliers" not in mem or not isinstance(mem["coin_multipliers"], dict):
-            mem["coin_multipliers"] = dict(DEFAULT_COIN_MULTIPLIERS)
-        else:
-            for ck, cv in DEFAULT_COIN_MULTIPLIERS.items():
-                if ck not in mem["coin_multipliers"]:
-                    mem["coin_multipliers"][ck] = cv
-        return mem
-
-    def save_strategy_memory(self, memory: Dict[str, Any]) -> bool:
-        memory["last_updated"] = self._utc_now_iso()
-        return self._write_json(self.strategy_memory_file, memory)
-
-    # ==========================================================================
-    # ۴. مدیریت دیتابیس رادار سایه (shadow_portfolio.json & shadow_trades.json)
-    # ==========================================================================
     def get_default_shadow_portfolio(self) -> Dict[str, Any]:
         return {
             "active_shadows": [],
             "resolved_shadows": [],
+            "filter_breakdown": {
+                "LOW_CONFLUENCE_SCORE": 0,
+                "TIMEMACHINE_REJECTED": 0,
+                "RISK_GUARDIAN_BLOCKED": 0,
+                "SPREAD_GUARD_5PCT_BLOCKED": 0,
+                "ECONOMIC_NEWS_BLOCKED": 0,
+            },
             "stats": {
                 "total_filtered": 0,
+                "evaluated_count": 0,
                 "saved_from_loss": 0,
                 "missed_winners": 0,
-                "shield_accuracy": 100.0,
+                "shield_accuracy": 0.0,
             },
-            "last_updated": self._utc_now_iso(),
+            "updated_at": self._now_utc_iso(),
         }
+
+    def ensure_all_state_files(self) -> None:
+        defaults: Dict[str, Any] = {
+            "portfolio": self.get_default_portfolio(),
+            "bot_config": self.get_default_bot_config(),
+            "strategy_memory": self.get_default_strategy_memory(),
+            "shadow_portfolio": self.get_default_shadow_portfolio(),
+            "shadow_trades": [],
+            "active_setups": [],
+            "market_regime": {},
+            "risk_status": {
+                "circuit_breaker": False,
+                "weekly_circuit_breaker": False,
+                "daily_drawdown_pct": 0.0,
+                "weekly_drawdown_pct": 0.0,
+                "active_slots": 0,
+                "updated_at": self._now_utc_iso(),
+            },
+        }
+        for key, path in self.files.items():
+            if not path.is_file():
+                self._atomic_write(path, defaults[key])
+
+    # ==========================================================================
+    # خواندن و نوشتن اتمیک
+    # ==========================================================================
+    def _atomic_write(self, file_path: Path, data: Any) -> None:
+        file_path.parent.mkdir(parents=True, exist_ok=True)
+        fd, tmp_path = tempfile.mkstemp(
+            dir=str(file_path.parent), prefix=f".{file_path.name}.", suffix=".tmp"
+        )
+        try:
+            with os.fdopen(fd, "w", encoding="utf-8") as tmp_file:
+                json.dump(data, tmp_file, ensure_ascii=False, indent=2)
+                tmp_file.flush()
+                os.fsync(tmp_file.fileno())
+            os.replace(tmp_path, file_path)
+        except Exception:
+            if os.path.exists(tmp_path):
+                try:
+                    os.remove(tmp_path)
+                except OSError:
+                    pass
+            raise
+
+    def _safe_read(self, file_path: Path, default_factory: Any) -> Any:
+        if not file_path.is_file():
+            default_data = default_factory() if callable(default_factory) else default_factory
+            self._atomic_write(file_path, default_data)
+            return default_data
+        try:
+            with open(file_path, "r", encoding="utf-8") as f:
+                return json.load(f)
+        except Exception:
+            default_data = default_factory() if callable(default_factory) else default_factory
+            self._atomic_write(file_path, default_data)
+            return default_data
+
+    # ==========================================================================
+    # مدیریت پرتفوی، ریست روزانه/هفتگی و دروازه ۵۰ معامله کاغذی
+    # ==========================================================================
+    def check_and_reset_periods(self, portfolio: Dict[str, Any]) -> Dict[str, Any]:
+        """بررسی و ریست خودکار مدارشکن روزانه (در 00:00 UTC) و هفتگی (دوشنبه 00:00 UTC)."""
+        today = self._today_utc_str()
+        curr_week = self._current_week_str()
+        current_bal = float(portfolio.get("balance_usdt", RISK_CONFIG["INITIAL_BALANCE_USDT"]))
+        changed = False
+
+        # ۱. بررسی ریست روزانه
+        if portfolio.get("last_reset_date") != today:
+            portfolio["daily_start_balance_usdt"] = current_bal
+            portfolio["daily_pnl_usdt"] = 0.0
+            portfolio["daily_circuit_breaker"] = False
+            portfolio["last_reset_date"] = today
+            changed = True
+
+        # ۲. بررسی ریست هفتگی
+        if portfolio.get("last_reset_week") != curr_week:
+            portfolio["weekly_start_balance_usdt"] = current_bal
+            portfolio["weekly_pnl_usdt"] = 0.0
+            portfolio["weekly_circuit_breaker"] = False
+            portfolio["last_reset_week"] = curr_week
+            changed = True
+
+        # ۳. مهاجرت خودکار فیلدهای جدید V2.5 برای فایل‌های قدیمی
+        if "paper_gate_target" not in portfolio:
+            portfolio["paper_gate_target"] = int(RISK_CONFIG.get("PAPER_GATE_TARGET_TRADES", 50))
+            changed = True
+        if "weekly_start_balance_usdt" not in portfolio:
+            portfolio["weekly_start_balance_usdt"] = current_bal
+            portfolio["weekly_pnl_usdt"] = 0.0
+            portfolio["weekly_circuit_breaker"] = False
+            portfolio["last_reset_week"] = curr_week
+            changed = True
+
+        # ۴. بررسی وضعیت باز شدن دروازه ۵۰ معامله
+        total_tr = int(portfolio.get("stats", {}).get("total_trades", 0))
+        target_tr = int(portfolio.get("paper_gate_target", 50))
+        is_unlocked = total_tr >= target_tr
+        if portfolio.get("paper_gate_unlocked") != is_unlocked:
+            portfolio["paper_gate_unlocked"] = is_unlocked
+            changed = True
+
+        if changed:
+            portfolio["updated_at"] = self._now_utc_iso()
+            self._atomic_write(self.files["portfolio"], portfolio)
+
+        return portfolio
+
+    @staticmethod
+    def get_paper_gate_progress(portfolio: Dict[str, Any]) -> Dict[str, Any]:
+        """محاسبه وضعیت پیشرفت دروازه ۵۰ معامله کاغذی برای نمایش در تلگرام."""
+        stats = portfolio.get("stats", {})
+        total_trades = int(stats.get("total_trades", 0))
+        target_trades = int(portfolio.get("paper_gate_target", RISK_CONFIG.get("PAPER_GATE_TARGET_TRADES", 50)))
+        win_rate = float(stats.get("win_rate_pct", 0.0))
+        remaining = max(0, target_trades - total_trades)
+        progress_pct = min(100.0, round((total_trades / max(target_trades, 1)) * 100.0, 1))
+        unlocked = total_trades >= target_trades
+
+        # ساخت نوار پیشرفت ۱۰ تایی
+        filled = int(round(progress_pct / 10.0))
+        bar = "🟦" * filled + "⬜" * (10 - filled)
+
+        return {
+            "completed_trades": total_trades,
+            "target_trades": target_trades,
+            "remaining_trades": remaining,
+            "progress_pct": progress_pct,
+            "win_rate_pct": win_rate,
+            "unlocked": unlocked,
+            "bar": bar,
+            "mode": str(portfolio.get("trading_mode", "PAPER")),
+        }
+
+    def load_portfolio(self) -> Dict[str, Any]:
+        pf = self._safe_read(self.files["portfolio"], self.get_default_portfolio)
+        return self.check_and_reset_periods(pf)
+
+    def save_portfolio(self, portfolio: Dict[str, Any]) -> None:
+        portfolio["updated_at"] = self._now_utc_iso()
+        total_tr = int(portfolio.get("stats", {}).get("total_trades", 0))
+        target_tr = int(portfolio.get("paper_gate_target", 50))
+        portfolio["paper_gate_unlocked"] = total_tr >= target_tr
+        self._atomic_write(self.files["portfolio"], portfolio)
+
+    def reset_portfolio(self) -> Dict[str, Any]:
+        fresh = self.get_default_portfolio()
+        self._atomic_write(self.files["portfolio"], fresh)
+        return fresh
+
+    def load_bot_config(self) -> Dict[str, Any]:
+        return self._safe_read(self.files["bot_config"], self.get_default_bot_config)
+
+    def save_bot_config(self, config: Dict[str, Any]) -> None:
+        config["updated_at"] = self._now_utc_iso()
+        self._atomic_write(self.files["bot_config"], config)
+
+    def load_strategy_memory(self) -> Dict[str, Any]:
+        return self._safe_read(self.files["strategy_memory"], self.get_default_strategy_memory)
+
+    def save_strategy_memory(self, memory: Dict[str, Any]) -> None:
+        memory["updated_at"] = self._now_utc_iso()
+        self._atomic_write(self.files["strategy_memory"], memory)
 
     def load_shadow_portfolio(self) -> Dict[str, Any]:
-        default_sh = self.get_default_shadow_portfolio()
-        sh = self._read_json(self.shadow_portfolio_file, default_sh)
-        for k, v in default_sh.items():
-            if k not in sh:
-                sh[k] = v
-        if "stats" not in sh or not isinstance(sh["stats"], dict):
-            sh["stats"] = default_sh["stats"]
-        else:
-            for sk, sv in default_sh["stats"].items():
-                if sk not in sh["stats"]:
-                    sh["stats"][sk] = sv
-        return sh
+        shd = self._safe_read(self.files["shadow_portfolio"], self.get_default_shadow_portfolio)
+        if "filter_breakdown" not in shd:
+            shd["filter_breakdown"] = self.get_default_shadow_portfolio()["filter_breakdown"]
+        return shd
 
-    def save_shadow_portfolio(self, shadow_pf: Dict[str, Any]) -> bool:
-        shadow_pf["last_updated"] = self._utc_now_iso()
-        saved = self._write_json(self.shadow_portfolio_file, shadow_pf)
-        # آرشیو ۵۰ معامله حل‌شده آخر در shadow_trades.json برای سازگاری کامل
-        resolved = shadow_pf.get("resolved_shadows", [])[-50:]
-        self._write_json(self.shadow_trades_file, resolved)
-        return saved
+    def save_shadow_portfolio(self, shadow_pf: Dict[str, Any]) -> None:
+        shadow_pf["updated_at"] = self._now_utc_iso()
+        self._atomic_write(self.files["shadow_portfolio"], shadow_pf)
+        resolved = shadow_pf.get("resolved_shadows", [])
+        self._atomic_write(self.files["shadow_trades"], resolved[-200:])
 
-    # ==========================================================================
-    # ۵. مدیریت وضعیت‌های کمکی (active_setups, market_regime, risk_status)
-    # ==========================================================================
-    def load_active_setups(self) -> Dict[str, Any]:
-        default_data = {"setups": [], "last_scan": self._utc_now_iso()}
-        return self._read_json(self.active_setups_file, default_data)
+    def load_active_setups(self) -> List[Dict[str, Any]]:
+        data = self._safe_read(self.files["active_setups"], list)
+        return data if isinstance(data, list) else []
 
-    def save_active_setups(self, setups: List[Dict[str, Any]]) -> bool:
-        payload = {"setups": setups, "last_scan": self._utc_now_iso()}
-        return self._write_json(self.active_setups_file, payload)
+    def save_active_setups(self, setups: List[Dict[str, Any]]) -> None:
+        self._atomic_write(self.files["active_setups"], setups)
 
     def load_market_regime(self) -> Dict[str, Any]:
-        default_data = {"regimes": {}, "last_updated": self._utc_now_iso()}
-        return self._read_json(self.market_regime_file, default_data)
+        data = self._safe_read(self.files["market_regime"], dict)
+        return data if isinstance(data, dict) else {}
 
-    def save_market_regime(self, regimes: Dict[str, Any]) -> bool:
-        payload = {"regimes": regimes, "last_updated": self._utc_now_iso()}
-        return self._write_json(self.market_regime_file, payload)
+    def save_market_regime(self, regimes: Dict[str, Any]) -> None:
+        self._atomic_write(self.files["market_regime"], regimes)
 
-    def load_risk_status(self) -> Dict[str, Any]:
-        default_data = {
-            "day_start_date": self._utc_today_str(),
-            "day_start_equity": float(RISK_RULES.get("initial_balance_usdt", 1000.0)),
-            "daily_pnl_usdt": 0.0,
-            "daily_drawdown_pct": 0.0,
-            "daily_circuit_breaker": False,
-            "consecutive_wins": 0,
-            "consecutive_losses": 0,
-            "open_positions_count": 0,
-            "last_updated": self._utc_now_iso(),
-        }
-        return self._read_json(self.risk_status_file, default_data)
+    def save_risk_status(self, risk_status: Dict[str, Any]) -> None:
+        risk_status["updated_at"] = self._now_utc_iso()
+        self._atomic_write(self.files["risk_status"], risk_status)

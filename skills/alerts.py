@@ -1,30 +1,50 @@
 """
-مهارت دوازدهم: اتاق فرمان دوطرفه تلگرام، گزارش پوزیشن‌های باز و رسم چارت (Telegram Alerts Skill)
-Institutional Trading Bot V2 - Telegram Command Center & Dark-Theme Charting Engine
+مهارت دوازدهم (نسخه V2.5 Pro): اتاق فرمان تلگرام، چارت‌های دوطبقه با حجم، کارت PnL و کیبورد شیشه‌ای نسل جدید
+Institutional Trading Bot V2.5 - Telegram Command Center, Volume Charts, PnL Cards & On-Demand Radar
 """
 
 import json
 import os
-from datetime import datetime, timezone
 from pathlib import Path
 from typing import Dict, Any, List, Optional
 
 import matplotlib
-matplotlib.use("Agg")  # بک‌اند بدون نیاز به نمایشگر برای اجرا در سرورهای ابری و GitHub Actions
+matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 from matplotlib.patches import Rectangle
 import numpy as np
 import pandas as pd
 import requests
 
-from core.config import CHARTS_DIR, TELEGRAM_CONFIG
+from core.config import (
+    CHARTS_DIR,
+    TELEGRAM_CONFIG,
+    WATCHLIST,
+    BROKER_URLS,
+    RISK_CONFIG,
+    format_price,
+)
+from core.state_manager import StateManager
 
 
 class TelegramAlertsSkill:
     """
-    کلاس مدیریت ارتباط دوطرفه با تلگرام، رندرینگ چارت‌های ستاپ و منحنی سرمایه،
-    محافظ طول کپشن HTML و نمایش درختی پوزیشن‌های باز.
+    کلاس جامع ارتباط با تلگرام و مصورسازی سازمانی V2.5:
+    - رسم چارت کندل‌استیک ۱۵ دقیقه + ساب‌چارت حجم (Volume) + FVG + سقف/کف سشن آسیا
+    - رسم چارت تحلیلی درخواستی (On-Demand Asset Analysis) برای هر ۵ دارایی
+    - رسم کارت گرافیکی سود/زیان (PnL Share Card) و منحنی سرمایه (Equity Curve)
+    - تفکیک «بیلان شبانه جمع‌وجور» از «استاتوس جامع لحظه‌ای» و قالب ترکیبی «شکار جدید (X-Ray)»
+    - کیبورد شیشه‌ای ۴ ردیفه جدید (چارت ۵ ارز، لینک بروکرها، ریسک‌فری سریع و سیو سود ۵۰٪)
     """
+
+    DARK_BG = "#0d1117"
+    PANEL_BG = "#161b22"
+    GRID_COLOR = "#21262d"
+    TEXT_COLOR = "#e6edf3"
+    BULL_COLOR = "#2ea043"
+    BEAR_COLOR = "#f85149"
+    FVG_COLOR = "#d29922"
+    ASIAN_COLOR = "#a371f7"
 
     def __init__(
         self,
@@ -33,154 +53,86 @@ class TelegramAlertsSkill:
         charts_dir: Optional[Path] = None,
     ) -> None:
         self.bot_token: str = (
-            bot_token
-            or os.getenv("TELEGRAM_BOT_TOKEN", "")
-            or TELEGRAM_CONFIG.get("bot_token", "")
+            bot_token if bot_token is not None else os.getenv("TELEGRAM_BOT_TOKEN", TELEGRAM_CONFIG.get("bot_token", ""))
         ).strip()
         self.chat_id: str = (
-            chat_id
-            or os.getenv("TELEGRAM_CHAT_ID", "")
-            or TELEGRAM_CONFIG.get("chat_id", "")
+            chat_id if chat_id is not None else os.getenv("TELEGRAM_CHAT_ID", TELEGRAM_CONFIG.get("chat_id", ""))
         ).strip()
         self.charts_dir: Path = charts_dir if charts_dir else CHARTS_DIR
         self.charts_dir.mkdir(parents=True, exist_ok=True)
-        self.caption_safe_limit: int = 950
 
     @property
     def is_configured(self) -> bool:
-        """بررسی تنظیم بودن توکن و چت‌آیدی تلگرام."""
         return bool(self.bot_token and self.chat_id)
 
     def _api_url(self, method: str) -> str:
         return f"https://api.telegram.org/bot{self.bot_token}/{method}"
 
     # ==========================================================================
-    # ۱. کیبورد شیشه‌ای داینامیک (Inline Keyboard)
+    # ۱. کیبوردهای شیشه‌ای نسل جدید (۴ ردیف عملیاتی + کیبورد اختصاصی شکار)
     # ==========================================================================
-    def _build_inline_keyboard(self, bot_config: Optional[Dict[str, Any]] = None) -> Dict[str, Any]:
-        """ساخت کیبورد شیشه‌ای داینامیک بر اساس وضعیت فعلی ربات."""
-        cfg = bot_config or {}
-        is_paused = bool(cfg.get("is_paused", False)) or bool(cfg.get("panic_mode", False))
+    @staticmethod
+    def build_inline_keyboard(bot_config: Optional[Dict[str, Any]] = None) -> Dict[str, Any]:
+        """
+        کیبورد ۴ ردیفه استاندارد زیر پیام‌های استاتوس و بیلان شبانه:
+        - ردیف ۱ و ۲: چارت و تحلیل زنده هر ۵ ارز (BTC, ETH, SOL, XRP, XAU)
+        - ردیف ۳: لینک مستقیم بروکر طلا (OpoFinance) و صرافی رمزارز (Bitunix)
+        - ردیف ۴: دکمه‌های اقدام فوری [ 🛡️ ریسک‌فری سریع ] و [ 💰 سیو سود پله‌ای (۵۰٪) ]
+        """
+        return {
+            "inline_keyboard": [
+                [
+                    {"text": "📊 تحلیل BTC", "callback_data": "ANLZ_BTC"},
+                    {"text": "📊 تحلیل ETH", "callback_data": "ANLZ_ETH"},
+                    {"text": "📊 تحلیل SOL", "callback_data": "ANLZ_SOL"},
+                ],
+                [
+                    {"text": "📊 تحلیل XRP", "callback_data": "ANLZ_XRP"},
+                    {"text": "🪙 تحلیل طلا (XAU)", "callback_data": "ANLZ_XAU"},
+                ],
+                [
+                    {"text": "🌐 بروکر طلا (OpoFinance)", "url": BROKER_URLS["opofinance"]},
+                    {"text": "🌐 صرافی (Bitunix)", "url": BROKER_URLS["bitunix"]},
+                ],
+                [
+                    {"text": "🛡️ ریسک‌فری سریع", "callback_data": "ACT_RISK_FREE"},
+                    {"text": "💰 سیو سود پله‌ای (۵۰٪)", "callback_data": "ACT_SAVE_50"},
+                ],
+            ]
+        }
 
-        toggle_btn = (
-            {"text": "▶️ ادامه معاملات (/resume)", "callback_data": "/resume"}
-            if is_paused
-            else {"text": "⏸ توقف موقت (/pause)", "callback_data": "/pause"}
-        )
+    @staticmethod
+    def build_hunt_inline_keyboard(coin: str = "XAU") -> Dict[str, Any]:
+        """
+        کیبورد شیشه‌ای اختصاصی زیر پیام شکار جدید (ترکیب لینک چارت زنده، بروکر و تحلیل سایر ارزها).
+        """
+        clean_coin = str(coin).upper().strip()
+        tv_url = WATCHLIST.get(clean_coin, {}).get("tv_url", BROKER_URLS["tradingview_gold"])
+        broker_label = "🏛️ بروکر OpoFinance" if clean_coin == "XAU" else "🏛️ صرافی Bitunix"
+        broker_link = BROKER_URLS["opofinance"] if clean_coin == "XAU" else BROKER_URLS["bitunix"]
 
         return {
             "inline_keyboard": [
                 [
-                    {"text": "📊 گزارش وضعیت (/status)", "callback_data": "/status"},
-                    toggle_btn,
+                    {"text": f"📈 چارت زنده {clean_coin} (TradingView)", "url": tv_url},
+                    {"text": broker_label, "url": broker_link},
                 ],
                 [
-                    {"text": "🛡️ ریسک کم", "callback_data": "/risk_low"},
-                    {"text": "⚖️ ریسک عادی", "callback_data": "/risk_normal"},
-                    {"text": "🔥 ریسک بالا", "callback_data": "/risk_high"},
+                    {"text": "📊 BTC", "callback_data": "ANLZ_BTC"},
+                    {"text": "📊 ETH", "callback_data": "ANLZ_ETH"},
+                    {"text": "📊 SOL", "callback_data": "ANLZ_SOL"},
+                    {"text": "📊 XRP", "callback_data": "ANLZ_XRP"},
+                    {"text": "🪙 طلا", "callback_data": "ANLZ_XAU"},
                 ],
                 [
-                    {"text": "⚠️ بستن همه (/close_all)", "callback_data": "/close_all"},
-                    {"text": "🚨 قفل اضطراری (/panic)", "callback_data": "/panic"},
+                    {"text": "🛡️ ریسک‌فری سریع", "callback_data": "ACT_RISK_FREE"},
+                    {"text": "💰 سیو سود پله‌ای (۵۰٪)", "callback_data": "ACT_SAVE_50"},
                 ],
             ]
         }
 
     # ==========================================================================
-    # ۲. ارسال پیام متنی و تصویر با محافظ طول کپشن ۹۵۰ کاراکتری
-    # ==========================================================================
-    def send_message(
-        self,
-        text: str,
-        bot_config: Optional[Dict[str, Any]] = None,
-        with_keyboard: bool = True,
-    ) -> bool:
-        """ارسال پیام متنی با فرمت HTML و کیبورد شیشه‌ای به تلگرام."""
-        if not self.is_configured:
-            print("ℹ️ [TelegramAlerts] Telegram credentials not configured. Skipping send_message.")
-            return False
-
-        payload: Dict[str, Any] = {
-            "chat_id": self.chat_id,
-            "text": text[:4000],
-            "parse_mode": "HTML",
-            "disable_web_page_preview": True,
-        }
-        if with_keyboard:
-            payload["reply_markup"] = json.dumps(self._build_inline_keyboard(bot_config))
-
-        try:
-            resp = requests.post(self._api_url("sendMessage"), data=payload, timeout=12)
-            if resp.status_code == 200:
-                return True
-            print(f"⚠️ [TelegramAlerts] sendMessage HTTP {resp.status_code}: {resp.text}")
-        except Exception as e:
-            print(f"⚠️ [TelegramAlerts] sendMessage error: {e}")
-        return False
-
-    def send_photo(
-        self,
-        photo_path: str | Path,
-        caption: str = "",
-        bot_config: Optional[Dict[str, Any]] = None,
-        with_keyboard: bool = True,
-    ) -> bool:
-        """
-        ارسال تصویر چارت به تلگرام به همراه محافظ طول کپشن (۹۵۰ کاراکتر):
-        اگر طول کپشن بیش از ۹۵۰ کاراکتر باشد، ابتدا عکس با یک کپشن کوتاه ارسال شده
-        و بلافاصله متن کامل گزارش با send_message ارسال می‌گردد تا تگ‌های HTML نشکنند.
-        """
-        path_obj = Path(photo_path)
-        if not path_obj.is_file():
-            return self.send_message(caption, bot_config=bot_config, with_keyboard=with_keyboard)
-
-        if not self.is_configured:
-            print(f"ℹ️ [TelegramAlerts] Photo generated at {path_obj}, skipping Telegram upload.")
-            return False
-
-        # بررسی محافظ طول کپشن (۹۵۰ کاراکتر)
-        if len(caption) > self.caption_safe_limit:
-            short_caption = "📊 <b>چارت گرافیکی ستاپ / گزارش عملکرد پرتفوی V2</b>\n⬇️ <i>جزئیات کامل در پیام بعدی...</i>"
-            photo_sent = self._upload_photo_raw(
-                path_obj, short_caption, bot_config=bot_config, with_keyboard=False
-            )
-            msg_sent = self.send_message(
-                caption, bot_config=bot_config, with_keyboard=with_keyboard
-            )
-            return photo_sent and msg_sent
-
-        return self._upload_photo_raw(
-            path_obj, caption, bot_config=bot_config, with_keyboard=with_keyboard
-        )
-
-    def _upload_photo_raw(
-        self,
-        path_obj: Path,
-        caption: str,
-        bot_config: Optional[Dict[str, Any]] = None,
-        with_keyboard: bool = True,
-    ) -> bool:
-        data: Dict[str, Any] = {
-            "chat_id": self.chat_id,
-            "caption": caption,
-            "parse_mode": "HTML",
-        }
-        if with_keyboard:
-            data["reply_markup"] = json.dumps(self._build_inline_keyboard(bot_config))
-
-        try:
-            with open(path_obj, "rb") as img_file:
-                files = {"photo": img_file}
-                resp = requests.post(self._api_url("sendPhoto"), data=data, files=files, timeout=20)
-                if resp.status_code == 200:
-                    return True
-                print(f"⚠️ [TelegramAlerts] sendPhoto HTTP {resp.status_code}: {resp.text}")
-        except Exception as e:
-            print(f"⚠️ [TelegramAlerts] sendPhoto error: {e}")
-        return False
-
-    # ==========================================================================
-    # ۳. موتور گرافیکی رسم چارت ستاپ ۱۵ دقیقه و منحنی سرمایه (Dark Theme #0d1117)
+    # ۲. موتور گرافیکی ۱: چارت دوطبقه شکار و تحلیل (Candles + Volume + FVG + Asian Range)
     # ==========================================================================
     def generate_setup_chart(
         self,
@@ -192,330 +144,660 @@ class TelegramAlertsSkill:
         tp1_price: float,
         tp2_price: float,
         active_fvg: Optional[Dict[str, Any]] = None,
-        score: float = 0.0,
         regime: str = "RANGING",
-    ) -> Path:
+        asian_range: Optional[Dict[str, Any]] = None,
+    ) -> str:
         """
-        رسم ۵۵ کندل آخر ۱۵ دقیقه با تم تاریک (#0d1117)، ناحیه طلایی‌رنگ FVG Zone،
-        و خطوط افقی LIMIT ENTRY، STOP LOSS، TP1 و TP2 در فایل state/charts/setup_<coin>.png.
+        رسم چارت شکار ستاپ در دو پنل (کندل‌استیک + حجم معاملات) با تم تاریک،
+        ناحیه FVG، سقف/کف سشن آسیا و خطوط قیمت استاندارد.
         """
-        clean_coin = str(coin).strip().upper().replace("/", "_")
+        clean_coin = str(coin).upper()
+        df = df_15m.tail(55).reset_index(drop=True) if len(df_15m) > 55 else df_15m.copy().reset_index(drop=True)
+
+        fig, (ax, ax_vol) = plt.subplots(
+            2, 1, figsize=(11, 6.8), dpi=130, sharex=True,
+            gridspec_kw={"height_ratios": [3.6, 1.0], "hspace": 0.06},
+            facecolor=self.DARK_BG,
+        )
+        ax.set_facecolor(self.PANEL_BG)
+        ax_vol.set_facecolor(self.PANEL_BG)
+
+        self._plot_candles_and_volume(ax, ax_vol, df)
+
+        n_bars = max(len(df), 10)
+        # رسم باکس FVG دست‌نخورده
+        if isinstance(active_fvg, dict) and "top" in active_fvg and "bottom" in active_fvg:
+            f_top = float(active_fvg["top"])
+            f_bot = float(active_fvg["bottom"])
+            fvg_rect = Rectangle(
+                (0, f_bot),
+                width=n_bars + 4,
+                height=max(f_top - f_bot, 1e-6),
+                facecolor=self.FVG_COLOR,
+                edgecolor=self.FVG_COLOR,
+                alpha=0.18,
+                label=f"FVG Zone ({format_price(f_bot, clean_coin)} - {format_price(f_top, clean_coin)})",
+            )
+            ax.add_patch(fvg_rect)
+
+        # رسم خطوط سقف و کف سشن آسیا (در صورت وجود)
+        if isinstance(asian_range, dict):
+            ah = float(asian_range.get("asian_high", 0.0))
+            al = float(asian_range.get("asian_low", 0.0))
+            if ah > 0 and al > 0:
+                ax.axhline(ah, color=self.ASIAN_COLOR, linestyle=":", linewidth=1.0, alpha=0.75, label=f"Asian High: {format_price(ah, clean_coin)}")
+                ax.axhline(al, color=self.ASIAN_COLOR, linestyle=":", linewidth=1.0, alpha=0.75, label=f"Asian Low: {format_price(al, clean_coin)}")
+
+        # رسم خطوط ورود، استاپ، TP1 و TP2
+        ax.axhline(entry_price, color="#58a6ff", linestyle="--", linewidth=1.5, label=f"LIMIT ENTRY: {format_price(entry_price, clean_coin)}")
+        ax.axhline(stop_loss, color="#f85149", linestyle="-", linewidth=1.6, label=f"STOP LOSS: {format_price(stop_loss, clean_coin)}")
+        ax.axhline(tp1_price, color="#d29922", linestyle="-.", linewidth=1.4, label=f"TP1 (50% + Risk-Free): {format_price(tp1_price, clean_coin)}")
+        ax.axhline(tp2_price, color="#3fb950", linestyle="-", linewidth=1.7, label=f"TP2 (Final Target): {format_price(tp2_price, clean_coin)}")
+
+        symbol_str = WATCHLIST.get(clean_coin, {}).get("symbol", f"{clean_coin}/USDT")
+        ax.set_title(
+            f"INSTITUTIONAL V2.5 | {clean_coin} ({symbol_str}) — {side.upper()} | Regime: {regime}",
+            color=self.TEXT_COLOR, fontsize=11, fontweight="bold", pad=10,
+        )
+
+        self._style_axes(ax, ax_vol, n_bars)
+        ax.legend(loc="upper left", facecolor=self.DARK_BG, edgecolor=self.GRID_COLOR, labelcolor=self.TEXT_COLOR, fontsize=8)
+
         out_path = self.charts_dir / f"setup_{clean_coin.lower()}.png"
+        fig.savefig(out_path, bbox_inches="tight", facecolor=self.DARK_BG)
+        plt.close(fig)
+        return str(out_path)
 
-        if df_15m is None or len(df_15m) < 5:
-            return out_path
+    def generate_asset_analysis_chart(
+        self,
+        coin: str,
+        df_15m: pd.DataFrame,
+        scan_data: Dict[str, Any],
+        regime_data: Dict[str, Any],
+    ) -> str:
+        """
+        رسم چارت تحلیلی درخواستی (On-Demand Analysis Chart) وقتی کاربر روی دکمه شیشه‌ای
+        [ 📊 تحلیل BTC / ETH / SOL / XRP / XAU ] کلیک می‌کند.
+        """
+        clean_coin = str(coin).upper()
+        df = df_15m.tail(55).reset_index(drop=True) if len(df_15m) > 55 else df_15m.copy().reset_index(drop=True)
 
-        df_plot = df_15m.tail(55).reset_index(drop=True)
-        n = len(df_plot)
+        fig, (ax, ax_vol) = plt.subplots(
+            2, 1, figsize=(11, 6.5), dpi=130, sharex=True,
+            gridspec_kw={"height_ratios": [3.5, 1.0], "hspace": 0.06},
+            facecolor=self.DARK_BG,
+        )
+        ax.set_facecolor(self.PANEL_BG)
+        ax_vol.set_facecolor(self.PANEL_BG)
 
-        fig, ax = plt.subplots(figsize=(11, 6), dpi=130)
-        fig.patch.set_facecolor("#0d1117")
-        ax.set_facecolor("#0d1117")
+        self._plot_candles_and_volume(ax, ax_vol, df)
+        n_bars = max(len(df), 10)
 
-        opens = df_plot["open"].astype(float).values
-        highs = df_plot["high"].astype(float).values
-        lows = df_plot["low"].astype(float).values
-        closes = df_plot["close"].astype(float).values
+        curr_p = float(scan_data.get("current_price", df["close"].iloc[-1] if not df.empty else 0.0))
+        sw_high = float(scan_data.get("swing_high", 0.0))
+        sw_low = float(scan_data.get("swing_low", 0.0))
 
-        # ۱. رسم کندل‌استیک‌ها (سبز #00e676 و قرمز #ff5252)
-        candle_width = 0.62
-        for i in range(n):
-            o, h, l, c = opens[i], highs[i], lows[i], closes[i]
-            color = "#00e676" if c >= o else "#ff5252"
-            ax.plot([i, i], [l, h], color=color, linewidth=1.1, zorder=2)
-            body_bottom = min(o, c)
-            body_height = max(abs(c - o), (h - l) * 0.02, 1e-6)
+        if sw_high > 0 and sw_low > 0:
+            eq_mid = (sw_high + sw_low) / 2.0
+            ax.axhline(sw_high, color="#f85149", linestyle="--", linewidth=1.2, alpha=0.8, label=f"Swing High Pool: {format_price(sw_high, clean_coin)}")
+            ax.axhline(eq_mid, color="#8b949e", linestyle=":", linewidth=1.0, alpha=0.7, label=f"Equilibrium (50%): {format_price(eq_mid, clean_coin)}")
+            ax.axhline(sw_low, color="#3fb950", linestyle="--", linewidth=1.2, alpha=0.8, label=f"Swing Low Pool: {format_price(sw_low, clean_coin)}")
+
+        active_fvg = scan_data.get("active_fvg")
+        if isinstance(active_fvg, dict) and "top" in active_fvg and "bottom" in active_fvg:
+            f_top = float(active_fvg["top"])
+            f_bot = float(active_fvg["bottom"])
             rect = Rectangle(
-                (i - candle_width / 2.0, body_bottom),
-                candle_width,
-                body_height,
-                facecolor=color,
-                edgecolor=color,
-                linewidth=0.8,
-                zorder=3,
+                (0, f_bot), width=n_bars + 4, height=max(f_top - f_bot, 1e-6),
+                facecolor=self.FVG_COLOR, edgecolor=self.FVG_COLOR, alpha=0.20,
+                label=f"Active {active_fvg.get('type','')} FVG ({format_price(f_bot, clean_coin)} - {format_price(f_top, clean_coin)})",
             )
             ax.add_patch(rect)
 
-        # ۲. رسم ناحیه طلایی‌رنگ FVG Zone (در صورت وجود)
-        if isinstance(active_fvg, dict) and active_fvg.get("top") and active_fvg.get("bottom"):
-            fvg_top = float(active_fvg["top"])
-            fvg_bot = float(active_fvg["bottom"])
-            ax.axhspan(
-                fvg_bot,
-                fvg_top,
-                color="#ffd700",
-                alpha=0.16,
-                label=f"15m FVG Zone ({fvg_bot:.4f} - {fvg_top:.4f})",
-                zorder=1,
-            )
+        asian_range = scan_data.get("asian_range", {})
+        if isinstance(asian_range, dict) and float(asian_range.get("asian_high", 0.0)) > 0:
+            ah = float(asian_range["asian_high"])
+            al = float(asian_range["asian_low"])
+            ax.axhline(ah, color=self.ASIAN_COLOR, linestyle="-.", linewidth=1.0, alpha=0.7, label=f"Asian High: {format_price(ah, clean_coin)}")
+            ax.axhline(al, color=self.ASIAN_COLOR, linestyle="-.", linewidth=1.0, alpha=0.7, label=f"Asian Low: {format_price(al, clean_coin)}")
 
-        # ۳. رسم خطوط افقی LIMIT ENTRY, STOP LOSS, TP1, TP2
-        ax.axhline(
-            entry_price,
-            color="#29b6f6",
-            linestyle="--",
-            linewidth=1.5,
-            label=f"LIMIT ENTRY: {entry_price:.4f}",
-            zorder=4,
-        )
-        ax.axhline(
-            stop_loss,
-            color="#ff1744",
-            linestyle="-",
-            linewidth=1.5,
-            label=f"STOP LOSS: {stop_loss:.4f}",
-            zorder=4,
-        )
-        ax.axhline(
-            tp1_price,
-            color="#ffca28",
-            linestyle=":",
-            linewidth=1.5,
-            label=f"TP1 (Risk-Free 50%): {tp1_price:.4f}",
-            zorder=4,
-        )
-        ax.axhline(
-            tp2_price,
-            color="#00e676",
-            linestyle="-.",
-            linewidth=1.6,
-            label=f"TP2 (Final Target): {tp2_price:.4f}",
-            zorder=4,
-        )
+        if curr_p > 0:
+            ax.axhline(curr_p, color="#58a6ff", linestyle="-", linewidth=1.3, label=f"Live Price: {format_price(curr_p, clean_coin)}")
 
-        # تنظیمات ظاهری و گرید
-        title_str = (
-            f"Institutional Bot V2 | {clean_coin} ({side}) — 15m Structure | "
-            f"Score: {score:.1f}/100 | Regime: {regime}"
-        )
-        ax.set_title(title_str, color="#e6edf3", fontsize=11, fontweight="bold", pad=12)
-        ax.set_xlabel("Recent 15m Candles (Last 55 Bars)", color="#8b949e", fontsize=9)
-        ax.set_ylabel("Price (USDT)", color="#8b949e", fontsize=9)
-
-        ax.grid(True, linestyle="--", linewidth=0.5, color="#21262d", alpha=0.8)
-        ax.tick_params(colors="#8b949e", labelsize=8.5)
-        for spine in ax.spines.values():
-            spine.set_color("#30363d")
-
-        legend = ax.legend(
-            loc="upper left",
-            facecolor="#161b22",
-            edgecolor="#30363d",
-            fontsize=8.5,
-            labelcolor="#e6edf3",
-        )
-        legend.set_zorder(5)
-
-        plt.tight_layout()
-        fig.savefig(out_path, facecolor=fig.get_facecolor(), edgecolor="none")
-        plt.close(fig)
-        return out_path
-
-    def generate_equity_chart(self, portfolio: Dict[str, Any]) -> Path:
-        """
-        رسم نمودار منحنی رشد سرمایه در فایل state/charts/equity_curve.png با تم تاریک (#0d1117).
-        """
-        out_path = self.charts_dir / "equity_curve.png"
-        curve = portfolio.get("equity_curve", [])
-        initial_bal = float(portfolio.get("initial_balance_usdt", 1000.0))
-        current_bal = float(portfolio.get("balance_usdt", initial_bal))
-
-        equities = [float(item.get("equity", initial_bal)) for item in curve if isinstance(item, dict)]
-        if not equities:
-            equities = [initial_bal, current_bal]
-        elif len(equities) == 1:
-            equities.append(current_bal)
-
-        x_vals = np.arange(len(equities))
-        y_vals = np.array(equities, dtype=float)
-
-        fig, ax = plt.subplots(figsize=(10, 5), dpi=130)
-        fig.patch.set_facecolor("#0d1117")
-        ax.set_facecolor("#0d1117")
-
-        line_color = "#00e676" if y_vals[-1] >= initial_bal else "#ff5252"
-        ax.plot(x_vals, y_vals, color=line_color, linewidth=2.2, marker="o", markersize=3.5, label="Portfolio Equity (USDT)")
-        ax.axhline(initial_bal, color="#8b949e", linestyle="--", linewidth=1.1, label=f"Initial Baseline (${initial_bal:,.2f})")
-        ax.fill_between(x_vals, initial_bal, y_vals, color=line_color, alpha=0.14)
-
-        pnl_total = y_vals[-1] - initial_bal
-        pnl_pct = ((y_vals[-1] / initial_bal) - 1.0) * 100.0 if initial_bal > 0 else 0.0
-
+        reg_name = regime_data.get("regime", "RANGING")
+        htf_bias = regime_data.get("htf_bias", "NEUTRAL")
         ax.set_title(
-            f"Institutional Portfolio V2 — Equity Curve | Balance: ${y_vals[-1]:,.2f} ({pnl_pct:+.2f}%)",
-            color="#e6edf3",
-            fontsize=11,
-            fontweight="bold",
-            pad=12,
+            f"LIVE RADAR X-RAY | {clean_coin}/USDT (15m) | Regime: {reg_name} | 4H Bias: {htf_bias}",
+            color=self.TEXT_COLOR, fontsize=11, fontweight="bold", pad=10,
         )
-        ax.set_xlabel("Trade Sequence / Checkpoints", color="#8b949e", fontsize=9)
-        ax.set_ylabel("Equity (USDT)", color="#8b949e", fontsize=9)
 
-        ax.grid(True, linestyle="--", linewidth=0.5, color="#21262d", alpha=0.8)
-        ax.tick_params(colors="#8b949e", labelsize=8.5)
-        for spine in ax.spines.values():
-            spine.set_color("#30363d")
+        self._style_axes(ax, ax_vol, n_bars)
+        ax.legend(loc="upper left", facecolor=self.DARK_BG, edgecolor=self.GRID_COLOR, labelcolor=self.TEXT_COLOR, fontsize=8)
 
-        ax.legend(loc="upper left", facecolor="#161b22", edgecolor="#30363d", fontsize=8.5, labelcolor="#e6edf3")
-        plt.tight_layout()
-        fig.savefig(out_path, facecolor=fig.get_facecolor(), edgecolor="none")
+        out_path = self.charts_dir / f"radar_{clean_coin.lower()}.png"
+        fig.savefig(out_path, bbox_inches="tight", facecolor=self.DARK_BG)
         plt.close(fig)
-        return out_path
+        return str(out_path)
 
-    # ==========================================================================
-    # ۴. نمایش درختی و کامل پوزیشن‌های باز و گزارش وضعیت (Status & Nightly Report)
-    # ==========================================================================
-    def _format_open_positions_section(self, open_positions: List[Dict[str, Any]]) -> str:
-        """
-        نمایش جزئیات کامل پوزیشن‌های باز به صورت درختی شامل:
-        نام ارز، جهت (🟢 LONG / 🔴 SHORT)، امتیاز، قیمت ورود، استاپ فعلی، تارگت ۱ و ۲،
-        و وضعیت ریسک‌فری شدن (🛡️ Risk-Free به همراه سود سیوشده یا ⚡ فعال به همراه ریسک و حجم).
-        """
-        if not open_positions:
-            return "📂 <b>پوزیشن‌های باز فعلی:</b>\n└ <i>هیچ پوزیشن بازی وجود ندارد (0/5 اسلات اشغال)</i>"
+    def _plot_candles_and_volume(self, ax: Any, ax_vol: Any, df: pd.DataFrame) -> None:
+        if df.empty:
+            return
+        opens = df["open"].astype(float).values
+        highs = df["high"].astype(float).values
+        lows = df["low"].astype(float).values
+        closes = df["close"].astype(float).values
+        vols = df["volume"].astype(float).values if "volume" in df.columns else np.ones(len(df))
 
-        lines: List[str] = [f"📂 <b>لیست پوزیشن‌های باز ({len(open_positions)}/5 اسلات):</b>"]
+        price_span = max(float(np.max(highs) - np.min(lows)), 1e-6)
+        min_body = price_span * 0.003
 
-        for idx, pos in enumerate(open_positions, start=1):
-            coin = str(pos.get("coin", "UNKNOWN"))
-            side = str(pos.get("side", "LONG")).upper()
-            side_badge = "🟢 LONG" if side == "LONG" else "🔴 SHORT"
-            score = float(pos.get("score", 0.0))
-            entry = float(pos.get("entry_price", 0.0))
-            curr_sl = float(pos.get("current_stop_loss", 0.0))
-            tp1 = float(pos.get("tp1_price", 0.0))
-            tp2 = float(pos.get("tp2_price", 0.0))
-            tp1_hit = bool(pos.get("tp1_hit", False))
-            partial_pnl = float(pos.get("realized_partial_pnl", 0.0))
-            risk_usdt = float(pos.get("risk_amount_usdt", 0.0))
-            rem_qty = float(pos.get("remaining_quantity", 0.0))
+        colors = [self.BULL_COLOR if closes[i] >= opens[i] else self.BEAR_COLOR for i in range(len(df))]
 
-            if tp1_hit:
-                state_str = f"🛡️ <b>Risk-Free (TP1 Hit)</b> | سود سیوشده: <code>{partial_pnl:+.2f}$</code>"
-            else:
-                state_str = f"⚡ <b>فعال (Active Risk)</b> | ریسک: <code>{risk_usdt:.2f}$</code> | حجم: <code>{rem_qty:.4f}</code>"
-
-            lines.append(
-                f"\n<b>{idx}. {coin} ({side_badge})</b> — امتیاز: <code>{score:.1f}</code>\n"
-                f"├ ورود: <code>{entry:.4f}</code> | استاپ فعلی: <code>{curr_sl:.4f}</code>\n"
-                f"├ تارگت ۱: <code>{tp1:.4f}</code> | تارگت ۲: <code>{tp2:.4f}</code>\n"
-                f"└ وضعیت: {state_str}"
+        for i in range(len(df)):
+            o, h, l, c = opens[i], highs[i], lows[i], closes[i]
+            color = colors[i]
+            ax.plot([i, i], [l, h], color=color, linewidth=1.1, zorder=2)
+            body_bottom = min(o, c)
+            body_height = max(abs(c - o), min_body)
+            rect = Rectangle(
+                (i - 0.32, body_bottom), width=0.64, height=body_height,
+                facecolor=color, edgecolor=color, alpha=0.92, zorder=3,
             )
+            ax.add_patch(rect)
 
+        x_idx = np.arange(len(df))
+        ax_vol.bar(x_idx, vols, width=0.64, color=colors, alpha=0.75, zorder=2)
+        if len(vols) >= 5:
+            vol_sma = pd.Series(vols).rolling(min(20, len(vols)), min_periods=1).mean().values
+            ax_vol.plot(x_idx, vol_sma, color="#58a6ff", linewidth=1.1, alpha=0.85, label="Vol SMA20")
+
+    def _style_axes(self, ax: Any, ax_vol: Any, n_bars: int) -> None:
+        ax.set_xlim(-1, n_bars + 3)
+        ax.grid(True, color=self.GRID_COLOR, linestyle=":", linewidth=0.7, alpha=0.7)
+        ax_vol.grid(True, color=self.GRID_COLOR, linestyle=":", linewidth=0.6, alpha=0.5)
+        ax.tick_params(colors=self.TEXT_COLOR, labelsize=8)
+        ax_vol.tick_params(colors=self.TEXT_COLOR, labelsize=7)
+        ax_vol.set_ylabel("Vol", color="#8b949e", fontsize=8)
+        for a in (ax, ax_vol):
+            for spine in a.spines.values():
+                spine.set_color(self.GRID_COLOR)
+
+    # ==========================================================================
+    # ۳. موتور گرافیکی ۲: کارت سود/زیان (PnL Share Card) و چارت منحنی سرمایه
+    # ==========================================================================
+    def generate_pnl_card(
+        self,
+        trade_record: Dict[str, Any],
+        portfolio: Dict[str, Any],
+    ) -> str:
+        """
+        تولید کارت گرافیکی سود/زیان (PnL Share Card) با تم دارک سازمانی هنگام بسته شدن معامله.
+        """
+        coin = str(trade_record.get("coin", "BTC")).upper()
+        side = str(trade_record.get("side", "LONG")).upper()
+        pnl_usdt = float(trade_record.get("net_pnl_usdt", 0.0))
+        r_mult = float(trade_record.get("r_multiple", 0.0))
+        entry_p = float(trade_record.get("entry_price", 0.0))
+        exit_p = float(trade_record.get("exit_price", 0.0))
+        reason = str(trade_record.get("exit_reason", "TARGET_HIT"))
+
+        is_win = pnl_usdt >= 0.0
+        accent_color = self.BULL_COLOR if is_win else self.BEAR_COLOR
+        sign = "+" if pnl_usdt >= 0 else ""
+
+        gate = StateManager.get_paper_gate_progress(portfolio)
+
+        fig, ax = plt.subplots(figsize=(8.5, 4.8), dpi=130, facecolor=self.DARK_BG)
+        ax.set_facecolor(self.PANEL_BG)
+        ax.axis("off")
+
+        border = Rectangle((0.02, 0.04), 0.96, 0.92, fill=False, edgecolor=accent_color, linewidth=2.2, transform=ax.transAxes)
+        ax.add_patch(border)
+
+        ax.text(0.07, 0.84, "INSTITUTIONAL TRADING BOT V2.5 — PNL CARD", color="#8b949e", fontsize=10, fontweight="bold", transform=ax.transAxes)
+        ax.text(0.07, 0.68, f"{coin}/USDT  |  {side}", color=self.TEXT_COLOR, fontsize=20, fontweight="bold", transform=ax.transAxes)
+        ax.text(0.07, 0.44, f"{sign}{r_mult:.2f}R   ({sign}${pnl_usdt:.2f})", color=accent_color, fontsize=28, fontweight="bold", transform=ax.transAxes)
+
+        info_line = (
+            f"Entry: {format_price(entry_p, coin)}   |   "
+            f"Exit: {format_price(exit_p, coin)}   |   "
+            f"Reason: {reason}"
+        )
+        ax.text(0.07, 0.25, info_line, color=self.TEXT_COLOR, fontsize=10.5, transform=ax.transAxes)
+
+        footer_line = (
+            f"Balance: ${float(portfolio.get('balance_usdt', 1000.0)):,.2f}   |   "
+            f"50-Trade Paper Gate: {gate['completed_trades']}/{gate['target_trades']} ({gate['progress_pct']:.0f}%)"
+        )
+        ax.text(0.07, 0.11, footer_line, color="#58a6ff", fontsize=9.5, fontweight="bold", transform=ax.transAxes)
+
+        out_path = self.charts_dir / f"pnl_card_{coin.lower()}.png"
+        fig.savefig(out_path, bbox_inches="tight", facecolor=self.DARK_BG)
+        plt.close(fig)
+        return str(out_path)
+
+    def generate_equity_chart(self, portfolio: Dict[str, Any]) -> str:
+        curve = portfolio.get("equity_curve", [])
+        equities = [float(pt.get("equity", 1000.0)) for pt in curve] if curve else [1000.0]
+        if len(equities) == 1:
+            equities = [equities[0], equities[0]]
+
+        init_bal = float(portfolio.get("initial_balance_usdt", 1000.0))
+        curr_bal = float(portfolio.get("balance_usdt", equities[-1]))
+        line_color = self.BULL_COLOR if curr_bal >= init_bal else self.BEAR_COLOR
+
+        fig, ax = plt.subplots(figsize=(10, 4.5), dpi=130, facecolor=self.DARK_BG)
+        ax.set_facecolor(self.PANEL_BG)
+
+        x_vals = list(range(len(equities)))
+        ax.plot(x_vals, equities, color=line_color, linewidth=2.3, marker="o", markersize=3.5, label="Portfolio Equity (USDT)")
+        ax.axhline(init_bal, color="#8b949e", linestyle="--", linewidth=1.0, label=f"Initial Baseline (${init_bal:,.2f})")
+        ax.fill_between(x_vals, equities, init_bal, color=line_color, alpha=0.12)
+
+        pnl_pct = ((curr_bal - init_bal) / max(init_bal, 1e-8)) * 100.0
+        gate = StateManager.get_paper_gate_progress(portfolio)
+        ax.set_title(
+            f"Institutional Portfolio V2.5 — Balance: ${curr_bal:,.2f} ({pnl_pct:+.2f}%) | Paper Gate: {gate['completed_trades']}/{gate['target_trades']}",
+            color=self.TEXT_COLOR, fontsize=10.5, fontweight="bold", pad=10,
+        )
+        ax.set_xlabel("Trade Checkpoints", color=self.TEXT_COLOR, fontsize=9)
+        ax.set_ylabel("Equity (USDT)", color=self.TEXT_COLOR, fontsize=9)
+        ax.grid(True, color=self.GRID_COLOR, linestyle=":", linewidth=0.8)
+        ax.tick_params(colors=self.TEXT_COLOR, labelsize=8)
+        for spine in ax.spines.values():
+            spine.set_color(self.GRID_COLOR)
+
+        ax.legend(loc="upper left", facecolor=self.DARK_BG, edgecolor=self.GRID_COLOR, labelcolor=self.TEXT_COLOR, fontsize=8)
+
+        out_path = self.charts_dir / "equity_curve.png"
+        fig.savefig(out_path, bbox_inches="tight", facecolor=self.DARK_BG)
+        plt.close(fig)
+        return str(out_path)
+
+    # ==========================================================================
+    # ۴. قالب‌های متنی تلگرام (تفکیک بیلان شبانه، استاتوس جامع، شکار جدید و تحلیل ارز)
+    # ==========================================================================
+    def build_nightly_pulse_report(
+        self,
+        portfolio: Dict[str, Any],
+        bot_config: Dict[str, Any],
+        shadow_portfolio: Dict[str, Any],
+        sentiment_data: Dict[str, Any],
+    ) -> str:
+        """
+        ۱. بیلان شبانه (Nightly Pulse): جمع‌وجور، مدیریتی و متمرکز بر دارایی، سود/زیان پوزیشن‌ها و دروازه ۵۰ ترید.
+        """
+        bal = float(portfolio.get("balance_usdt", 1000.0))
+        init_bal = float(portfolio.get("initial_balance_usdt", 1000.0))
+        total_pnl_pct = ((bal - init_bal) / max(init_bal, 1e-8)) * 100.0
+        daily_pnl = float(portfolio.get("daily_pnl_usdt", 0.0))
+        open_pos = portfolio.get("open_positions", [])
+        unrealized_total = sum(float(p.get("unrealized_pnl_usdt", 0.0)) for p in open_pos)
+
+        gate = StateManager.get_paper_gate_progress(portfolio)
+        sh_stats = shadow_portfolio.get("stats", {})
+        filtered_cnt = int(sh_stats.get("total_filtered", 0))
+        saved_cnt = int(sh_stats.get("saved_from_loss", 0))
+
+        sys_badge = "🟢 روشن و ایمن"
+        if bot_config.get("panic_mode"):
+            sys_badge = "🚨 قفل اضطراری"
+        elif portfolio.get("daily_circuit_breaker") or portfolio.get("weekly_circuit_breaker"):
+            sys_badge = "🔒 مدارشکن فعال"
+        elif bot_config.get("is_paused"):
+            sys_badge = "⏸ متوقف (Paused)"
+
+        pos_lines: List[str] = []
+        if not open_pos:
+            pos_lines.append("  └ <i>هیچ پوزیشن بازی وجود ندارد (0/5)</i>")
+        else:
+            for idx, p in enumerate(open_pos, start=1):
+                c = p["coin"]
+                s = p["side"]
+                u_pnl = float(p.get("unrealized_pnl_usdt", 0.0))
+                margin_u = max(float(p.get("margin_used_usdt", 1.0)), 1e-8)
+                u_pct = (u_pnl / margin_u) * 100.0
+                st_icon = "🛡️ Risk-Free" if p.get("is_risk_free") else "⚡ فعال"
+                pnl_ic = "🟢" if u_pnl >= 0 else "🔴"
+                pos_lines.append(
+                    f"  {idx}. {pnl_ic} <b>{c}</b> ({s}) | PnL: <code>{u_pnl:+.2f}$ ({u_pct:+.1f}%)</code> | {st_icon}"
+                )
+
+        fng_val = sentiment_data.get("value", 50)
+        fng_cls = sentiment_data.get("classification", "Neutral")
+        fng_bar = sentiment_data.get("bar", "🟨🟨🟨🟨🟨⬜⬜⬜⬜⬜")
+
+        lines = [
+            "🌙 <b>پالس و بیلان شبانه ربات سازمانی (V2.5 Pro)</b>",
+            "━━━━━━━━━━━━━━━━━━",
+            f"🤖 <b>وضعیت سیستم:</b> <code>{sys_badge}</code> | <b>حالت:</b> <code>{gate['mode']}</code>",
+            f"💰 <b>موجودی نقد:</b> <code>${bal:,.2f}</code> (<code>{total_pnl_pct:+.2f}%</code>)",
+            f"📅 <b>سود/زیان امروز:</b> <code>{daily_pnl:+.2f}$</code> | <b>شناور فعلی:</b> <code>{unrealized_total:+.2f}$</code>",
+            "",
+            f"🎯 <b>دروازه ۵۰ معامله کاغذی:</b> <code>{gate['completed_trades']}/{gate['target_trades']}</code> (برد: <code>{gate['win_rate_pct']:.1f}%</code>)",
+            f"{gate['bar']} <code>{gate['progress_pct']:.0f}%</code>",
+            "",
+            f"📂 <b>پوزیشن‌های باز و سود/زیان ({len(open_pos)}/5):</b>",
+            *pos_lines,
+            "",
+            f"🛡️ <b>سپر رادار سایه:</b> <code>{filtered_cnt}</code> ردشده | <code>{saved_cnt}</code> نجات قطعی از استاپ",
+            f"🧭 <b>سنتیمنت بازار:</b> <code>{fng_val} ({fng_cls})</code>\n{fng_bar}",
+        ]
         return "\n".join(lines)
 
     def build_status_report(
         self,
         portfolio: Dict[str, Any],
         bot_config: Dict[str, Any],
-        shadow_portfolio: Optional[Dict[str, Any]] = None,
-        sentiment_data: Optional[Dict[str, Any]] = None,
-        title: str = "🏛️ گزارش جامع اتاق فرمان (Institutional Bot V2)",
+        shadow_portfolio: Dict[str, Any],
+        sentiment_data: Dict[str, Any],
+        title: str = "🏛️ اتاق فرمان ربات سازمانی V2.5 | گزارش جامع وضعیت",
+        market_regimes: Optional[Dict[str, Any]] = None,
+        strategy_memory: Optional[Dict[str, Any]] = None,
+        news_status: Optional[Dict[str, Any]] = None,
+        killzone_status: Optional[Dict[str, Any]] = None,
     ) -> str:
         """
-        ساخت متن کامل گزارش وضعیت (برای دستور /status و گزارش شبانه) شامل:
-        موجودی، سود روزانه، وضعیت مدارشکن، آمار وین‌ریت، رادار سایه و جزئیات درختی پوزیشن‌های باز.
+        ۲. استاتوس جامع لحظه‌ای (Comprehensive Live Status):
+        شامل تمام جزئیات مالی، مارجین آزاد/درگیر، وضعیت سشن و خبر اقتصادی،
+        پوزیشن‌های باز با قیمت‌های گردشده، ماتریس رادار ۵ ارز و ضرایب ML.
         """
         bal = float(portfolio.get("balance_usdt", 1000.0))
         init_bal = float(portfolio.get("initial_balance_usdt", 1000.0))
+        total_pnl_pct = ((bal - init_bal) / max(init_bal, 1e-8)) * 100.0
         daily_pnl = float(portfolio.get("daily_pnl_usdt", 0.0))
-        total_pnl_pct = ((bal / init_bal) - 1.0) * 100.0 if init_bal > 0 else 0.0
-
-        cb_active = bool(portfolio.get("daily_circuit_breaker", False))
-        is_paused = bool(bot_config.get("is_paused", False))
-        panic_mode = bool(bot_config.get("panic_mode", False))
-        risk_mode = str(bot_config.get("risk_mode", "NORMAL")).upper()
-
-        if panic_mode:
-            bot_state_str = "🚨 PANIC LOCKED"
-        elif is_paused:
-            bot_state_str = "⏸ PAUSED"
-        elif cb_active:
-            bot_state_str = "🛑 CIRCUIT BREAKER TRIPPED"
-        else:
-            bot_state_str = "🟢 ACTIVE & HUNTING"
-
+        weekly_pnl = float(portfolio.get("weekly_pnl_usdt", 0.0))
         stats = portfolio.get("stats", {})
-        total_trades = int(stats.get("total_trades", 0))
-        wins = int(stats.get("wins", 0))
-        losses = int(stats.get("losses", 0))
-        win_rate = float(stats.get("win_rate_pct", 0.0))
         max_dd = float(stats.get("max_drawdown_pct", 0.0))
 
-        open_positions = portfolio.get("open_positions", [])
-        rf_count = sum(1 for p in open_positions if bool(p.get("tp1_hit", False)))
-        active_risk_count = len(open_positions) - rf_count
+        open_pos = portfolio.get("open_positions", [])
+        unrealized_total = sum(float(p.get("unrealized_pnl_usdt", 0.0)) for p in open_pos)
+        used_margin = sum(float(p.get("margin_used_usdt", 0.0)) for p in open_pos)
+        used_margin_pct = (used_margin / max(bal, 1e-8)) * 100.0
 
-        sh_stats = (shadow_portfolio or {}).get("stats", {})
-        saved_losses = int(sh_stats.get("saved_from_loss", 0))
-        shield_acc = float(sh_stats.get("shield_accuracy", 100.0))
+        gate = StateManager.get_paper_gate_progress(portfolio)
 
-        sent = sentiment_data or {}
-        fng_val = sent.get("value", 50)
-        fng_cls = sent.get("classification", "Neutral")
-        fng_bar = sent.get("bar", "🟨🟨🟨🟨🟨⬜⬜⬜⬜⬜")
+        # وضعیت سیستم و مدارشکن‌ها
+        sys_state = "🟢 روشن و در حال شکار"
+        if bot_config.get("panic_mode"):
+            sys_state = "🚨 قفل اضطراری (PANIC)"
+        elif bot_config.get("is_paused"):
+            sys_state = "⏸ متوقف موقت (PAUSED)"
 
-        open_pos_section = self._format_open_positions_section(open_positions)
+        cb_daily = "🔒 قفل (۲٪)" if portfolio.get("daily_circuit_breaker") else "🟢 ایمن"
+        cb_weekly = "🔒 قفل (۵٪)" if portfolio.get("weekly_circuit_breaker") else "🟢 ایمن"
 
-        report = (
-            f"<b>{title}</b>\n"
-            f"━━━━━━━━━━━━━━━━━━━━━━\n"
-            f"🤖 <b>وضعیت سیستم:</b> <code>{bot_state_str}</code>\n"
-            f"⚙️ <b>مد ریسک:</b> <code>{risk_mode}</code> | <b>اسلات‌ها:</b> <code>{len(open_positions)}/5</code> "
-            f"(⚡فعال: <code>{active_risk_count}</code> | 🛡️ریسک‌فری: <code>{rf_count}</code>)\n\n"
-            f"💰 <b>موجودی فعلی:</b> <code>${bal:,.2f}</code> (<code>{total_pnl_pct:+.2f}%</code>)\n"
-            f"📅 <b>سود/زیان امروز:</b> <code>${daily_pnl:+.2f}</code> | <b>Max DD:</b> <code>{max_dd:.2f}%</code>\n"
-            f"📈 <b>آمار کل:</b> <code>{total_trades}</code> معامله (✅ <code>{wins}</code> برد | ❌ <code>{losses}</code> باخت | WinRate: <code>{win_rate:.1f}%</code>)\n"
-            f"🛡️ <b>سپر رادار سایه:</b> <code>{saved_losses}</code> ضرر مهارشده (دقت سپر: <code>{shield_acc:.1f}%</code>)\n\n"
-            f"🧭 <b>سنتیمنت بازار (F&G):</b> <code>{fng_val} ({fng_cls})</code>\n"
-            f"{fng_bar}\n"
-            f"━━━━━━━━━━━━━━━━━━━━━━\n"
-            f"{open_pos_section}"
-        )
-        return report
+        # پوزیشن‌های باز با اعشار استاندارد
+        pos_lines: List[str] = []
+        if not open_pos:
+            pos_lines.append("  └ <i>هیچ پوزیشن بازی وجود ندارد (0/5 اسلات اشغال)</i>")
+        else:
+            for idx, p in enumerate(open_pos, start=1):
+                c = p["coin"]
+                s = p["side"]
+                sc = float(p.get("confluence_score", 70.0))
+                ep = format_price(p["entry_price"], c)
+                sl = format_price(p["stop_loss"], c)
+                tp1 = format_price(p["tp1_breakeven"], c)
+                tp2 = format_price(p["tp2_final"], c)
+                u_pnl = float(p.get("unrealized_pnl_usdt", 0.0))
+                r_usdt = float(p.get("initial_risk_usdt", 3.75))
+                notional = float(p.get("remaining_notional_usdt", 0.0))
+                if p.get("trailing_active"):
+                    st_badge = "🚀 تریلینگ استاپ"
+                elif p.get("is_risk_free"):
+                    st_badge = "🛡️ ریسک‌فری"
+                else:
+                    st_badge = "⚡ فعال"
+                pos_lines.append(
+                    f"{idx}. <b>{c} ({s})</b> | امتیاز: <code>{sc:.1f}</code> | PnL: <code>{u_pnl:+.2f}$</code>\n"
+                    f"   ├ ورود: <code>{ep}</code> | استاپ: <code>{sl}</code>\n"
+                    f"   ├ تارگت ۱: <code>{tp1}</code> | تارگت ۲: <code>{tp2}</code>\n"
+                    f"   └ وضعیت: {st_badge} (ریسک: <code>{r_usdt:.2f}$</code> | حجم: <code>{notional:.1f}$</code>)"
+                )
 
-    def build_trade_opened_caption(
+        # خلاصه رادار ۵ دارایی
+        radar_lines: List[str] = []
+        regimes_dict = market_regimes or {}
+        for coin_key in WATCHLIST.keys():
+            r_info = regimes_dict.get(coin_key, {})
+            if isinstance(r_info, dict) and r_info:
+                reg_lbl = r_info.get("regime", "RANGING")
+                side_lbl = r_info.get("candidate_side", "NONE")
+                score_lbl = float(r_info.get("confluence_score", 0.0))
+                price_lbl = format_price(r_info.get("current_price", 0.0), coin_key)
+                radar_lines.append(
+                    f" • <b>{coin_key}</b> (<code>{price_lbl}</code>) | <code>{reg_lbl}</code> ➔ <b>{side_lbl}</b> (امتیاز: <code>{score_lbl:.0f}/100</code>)"
+                )
+
+        if not radar_lines:
+            radar_lines.append(" • <i>در انتظار بروزرسانی اسکنر در چرخه جاری...</i>")
+
+        # سپر سایه و ضرایب ML
+        sh_stats = shadow_portfolio.get("stats", {})
+        sh_filtered = int(sh_stats.get("total_filtered", 0))
+        sh_saved = int(sh_stats.get("saved_from_loss", 0))
+        sh_eval = int(sh_stats.get("evaluated_count", 0))
+        sh_acc_str = f"{float(sh_stats.get('shield_accuracy', 0.0)):.1f}%" if sh_eval > 0 else "در حال پایش"
+
+        ml_line = ""
+        if isinstance(strategy_memory, dict) and "coin_multipliers" in strategy_memory:
+            cm = strategy_memory["coin_multipliers"]
+            ml_line = " | ".join([f"{k}:<code>{ float(cm.get(k, 1.0)):.2f}x</code>" for k in WATCHLIST.keys()])
+
+        session_str = (killzone_status or {}).get("session_fa", "🌐 سشن جهانی در جریان")
+        news_str = (news_status or {}).get("summary_fa", "🟢 تقویم اقتصادی ایمن")
+
+        fng_val = sentiment_data.get("value", 50)
+        fng_cls = sentiment_data.get("classification", "Neutral")
+        fng_bar = sentiment_data.get("bar", "🟨🟨🟨🟨🟨⬜⬜⬜⬜⬜")
+
+        lines = [
+            f"<b>{title}</b>",
+            "━━━━━━━━━━━━━━━━━━",
+            f"🤖 <b>وضعیت سیستم:</b> {sys_state}",
+            f"🛡️ <b>مدارشکن روزانه:</b> {cb_daily} | <b>هفتگی:</b> {cb_weekly}",
+            f"💰 <b>موجودی نقد:</b> <code>${bal:,.2f}</code> (<code>{total_pnl_pct:+.2f}%</code>) | <b>شناور:</b> <code>{unrealized_total:+.2f}$</code>",
+            f"📅 <b>بیلان امروز:</b> <code>{daily_pnl:+.2f}$</code> | <b>هفته:</b> <code>{weekly_pnl:+.2f}$</code> | <b>Max DD:</b> <code>{max_dd:.2f}%</code>",
+            f"🏦 <b>مارجین درگیر:</b> <code>${used_margin:,.1f} ({used_margin_pct:.1f}%)</code> | <b>مد ریسک:</b> <code>{bot_config.get('risk_mode','NORMAL')}</code>",
+            "",
+            f"🎯 <b>دروازه ۵۰ ترید کاغذی:</b> <code>{gate['completed_trades']}/{gate['target_trades']}</code> | برد: <code>{gate['win_rate_pct']:.1f}%</code>",
+            f"{gate['bar']} (<code>{gate['remaining_trades']}</code> ترید تا آزادی ورود Live)",
+            "",
+            f"🕒 <b>سشن فعال:</b> {session_str}",
+            f"📰 <b>رادار اخبار USD:</b> {news_str}",
+            "",
+            f"📂 <b>پوزیشن‌های باز فعلی ({len(open_pos)}/5):</b>",
+            *pos_lines,
+            "",
+            "🛰️ <b>خلاصه رادار ۵ دارایی:</b>",
+            *radar_lines,
+            "",
+            f"🛡️ <b>سپر رادار سایه:</b> فیلترشده: <code>{sh_filtered}</code> | نجات از استاپ: <code>{sh_saved}</code> (دقت: <code>{sh_acc_str}</code>)",
+        ]
+        if ml_line:
+            lines.append(f"🧠 <b>ضرایب یادگیری ماشین (ML):</b>\n{ml_line}")
+
+        lines.append(f"\n🧭 <b>سنتیمنت بازار:</b> <code>{fng_val} ({fng_cls})</code>\n{fng_bar}")
+        return "\n".join(lines)
+
+    def build_hunt_caption(
         self,
-        pos: Dict[str, Any],
-        timemachine_data: Dict[str, Any],
-        spread_data: Dict[str, Any],
+        coin: str,
+        side: str,
+        regime_data: Dict[str, Any],
+        confluence_data: Dict[str, Any],
+        entry_plan: Dict[str, Any],
+        exit_plan: Dict[str, Any],
+        tm_data: Dict[str, Any],
+        allocation: Dict[str, Any],
+        sentiment_data: Optional[Dict[str, Any]] = None,
     ) -> str:
-        """ساخت کپشن گزارش باز شدن پوزیشن جدید به همراه آمار مونت‌کارلو و اسپرد."""
-        coin = pos.get("coin", "")
-        side = pos.get("side", "LONG")
-        badge = "🟢 LONG" if side == "LONG" else "🔴 SHORT"
-        score = float(pos.get("score", 0.0))
-        tier = pos.get("tier", "")
-        regime = pos.get("regime", "")
-        trigger = pos.get("trigger_type", "")
-        entry = float(pos.get("entry_price", 0.0))
-        sl = float(pos.get("initial_stop_loss", 0.0))
-        tp1 = float(pos.get("tp1_price", 0.0))
-        tp2 = float(pos.get("tp2_price", 0.0))
-        risk_usdt = float(pos.get("risk_amount_usdt", 0.0))
-        risk_pct = float(pos.get("effective_risk_pct", 0.5))
-        margin = float(pos.get("margin_used_usdt", 0.0))
+        """
+        ۳. قالب ترکیبی «شکار جدید سازمانی» (دقیقاً منطبق با اسکرین‌شات محبوب شما + فرمت استاندارد اعشار و جعبه X-Ray).
+        """
+        c = str(coin).upper()
+        s = str(side).upper()
+        reg_name = regime_data.get("regime", "RANGING")
+        strat_name = regime_data.get("strategy", "SMC_SETUP")
 
-        tm_wr = float(timemachine_data.get("win_rate_pct", 0.0))
-        tm_ev = float(timemachine_data.get("expected_value_r", 0.0))
-        sp_ratio = float(spread_data.get("spread_ratio_pct", 0.0))
+        score = float(confluence_data.get("final_score", 70.0))
+        tier = confluence_data.get("tier", "STANDARD_SIZE")
+        size_pct = int(round(float(confluence_data.get("size_multiplier", 0.75)) * 100))
+        xray_fa = confluence_data.get("xray_summary_fa", "تایید ساختار ۱۵ دقیقه و نقدینگی")
 
-        return (
-            f"🎯 <b>شلیک ستاپ سازمانی جدید | {coin} ({badge})</b>\n"
-            f"━━━━━━━━━━━━━━━━━━━━━━\n"
-            f"📊 <b>امتیاز هم‌گرایی:</b> <code>{score:.1f}/100</code> ({tier})\n"
-            f"🧭 <b>رژیم بازار:</b> <code>{regime}</code> | <b>ماشه:</b> <code>{trigger}</code>\n"
-            f"⏳ <b>ماشین زمان (1000 مسیر):</b> WinRate <code>{tm_wr:.1f}%</code> | EV: <code>{tm_ev:+.2f}R</code>\n"
-            f"🛡️ <b>گارد اسپرد:</b> <code>{sp_ratio:.2f}%</code> از تارگت (تایید شده)\n\n"
-            f"📍 <b>ورود (Limit Maker):</b> <code>{entry:.4f}</code>\n"
-            f"🛑 <b>حد ضرر ساختاری (SL):</b> <code>{sl:.4f}</code>\n"
-            f"🥇 <b>تارگت ۱ (50% + Risk-Free):</b> <code>{tp1:.4f}</code>\n"
-            f"🏆 <b>تارگت ۲ (نقدینگی نهایی):</b> <code>{tp2:.4f}</code>\n"
-            f"💼 <b>ریسک معامله:</b> <code>${risk_usdt:.2f} ({risk_pct:.2f}%)</code> | <b>مارجین:</b> <code>${margin:.2f}</code>"
-        )
+        trig = entry_plan.get("trigger_type", "5M_MICRO_CHOCH")
+        ep = format_price(exit_plan["entry_price"], c)
+        sl = format_price(exit_plan["stop_loss"], c)
+        tp1 = format_price(exit_plan["tp1_breakeven"], c)
+        tp2 = format_price(exit_plan["tp2_final"], c)
+        rr = float(exit_plan.get("rr_tp2", 2.0))
+
+        wr = float(tm_data.get("win_rate_pct", 50.0))
+        ev = float(tm_data.get("expected_value_r", 0.15))
+        risk_u = float(allocation.get("risk_amount_usdt", 3.75))
+        notional_u = float(allocation.get("notional_usdt", 500.0))
+
+        fng_val = (sentiment_data or {}).get("value", 50)
+        fng_cls = (sentiment_data or {}).get("classification", "Neutral")
+        fng_bar = (sentiment_data or {}).get("bar", "🟨🟨🟨🟨🟨⬜⬜⬜⬜⬜")
+
+        lines = [
+            f"🎯 <b>شکار جدید سازمانی | {c} ({s})</b>",
+            "━━━━━━━━━━━━━━━━━━",
+            f"🧭 <b>رژیم بازار:</b> <code>{reg_name} ({strat_name})</code>",
+            f"🧠 <b>امتیاز هم‌گرایی فازی:</b> <code>{score:.1f}/100</code> (<code>{tier} - {size_pct}%</code>)",
+            f"⚡ <b>ماشه ۵ دقیقه:</b> <code>{trig}</code>",
+            "",
+            f"📌 <b>ورود (LIMIT Maker):</b> <code>{ep}</code>",
+            f"🛑 <b>حد ضرر (MARKET):</b> <code>{sl}</code>",
+            f"🛡️ <b>تارگت ۱ (Risk-Free 50%):</b> <code>{tp1}</code>",
+            f"🚀 <b>تارگت ۲ (نهایی):</b> <code>{tp2}</code> (<code>R:R = 1:{rr:.1f}</code>)",
+            "",
+            "🔬 <b>جعبه X-Ray و مونت‌کارلو:</b>",
+            f" • <b>شبیه‌ساز ۱۰۰۰ مسیر:</b> برد <code>{wr:.1f}%</code> | امید ریاضی: <code>{ev:+.2f}R</code>",
+            f" • <b>ریسک درگیر:</b> <code>${risk_u:.2f}</code> | <b>ارزش پوزیشن:</b> <code>${notional_u:.2f}</code>",
+            f" • <b>دلایل:</b> {xray_fa}",
+            "",
+            f"🌡️ <b>سنتیمنت:</b> <code>{fng_val} ({fng_cls})</code>\n{fng_bar}",
+        ]
+        return "\n".join(lines)
+
+    def build_asset_analysis_caption(
+        self,
+        coin: str,
+        regime_data: Dict[str, Any],
+        scan_data: Dict[str, Any],
+        confluence_data: Dict[str, Any],
+        orderbook_data: Optional[Dict[str, Any]] = None,
+    ) -> str:
+        """
+        ۴. کپشن گزارش تحلیلی اختصاصی وقتی کاربر روی دکمه شیشه‌ای چارت یک ارز کلیک می‌کند.
+        """
+        c = str(coin).upper()
+        curr_p = format_price(scan_data.get("current_price", 0.0), c)
+        reg = regime_data.get("regime", "RANGING")
+        htf = regime_data.get("htf_bias", "NEUTRAL")
+        adx = float(regime_data.get("adx", 20.0))
+
+        zone = scan_data.get("zone", "EQUILIBRIUM")
+        rng_pct = float(scan_data.get("range_position_pct", 50.0))
+        cand_side = scan_data.get("candidate_side", "NONE")
+        sweep = scan_data.get("liquidity_sweep", "NONE")
+        asian = scan_data.get("asian_range", {})
+        ah = format_price(asian.get("asian_high", 0.0), c)
+        al = format_price(asian.get("asian_low", 0.0), c)
+
+        fvg = scan_data.get("active_fvg")
+        if isinstance(fvg, dict) and "top" in fvg:
+            fvg_str = f"{fvg.get('type')} ({format_price(fvg['bottom'], c)} - {format_price(fvg['top'], c)})"
+        else:
+            fvg_str = "ندارد (در انتظار تشکیل شکاف)"
+
+        buy_p = float((orderbook_data or {}).get("buy_pressure_pct", 50.0))
+        score = float(confluence_data.get("final_score", 0.0))
+        xray = confluence_data.get("xray_summary_fa", "در حال رصد ساختار")
+
+        return "\n".join([
+            f"📊 <b>رادار و کالبدشکافی زنده | {c}/USDT (تایم‌فریم ۱۵m)</b>",
+            "━━━━━━━━━━━━━━━━━━",
+            f"💵 <b>قیمت لحظه‌ای:</b> <code>{curr_p}</code>",
+            f"🧭 <b>رژیم ۱ ساعته:</b> <code>{reg}</code> (ADX: <code>{adx:.1f}</code>) | <b>بایاس ۴H:</b> <code>{htf}</code>",
+            f"📐 <b>موقعیت در رنج:</b> <code>{rng_pct:.1f}% ({zone})</code>",
+            f"🟨 <b>ناحیه FVG فعال:</b> <code>{fvg_str}</code>",
+            f"🌏 <b>رنج سشن آسیا:</b> سقف <code>{ah}</code> | کف <code>{al}</code>",
+            f"💧 <b>شکار نقدینگی اخیر:</b> <code>{sweep}</code>",
+            f"⚖️ <b>فشار خرید اردربوک:</b> <code>{buy_p:.1f}%</code>",
+            "",
+            f"🎯 <b>جهت کاندید فعلی:</b> <b>{cand_side}</b> | <b>امتیاز آمادگی:</b> <code>{score:.1f}/100</code>",
+            f"🔬 <b>جزئیات X-Ray:</b> {xray}",
+        ])
 
     # ==========================================================================
-    # ۵. پردازشگر دستورات از راه دور تلگرام (Remote Command Polling)
+    # ۵. متدهای ارسال پیام و تصویر به تلگرام
+    # ==========================================================================
+    def send_message(
+        self,
+        text: str,
+        bot_config: Optional[Dict[str, Any]] = None,
+        with_keyboard: bool = True,
+        custom_keyboard: Optional[Dict[str, Any]] = None,
+    ) -> bool:
+        if not self.is_configured:
+            return False
+
+        payload: Dict[str, Any] = {
+            "chat_id": self.chat_id,
+            "text": text,
+            "parse_mode": "HTML",
+            "disable_web_page_preview": True,
+        }
+        if custom_keyboard is not None:
+            payload["reply_markup"] = json.dumps(custom_keyboard)
+        elif with_keyboard:
+            payload["reply_markup"] = json.dumps(self.build_inline_keyboard(bot_config))
+
+        try:
+            resp = requests.post(self._api_url("sendMessage"), data=payload, timeout=10)
+            return resp.status_code == 200
+        except Exception:
+            return False
+
+    def send_photo(
+        self,
+        photo_path: str,
+        caption: str,
+        bot_config: Optional[Dict[str, Any]] = None,
+        with_keyboard: bool = True,
+        custom_keyboard: Optional[Dict[str, Any]] = None,
+    ) -> bool:
+        if not self.is_configured or not os.path.isfile(photo_path):
+            return False
+
+        data: Dict[str, Any] = {
+            "chat_id": self.chat_id,
+            "caption": caption,
+            "parse_mode": "HTML",
+        }
+        if custom_keyboard is not None:
+            data["reply_markup"] = json.dumps(custom_keyboard)
+        elif with_keyboard:
+            data["reply_markup"] = json.dumps(self.build_inline_keyboard(bot_config))
+
+        try:
+            with open(photo_path, "rb") as img_f:
+                resp = requests.post(
+                    self._api_url("sendPhoto"),
+                    data=data,
+                    files={"photo": img_f},
+                    timeout=18,
+                )
+            return resp.status_code == 200
+        except Exception:
+            return False
+
+    # ==========================================================================
+    # ۶. پردازش دستورات و دکمه‌های شیشه‌ای نسل جدید (چارت ۵ ارز + ریسک‌فری + سیو سود)
     # ==========================================================================
     def process_incoming_commands(
         self,
@@ -523,160 +805,249 @@ class TelegramAlertsSkill:
         broker: Any,
         portfolio: Dict[str, Any],
         bot_config: Dict[str, Any],
-        shadow_portfolio: Optional[Dict[str, Any]] = None,
-        sentiment_data: Optional[Dict[str, Any]] = None,
+        shadow_portfolio: Dict[str, Any],
         live_prices: Optional[Dict[str, float]] = None,
+        on_demand_callback: Optional[Any] = None,
     ) -> List[str]:
         """
-        دریافت آپدیت‌های جدید تلگرام بر اساس last_update_id و اجرای دستورات:
-        /status, /panic, /close_all, /pause, /resume, /risk_low, /risk_normal, /risk_high, /reset
+        دریافت و اجرای دستورات متنی و کالبک‌های شیشه‌ای جدید:
+        - ANLZ_BTC, ANLZ_ETH, ANLZ_SOL, ANLZ_XRP, ANLZ_XAU: ارسال فوری چارت و رادار آن ارز
+        - ACT_RISK_FREE: ریسک‌فری سریع تمام پوزیشن‌های در سود
+        - ACT_SAVE_50: سیو سود پله‌ای ۵۰٪ تمام پوزیشن‌های در سود
+        - دستورات متنی: /status, /nightly, /pause, /resume, /panic, /reset
         """
         if not self.is_configured:
             return []
 
         last_update_id = int(bot_config.get("last_update_id", 0))
-        executed_commands: List[str] = []
+        executed_cmds: List[str] = []
 
         try:
-            params = {"offset": last_update_id + 1, "timeout": 4}
-            resp = requests.get(self._api_url("getUpdates"), params=params, timeout=8)
+            resp = requests.get(
+                self._api_url("getUpdates"),
+                params={"offset": last_update_id + 1, "timeout": 2},
+                timeout=6,
+            )
             if resp.status_code != 200:
                 return []
-
             updates = resp.json().get("result", [])
-            for upd in updates:
-                upd_id = int(upd.get("update_id", 0))
-                if upd_id > last_update_id:
-                    last_update_id = upd_id
-                    bot_config["last_update_id"] = last_update_id
+        except Exception:
+            return []
 
-                # استخراج دستور از پیام متنی یا کلیک روی دکمه شیشه‌ای (callback_query)
-                cmd_text = ""
-                chat_from = ""
+        for upd in updates:
+            upd_id = int(upd.get("update_id", 0))
+            if upd_id > last_update_id:
+                last_update_id = upd_id
+                bot_config["last_update_id"] = last_update_id
 
-                if "message" in upd and isinstance(upd["message"], dict):
-                    msg = upd["message"]
-                    cmd_text = str(msg.get("text", "")).strip()
-                    chat_from = str(msg.get("chat", {}).get("id", ""))
-                elif "callback_query" in upd and isinstance(upd["callback_query"], dict):
-                    cb = upd["callback_query"]
-                    cmd_text = str(cb.get("data", "")).strip()
-                    chat_from = str(cb.get("message", {}).get("chat", {}).get("id", ""))
-                    # پاسخ به callback_query برای بسته شدن لودینگ دکمه در تلگرام
-                    cb_id = cb.get("id")
-                    if cb_id:
-                        try:
-                            requests.post(
-                                self._api_url("answerCallbackQuery"),
-                                data={"callback_query_id": cb_id},
-                                timeout=4,
-                            )
-                        except Exception:
-                            pass
+            raw_cmd = ""
+            cb_id = None
 
-                if not cmd_text or (self.chat_id and chat_from and chat_from != self.chat_id):
+            if "message" in upd and "text" in upd["message"]:
+                msg_chat_id = str(upd["message"].get("chat", {}).get("id", ""))
+                if msg_chat_id and msg_chat_id != self.chat_id:
                     continue
+                raw_cmd = str(upd["message"]["text"]).strip()
 
-                cmd = cmd_text.split()[0].lower()
-                if "@" in cmd:
-                    cmd = cmd.split("@")[0]
+            elif "callback_query" in upd:
+                cb = upd["callback_query"]
+                cb_id = cb.get("id")
+                cb_chat_id = str(cb.get("message", {}).get("chat", {}).get("id", ""))
+                if cb_chat_id and cb_chat_id != self.chat_id:
+                    continue
+                raw_cmd = str(cb.get("data", "")).strip()
 
-                if cmd == "/status":
-                    report = self.build_status_report(
-                        portfolio, bot_config, shadow_portfolio, sentiment_data
+            if not raw_cmd:
+                continue
+
+            if cb_id:
+                try:
+                    requests.post(
+                        self._api_url("answerCallbackQuery"),
+                        data={"callback_query_id": cb_id, "text": f"⏳ اجرای فرمان: {raw_cmd}"},
+                        timeout=4,
                     )
-                    eq_chart = self.generate_equity_chart(portfolio)
-                    self.send_photo(eq_chart, caption=report, bot_config=bot_config)
-                    executed_commands.append("/status")
+                except Exception:
+                    pass
 
-                elif cmd == "/panic":
-                    closed = broker.close_all_panic(
-                        portfolio, bot_config, live_prices=live_prices, lock_panic=True
-                    )
-                    state_manager.save_portfolio(portfolio)
-                    state_manager.save_bot_config(bot_config)
-                    self.send_message(
-                        f"🚨 <b>قفل اضطراری (/panic) فعال شد!</b>\n"
-                        f"تمام پوزیشن‌های باز (<code>{len(closed)}</code> مورد) بسته شدند و ربات قفل گردید.",
-                        bot_config=bot_config,
-                    )
-                    executed_commands.append("/panic")
+            action = self._execute_single_command(
+                raw_cmd=raw_cmd,
+                state_manager=state_manager,
+                broker=broker,
+                portfolio=portfolio,
+                bot_config=bot_config,
+                shadow_portfolio=shadow_portfolio,
+                live_prices=live_prices,
+                on_demand_callback=on_demand_callback,
+            )
+            if action:
+                executed_cmds.append(action)
 
-                elif cmd == "/close_all":
-                    closed = broker.close_all_panic(
-                        portfolio, bot_config, live_prices=live_prices, lock_panic=False
-                    )
-                    state_manager.save_portfolio(portfolio)
-                    self.send_message(
-                        f"⚠️ <b>دستور بستن همه پوزیشن‌ها (/close_all) اجرا شد.</b>\n"
-                        f"تعداد <code>{len(closed)}</code> پوزیشن به صورت دستی بسته شد.",
-                        bot_config=bot_config,
-                    )
-                    executed_commands.append("/close_all")
+        if updates:
+            state_manager.save_bot_config(bot_config)
+            state_manager.save_portfolio(portfolio)
 
-                elif cmd == "/pause":
-                    bot_config["is_paused"] = True
-                    state_manager.save_bot_config(bot_config)
-                    self.send_message(
-                        "⏸ <b>ربات به حالت توقف موقت (Paused) رفت.</b>\nپوزیشن‌های قبلی مدیریت می‌شوند اما معامله جدیدی باز نخواهد شد.",
-                        bot_config=bot_config,
-                    )
-                    executed_commands.append("/pause")
+        return executed_cmds
 
-                elif cmd == "/resume":
-                    bot_config["is_paused"] = False
-                    bot_config["panic_mode"] = False
-                    state_manager.save_bot_config(bot_config)
-                    self.send_message(
-                        "▶️ <b>ربات مجدداً فعال شد (Active & Hunting)!</b>",
-                        bot_config=bot_config,
-                    )
-                    executed_commands.append("/resume")
+    def _execute_single_command(
+        self,
+        raw_cmd: str,
+        state_manager: Any,
+        broker: Any,
+        portfolio: Dict[str, Any],
+        bot_config: Dict[str, Any],
+        shadow_portfolio: Dict[str, Any],
+        live_prices: Optional[Dict[str, float]] = None,
+        on_demand_callback: Optional[Any] = None,
+    ) -> Optional[str]:
+        cmd = raw_cmd.split("@")[0].strip()
+        cmd_upper = cmd.upper()
 
-                elif cmd == "/risk_low":
-                    bot_config["risk_mode"] = "CONSERVATIVE"
-                    state_manager.save_bot_config(bot_config)
-                    self.send_message(
-                        "🛡️ <b>مد ریسک روی حالت محافظه‌کارانه (CONSERVATIVE - 0.25%) قرار گرفت.</b>",
-                        bot_config=bot_config,
-                    )
-                    executed_commands.append("/risk_low")
+        # ۱. دکمه‌های شیشه‌ای چارت و تحلیل زنده ۵ ارز (ANLZ_BTC, ANLZ_ETH, ...)
+        if cmd_upper.startswith("ANLZ_"):
+            target_coin = cmd_upper.replace("ANLZ_", "").strip()
+            if target_coin in WATCHLIST:
+                if callable(on_demand_callback):
+                    on_demand_callback(target_coin)
+                else:
+                    self._send_cached_or_live_asset_analysis(target_coin, state_manager, bot_config)
+                return f"ANALYZE_{target_coin}"
 
-                elif cmd == "/risk_normal":
-                    bot_config["risk_mode"] = "NORMAL"
-                    state_manager.save_bot_config(bot_config)
-                    self.send_message(
-                        "⚖️ <b>مد ریسک روی حالت استاندارد (NORMAL - 0.50%) قرار گرفت.</b>",
-                        bot_config=bot_config,
-                    )
-                    executed_commands.append("/risk_normal")
+        # ۲. دکمه شیشه‌ای [ 🛡️ ریسک‌فری سریع ]
+        if cmd_upper in ("ACT_RISK_FREE", "/RISKFREE"):
+            res = broker.risk_free_all_in_profit(portfolio, live_prices=live_prices)
+            cnt = res["updated_count"]
+            coins_str = "، ".join(res["updated_coins"]) if res["updated_coins"] else "—"
+            if cnt > 0:
+                msg = (
+                    f"🛡️ <b>عملیات ریسک‌فری سریع انجام شد!</b>\n"
+                    f"حد ضرر <code>{cnt}</code> پوزیشن در سود (<b>{coins_str}</b>) به نقطه ورود منتقل گردید."
+                )
+            else:
+                msg = "ℹ️ <b>ریسک‌فری سریع:</b> در حال حاضر پوزیشن جدیدی در سود (که قبلاً ریسک‌فری نشده باشد) وجود ندارد."
+            self.send_message(msg, bot_config=bot_config)
+            return "ACT_RISK_FREE"
 
-                elif cmd == "/risk_high":
-                    bot_config["risk_mode"] = "AGGRESSIVE"
-                    state_manager.save_bot_config(bot_config)
-                    self.send_message(
-                        "🔥 <b>مد ریسک روی حالت تهاجمی (AGGRESSIVE - 0.80%) قرار گرفت.</b>",
-                        bot_config=bot_config,
-                    )
-                    executed_commands.append("/risk_high")
+        # ۳. دکمه شیشه‌ای [ 💰 سیو سود پله‌ای (۵۰٪) ]
+        if cmd_upper in ("ACT_SAVE_50", "/SAVE50"):
+            res = broker.partial_close_all_in_profit(portfolio, close_fraction=0.50, live_prices=live_prices)
+            cnt = res["closed_count"]
+            locked = res["total_locked_pnl_usdt"]
+            coins_str = "، ".join(res["closed_coins"]) if res["closed_coins"] else "—"
+            if cnt > 0:
+                msg = (
+                    f"💰 <b>سیو سود پله‌ای (۵۰٪) با موفقیت اجرا شد!</b>\n"
+                    f"• پوزیشن‌های نقدشده: <b>{coins_str}</b>\n"
+                    f"• سود خالص واریزی به بالانس: <code>+${locked:.2f} USDT</code>\n"
+                    f"• وضعیت ۵۰٪ باقی‌مانده: 🛡️ <b>Risk-Free (استاپ در نقطه ورود)</b>"
+                )
+            else:
+                msg = "ℹ️ <b>سیو سود پله‌ای:</b> در حال حاضر پوزیشنی در سود برای نقد کردن ۵۰٪ وجود ندارد."
+            self.send_message(msg, bot_config=bot_config)
+            return "ACT_SAVE_50"
 
-                elif cmd == "/reset":
-                    fresh_pf = state_manager.reset_portfolio()
-                    portfolio.clear()
-                    portfolio.update(fresh_pf)
-                    bot_config["is_paused"] = False
-                    bot_config["panic_mode"] = False
-                    state_manager.save_bot_config(bot_config)
-                    self.send_message(
-                        "🔄 <b>پرتفوی با موفقیت به حالت اولیه ($1,000.00) ریست شد.</b>",
-                        bot_config=bot_config,
-                    )
-                    executed_commands.append("/reset")
+        # ۴. گزارش جامع وضعیت (/status)
+        if cmd.lower() in ("/status", "/start"):
+            eq_chart = self.generate_equity_chart(portfolio)
+            regimes = state_manager.load_market_regime()
+            mem = state_manager.load_strategy_memory()
+            caption = self.build_status_report(
+                portfolio=portfolio,
+                bot_config=bot_config,
+                shadow_portfolio=shadow_portfolio,
+                sentiment_data={"value": 50, "classification": "Live", "bar": "🟨🟨🟨🟨🟨⬜⬜⬜⬜⬜"},
+                market_regimes=regimes,
+                strategy_memory=mem,
+            )
+            self.send_photo(eq_chart, caption=caption, bot_config=bot_config)
+            return "STATUS"
 
-            if updates:
-                state_manager.save_bot_config(bot_config)
+        # ۵. بیلان شبانه (/nightly)
+        if cmd.lower() == "/nightly":
+            eq_chart = self.generate_equity_chart(portfolio)
+            caption = self.build_nightly_pulse_report(
+                portfolio=portfolio,
+                bot_config=bot_config,
+                shadow_portfolio=shadow_portfolio,
+                sentiment_data={"value": 50, "classification": "Live", "bar": "🟨🟨🟨🟨🟨⬜⬜⬜⬜⬜"},
+            )
+            self.send_photo(eq_chart, caption=caption, bot_config=bot_config)
+            return "NIGHTLY"
 
-        except Exception as e:
-            print(f"⚠️ [TelegramAlerts] Error polling Telegram updates: {e}")
+        # ۶. دستورات کنترلی پایه
+        if cmd.lower() == "/pause":
+            bot_config["is_paused"] = True
+            self.send_message("⏸ <b>ربات موقتاً متوقف شد.</b> پوزیشن‌های فعلی مدیریت می‌شوند اما ورود جدیدی انجام نمی‌شود.", bot_config=bot_config)
+            return "PAUSE"
 
-        return executed_commands
+        if cmd.lower() in ("/resume", "/unpause"):
+            bot_config["is_paused"] = False
+            bot_config["panic_mode"] = False
+            self.send_message("▶️ <b>ربات مجدداً فعال شد و در حال شکار ستاپ‌هاست.</b>", bot_config=bot_config)
+            return "RESUME"
+
+        if cmd.lower() in ("/close_all", "/panic"):
+            closed = broker.close_all_positions(portfolio, live_prices=live_prices, reason=f"TELEGRAM_{cmd_upper.strip('/')}")
+            if cmd.lower() == "/panic":
+                bot_config["panic_mode"] = True
+                bot_config["is_paused"] = True
+            self.send_message(f"🚨 <b>خروج اضطراری انجام شد:</b> تعداد <code>{len(closed)}</code> پوزیشن بسته شد.", bot_config=bot_config)
+            return cmd_upper.strip("/")
+
+        if cmd.lower() == "/reset":
+            fresh = state_manager.reset_portfolio()
+            portfolio.clear()
+            portfolio.update(fresh)
+            bot_config["panic_mode"] = False
+            bot_config["is_paused"] = False
+            self.send_message("🔄 <b>پرتفوی کاغذی به $1,000.00 و دروازه ۰/۵۰ ریست شد.</b>", bot_config=bot_config)
+            return "RESET"
+
+        if cmd.lower().startswith("/risk"):
+            parts = cmd.lower().split()
+            mode = parts[1].upper() if len(parts) > 1 else "NORMAL"
+            if mode in ("LOW", "NORMAL", "HIGH"):
+                bot_config["risk_mode"] = mode
+                self.send_message(f"⚙️ <b>مد ریسک روی <code>{mode}</code> تنظیم شد.</b>", bot_config=bot_config)
+                return f"RISK_{mode}"
+
+        return None
+
+    def _send_cached_or_live_asset_analysis(
+        self, coin: str, state_manager: Any, bot_config: Dict[str, Any]
+    ) -> None:
+        """ارسال فوری چارت و کالبدشکافی ارز انتخاب‌شده با دریافت زنده کندل‌های ۱۵ دقیقه."""
+        try:
+            from core.data_engine import DataEngine
+            from skills.regime_detector import RegimeDetectorSkill
+            from skills.scanner import MarketScannerSkill
+            from skills.confluence_scorer import ConfluenceScorerSkill
+
+            de = DataEngine()
+            rd = RegimeDetectorSkill()
+            sc = MarketScannerSkill()
+            cs = ConfluenceScorerSkill()
+
+            df_4h = de.fetch_ohlcv(coin, "4h", limit=60)
+            df_1h = de.fetch_ohlcv(coin, "1h", limit=80)
+            df_15m = de.fetch_ohlcv(coin, "15m", limit=70)
+            ob = de.fetch_order_book_imbalance(coin)
+
+            reg_res = rd.detect_regime(df_1h, df_4h)
+            scan_res = sc.scan_structure(df_15m, reg_res)
+            side = scan_res.get("candidate_side", "LONG")
+            if side == "NONE":
+                side = "LONG" if reg_res.get("htf_bias") != "BEARISH" else "SHORT"
+            mem = state_manager.load_strategy_memory()
+            conf_res = cs.evaluate_confluence(coin, side, reg_res, scan_res, ob, {}, {}, mem)
+
+            chart_path = self.generate_asset_analysis_chart(coin, df_15m, scan_res, reg_res)
+            caption = self.build_asset_analysis_caption(coin, reg_res, scan_res, conf_res, ob)
+            self.send_photo(
+                chart_path,
+                caption=caption,
+                bot_config=bot_config,
+                custom_keyboard=self.build_hunt_inline_keyboard(coin),
+            )
+        except Exception as err:
+            self.send_message(f"⚠️ خطا در تولید چارت لحظه‌ای {coin}: <code>{err}</code>", bot_config=bot_config)
