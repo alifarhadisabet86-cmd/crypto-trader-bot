@@ -1,5 +1,6 @@
 {
-  "active_shadows": [
+  "active_shadows": [],
+  "resolved_shadows": [
     {
       "shadow_id": "SHD-BTC-5CD821",
       "coin": "BTC",
@@ -11,15 +12,16 @@
       "tp1_price": 77769.344642,
       "tp2_price": 77488.0,
       "filter_reason": "LOW_CONFLUENCE_SCORE",
-      "created_at": "2026-11-01T08:13:38Z"
+      "created_at": "2026-11-01T08:13:38Z",
+      "outcome": "SHIELD_SAVED_LOSS",
+      "resolved_at": "2026-11-01T08:52:14Z"
     }
   ],
-  "resolved_shadows": [],
   "stats": {
     "total_filtered": 1,
-    "saved_from_loss": 0,
+    "saved_from_loss": 1,
     "missed_winners": 0,
     "shield_accuracy": 100.0
   },
-  "last_updated": "2026-11-01T08:13:41Z"
+  "last_updated": "2026-11-01T08:52:16Z"
 }
