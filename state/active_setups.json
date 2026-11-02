@@ -1,1 +1,33 @@
-[]
+[
+  {
+    "id": "POS-BTC-4A5FE5",
+    "coin": "BTC",
+    "side": "LONG",
+    "order_type": "LIMIT",
+    "trigger_type": "LIMIT_SNIPER_FVG",
+    "regime": "RANGING",
+    "confluence_score": 77.24,
+    "xray_summary_fa": "ساختار بازگشت به میانگین رنج (+14) | حضور قیمت در ناحیه FVG دست‌نخورده (+18) | ناحیه ارزان‌فروشی Discount (+9) | حجم تراکنش بالاتر از میانگین (+8) | تایید فشار اردربوک صرافی (+7) | سشن Killzone فعال (+7)",
+    "slot_type": "STANDARD_SLOT",
+    "entry_price": 77844.994286,
+    "current_price": 77844.994286,
+    "stop_loss": 77661.770714,
+    "initial_stop_loss": 77661.770714,
+    "stop_distance": 183.223572,
+    "tp1_breakeven": 78055.701394,
+    "tp2_final": 78517.2,
+    "initial_qty": 0.01608,
+    "remaining_qty": 0.01608,
+    "initial_notional_usdt": 1251.76,
+    "remaining_notional_usdt": 1251.76,
+    "margin_used_usdt": 250.35,
+    "initial_risk_usdt": 2.95,
+    "tp1_hit": false,
+    "is_risk_free": false,
+    "trailing_active": false,
+    "realized_pnl_usdt": -0.2504,
+    "unrealized_pnl_usdt": 0.0,
+    "fees_paid_usdt": 0.2504,
+    "opened_at": "2026-11-02T14:44:53Z"
+  }
+]
