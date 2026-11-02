@@ -115,6 +115,78 @@ def run_institutional_cycle(
             "duration_sec": round(time.time() - t0, 2),
         }
 
+    if env_direct_cmd and not dry_run and alerts_skill.is_configured:
+        fast_15m: Dict[str, pd.DataFrame] = {}
+        fast_prices: Dict[str, float] = {}
+        for c_key in WATCHLIST.keys():
+            df_c = data_engine.fetch_ohlcv(c_key, TIMEFRAMES["LTF_SETUP"], limit=30)
+            fast_15m[c_key] = df_c
+            if not df_c.empty:
+                fast_prices[c_key] = float(df_c["close"].iloc[-1])
+
+        pos_upd = broker_skill.update_open_positions(portfolio, fast_15m)
+        cached_regimes = state_mgr.load_market_regime().get("regimes", {})
+        for c_key, p_val in fast_prices.items():
+            if c_key in cached_regimes and isinstance(cached_regimes[c_key], dict):
+                cached_regimes[c_key]["current_price"] = p_val
+
+        killzone_now = intel_skill.check_killzone_session(now_utc.hour)
+        sentiment_now = intel_skill.fetch_sentiment()
+        news_now = intel_skill.check_economic_news_shield(now_utc)
+
+        cmd_clean = env_direct_cmd.split("@")[0].strip().lower()
+        executed_fast: List[str] = []
+        state_mutated = bool(pos_upd.get("events"))
+
+        if cmd_clean in ("/status", "/start"):
+            eq_chart = alerts_skill.generate_equity_chart(portfolio)
+            caption = alerts_skill.build_status_report(
+                portfolio=portfolio,
+                bot_config=bot_config,
+                shadow_portfolio=shadow_portfolio,
+                sentiment_data=sentiment_now,
+                market_regimes=cached_regimes,
+                strategy_memory=strategy_memory,
+                news_status=news_now,
+                killzone_status=killzone_now,
+            )
+            alerts_skill.send_photo(eq_chart, caption=caption, bot_config=bot_config)
+            executed_fast.append("DIRECT_STATUS_WITH_PHOTO")
+        elif cmd_clean == "/nightly":
+            eq_chart = alerts_skill.generate_equity_chart(portfolio)
+            caption = alerts_skill.build_nightly_pulse_report(
+                portfolio=portfolio,
+                bot_config=bot_config,
+                shadow_portfolio=shadow_portfolio,
+                sentiment_data=sentiment_now,
+            )
+            alerts_skill.send_photo(eq_chart, caption=caption, bot_config=bot_config)
+            executed_fast.append("DIRECT_NIGHTLY_WITH_PHOTO")
+        else:
+            act = alerts_skill._execute_single_command(
+                raw_cmd=env_direct_cmd,
+                state_manager=state_mgr,
+                broker=broker_skill,
+                portfolio=portfolio,
+                bot_config=bot_config,
+                shadow_portfolio=shadow_portfolio,
+                live_prices=fast_prices,
+            )
+            if act:
+                executed_fast.append(act)
+                state_mutated = True
+
+        if state_mutated:
+            state_mgr.save_portfolio(portfolio)
+            state_mgr.save_bot_config(bot_config)
+            state_mgr.save_active_setups(portfolio.get("open_positions", []))
+
+        return {
+            "status": "FAST_DIRECT_CMD_COMPLETED",
+            "duration_sec": round(time.time() - t0, 2),
+            "executed_telegram_commands": executed_fast,
+        }
+
     # ۳. دریافت دیتای چندتایم‌فریمی برای ۵ دارایی
     data_4h: Dict[str, pd.DataFrame] = {}
     data_1h: Dict[str, pd.DataFrame] = {}

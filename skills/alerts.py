@@ -5,6 +5,7 @@ Institutional Trading Bot V2.5 - Telegram Command Center, Volume Charts, PnL Car
 
 import json
 import os
+import re
 import tempfile
 from pathlib import Path
 from typing import Dict, Any, List, Optional
@@ -533,7 +534,7 @@ class TelegramAlertsSkill:
         # پوزیشن‌های باز با اعشار استاندارد
         pos_lines: List[str] = []
         if not open_pos:
-            pos_lines.append("  └ <i>هیچ پوزیشن بازی وجود ندارد (0/5 اسلات اشغال)</i>")
+            pos_lines.append("  └ <i>هیچ پوزیشن بازی وجود ندارد (0/5 اسلات)</i>")
         else:
             for idx, p in enumerate(open_pos, start=1):
                 c = p["coin"]
@@ -545,18 +546,15 @@ class TelegramAlertsSkill:
                 tp2 = format_price(p.get("tp2_final", p.get("tp2_price", 0.0)), c)
                 u_pnl = float(p.get("unrealized_pnl_usdt", 0.0))
                 r_usdt = float(p.get("initial_risk_usdt", p.get("risk_amount_usdt", 3.75)))
-                notional = float(p.get("remaining_notional_usdt", p.get("notional_usdt", 0.0)))
                 if p.get("trailing_active"):
-                    st_badge = "🚀 تریلینگ استاپ"
+                    st_badge = "🚀 تریلینگ"
                 elif p.get("is_risk_free") or p.get("risk_free"):
                     st_badge = "🛡️ ریسک‌فری"
                 else:
                     st_badge = "⚡ فعال"
                 pos_lines.append(
-                    f"{idx}. <b>{c} ({s})</b> | امتیاز: <code>{sc:.1f}</code> | PnL: <code>{u_pnl:+.2f}$</code>\n"
-                    f"   ├ ورود: <code>{ep}</code> | استاپ: <code>{sl}</code>\n"
-                    f"   ├ تارگت ۱: <code>{tp1}</code> | تارگت ۲: <code>{tp2}</code>\n"
-                    f"   └ وضعیت: {st_badge} (ریسک: <code>{r_usdt:.2f}$</code> | حجم: <code>{notional:.1f}$</code>)"
+                    f"{idx}. <b>{c} ({s})</b> | PnL: <code>{u_pnl:+.2f}$</code> | {st_badge} (امتیاز: <code>{sc:.0f}</code> | ریسک: <code>{r_usdt:.2f}$</code>)\n"
+                    f"   └ ورود: <code>{ep}</code> | SL: <code>{sl}</code> | TP1: <code>{tp1}</code> | TP2: <code>{tp2}</code>"
                 )
 
         # خلاصه رادار ۵ دارایی
@@ -572,11 +570,11 @@ class TelegramAlertsSkill:
                 score_lbl = float(r_info.get("confluence_score", 0.0))
                 price_lbl = format_price(r_info.get("current_price", 0.0), coin_key)
                 radar_lines.append(
-                    f" • <b>{coin_key}</b> (<code>{price_lbl}</code>) | <code>{reg_lbl}</code> ➔ <b>{side_lbl}</b> (امتیاز: <code>{score_lbl:.0f}/100</code>)"
+                    f" • <b>{coin_key}</b> (<code>{price_lbl}</code>) | <code>{reg_lbl}</code> ➔ <b>{side_lbl}</b> (<code>{score_lbl:.0f}/100</code>)"
                 )
 
         if not radar_lines:
-            radar_lines.append(" • <i>در انتظار بروزرسانی اسکنر در چرخه جاری...</i>")
+            radar_lines.append(" • <i>در انتظار بروزرسانی اسکنر...</i>")
 
         # سپر سایه و ضرایب ML
         sh_stats = shadow_portfolio.get("stats", {})
@@ -600,17 +598,12 @@ class TelegramAlertsSkill:
         lines = [
             f"<b>{title}</b>",
             "━━━━━━━━━━━━━━━━━━",
-            f"🤖 <b>وضعیت سیستم:</b> {sys_state}",
-            f"🛡️ <b>مدارشکن روزانه:</b> {cb_daily} | <b>هفتگی:</b> {cb_weekly}",
+            f"🤖 <b>وضعیت:</b> {sys_state} | 🛡️ <b>مدارشکن روزانه:</b> {cb_daily} | <b>هفتگی:</b> {cb_weekly}",
             f"💰 <b>موجودی نقد:</b> <code>${bal:,.2f}</code> (<code>{total_pnl_pct:+.2f}%</code>) | <b>شناور:</b> <code>{unrealized_total:+.2f}$</code>",
-            f"📅 <b>بیلان امروز:</b> <code>{daily_pnl:+.2f}$</code> | <b>هفته:</b> <code>{weekly_pnl:+.2f}$</code> | <b>Max DD:</b> <code>{max_dd:.2f}%</code>",
-            f"🏦 <b>مارجین درگیر:</b> <code>${used_margin:,.1f} ({used_margin_pct:.1f}%)</code> | <b>مد ریسک:</b> <code>{bot_config.get('risk_mode','NORMAL')}</code>",
-            "",
-            f"🎯 <b>دروازه ۵۰ ترید کاغذی:</b> <code>{gate['completed_trades']}/{gate['target_trades']}</code> | برد: <code>{gate['win_rate_pct']:.1f}%</code>",
-            f"{gate['bar']} (<code>{gate['remaining_trades']}</code> ترید تا آزادی ورود Live)",
-            "",
-            f"🕒 <b>سشن فعال:</b> {session_str}",
-            f"📰 <b>رادار اخبار USD:</b> {news_str}",
+            f"📅 <b>امروز:</b> <code>{daily_pnl:+.2f}$</code> | <b>هفته:</b> <code>{weekly_pnl:+.2f}$</code> | <b>Max DD:</b> <code>{max_dd:.2f}%</code>",
+            f"🏦 <b>مارجین درگیر:</b> <code>${used_margin:,.1f} ({used_margin_pct:.1f}%)</code> | <b>ریسک:</b> <code>{bot_config.get('risk_mode','NORMAL')}</code>",
+            f"🎯 <b>دروازه ۵۰ ترید کاغذی:</b> <code>{gate['completed_trades']}/{gate['target_trades']}</code> (برد: <code>{gate['win_rate_pct']:.1f}%</code>)\n{gate['bar']} (<code>{gate['remaining_trades']}</code> تا Live)",
+            f"🕒 <b>سشن:</b> {session_str} | 📰 <b>اخبار:</b> {news_str}",
             "",
             f"📂 <b>پوزیشن‌های باز فعلی ({len(open_pos)}/5):</b>",
             *pos_lines,
@@ -618,12 +611,12 @@ class TelegramAlertsSkill:
             "🛰️ <b>خلاصه رادار ۵ دارایی:</b>",
             *radar_lines,
             "",
-            f"🛡️ <b>سپر رادار سایه:</b> فیلترشده: <code>{sh_filtered}</code> | نجات از استاپ: <code>{sh_saved}</code> (دقت: <code>{sh_acc_str}</code>)",
+            f"🛡️ <b>رادار سایه:</b> فیلتر: <code>{sh_filtered}</code> | نجات: <code>{sh_saved}</code> (<code>{sh_acc_str}</code>)",
         ]
         if ml_line:
-            lines.append(f"🧠 <b>ضرایب یادگیری ماشین (ML):</b>\n{ml_line}")
+            lines.append(f"🧠 <b>ضرایب ML:</b> {ml_line}")
 
-        lines.append(f"\n🧭 <b>سنتیمنت بازار:</b> <code>{fng_val} ({fng_cls})</code>\n{fng_bar}")
+        lines.append(f"🧭 <b>سنتیمنت:</b> <code>{fng_val} ({fng_cls})</code> {fng_bar}")
         return "\n".join(lines)
 
     def build_hunt_caption(
@@ -763,9 +756,17 @@ class TelegramAlertsSkill:
             payload["reply_markup"] = json.dumps(self.build_inline_keyboard(bot_config))
 
         try:
-            resp = requests.post(self._api_url("sendMessage"), data=payload, timeout=10)
-            return resp.status_code == 200
-        except Exception:
+            resp = requests.post(self._api_url("sendMessage"), data=payload, timeout=12)
+            if resp.status_code == 200:
+                return True
+            print(f"⚠️ [Telegram sendMessage] HTTP {resp.status_code}: {resp.text[:250]}")
+            plain_payload = dict(payload)
+            plain_payload.pop("parse_mode", None)
+            plain_payload["text"] = re.sub(r"<[^>]+>", "", text)[:4000]
+            resp2 = requests.post(self._api_url("sendMessage"), data=plain_payload, timeout=12)
+            return resp2.status_code == 200
+        except Exception as err:
+            print(f"⚠️ [Telegram sendMessage Exception]: {err}")
             return False
 
     def send_photo(
@@ -779,27 +780,62 @@ class TelegramAlertsSkill:
         if not self.is_configured or not os.path.isfile(photo_path):
             return False
 
-        data: Dict[str, Any] = {
+        plain_caption = re.sub(r"<[^>]+>", "", caption or "")
+        utf16_len = len(plain_caption.encode("utf-16-le")) // 2
+
+        if utf16_len <= 1015:
+            data: Dict[str, Any] = {
+                "chat_id": self.chat_id,
+                "caption": caption,
+                "parse_mode": "HTML",
+            }
+            if custom_keyboard is not None:
+                data["reply_markup"] = json.dumps(custom_keyboard)
+            elif with_keyboard:
+                data["reply_markup"] = json.dumps(self.build_inline_keyboard(bot_config))
+
+            try:
+                with open(photo_path, "rb") as img_f:
+                    resp = requests.post(
+                        self._api_url("sendPhoto"),
+                        data=data,
+                        files={"photo": img_f},
+                        timeout=18,
+                    )
+                if resp.status_code == 200:
+                    return True
+                print(f"⚠️ [Telegram sendPhoto] HTTP {resp.status_code} (utf16_len={utf16_len}): {resp.text[:250]}")
+            except Exception as err:
+                print(f"⚠️ [Telegram sendPhoto Exception]: {err}")
+
+        # Fallback: اگر طول کپشن بیش از محدودیت ۱۰۲۴ کاراکتری تلگرام باشد یا sendPhoto با کپشن بلند خطا بدهد،
+        # ابتدا تصویر چارت با تیتر کوتاه ارسال می‌شود و بلافاصله متن کامل گزارش + کیبورد شیشه‌ای ارسال می‌گردد.
+        header_line = (caption or "").splitlines()[0] if caption else "📊 Institutional Chart V2.5"
+        short_data: Dict[str, Any] = {
             "chat_id": self.chat_id,
-            "caption": caption,
+            "caption": header_line[:200],
             "parse_mode": "HTML",
         }
-        if custom_keyboard is not None:
-            data["reply_markup"] = json.dumps(custom_keyboard)
-        elif with_keyboard:
-            data["reply_markup"] = json.dumps(self.build_inline_keyboard(bot_config))
-
+        photo_ok = False
         try:
             with open(photo_path, "rb") as img_f:
-                resp = requests.post(
+                resp_short = requests.post(
                     self._api_url("sendPhoto"),
-                    data=data,
+                    data=short_data,
                     files={"photo": img_f},
                     timeout=18,
                 )
-            return resp.status_code == 200
-        except Exception:
-            return False
+            photo_ok = resp_short.status_code == 200
+        except Exception as err:
+            print(f"⚠️ [Telegram sendPhoto Fallback Exception]: {err}")
+
+        msg_ok = self.send_message(
+            text=caption,
+            bot_config=bot_config,
+            with_keyboard=with_keyboard,
+            custom_keyboard=custom_keyboard,
+        )
+        return photo_ok or msg_ok
 
     # ==========================================================================
     # ۶. پردازش دستورات و دکمه‌های شیشه‌ای نسل جدید (چارت ۵ ارز + ریسک‌فری + سیو سود)
