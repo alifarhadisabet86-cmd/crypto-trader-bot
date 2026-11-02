@@ -3,11 +3,11 @@
     "regime": "RANGING",
     "strategy": "LIQUIDITY_SWEEP_REVERSAL",
     "htf_bias": "BEARISH",
-    "adx": 15.75,
+    "adx": 16.32,
     "tradable": true,
-    "current_price": 77842.1,
+    "current_price": 77817.4,
     "candidate_side": "LONG",
-    "confluence_score": 61.82,
+    "confluence_score": 62.79,
     "zone": "DISCOUNT",
     "asian_range": {
       "asian_high": 78864.8,
@@ -22,16 +22,16 @@
     "htf_bias": "NEUTRAL",
     "adx": 29.19,
     "tradable": true,
-    "current_price": 2288.15,
+    "current_price": 2286.69,
     "candidate_side": "LONG",
-    "confluence_score": 60.6,
+    "confluence_score": 62.19,
     "zone": "DISCOUNT",
     "asian_range": {
       "asian_high": 2317.65,
       "asian_low": 2268.85,
       "asian_sweep": "NONE"
     },
-    "xray_summary_fa": "هم‌راستا با روند ۱ ساعته (+22) | مجاورت با FVG معتبر (+16) | سشن Killzone فعال (+7)"
+    "xray_summary_fa": "هم‌راستا با روند ۱ ساعته (+22) | مجاورت با FVG معتبر (+16) | ناحیه ارزان‌فروشی Discount (+7) | سشن Killzone فعال (+7)"
   },
   "SOL": {
     "regime": "RANGING",
@@ -39,7 +39,7 @@
     "htf_bias": "BEARISH",
     "adx": 16.09,
     "tradable": true,
-    "current_price": 94.22,
+    "current_price": 94.05,
     "candidate_side": "NONE",
     "confluence_score": 34.0,
     "zone": "DISCOUNT",
@@ -54,18 +54,18 @@
     "regime": "RANGING",
     "strategy": "LIQUIDITY_SWEEP_REVERSAL",
     "htf_bias": "BEARISH",
-    "adx": 14.1,
+    "adx": 13.81,
     "tradable": true,
-    "current_price": 1.25104,
+    "current_price": 1.25022,
     "candidate_side": "LONG",
-    "confluence_score": 48.88,
+    "confluence_score": 52.63,
     "zone": "DISCOUNT",
     "asian_range": {
       "asian_high": 1.26425,
       "asian_low": 1.24211,
       "asian_sweep": "NONE"
     },
-    "xray_summary_fa": "ساختار بازگشت به میانگین رنج (+14) | حضور قیمت در ناحیه FVG دست‌نخورده (+18) | ناحیه ارزان‌فروشی Discount (+8) | سشن Killzone فعال (+7)"
+    "xray_summary_fa": "ساختار بازگشت به میانگین رنج (+14) | حضور قیمت در ناحیه FVG دست‌نخورده (+18) | ناحیه ارزان‌فروشی Discount (+9) | سشن Killzone فعال (+7)"
   },
   "XAU": {
     "regime": "EXTREME_VOLATILITY",
@@ -73,7 +73,7 @@
     "htf_bias": "NEUTRAL",
     "adx": 46.5,
     "tradable": false,
-    "current_price": 3957.91,
+    "current_price": 3957.47,
     "candidate_side": "SHORT",
     "confluence_score": 0.0,
     "zone": "PREMIUM",
