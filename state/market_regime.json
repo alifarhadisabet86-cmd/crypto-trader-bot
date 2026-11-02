@@ -3,9 +3,9 @@
     "regime": "RANGING",
     "strategy": "LIQUIDITY_SWEEP_REVERSAL",
     "htf_bias": "BEARISH",
-    "adx": 28.46,
+    "adx": 31.95,
     "tradable": true,
-    "current_price": 77539.0,
+    "current_price": 77434.6,
     "candidate_side": "NONE",
     "confluence_score": 33.66,
     "zone": "DISCOUNT",
@@ -22,33 +22,33 @@
     "htf_bias": "BEARISH",
     "adx": 26.12,
     "tradable": true,
-    "current_price": 2272.32,
-    "candidate_side": "LONG",
-    "confluence_score": 45.26,
+    "current_price": 2268.2,
+    "candidate_side": "NONE",
+    "confluence_score": 38.89,
     "zone": "DISCOUNT",
     "asian_range": {
       "asian_high": 2317.65,
       "asian_low": 2268.85,
-      "asian_sweep": "ASIAN_LOW_SWEEP_BULL"
+      "asian_sweep": "NONE"
     },
-    "xray_summary_fa": "ساختار بازگشت به میانگین رنج (+14) | ناحیه ارزان‌فروشی Discount (+11) | شکار نقدینگی سشن آسیا (+11) | سشن Killzone فعال (+7)"
+    "xray_summary_fa": "ساختار بازگشت به میانگین رنج (+14) | حمایت ساختار ۴ ساعته (+6) | تایید فشار اردربوک صرافی (+7) | سشن Killzone فعال (+7)"
   },
   "SOL": {
-    "regime": "RANGING",
-    "strategy": "LIQUIDITY_SWEEP_REVERSAL",
+    "regime": "TRENDING_BEAR",
+    "strategy": "SMC_TREND_CONTINUATION",
     "htf_bias": "BEARISH",
-    "adx": 19.71,
+    "adx": 24.02,
     "tradable": true,
-    "current_price": 93.57,
-    "candidate_side": "NONE",
-    "confluence_score": 39.27,
+    "current_price": 93.28,
+    "candidate_side": "SHORT",
+    "confluence_score": 51.6,
     "zone": "DISCOUNT",
     "asian_range": {
       "asian_high": 95.9,
       "asian_low": 93.83,
       "asian_sweep": "NONE"
     },
-    "xray_summary_fa": "ساختار بازگشت به میانگین رنج (+14) | حمایت ساختار ۴ ساعته (+6) | تایید فشار اردربوک صرافی (+7) | سشن Killzone فعال (+7)"
+    "xray_summary_fa": "هم‌راستا با روند ۱ ساعته (+21) | حمایت ساختار ۴ ساعته (+6) | مجاورت با FVG معتبر (+11) | سشن Killzone فعال (+7)"
   },
   "XRP": {
     "regime": "RANGING",
@@ -56,7 +56,7 @@
     "htf_bias": "BEARISH",
     "adx": 12.8,
     "tradable": true,
-    "current_price": 1.25113,
+    "current_price": 1.24986,
     "candidate_side": "NONE",
     "confluence_score": 35.63,
     "zone": "DISCOUNT",
@@ -73,7 +73,7 @@
     "htf_bias": "NEUTRAL",
     "adx": 51.0,
     "tradable": false,
-    "current_price": 3972.15,
+    "current_price": 3971.2,
     "candidate_side": "NONE",
     "confluence_score": 0.0,
     "zone": "PREMIUM",
