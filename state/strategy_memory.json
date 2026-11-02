@@ -5,7 +5,7 @@
     "RANGING": 0.9007
   },
   "coin_multipliers": {
-    "BTC": 1.1118,
+    "BTC": 1.0085,
     "ETH": 1.0,
     "SOL": 1.0,
     "XRP": 0.9072,
@@ -16,14 +16,14 @@
   "regime_multipliers": {
     "TRENDING_BULL": 1.0,
     "TRENDING_BEAR": 1.0,
-    "RANGING": 1.0
+    "RANGING": 0.9818
   },
   "coin_stats": {
     "BTC": {
-      "trades": 1,
+      "trades": 2,
       "wins": 1,
-      "posterior_wr": 0.5556,
-      "avg_r": 1.68
+      "posterior_wr": 0.5,
+      "avg_r": 0.17
     },
     "ETH": {
       "trades": 0,
@@ -50,5 +50,5 @@
       "avg_r": 0.0
     }
   },
-  "updated_at": "2026-11-02T15:45:50Z"
+  "updated_at": "2026-11-02T16:00:58Z"
 }
