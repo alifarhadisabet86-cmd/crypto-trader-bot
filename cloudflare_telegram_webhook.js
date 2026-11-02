@@ -1,19 +1,19 @@
 /**
- * وب‌هوک سرورلس کلودفلر برای پاسخگویی آنی (زیر ۱ ثانیه) به دکمه‌های شیشه‌ای تلگرام
- * Institutional Trading Bot V2.5 - Cloudflare Worker Instant Telegram Bridge
+ * وب‌هوک سرورلس کلودفلر برای اتصال آنی تلگرام به موتور پایتون گیت‌هاب اکشنز
+ * Institutional Trading Bot V2.5 Pro - Cloudflare Worker Instant Telegram Bridge
  *
- * متغیرهای محیطی (Environment Variables) مورد نیاز در پنل Cloudflare Worker:
+ * متغیرهای محیطی (Environment Variables / Secrets) تعریف‌شده در پنل Cloudflare Worker:
  * - TELEGRAM_BOT_TOKEN : توکن ربات تلگرام
- * - TELEGRAM_CHAT_ID   : شناسه عددی چت شما
- * - GITHUB_OWNER       : نام کاربری گیت‌هاب (مثلاً alifarhadisabet86-cmd)
- * - GITHUB_REPO        : نام مخزن (مثلاً crypto-trader-bot)
- * - GITHUB_PAT         : (اختیاری) توکن Personal Access Token گیت‌هاب برای استارت فوری رندر چارت و اجرای دستورات
+ * - TELEGRAM_CHAT_ID   : شناسه عددی چت ادمین
+ * - GITHUB_OWNER       : نام کاربری گیت‌هاب (alifarhadisabet86-cmd)
+ * - GITHUB_REPO        : نام مخزن (crypto-trader-bot)
+ * - GITHUB_PAT         : توکن دسترسی شخصی گیت‌هاب (دارای دسترسی repo و workflow)
  */
 
 export default {
   async fetch(request, env, ctx) {
     if (request.method !== "POST") {
-      return new Response("Institutional Bot V2.5 Webhook Active ✅", { status: 200 });
+      return new Response("Institutional Bot V2.5 Pro Webhook Active ✅", { status: 200 });
     }
 
     let update;
@@ -56,7 +56,7 @@ export default {
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
             callback_query_id: callbackId,
-            text: `⚡ پردازش آنی فرمان: ${rawCmd}`,
+            text: `⚡ فرمان دریافت شد: ${rawCmd}`,
           }),
         })
       );
@@ -64,68 +64,34 @@ export default {
 
     const cmdUpper = rawCmd.split("@")[0].trim().toUpperCase();
 
-    // ۱. پاسخ آنی به دکمه‌های چارت و تحلیل ۵ ارز (ANLZ_BTC, ANLZ_ETH, ...)
+    // ۱. دکمه‌های شیشه‌ای چارت و تحلیل ۵ ارز (ANLZ_BTC, ANLZ_ETH, ANLZ_SOL, ANLZ_XRP, ANLZ_XAU)
     if (cmdUpper.startsWith("ANLZ_")) {
       const coin = cmdUpper.replace("ANLZ_", "").trim();
-      const rawRegimes = await fetchGitHubJson(ghOwner, ghRepo, "state/market_regime.json", env.GITHUB_PAT);
-      const regimes = (rawRegimes && rawRegimes.regimes) ? rawRegimes.regimes : (rawRegimes || {});
-      const rInfo = regimes[coin] || {};
-
-      const text = [
-        `⚡ <b>رادار آنی کلودفلر | ${coin}/USDT (تایم‌فریم ۱۵m)</b>`,
-        `━━━━━━━━━━━━━━━━━━`,
-        `💵 <b>آخرین قیمت ثبت‌شده:</b> <code>${rInfo.current_price ?? "—"}</code>`,
-        `🧭 <b>رژیم ۱ ساعته:</b> <code>${rInfo.regime ?? "RANGING"}</code> | <b>بایاس ۴H:</b> <code>${rInfo.htf_bias ?? "NEUTRAL"}</code>`,
-        `📐 <b>ناحیه قیمتی:</b> <code>${rInfo.zone ?? "EQUILIBRIUM"}</code>`,
-        `🎯 <b>جهت کاندید:</b> <b>${rInfo.candidate_side ?? "NONE"}</b> | <b>امتیاز فازی:</b> <code>${rInfo.confluence_score ?? 0}/100</code>`,
-        `🔬 <b>دلایل X-Ray:</b> ${rInfo.xray_summary_fa || "در حال رصد ساختار"}`,
-        ``,
-        `🖼 <i>درخواست رندر چارت گرافیکی زنده به سرور ارسال شد...</i>`,
-      ].join("\n");
-
-      await sendTelegramMessage(botToken, chatId, text);
+      await sendTelegramMessage(
+        botToken,
+        chatId,
+        `⏳ <b>درخواست تحلیل و رندر چارت دوطبقه <code>${coin}/USDT</code> به موتور پایتون ارسال شد...</b>\n<i>در حال دریافت کندل‌های زنده صرافی و رسم گرافیک...</i>`
+      );
       if (env.GITHUB_PAT) {
         ctx.waitUntil(triggerGitHubWorkflow(ghOwner, ghRepo, env.GITHUB_PAT, coin, ""));
       }
       return new Response("OK", { status: 200 });
     }
 
-    // ۲. پاسخ آنی به گزارش وضعیت (/status) یا بیلان (/nightly) + تریگر ارسال چارت کامل
+    // ۲. گزارش جامع وضعیت (/status, /start) و بیلان شبانه (/nightly) با عکس منحنی سرمایه و PnL زنده
     if (cmdUpper === "/STATUS" || cmdUpper === "/START" || cmdUpper === "/NIGHTLY") {
-      const pf = await fetchGitHubJson(ghOwner, ghRepo, "state/paper_portfolio.json", env.GITHUB_PAT);
-      if (pf) {
-        const bal = Number(pf.balance_usdt || 1000).toFixed(2);
-        const dPnl = Number(pf.daily_pnl_usdt || 0).toFixed(2);
-        const totalTr = (pf.stats && pf.stats.total_trades) || 0;
-        const targetTr = pf.paper_gate_target || 50;
-        const wr = Number((pf.stats && pf.stats.win_rate_pct) || 0).toFixed(1);
-        const openPos = pf.open_positions || [];
-
-        const posLines = openPos.length
-          ? openPos.map(
-              (p, i) =>
-                `  ${i + 1}. <b>${p.coin}</b> (${p.side}) | ورود: <code>${p.entry_price}</code> | PnL: <code>${Number(p.unrealized_pnl_usdt || 0).toFixed(2)}$</code>`
-            )
-          : ["  └ <i>هیچ پوزیشن بازی وجود ندارد (0/5)</i>"];
-
-        const msg = [
-          `⚡ <b>پاسخ آنی اتاق فرمان V2.5 (Cloudflare Edge)</b>`,
-          `━━━━━━━━━━━━━━━━━━`,
-          `💰 <b>موجودی نقد:</b> <code>$${bal}</code> | <b>سود امروز:</b> <code>${dPnl}$</code>`,
-          `🎯 <b>دروازه ۵۰ معامله کاغذی:</b> <code>${totalTr}/${targetTr}</code> (برد: <code>${wr}%</code>)`,
-          `📂 <b>پوزیشن‌های باز (${openPos.length}/5):</b>`,
-          ...posLines,
-        ].join("\n");
-
-        await sendTelegramMessage(botToken, chatId, msg);
-      }
+      await sendTelegramMessage(
+        botToken,
+        chatId,
+        `⏳ <b>درخواست گزارش <code>${cmdUpper}</code> به موتور پایتون ارسال شد...</b>\n<i>در حال بروزرسانی قیمت‌های لحظه‌ای، محاسبه PnL شناور و رندر چارت منحنی سرمایه...</i>`
+      );
       if (env.GITHUB_PAT) {
         ctx.waitUntil(triggerGitHubWorkflow(ghOwner, ghRepo, env.GITHUB_PAT, "", cmdUpper.toLowerCase()));
       }
       return new Response("OK", { status: 200 });
     }
 
-    // ۳. اکشن‌های ریسک‌فری، سیو سود پله‌ای و دستورات کنترلی (/pause, /resume, /panic, /reset, /risk)
+    // ۳. اکشن‌های مدیریتی فوری (ACT_RISK_FREE, ACT_SAVE_50) و دستورات کنترلی (/pause, /resume, /panic, /reset, /risk)
     if (
       cmdUpper === "ACT_RISK_FREE" ||
       cmdUpper === "ACT_SAVE_50" ||
@@ -142,7 +108,7 @@ export default {
       await sendTelegramMessage(
         botToken,
         chatId,
-        `⏳ فرمان <code>${rawCmd}</code> ثبت شد و در اجرای فوری پایپ‌لاین اعمال می‌گردد.`
+        `⏳ فرمان <code>${rawCmd}</code> به موتور پایتون ارسال شد و در حال اجرا روی پوزیشن‌های باز است...`
       );
       if (env.GITHUB_PAT) {
         ctx.waitUntil(triggerGitHubWorkflow(ghOwner, ghRepo, env.GITHUB_PAT, "", rawCmd));
@@ -154,17 +120,6 @@ export default {
   },
 };
 
-async function fetchGitHubJson(owner, repo, path, pat) {
-  const url = `https://raw.githubusercontent.com/${owner}/${repo}/main/${path}`;
-  const headers = { "User-Agent": "Cloudflare-Worker-Bot-V2.5" };
-  if (pat) headers["Authorization"] = `Bearer ${pat}`;
-  try {
-    const r = await fetch(url, { headers });
-    if (r.ok) return await r.json();
-  } catch {}
-  return null;
-}
-
 async function triggerGitHubWorkflow(owner, repo, pat, analyzeCoin, telegramCommand = "") {
   const url = `https://api.github.com/repos/${owner}/${repo}/actions/workflows/bot_cron.yml/dispatches`;
   try {
@@ -173,7 +128,7 @@ async function triggerGitHubWorkflow(owner, repo, pat, analyzeCoin, telegramComm
       headers: {
         Authorization: `Bearer ${pat}`,
         Accept: "application/vnd.github+json",
-        "User-Agent": "Cloudflare-Worker-Bot-V2.5",
+        "User-Agent": "Cloudflare-Worker-Bot-V2.5-Pro",
       },
       body: JSON.stringify({
         ref: "main",

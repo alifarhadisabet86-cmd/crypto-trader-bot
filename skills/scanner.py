@@ -279,14 +279,14 @@ class MarketScannerSkill:
             if is_near_fvg(best_bear_fvg) or sweep_type == "BEARISH_SWEEP" or asian_sweep == "ASIAN_HIGH_SWEEP_BEAR" or zone == "PREMIUM":
                 return "SHORT", best_bear_fvg
         elif regime == "RANGING":
-            if sweep_type == "BULLISH_SWEEP" or asian_sweep == "ASIAN_LOW_SWEEP_BULL" or (zone == "DISCOUNT" and is_near_fvg(best_bull_fvg)):
+            if sweep_type == "BULLISH_SWEEP" or asian_sweep == "ASIAN_LOW_SWEEP_BULL" or (zone != "PREMIUM" and is_near_fvg(best_bull_fvg)):
                 return "LONG", best_bull_fvg
-            if sweep_type == "BEARISH_SWEEP" or asian_sweep == "ASIAN_HIGH_SWEEP_BEAR" or (zone == "PREMIUM" and is_near_fvg(best_bear_fvg)):
+            if sweep_type == "BEARISH_SWEEP" or asian_sweep == "ASIAN_HIGH_SWEEP_BEAR" or (zone != "DISCOUNT" and is_near_fvg(best_bear_fvg)):
                 return "SHORT", best_bear_fvg
 
-        if best_bull_fvg and is_near_fvg(best_bull_fvg):
+        if best_bull_fvg and is_near_fvg(best_bull_fvg) and zone != "PREMIUM":
             return "LONG", best_bull_fvg
-        if best_bear_fvg and is_near_fvg(best_bear_fvg):
+        if best_bear_fvg and is_near_fvg(best_bear_fvg) and zone != "DISCOUNT":
             return "SHORT", best_bear_fvg
 
         return "NONE", None

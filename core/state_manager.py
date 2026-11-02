@@ -391,6 +391,7 @@ class StateManager:
         # ساخت نوار پیشرفت ۱۰ تایی
         filled = int(round(progress_pct / 10.0))
         bar = "🟦" * filled + "⬜" * (10 - filled)
+        mode_str = "LIVE_READY" if unlocked else "PAPER_VALIDATION_LOCKED"
 
         return {
             "completed_trades": total_trades,
@@ -400,8 +401,15 @@ class StateManager:
             "win_rate_pct": win_rate,
             "unlocked": unlocked,
             "bar": bar,
-            "mode": str(portfolio.get("trading_mode", "PAPER")),
+            "mode": mode_str,
         }
+
+    # Aliasهای سازگاری مستقیم با نام‌های سند مرجع V2.5 Pro
+    def _atomic_write_json(self, file_path: Path, data: Any) -> None:
+        self._atomic_write(file_path, data)
+
+    def _check_and_apply_period_resets(self, portfolio: Dict[str, Any]) -> Dict[str, Any]:
+        return self.check_and_reset_periods(portfolio)
 
     def load_portfolio(self) -> Dict[str, Any]:
         pf = self._safe_read(self.files["portfolio"], self.get_default_portfolio)

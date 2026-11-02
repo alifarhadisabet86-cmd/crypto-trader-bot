@@ -1,23 +1,26 @@
 """
-مهارت پنجم: ماشه شلیک ۵ دقیقه (CHoCH, Pinbar, Engulfing, Limit Sniper) و محاسبه قیمت ورود Limit
-Institutional Trading Bot V2 - 5m Micro Entry Trigger & Maker Price Optimizer
+مهارت پنجم (نسخه V2.5 Pro): ماشه ورود میکرو ۵ دقیقه (5M_MICRO_CHOCH, 5M_ENGULFING, 5M_PINBAR, LIMIT_SNIPER_FVG)
+Institutional Trading Bot V2.5 - 5m Micro Entry Trigger & Maker Price Optimizer
 """
 
 from typing import Dict, Any, Optional
 import pandas as pd
 
+from core.config import EXCHANGE_CONFIG, TIMEMACHINE_CONFIG
+
 
 class EntryTriggerSkill:
     """
-    کلاس بررسی کندل‌های تایم‌فریم 5m برای صدور دستور شلیک نهایی و
-    تعیین قیمت ورود بهینه (limit_entry_price) به اندازه 0.10 * ATR_5m بهتر از قیمت مارکت.
+    کلاس بررسی کندل‌های تایم‌فریم 5m برای صدور دستور شلیک نهایی،
+    فیلتر جلوگیری از ورود وسط کندل‌های شارپ/ریزشی (Anti-Falling-Knife)
+    و تعیین قیمت ورود بهینه Limit Maker (0.10 * ATR_5m بهتر از قیمت مارکت).
     """
 
     def __init__(self) -> None:
         self.wick_rejection_ratio: float = 0.45
         self.engulf_body_ratio: float = 0.55
-        self.sniper_score_threshold: float = 75.0
-        self.maker_offset_atr_mult: float = 0.10
+        self.sniper_score_threshold: float = float(TIMEMACHINE_CONFIG.get("SNIPER_LIMIT_MIN_SCORE", 75.0))
+        self.maker_offset_atr_mult: float = float(EXCHANGE_CONFIG.get("MAKER_OFFSET_ATR_5M", 0.10))
 
     def evaluate_entry_trigger(
         self,
@@ -27,7 +30,7 @@ class EntryTriggerSkill:
         active_fvg: Optional[Dict[str, Any]] = None,
     ) -> Dict[str, Any]:
         """
-        بررسی شروط کندلی ۵ دقیقه (CHoCH, Wick Rejection, Momentum Engulf) و شرط Limit Sniper.
+        بررسی شروط کندلی ۵ دقیقه (5M_MICRO_CHOCH, 5M_PINBAR, 5M_ENGULFING) و شرط LIMIT_SNIPER_FVG.
         محاسبه قیمت دقیق سفارش Limit (Maker).
         """
         side = str(candidate_side).strip().upper()
@@ -36,6 +39,7 @@ class EntryTriggerSkill:
             return {
                 "triggered": False,
                 "trigger_type": "NONE",
+                "order_type": "LIMIT",
                 "side": side,
                 "market_price": 0.0,
                 "limit_entry_price": 0.0,
@@ -58,78 +62,93 @@ class EntryTriggerSkill:
 
         # مشخصات کندل فعلی (-1)، کندل قبلی (-2) و دو کندل قبل (-3)
         c_open, c_high, c_low, c_close = opens[-1], highs[-1], lows[-1], closes[-1]
-        p_high, p_low = highs[-2], lows[-2]
+        p_open, p_high, p_low, p_close = opens[-2], highs[-2], lows[-2], closes[-2]
         pp_close = closes[-3]
 
         candle_range = max(c_high - c_low, 1e-12)
         body_size = abs(c_close - c_open)
         upper_wick = c_high - max(c_open, c_close)
         lower_wick = min(c_open, c_close) - c_low
+        close_pos_in_candle = (c_close - c_low) / candle_range
+
+        # فیلتر ایمنی جلوگیری از ورود وسط کندل‌های ریزشی/شارپ مخالف (Anti-Climax / Falling Knife Guard)
+        is_adverse_climax = False
+        if side == "LONG" and c_close < c_open and body_size > 1.25 * atr_5m and close_pos_in_candle < 0.20:
+            is_adverse_climax = True
+        elif side == "SHORT" and c_close > c_open and body_size > 1.25 * atr_5m and close_pos_in_candle > 0.80:
+            is_adverse_climax = True
 
         triggered = False
         trigger_type = "NONE"
         details = "Waiting for 5m micro confirmation"
 
-        # ======================================================================
-        # ۱. بررسی 5M_MICRO_CHOCH (بسته شدن کندل فعلی فراتر از سقف/کف کندل قبلی)
-        # ======================================================================
-        if side == "LONG" and c_close > p_high and c_close > c_open:
-            triggered = True
-            trigger_type = "5M_MICRO_CHOCH"
-            details = f"Bullish 5m CHoCH: Close ({c_close:.4f}) broke above prior High ({p_high:.4f})"
-        elif side == "SHORT" and c_close < p_low and c_close < c_open:
-            triggered = True
-            trigger_type = "5M_MICRO_CHOCH"
-            details = f"Bearish 5m CHoCH: Close ({c_close:.4f}) broke below prior Low ({p_low:.4f})"
+        if not is_adverse_climax:
+            # ======================================================================
+            # ۱. بررسی 5M_MICRO_CHOCH (بسته شدن کندل فعلی فراتر از سقف/کف کندل قبلی)
+            # ======================================================================
+            if side == "LONG" and c_close > p_high and c_close > c_open:
+                triggered = True
+                trigger_type = "5M_MICRO_CHOCH"
+                details = f"Bullish 5m CHoCH: Close ({c_close:.4f}) broke above prior High ({p_high:.4f})"
+            elif side == "SHORT" and c_close < p_low and c_close < c_open:
+                triggered = True
+                trigger_type = "5M_MICRO_CHOCH"
+                details = f"Bearish 5m CHoCH: Close ({c_close:.4f}) broke below prior Low ({p_low:.4f})"
 
-        # ======================================================================
-        # ۲. بررسی 5M_WICK_REJECTION (پین‌بار با شدوی مخالف حداقل ۴۵٪ کل طول کندل)
-        # ======================================================================
-        if not triggered:
-            if side == "LONG" and (lower_wick / candle_range) >= self.wick_rejection_ratio:
-                triggered = True
-                trigger_type = "5M_WICK_REJECTION"
-                details = f"Bullish 5m Pinbar rejection (Lower wick {(lower_wick / candle_range)*100:.1f}% >= 45%)"
-            elif side == "SHORT" and (upper_wick / candle_range) >= self.wick_rejection_ratio:
-                triggered = True
-                trigger_type = "5M_WICK_REJECTION"
-                details = f"Bearish 5m Pinbar rejection (Upper wick {(upper_wick / candle_range)*100:.1f}% >= 45%)"
+            # ======================================================================
+            # ۲. بررسی 5M_PINBAR (پین‌بار بازگشتی با شدوی حداقل ۴۵٪ و بسته شدن در نیمه موافق)
+            # ======================================================================
+            if not triggered:
+                if (
+                    side == "LONG"
+                    and (lower_wick / candle_range) >= self.wick_rejection_ratio
+                    and close_pos_in_candle >= 0.45
+                ):
+                    triggered = True
+                    trigger_type = "5M_PINBAR"
+                    details = f"Bullish 5m Pinbar rejection (Lower wick {(lower_wick / candle_range)*100:.1f}% >= 45%)"
+                elif (
+                    side == "SHORT"
+                    and (upper_wick / candle_range) >= self.wick_rejection_ratio
+                    and close_pos_in_candle <= 0.55
+                ):
+                    triggered = True
+                    trigger_type = "5M_PINBAR"
+                    details = f"Bearish 5m Pinbar rejection (Upper wick {(upper_wick / candle_range)*100:.1f}% >= 45%)"
 
-        # ======================================================================
-        # ۳. بررسی 5M_MOMENTUM_ENGULF (بدنه حداقل ۵۵٪ رنج کندل و عبور از کلوز ۲ کندل قبل)
-        # ======================================================================
-        if not triggered:
-            body_ratio = body_size / candle_range
-            if (
-                side == "LONG"
-                and c_close > c_open
-                and body_ratio >= self.engulf_body_ratio
-                and c_close > pp_close
-            ):
-                triggered = True
-                trigger_type = "5M_MOMENTUM_ENGULF"
-                details = f"Bullish 5m Momentum Engulfing (Body {body_ratio*100:.1f}% >= 55%, Close > 2-bars ago)"
-            elif (
-                side == "SHORT"
-                and c_close < c_open
-                and body_ratio >= self.engulf_body_ratio
-                and c_close < pp_close
-            ):
-                triggered = True
-                trigger_type = "5M_MOMENTUM_ENGULF"
-                details = f"Bearish 5m Momentum Engulfing (Body {body_ratio*100:.1f}% >= 55%, Close < 2-bars ago)"
-
-        # ======================================================================
-        # ۴. بررسی LIMIT_SNIPER_FVG (امتیاز فازی >= 75 و وجود active_fvg)
-        # ======================================================================
-        if not triggered:
-            if float(confluence_score) >= self.sniper_score_threshold and active_fvg is not None:
-                triggered = True
-                trigger_type = "LIMIT_SNIPER_FVG"
-                details = (
-                    f"Golden Setup Sniper Trigger (Score {confluence_score:.1f} >= 75.0 "
-                    f"with active 15m FVG zone)"
+            # ======================================================================
+            # ۳. بررسی 5M_ENGULFING (کندل پوشا / مومنتوم قوی با بدنه حداقل ۵۵٪)
+            # ======================================================================
+            if not triggered:
+                body_ratio = body_size / candle_range
+                bull_engulf = c_close > c_open and (
+                    (body_ratio >= self.engulf_body_ratio and c_close > pp_close)
+                    or (p_close < p_open and c_close >= p_open and c_open <= p_close)
                 )
+                bear_engulf = c_close < c_open and (
+                    (body_ratio >= self.engulf_body_ratio and c_close < pp_close)
+                    or (p_close > p_open and c_close <= p_open and c_open >= p_close)
+                )
+                if side == "LONG" and bull_engulf:
+                    triggered = True
+                    trigger_type = "5M_ENGULFING"
+                    details = f"Bullish 5m Engulfing / Momentum (Body {body_ratio*100:.1f}%)"
+                elif side == "SHORT" and bear_engulf:
+                    triggered = True
+                    trigger_type = "5M_ENGULFING"
+                    details = f"Bearish 5m Engulfing / Momentum (Body {body_ratio*100:.1f}%)"
+
+            # ======================================================================
+            # ۴. بررسی LIMIT_SNIPER_FVG (امتیاز فازی >= 75 و وجود active_fvg)
+            # ======================================================================
+            if not triggered:
+                if float(confluence_score) >= self.sniper_score_threshold and active_fvg is not None:
+                    triggered = True
+                    trigger_type = "LIMIT_SNIPER_FVG"
+                    details = (
+                        f"Golden Setup Sniper Trigger (Score {confluence_score:.1f} >= "
+                        f"{self.sniper_score_threshold:.1f} with active 15m FVG zone)"
+                    )
 
         # ======================================================================
         # ۵. محاسبه قیمت ورود Limit به اندازه 0.10 * ATR_5m بهتر از قیمت مارکت
@@ -143,6 +162,7 @@ class EntryTriggerSkill:
         return {
             "triggered": triggered,
             "trigger_type": trigger_type,
+            "order_type": "LIMIT",
             "side": side,
             "market_price": round(market_price, 6),
             "limit_entry_price": limit_entry_price,

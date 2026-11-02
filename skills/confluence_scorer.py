@@ -1,5 +1,5 @@
 """
-مهارت چهارم (نسخه V2.5): موتور امتیازدهی فازی ۰ تا ۱۰۰ به همراه دلایل فارسی X-Ray
+مهارت چهارم (نسخه V2.5 Pro): موتور امتیازدهی فازی ۰ تا ۱۰۰ به همراه دلایل فارسی X-Ray
 Institutional Trading Bot V2.5 - Fuzzy Confluence Scorer & X-Ray Breakdown
 """
 
@@ -97,7 +97,7 @@ class ConfluenceScorerSkill:
         score = 0.0
         regime = regime_data.get("regime", "RANGING")
         htf_bias = regime_data.get("htf_bias", "NEUTRAL")
-        adx = float(regime_data.get("adx", 20.0))
+        adx = float(regime_data.get("adx", regime_data.get("trend_strength", 20.0)))
 
         if (side == "LONG" and regime == "TRENDING_BULL") or (
             side == "SHORT" and regime == "TRENDING_BEAR"
@@ -110,7 +110,7 @@ class ConfluenceScorerSkill:
             score += 14.0
             xray_reasons.append("ساختار بازگشت به میانگین رنج (+14)")
         else:
-            score += 5.0
+            score += 0.0
 
         if (side == "LONG" and htf_bias == "BULLISH") or (
             side == "SHORT" and htf_bias == "BEARISH"
