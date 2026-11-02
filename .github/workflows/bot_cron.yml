@@ -18,7 +18,7 @@ permissions:
   contents: write
 
 concurrency:
-  group: institutional-trading-bot-v2-${{ github.event_name }}-${{ github.event.inputs.telegram_command || github.event.inputs.analyze_coin || 'cron' }}
+  group: institutional-trading-bot-v2-${{ github.event.inputs.telegram_command || github.event.inputs.analyze_coin || '15m-cycle' }}
   cancel-in-progress: false
 
 jobs:

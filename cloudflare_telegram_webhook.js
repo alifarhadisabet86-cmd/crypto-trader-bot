@@ -1,6 +1,6 @@
 /**
- * وب‌هوک سرورلس کلودفلر برای اتصال آنی تلگرام به موتور پایتون گیت‌هاب اکشنز
- * Institutional Trading Bot V2.5 Pro - Cloudflare Worker Instant Telegram Bridge
+ * وب‌هوک سرورلس کلودفلر برای اتصال آنی تلگرام + کرون‌جاب دقیق ۱۵ دقیقه‌ای به موتور پایتون گیت‌هاب اکشنز
+ * Institutional Trading Bot V2.5 Pro - Cloudflare Worker Instant Telegram Bridge & 15m Precision Cron
  *
  * متغیرهای محیطی (Environment Variables / Secrets) تعریف‌شده در پنل Cloudflare Worker:
  * - TELEGRAM_BOT_TOKEN : توکن ربات تلگرام
@@ -11,9 +11,17 @@
  */
 
 export default {
+  async scheduled(event, env, ctx) {
+    const ghOwner = (env.GITHUB_OWNER || "alifarhadisabet86-cmd").trim();
+    const ghRepo = (env.GITHUB_REPO || "crypto-trader-bot").trim();
+    if (env.GITHUB_PAT) {
+      ctx.waitUntil(triggerGitHubWorkflow(ghOwner, ghRepo, env.GITHUB_PAT, "", ""));
+    }
+  },
+
   async fetch(request, env, ctx) {
     if (request.method !== "POST") {
-      return new Response("Institutional Bot V2.5 Pro Webhook Active ✅", { status: 200 });
+      return new Response("Institutional Bot V2.5 Pro Webhook + 15m Cron Active ✅", { status: 200 });
     }
 
     let update;
