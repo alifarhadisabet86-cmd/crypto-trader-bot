@@ -4,10 +4,17 @@ Institutional Trading Bot V2.5 - Full End-to-End Orchestrator
 """
 
 import argparse
+import copy
 import os
+import sys
 import time
 from datetime import datetime, timezone
 from typing import Dict, Any, List, Optional
+
+if hasattr(sys.stdout, "reconfigure"):
+    sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+if hasattr(sys.stderr, "reconfigure"):
+    sys.stderr.reconfigure(encoding="utf-8", errors="replace")
 
 import numpy as np
 import pandas as pd
@@ -85,11 +92,17 @@ def run_institutional_cycle(
     ml_skill = MLFeedbackSkill()
     alerts_skill = TelegramAlertsSkill()
 
-    # ۲. بارگذاری حافظه پایدار
+    # ۲. بارگذاری حافظه پایدار (در حالت dry_run روی کپی در حافظه اجرا می‌شود تا فایل‌های واقعی دست‌نخورده بمانند)
     portfolio = state_mgr.load_portfolio()
     bot_config = state_mgr.load_bot_config()
     strategy_memory = state_mgr.load_strategy_memory()
     shadow_portfolio = state_mgr.load_shadow_portfolio()
+
+    if dry_run:
+        portfolio = copy.deepcopy(portfolio)
+        bot_config = copy.deepcopy(bot_config)
+        strategy_memory = copy.deepcopy(strategy_memory)
+        shadow_portfolio = copy.deepcopy(shadow_portfolio)
 
     # بررسی دستور مستقیم ارسال‌شده از وب‌هوک کلودفلر
     env_target_coin = (target_analyze_coin or os.getenv("TARGET_ANALYZE_COIN", "")).strip().upper()
@@ -202,13 +215,14 @@ def run_institutional_cycle(
 
     # ۸. بررسی مدارشکن روزانه (۲٪) و هفتگی (۵٪)
     cb_info = risk_skill.check_circuit_breaker(portfolio, unrealized_pnl)
-    state_mgr.save_risk_status({
-        "circuit_breaker": cb_info["daily_locked"],
-        "weekly_circuit_breaker": cb_info["weekly_locked"],
-        "daily_drawdown_pct": cb_info["daily_drawdown_pct"],
-        "weekly_drawdown_pct": cb_info["weekly_drawdown_pct"],
-        "active_slots": len(portfolio.get("open_positions", [])),
-    })
+    if not dry_run:
+        state_mgr.save_risk_status({
+            "circuit_breaker": cb_info["daily_locked"],
+            "weekly_circuit_breaker": cb_info["weekly_locked"],
+            "daily_drawdown_pct": cb_info["daily_drawdown_pct"],
+            "weekly_drawdown_pct": cb_info["weekly_drawdown_pct"],
+            "active_slots": len(portfolio.get("open_positions", [])),
+        })
 
     # ۹. حلقه اسکن، تحلیل و شکار روی ۵ دارایی واچ‌لیست
     regimes_snapshot: Dict[str, Any] = {}
@@ -477,13 +491,14 @@ def run_institutional_cycle(
             if alerts_skill.send_photo(eq_chart, caption=nightly_text, bot_config=bot_config):
                 bot_config["last_daily_report_date"] = today_str
 
-    # ۱۲. ذخیره اتمیک تمام فایل‌های وضعیت
-    state_mgr.save_portfolio(portfolio)
-    state_mgr.save_bot_config(bot_config)
-    state_mgr.save_strategy_memory(strategy_memory)
-    state_mgr.save_shadow_portfolio(shadow_portfolio)
-    state_mgr.save_market_regime(regimes_snapshot)
-    state_mgr.save_active_setups(portfolio.get("open_positions", []))
+    # ۱۲. ذخیره اتمیک تمام فایل‌های وضعیت (فقط در اجرای واقعی)
+    if not dry_run:
+        state_mgr.save_portfolio(portfolio)
+        state_mgr.save_bot_config(bot_config)
+        state_mgr.save_strategy_memory(strategy_memory)
+        state_mgr.save_shadow_portfolio(shadow_portfolio)
+        state_mgr.save_market_regime(regimes_snapshot)
+        state_mgr.save_active_setups(portfolio.get("open_positions", []))
 
     gate_info = state_mgr.get_paper_gate_progress(portfolio)
     duration = round(time.time() - t0, 2)

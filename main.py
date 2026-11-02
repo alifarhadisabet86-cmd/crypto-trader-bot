@@ -1,12 +1,17 @@
 """
 اسکریپت اجرای لوکال ۲۴ ساعته با حلقه while True و پولینگ زنده تلگرام (Local 24/7 Runner)
-Institutional Trading Bot V2 - Continuous Local Execution Engine
+Institutional Trading Bot V2.5 - Continuous Local Execution Engine
 """
 
 import argparse
 import sys
 import time
 from datetime import datetime, timezone
+
+if hasattr(sys.stdout, "reconfigure"):
+    sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+if hasattr(sys.stderr, "reconfigure"):
+    sys.stderr.reconfigure(encoding="utf-8", errors="replace")
 
 from cloud_runner import run_institutional_cycle
 from core.state_manager import StateManager
@@ -28,7 +33,7 @@ def run_continuous_loop(interval_minutes: int = 15, poll_seconds: int = 10) -> N
     alerts = TelegramAlertsSkill()
 
     print("=" * 72)
-    print("🏛️  Institutional Trading Bot V2 — 24/7 Local Runner Started")
+    print("🏛️  Institutional Trading Bot V2.5 — 24/7 Local Runner Started")
     print(f"⏱️  Cycle Interval: {interval_minutes} min | Telegram Poll: every {poll_sec}s")
     print("💡 Press Ctrl+C at any time to stop gracefully.")
     print("=" * 72)
@@ -79,7 +84,7 @@ def run_continuous_loop(interval_minutes: int = 15, poll_seconds: int = 10) -> N
 
 def main() -> None:
     parser = argparse.ArgumentParser(
-        description="Institutional Trading Bot V2 - Local Runner"
+        description="Institutional Trading Bot V2.5 - Local Runner"
     )
     parser.add_argument(
         "--once",

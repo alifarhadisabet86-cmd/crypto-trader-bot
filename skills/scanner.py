@@ -39,7 +39,7 @@ class MarketScannerSkill:
         current_price = float(df["close"].iloc[-1])
         atr_15m = self._get_latest_atr(df)
 
-        # ۱. محاسبه محدوده رنج ۵۰ کندل اخیر و درصد Premium / Discount
+        # ۱. محاسبه محدوده رنج کندل‌های اخیر و درصد Premium / Discount
         window_df = df.tail(self.swing_lookback)
         swing_high = float(window_df["high"].max())
         swing_low = float(window_df["low"].min())
@@ -91,6 +91,8 @@ class MarketScannerSkill:
             "atr_15m": round(atr_15m, 6),
             "swing_high": round(swing_high, 6),
             "swing_low": round(swing_low, 6),
+            "range_high_pool": round(swing_high, 6),
+            "range_low_pool": round(swing_low, 6),
             "range_position_pct": round(range_position_pct, 2),
             "zone": zone,
             "candidate_side": candidate_side,
@@ -100,6 +102,7 @@ class MarketScannerSkill:
             "liquidity_sweep": sweep_info["sweep_type"],
             "sweep_level": sweep_info["sweep_level"],
             "sweep_wick_extreme": sweep_info["wick_extreme"],
+            "sweep_extreme_wick": sweep_info["wick_extreme"],
             "asian_range": asian_info,
             "volume_ratio": round(vol_ratio, 2),
             "volume_spike": volume_spike,
@@ -112,15 +115,25 @@ class MarketScannerSkill:
         """
         استخراج سقف و کف سشن آسیا (ساعت 00:00 تا 06:00 UTC) و بررسی شکار نقدینگی آن.
         """
-        if "timestamp" in df.columns:
+        asian_df = pd.DataFrame()
+        if "datetime" in df.columns:
             try:
-                ts = pd.to_datetime(df["timestamp"], utc=True)
+                ts = pd.to_datetime(df["datetime"], utc=True)
                 asian_mask = (ts.dt.hour >= 0) & (ts.dt.hour < 6)
                 asian_df = df[asian_mask].tail(24)
             except Exception:
                 asian_df = pd.DataFrame()
-        else:
-            asian_df = pd.DataFrame()
+        elif "timestamp" in df.columns:
+            try:
+                raw_ts = df["timestamp"]
+                if pd.api.types.is_numeric_dtype(raw_ts):
+                    ts = pd.to_datetime(raw_ts, unit="ms", utc=True)
+                else:
+                    ts = pd.to_datetime(raw_ts, utc=True)
+                asian_mask = (ts.dt.hour >= 0) & (ts.dt.hour < 6)
+                asian_df = df[asian_mask].tail(24)
+            except Exception:
+                asian_df = pd.DataFrame()
 
         if asian_df.empty:
             # در صورتی که ستون زمان نباشد، از یک‌پنجم ابتدایی پنجره اخیر به عنوان مرجع رنج اولیه استفاده می‌شود
@@ -303,6 +316,8 @@ class MarketScannerSkill:
             "atr_15m": 0.0,
             "swing_high": 0.0,
             "swing_low": 0.0,
+            "range_high_pool": 0.0,
+            "range_low_pool": 0.0,
             "range_position_pct": 50.0,
             "zone": "EQUILIBRIUM",
             "candidate_side": "NONE",
@@ -312,6 +327,7 @@ class MarketScannerSkill:
             "liquidity_sweep": "NONE",
             "sweep_level": None,
             "sweep_wick_extreme": None,
+            "sweep_extreme_wick": None,
             "asian_range": {"asian_high": 0.0, "asian_low": 0.0, "asian_sweep": "NONE"},
             "volume_ratio": 1.0,
             "volume_spike": False,

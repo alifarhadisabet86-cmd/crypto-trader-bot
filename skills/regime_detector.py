@@ -1,9 +1,9 @@
 """
-مهارت اول: تشخیص رژیم بازار در ۴ ساعته و ۱ ساعته + فیلتر شوک خبری (Regime Detector Skill)
-Institutional Trading Bot V2 - Market Regime & Volatility Filter
+مهارت اول: تشخیص رژیم بازار در ۱ ساعته و ۴ ساعته + فیلتر شوک خبری (Regime Detector Skill)
+Institutional Trading Bot V2.5 - Market Regime & Volatility Filter
 """
 
-from typing import Dict, Any
+from typing import Dict, Any, Optional
 import numpy as np
 import pandas as pd
 
@@ -50,7 +50,7 @@ class RegimeDetectorSkill:
         """محاسبه میانگین متحرک نمایی (EMA)."""
         return series.astype(float).ewm(span=span, adjust=False).mean()
 
-    def _determine_htf_bias(self, df_4h: pd.DataFrame) -> str:
+    def _determine_htf_bias(self, df_4h: Optional[pd.DataFrame]) -> str:
         """
         تعیین بایاس ساختار کلان ۴ ساعته (BULLISH, BEARISH, NEUTRAL).
         """
@@ -71,9 +71,13 @@ class RegimeDetectorSkill:
             return "BEARISH"
         return "NEUTRAL"
 
-    def detect_regime(self, df_4h: pd.DataFrame, df_1h: pd.DataFrame) -> Dict[str, Any]:
+    def detect_regime(
+        self,
+        df_1h: pd.DataFrame,
+        df_4h: Optional[pd.DataFrame] = None,
+    ) -> Dict[str, Any]:
         """
-        تحلیل کندل‌های 4h و 1h و استخراج رژیم فعلی بازار، استراتژی مجاز و وضعیت tradable.
+        تحلیل کندل‌های 1h و 4h و استخراج رژیم فعلی بازار، استراتژی مجاز، ADX و وضعیت tradable.
         """
         if df_1h is None or len(df_1h) < 20:
             return {
@@ -81,6 +85,7 @@ class RegimeDetectorSkill:
                 "strategy": "NONE",
                 "tradable": False,
                 "htf_bias": "NEUTRAL",
+                "adx": 0.0,
                 "trend_strength": 0.0,
                 "atr_ratio": 0.0,
                 "ema20_1h": 0.0,
@@ -89,7 +94,7 @@ class RegimeDetectorSkill:
             }
 
         # ۱. تعیین بایاس ۴ ساعته
-        htf_bias = self._determine_htf_bias(df_4h)
+        htf_bias = self._determine_htf_bias(df_4h if df_4h is not None else df_1h)
 
         # ۲. محاسبه EMA 20 و EMA 50 در تایم‌فریم ۱ ساعته
         closes_1h = df_1h["close"].astype(float)
@@ -121,6 +126,7 @@ class RegimeDetectorSkill:
                 "strategy": "NONE",
                 "tradable": False,
                 "htf_bias": htf_bias,
+                "adx": trend_strength,
                 "trend_strength": trend_strength,
                 "atr_ratio": atr_ratio,
                 "ema20_1h": round(ema20_1h, 6),
@@ -134,6 +140,7 @@ class RegimeDetectorSkill:
                 "strategy": "NONE",
                 "tradable": False,
                 "htf_bias": htf_bias,
+                "adx": trend_strength,
                 "trend_strength": trend_strength,
                 "atr_ratio": atr_ratio,
                 "ema20_1h": round(ema20_1h, 6),
@@ -163,6 +170,7 @@ class RegimeDetectorSkill:
             "strategy": strategy,
             "tradable": True,
             "htf_bias": htf_bias,
+            "adx": trend_strength,
             "trend_strength": trend_strength,
             "atr_ratio": atr_ratio,
             "ema20_1h": round(ema20_1h, 6),

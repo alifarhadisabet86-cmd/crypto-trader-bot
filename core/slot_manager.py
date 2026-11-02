@@ -1,9 +1,9 @@
 """
 ماژول مدیریت ۵ اسلات هوشمند و سپر همبستگی (Slot Manager & Correlation Shield)
-Institutional Trading Bot V2 - Smart Slot Matrix
+Institutional Trading Bot V2.5 - Smart Slot Matrix
 """
 
-from typing import Dict, Any, List
+from typing import Dict, Any, List, Optional
 
 from core.config import WATCHLIST, RISK_RULES
 
@@ -22,9 +22,9 @@ def _extract_coin_key(coin_or_symbol: str) -> str:
 def _is_crypto_asset(coin_key: str) -> bool:
     """بررسی اینکه آیا دارایی جزو گروه کریپتو است یا دارایی امن (طلا)."""
     info = WATCHLIST.get(coin_key, {})
-    corr_group = info.get("correlation_group", "CRYPTO_HIGH")
-    category = info.get("category", "CRYPTO_MAJOR")
-    if coin_key == "XAU" or corr_group == "SAFE_HAVEN" or category == "COMMODITY":
+    corr_group = str(info.get("correlated_group") or info.get("correlation_group", "CRYPTO_HIGH"))
+    category = str(info.get("category", "CRYPTO_MAJOR"))
+    if coin_key == "XAU" or "SAFE_HAVEN" in corr_group or category == "COMMODITY":
         return False
     return True
 
@@ -33,7 +33,8 @@ def can_open_new_position(
     open_positions: List[Dict[str, Any]],
     candidate_coin: str,
     candidate_side: str,
-    candidate_score: float,
+    candidate_score: float = 0.0,
+    confluence_score: Optional[float] = None,
 ) -> Dict[str, Any]:
     """
     بررسی امکان باز کردن پوزیشن جدید بر اساس ماتریس ۵ اسلات هوشمند و سپر همبستگی.
@@ -45,14 +46,14 @@ def can_open_new_position(
         - details (str): توضیح کامل فارسی/انگلیسی برای لاگ و رادار سایه
         - slot_metrics (dict): آمار لحظه‌ای اسلات‌ها
     """
-    max_pos: int = int(RISK_RULES.get("max_concurrent_positions", 5))
-    max_normal_slots: int = int(RISK_RULES.get("max_normal_score_slots", 2))
-    golden_threshold: float = float(RISK_RULES.get("golden_score_threshold", 75.0))
-    max_crypto_same_side: int = int(RISK_RULES.get("max_crypto_correlated_same_side", 3))
+    max_pos: int = int(RISK_RULES.get("MAX_OPEN_POSITIONS", RISK_RULES.get("max_concurrent_positions", 5)))
+    max_normal_slots: int = int(RISK_RULES.get("STANDARD_SLOTS", RISK_RULES.get("max_normal_score_slots", 3)))
+    golden_threshold: float = float(RISK_RULES.get("GOLDEN_SLOTS_MIN_SCORE", RISK_RULES.get("golden_score_threshold", 80.0)))
+    max_crypto_same_side: int = int(RISK_RULES.get("MAX_CORRELATED_ALTS", RISK_RULES.get("max_crypto_correlated_same_side", 3)))
 
     cand_key = _extract_coin_key(candidate_coin)
     cand_side = str(candidate_side).strip().upper()
-    cand_score = float(candidate_score)
+    cand_score = float(confluence_score if confluence_score is not None else candidate_score)
 
     # ۱. بررسی عدم وجود پوزیشن باز تکراری روی همین نماد
     for pos in open_positions:
@@ -75,14 +76,14 @@ def can_open_new_position(
             "slot_metrics": _build_slot_metrics(open_positions, max_pos),
         }
 
-    # ۳. تفکیک پوزیشن‌های دارای ریسک فعال (آن‌هایی که هنوز به TP1 نرسیده‌اند)
+    # ۳. تفکیک پوزیشن‌های دارای ریسک فعال (آن‌هایی که هنوز به TP1/Risk-Free نرسیده‌اند)
     active_risk_positions = [
-        p for p in open_positions if not bool(p.get("tp1_hit", False))
+        p for p in open_positions
+        if not bool(p.get("tp1_hit", False) or p.get("is_risk_free", False) or p.get("risk_free", False))
     ]
     active_risk_count = len(active_risk_positions)
 
-    # ۴. قانون رزرو اسلات برای ستاپ‌های طلایی (Score >= 75.0)
-    # ستاپ‌های عادی (65 <= score < 75) حداکثر ۲ اسلات ریسک فعال را می‌توانند پر کنند
+    # ۴. قانون رزرو اسلات برای ستاپ‌های طلایی (Score >= golden_threshold)
     if cand_score < golden_threshold:
         if active_risk_count >= max_normal_slots:
             return {
@@ -128,7 +129,10 @@ def can_open_new_position(
 def _build_slot_metrics(open_positions: List[Dict[str, Any]], max_pos: int) -> Dict[str, int]:
     """محاسبه آمار لحظه‌ای اسلات‌های کل، ریسک‌فری شده و دارای ریسک فعال."""
     total_open = len(open_positions)
-    risk_free_count = sum(1 for p in open_positions if bool(p.get("tp1_hit", False)))
+    risk_free_count = sum(
+        1 for p in open_positions
+        if bool(p.get("tp1_hit", False) or p.get("is_risk_free", False) or p.get("risk_free", False))
+    )
     active_risk_count = total_open - risk_free_count
     return {
         "max_slots": max_pos,

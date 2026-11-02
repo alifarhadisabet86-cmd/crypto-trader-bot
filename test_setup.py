@@ -1,11 +1,17 @@
 """
 اسکریپت تست اتصال صرافی، سلامت فایل‌ها، ۱۲ مهارت و گزارش‌دهی تلگرام (System Diagnostics)
-Institutional Trading Bot V2 - End-to-End Health Check & Verification Suite
+Institutional Trading Bot V2.5 - End-to-End Health Check & Verification Suite
 """
 
 import argparse
+import sys
 from pathlib import Path
 from typing import Dict, Any
+
+if hasattr(sys.stdout, "reconfigure"):
+    sys.stdout.reconfigure(encoding="utf-8", errors="replace")
+if hasattr(sys.stderr, "reconfigure"):
+    sys.stderr.reconfigure(encoding="utf-8", errors="replace")
 
 import numpy as np
 import pandas as pd
@@ -70,7 +76,7 @@ def run_system_diagnostics(live_exchange: bool = False, send_telegram: bool = Fa
     ml = MLFeedbackSkill()
     al = TelegramAlertsSkill()
 
-    # تست زنجیره تحلیلی با دیتای استاندارد
+    # تست زنجیره تحلیلی با دیتای استاندارد و پرتفوی پایه
     synth_df = pd.DataFrame({
         "open": np.linspace(100, 110, 60),
         "high": np.linspace(101, 111, 60),
@@ -79,6 +85,9 @@ def run_system_diagnostics(live_exchange: bool = False, send_telegram: bool = Fa
         "volume": [150.0] * 60,
     })
     synth_df["atr"] = de._compute_atr(synth_df, 14)
+
+    test_pf = sm.get_default_portfolio()
+    test_cfg = sm.get_default_bot_config()
 
     reg_res = rd.detect_regime(synth_df, synth_df)
     scan_res = sc.scan_structure(synth_df, reg_res)
@@ -92,7 +101,7 @@ def run_system_diagnostics(live_exchange: bool = False, send_telegram: bool = Fa
     tm_res = tm.run_simulation(synth_df, exit_res, 82.0, reg_res, seed=42)
     slot_res = can_open_new_position([], "BTC", "LONG", 82.0)
     risk_res = bg.allocate_budget(
-        pf, "BTC", "LONG", {"final_score": 82.0, "size_multiplier": 1.0}, exit_res, cfg
+        test_pf, "BTC", "LONG", {"final_score": 82.0, "size_multiplier": 1.0}, exit_res, test_cfg
     )
     sp_res = br.check_spread_guard({"spread_abs": 0.05}, 110.0, exit_res["tp2_final"])
     chart_path = al.generate_setup_chart(
@@ -104,6 +113,7 @@ def run_system_diagnostics(live_exchange: bool = False, send_telegram: bool = Fa
         reg_res["tradable"]
         and scan_res["valid"]
         and trig_res["triggered"]
+        and exit_res["valid"]
         and tm_res["approved"]
         and slot_res["allowed"]
         and risk_res["approved"]
@@ -127,7 +137,7 @@ def run_system_diagnostics(live_exchange: bool = False, send_telegram: bool = Fa
     if send_telegram and al.is_configured:
         report_text = al.build_status_report(
             pf, cfg, shd, {"value": 55, "classification": "Greed", "bar": "🟩🟩🟩🟩🟩🟩⬜⬜⬜⬜"},
-            title="✅ تست سلامت سیستم (Institutional Trading Bot V2)"
+            title="✅ تست سلامت سیستم (Institutional Trading Bot V2.5)"
         )
         results["telegram_sent_ok"] = al.send_photo(eq_path, caption=report_text, bot_config=cfg)
     else:
@@ -143,14 +153,14 @@ def run_system_diagnostics(live_exchange: bool = False, send_telegram: bool = Fa
 
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description="Institutional Bot V2 - System Health Check")
+    parser = argparse.ArgumentParser(description="Institutional Bot V2.5 - System Health Check")
     parser.add_argument("--live", action="store_true", help="تست دریافت کندل و اردربوک زنده از KuCoin")
     parser.add_argument("--telegram", action="store_true", help="ارسال پیام و چارت تست به تلگرام")
     args = parser.parse_args()
 
     diag = run_system_diagnostics(live_exchange=args.live, send_telegram=args.telegram)
     print("=" * 65)
-    print("🩺 Institutional Trading Bot V2 — Diagnostic Report")
+    print("🩺 Institutional Trading Bot V2.5 — Diagnostic Report")
     for k, v in diag["checks"].items():
         badge = "✅ PASS" if v else "❌ FAIL"
         print(f"  - {k}: {badge}")

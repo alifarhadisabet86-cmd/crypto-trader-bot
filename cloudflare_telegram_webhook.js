@@ -7,7 +7,7 @@
  * - TELEGRAM_CHAT_ID   : شناسه عددی چت شما
  * - GITHUB_OWNER       : نام کاربری گیت‌هاب (مثلاً alifarhadisabet86-cmd)
  * - GITHUB_REPO        : نام مخزن (مثلاً crypto-trader-bot)
- * - GITHUB_PAT         : (اختیاری) توکن Personal Access Token گیت‌هاب برای استارت فوری رندر چارت
+ * - GITHUB_PAT         : (اختیاری) توکن Personal Access Token گیت‌هاب برای استارت فوری رندر چارت و اجرای دستورات
  */
 
 export default {
@@ -62,13 +62,14 @@ export default {
       );
     }
 
-    const cmdUpper = rawCmd.split("@")[0].toUpperCase();
+    const cmdUpper = rawCmd.split("@")[0].trim().toUpperCase();
 
     // ۱. پاسخ آنی به دکمه‌های چارت و تحلیل ۵ ارز (ANLZ_BTC, ANLZ_ETH, ...)
     if (cmdUpper.startsWith("ANLZ_")) {
       const coin = cmdUpper.replace("ANLZ_", "").trim();
-      const regimes = await fetchGitHubJson(ghOwner, ghRepo, "state/market_regime.json", env.GITHUB_PAT);
-      const rInfo = (regimes && regimes[coin]) || {};
+      const rawRegimes = await fetchGitHubJson(ghOwner, ghRepo, "state/market_regime.json", env.GITHUB_PAT);
+      const regimes = (rawRegimes && rawRegimes.regimes) ? rawRegimes.regimes : (rawRegimes || {});
+      const rInfo = regimes[coin] || {};
 
       const text = [
         `⚡ <b>رادار آنی کلودفلر | ${coin}/USDT (تایم‌فریم ۱۵m)</b>`,
@@ -84,12 +85,12 @@ export default {
 
       await sendTelegramMessage(botToken, chatId, text);
       if (env.GITHUB_PAT) {
-        ctx.waitUntil(triggerGitHubWorkflow(ghOwner, ghRepo, env.GITHUB_PAT, coin));
+        ctx.waitUntil(triggerGitHubWorkflow(ghOwner, ghRepo, env.GITHUB_PAT, coin, ""));
       }
       return new Response("OK", { status: 200 });
     }
 
-    // ۲. پاسخ آنی به گزارش وضعیت (/status) یا بیلان (/nightly)
+    // ۲. پاسخ آنی به گزارش وضعیت (/status) یا بیلان (/nightly) + تریگر ارسال چارت کامل
     if (cmdUpper === "/STATUS" || cmdUpper === "/START" || cmdUpper === "/NIGHTLY") {
       const pf = await fetchGitHubJson(ghOwner, ghRepo, "state/paper_portfolio.json", env.GITHUB_PAT);
       if (pf) {
@@ -118,18 +119,33 @@ export default {
 
         await sendTelegramMessage(botToken, chatId, msg);
       }
+      if (env.GITHUB_PAT) {
+        ctx.waitUntil(triggerGitHubWorkflow(ghOwner, ghRepo, env.GITHUB_PAT, "", cmdUpper.toLowerCase()));
+      }
       return new Response("OK", { status: 200 });
     }
 
-    // ۳. اکشن‌های ریسک‌فری و سیو سود پله‌ای
-    if (cmdUpper === "ACT_RISK_FREE" || cmdUpper === "ACT_SAVE_50") {
+    // ۳. اکشن‌های ریسک‌فری، سیو سود پله‌ای و دستورات کنترلی (/pause, /resume, /panic, /reset, /risk)
+    if (
+      cmdUpper === "ACT_RISK_FREE" ||
+      cmdUpper === "ACT_SAVE_50" ||
+      cmdUpper === "/RISKFREE" ||
+      cmdUpper === "/SAVE50" ||
+      cmdUpper === "/PAUSE" ||
+      cmdUpper === "/RESUME" ||
+      cmdUpper === "/UNPAUSE" ||
+      cmdUpper === "/PANIC" ||
+      cmdUpper === "/CLOSE_ALL" ||
+      cmdUpper === "/RESET" ||
+      cmdUpper.startsWith("/RISK")
+    ) {
       await sendTelegramMessage(
         botToken,
         chatId,
-        `⏳ فرمان <code>${cmdUpper}</code> ثبت شد و در اجرای جاری پایپ‌لاین اعمال می‌گردد.`
+        `⏳ فرمان <code>${rawCmd}</code> ثبت شد و در اجرای فوری پایپ‌لاین اعمال می‌گردد.`
       );
       if (env.GITHUB_PAT) {
-        ctx.waitUntil(triggerGitHubWorkflow(ghOwner, ghRepo, env.GITHUB_PAT, ""));
+        ctx.waitUntil(triggerGitHubWorkflow(ghOwner, ghRepo, env.GITHUB_PAT, "", rawCmd));
       }
       return new Response("OK", { status: 200 });
     }
@@ -149,7 +165,7 @@ async function fetchGitHubJson(owner, repo, path, pat) {
   return null;
 }
 
-async function triggerGitHubWorkflow(owner, repo, pat, analyzeCoin) {
+async function triggerGitHubWorkflow(owner, repo, pat, analyzeCoin, telegramCommand = "") {
   const url = `https://api.github.com/repos/${owner}/${repo}/actions/workflows/bot_cron.yml/dispatches`;
   try {
     await fetch(url, {
@@ -161,7 +177,10 @@ async function triggerGitHubWorkflow(owner, repo, pat, analyzeCoin) {
       },
       body: JSON.stringify({
         ref: "main",
-        inputs: { analyze_coin: analyzeCoin || "" },
+        inputs: {
+          analyze_coin: analyzeCoin || "",
+          telegram_command: telegramCommand || "",
+        },
       }),
     });
   } catch {}

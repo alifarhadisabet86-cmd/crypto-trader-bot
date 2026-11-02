@@ -109,8 +109,8 @@ class RiskGuardianSkill:
         size_multiplier: float = 1.0,
     ) -> Dict[str, Any]:
         stats = portfolio.get("stats", {})
-        c_wins = int(stats.get("consecutive_wins", 0))
-        c_losses = int(stats.get("consecutive_losses", 0))
+        c_wins = int(stats.get("consecutive_wins", portfolio.get("consecutive_wins", 0)))
+        c_losses = int(stats.get("consecutive_losses", portfolio.get("consecutive_losses", 0)))
 
         if c_losses >= 2:
             streak_state = "LOSS_STREAK_DEFENSIVE"
@@ -173,7 +173,7 @@ class RiskGuardianSkill:
             open_positions=open_positions,
             candidate_coin=coin,
             candidate_side=side,
-            confluence_score=confluence_score,
+            candidate_score=confluence_score,
         )
         if not slot_check["allowed"]:
             return self._reject(slot_check["reason"], slot_check)
@@ -228,6 +228,31 @@ class RiskGuardianSkill:
             "weekly_drawdown_pct": cb_status["weekly_drawdown_pct"],
             "reason": "APPROVED",
         }
+
+    def evaluate_risk_and_size(
+        self,
+        portfolio: Dict[str, Any],
+        candidate_coin: str,
+        candidate_side: str,
+        confluence_data: Dict[str, Any],
+        exit_plan: Dict[str, Any],
+        bot_config: Optional[Dict[str, Any]] = None,
+        unrealized_pnl_usdt: float = 0.0,
+    ) -> Dict[str, Any]:
+        """پل سازگاری با نسخه V2.0 برای فراخوانی مستقیم از BudgetAllocationSkill یا تست‌ها."""
+        conf = confluence_data or {}
+        ex = exit_plan or {}
+        return self.evaluate_trade_risk(
+            portfolio=portfolio,
+            coin=candidate_coin,
+            side=candidate_side,
+            confluence_score=float(conf.get("final_score", conf.get("score", 70.0))),
+            entry_price=float(ex.get("entry_price", 0.0)),
+            stop_loss=float(ex.get("stop_loss", 0.0)),
+            size_multiplier=float(conf.get("size_multiplier", 1.0)),
+            bot_config=bot_config,
+            unrealized_pnl_usdt=unrealized_pnl_usdt,
+        )
 
     @staticmethod
     def _reject(reason: str, details: Optional[Dict[str, Any]] = None) -> Dict[str, Any]:

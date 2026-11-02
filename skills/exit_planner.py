@@ -1,6 +1,6 @@
 """
 مهارت ششم: طراحی نقشه خروج، استاپ ساختاری + ATR و تارگت دوگانه (TP1/TP2) (Exit Planner Skill)
-Institutional Trading Bot V2 - Structural Stop-Loss & Dual-Target Planner
+Institutional Trading Bot V2.5 - Structural Stop-Loss & Dual-Target Planner
 """
 
 from typing import Dict, Any, Optional, List
@@ -36,16 +36,45 @@ class ExitPlannerSkill:
         """
         clean_side = str(side).strip().upper()
         entry = float(entry_price)
+        if entry <= 0.0 or clean_side not in ("LONG", "SHORT"):
+            return {
+                "valid": False,
+                "side": clean_side,
+                "entry_price": 0.0,
+                "stop_loss": 0.0,
+                "sl_distance": 0.0,
+                "sl_pct": 0.0,
+                "tp1_breakeven": 0.0,
+                "tp2_final": 0.0,
+                "rr_tp1": 0.0,
+                "rr_tp2": 0.0,
+                "blended_rr": 0.0,
+                "partial_close_pct": 0.50,
+                "regime_used": "RANGING",
+            }
+
         atr = max(float(atr_15m), entry * 0.001, 1e-8)
 
         scan = scan_data or {}
         reg = regime_data or {}
         regime_name = str(reg.get("regime", "RANGING")).upper()
 
-        sweep_wick = float(scan.get("sweep_extreme_wick") or 0.0)
+        sweep_wick = float(
+            scan.get("sweep_wick_extreme")
+            or scan.get("sweep_extreme_wick")
+            or 0.0
+        )
         active_fvg = scan.get("active_fvg")
-        high_pool = float(scan.get("range_high_pool") or 0.0)
-        low_pool = float(scan.get("range_low_pool") or 0.0)
+        high_pool = float(
+            scan.get("swing_high")
+            or scan.get("range_high_pool")
+            or 0.0
+        )
+        low_pool = float(
+            scan.get("swing_low")
+            or scan.get("range_low_pool")
+            or 0.0
+        )
 
         min_sl_dist = self.min_sl_atr_mult * atr
         max_sl_dist = self.max_sl_atr_mult * atr
@@ -107,7 +136,6 @@ class ExitPlannerSkill:
 
         if clean_side == "LONG":
             pool_dist = (high_pool - entry) if high_pool > entry else 0.0
-            # اگر استخر نقدینگی بالاتر از حداقل ریوارد بود و بیش از 4.5R دور نبود، همان استخر هدف است
             tp2_dist = max(min_tp2_dist, min(pool_dist, 4.5 * sl_dist))
             tp2_final = round(entry + tp2_dist, 6)
         else:
@@ -120,6 +148,7 @@ class ExitPlannerSkill:
         blended_rr = round((0.5 * rr_tp1) + (0.5 * rr_tp2), 2)
 
         return {
+            "valid": True,
             "side": clean_side,
             "entry_price": round(entry, 6),
             "stop_loss": stop_loss,

@@ -168,10 +168,14 @@ class BrokerExecutionSkill:
 
             side = pos["side"]
             entry = float(pos["entry_price"])
-            sl = float(pos["stop_loss"])
-            tp1 = float(pos["tp1_breakeven"])
-            tp2 = float(pos["tp2_final"])
-            rem_qty = float(pos["remaining_qty"])
+            sl = float(pos.get("stop_loss", pos.get("current_stop_loss", pos.get("initial_stop_loss", entry))))
+            pos["stop_loss"] = sl
+            tp1 = float(pos.get("tp1_breakeven", pos.get("tp1_price", entry)))
+            pos["tp1_breakeven"] = tp1
+            tp2 = float(pos.get("tp2_final", pos.get("tp2_price", entry)))
+            pos["tp2_final"] = tp2
+            rem_qty = float(pos.get("remaining_qty", pos.get("remaining_quantity", 0.0)))
+            pos["remaining_qty"] = rem_qty
 
             # ۱. بررسی برخورد با حد ضرر (Stop-Loss یا Break-Even یا Trailing Stop)
             sl_hit = (side == "LONG" and c_low <= sl) or (side == "SHORT" and c_high >= sl)
@@ -179,7 +183,7 @@ class BrokerExecutionSkill:
                 exit_price = sl
                 if pos.get("trailing_active"):
                     reason = "TRAILING_STOP_PROFIT"
-                elif pos.get("is_risk_free"):
+                elif pos.get("is_risk_free") or pos.get("risk_free"):
                     reason = "BREAKEVEN_STOP"
                 else:
                     reason = "STOP_LOSS"
@@ -204,7 +208,7 @@ class BrokerExecutionSkill:
                     rem_qty = float(pos["remaining_qty"])
 
             # ۳. بررسی تریلینگ استاپ ساختاری (Structural Trailing Stop پس از ریسک‌فری شدن)
-            if pos.get("is_risk_free", False) and len(df) >= 6:
+            if (pos.get("is_risk_free", False) or pos.get("risk_free", False)) and len(df) >= 6:
                 trail_event = self._apply_structural_trailing_stop(pos, df, c_close)
                 if trail_event is not None:
                     events.append(trail_event)
@@ -253,7 +257,7 @@ class BrokerExecutionSkill:
         """
         side = pos["side"]
         entry = float(pos["entry_price"])
-        curr_sl = float(pos["stop_loss"])
+        curr_sl = float(pos.get("stop_loss", entry))
         stop_dist = max(float(pos.get("stop_distance", abs(entry - float(pos.get("initial_stop_loss", entry))))), 1e-8)
 
         recent_5 = df_15m.iloc[-6:-1]
@@ -313,7 +317,7 @@ class BrokerExecutionSkill:
         updated_coins: List[str] = []
 
         for pos in open_positions:
-            if pos.get("is_risk_free", False):
+            if pos.get("is_risk_free", False) or pos.get("risk_free", False):
                 continue
 
             coin = pos["coin"]
@@ -358,7 +362,7 @@ class BrokerExecutionSkill:
             coin = pos["coin"]
             side = pos["side"]
             entry = float(pos["entry_price"])
-            rem_qty = float(pos["remaining_qty"])
+            rem_qty = float(pos.get("remaining_qty", pos.get("remaining_quantity", 0.0)))
             curr_price = float(prices.get(coin, pos.get("current_price", entry)))
             pos["current_price"] = round(curr_price, 6)
 
@@ -381,9 +385,9 @@ class BrokerExecutionSkill:
 
             pos["remaining_qty"] = round(rem_after, 6)
             pos["remaining_notional_usdt"] = round(rem_after * entry, 2)
-            pos["margin_used_usdt"] = round(float(pos["margin_used_usdt"]) * (1.0 - fraction), 2)
-            pos["realized_pnl_usdt"] = round(float(pos["realized_pnl_usdt"]) + net_pnl, 4)
-            pos["fees_paid_usdt"] = round(float(pos["fees_paid_usdt"]) + fee_usdt, 4)
+            pos["margin_used_usdt"] = round(float(pos.get("margin_used_usdt", 0.0)) * (1.0 - fraction), 2)
+            pos["realized_pnl_usdt"] = round(float(pos.get("realized_pnl_usdt", pos.get("realized_partial_pnl", 0.0))) + net_pnl, 4)
+            pos["fees_paid_usdt"] = round(float(pos.get("fees_paid_usdt", pos.get("entry_fee_usdt", 0.0))) + fee_usdt, 4)
             pos["unrealized_pnl_usdt"] = round(raw_u_pnl * (1.0 - fraction), 2)
 
             # همزمان استاپ نیمه باقی‌مانده را ریسک‌فری می‌کنیم
@@ -427,7 +431,7 @@ class BrokerExecutionSkill:
     ) -> Dict[str, Any]:
         side = pos["side"]
         entry = float(pos["entry_price"])
-        rem_qty = float(pos["remaining_qty"])
+        rem_qty = float(pos.get("remaining_qty", pos.get("remaining_quantity", 0.0)))
         close_qty = rem_qty * 0.50
         left_qty = rem_qty - close_qty
 
@@ -449,9 +453,9 @@ class BrokerExecutionSkill:
 
         pos["remaining_qty"] = round(left_qty, 6)
         pos["remaining_notional_usdt"] = round(left_qty * entry, 2)
-        pos["margin_used_usdt"] = round(float(pos["margin_used_usdt"]) * 0.50, 2)
-        pos["realized_pnl_usdt"] = round(float(pos["realized_pnl_usdt"]) + net_partial_pnl, 4)
-        pos["fees_paid_usdt"] = round(float(pos["fees_paid_usdt"]) + fee_usdt, 4)
+        pos["margin_used_usdt"] = round(float(pos.get("margin_used_usdt", 0.0)) * 0.50, 2)
+        pos["realized_pnl_usdt"] = round(float(pos.get("realized_pnl_usdt", pos.get("realized_partial_pnl", 0.0))) + net_partial_pnl, 4)
+        pos["fees_paid_usdt"] = round(float(pos.get("fees_paid_usdt", pos.get("entry_fee_usdt", 0.0))) + fee_usdt, 4)
         pos["tp1_hit"] = True
         pos["is_risk_free"] = True
         pos["stop_loss"] = round(entry, 6)
@@ -471,7 +475,7 @@ class BrokerExecutionSkill:
     ) -> Dict[str, Any]:
         side = pos["side"]
         entry = float(pos["entry_price"])
-        rem_qty = float(pos["remaining_qty"])
+        rem_qty = float(pos.get("remaining_qty", pos.get("remaining_quantity", 0.0)))
 
         if side == "LONG":
             gross_pnl = (exit_price - entry) * rem_qty
@@ -487,9 +491,9 @@ class BrokerExecutionSkill:
         portfolio["daily_pnl_usdt"] = round(float(portfolio.get("daily_pnl_usdt", 0.0)) + net_leg_pnl, 4)
         portfolio["weekly_pnl_usdt"] = round(float(portfolio.get("weekly_pnl_usdt", 0.0)) + net_leg_pnl, 4)
 
-        total_trade_pnl = float(pos["realized_pnl_usdt"]) + net_leg_pnl
-        total_fees = float(pos["fees_paid_usdt"]) + fee_usdt
-        init_risk = max(float(pos.get("initial_risk_usdt", 5.0)), 1e-8)
+        total_trade_pnl = float(pos.get("realized_pnl_usdt", pos.get("realized_partial_pnl", 0.0))) + net_leg_pnl
+        total_fees = float(pos.get("fees_paid_usdt", pos.get("entry_fee_usdt", 0.0))) + fee_usdt
+        init_risk = max(float(pos.get("initial_risk_usdt", pos.get("risk_amount_usdt", 5.0))), 1e-8)
         r_multiple = total_trade_pnl / init_risk
 
         stats = portfolio["stats"]
@@ -511,11 +515,11 @@ class BrokerExecutionSkill:
 
         now_iso = self._now_utc_iso()
         closed_record = {
-            "id": pos["id"],
+            "id": str(pos.get("id", pos.get("position_id", f"POS-{pos['coin']}-CLOSED"))),
             "coin": pos["coin"],
             "side": side,
             "regime": pos.get("regime", "RANGING"),
-            "confluence_score": pos.get("confluence_score", 70.0),
+            "confluence_score": float(pos.get("confluence_score", pos.get("score", 70.0))),
             "entry_price": entry,
             "exit_price": round(exit_price, 6),
             "exit_reason": exit_reason,

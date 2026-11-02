@@ -99,6 +99,8 @@ class MLFeedbackSkill:
         still_active: List[Dict[str, Any]] = []
         resolved_list: List[Dict[str, Any]] = shadow_portfolio.setdefault("resolved_shadows", [])
         stats = shadow_portfolio.setdefault("stats", {})
+        if "evaluated_count" not in stats:
+            stats["evaluated_count"] = int(stats.get("saved_from_loss", 0)) + int(stats.get("missed_winners", 0))
         resolved_now = 0
 
         for shd in active_list:
@@ -113,10 +115,11 @@ class MLFeedbackSkill:
             c_low = float(last_row["low"])
             side = shd.get("side", "LONG")
             sl = float(shd.get("stop_loss", 0.0))
-            tp = float(shd.get("tp_price", 0.0))
+            tp = float(shd.get("tp_price", shd.get("tp2_price", shd.get("tp1_price", 0.0))))
+            shd["tp_price"] = tp
 
             sl_hit = (side == "LONG" and c_low <= sl) or (side == "SHORT" and c_high >= sl)
-            tp_hit = (side == "LONG" and c_high >= tp) or (side == "SHORT" and c_low <= tp)
+            tp_hit = tp > 0 and ((side == "LONG" and c_high >= tp) or (side == "SHORT" and c_low <= tp))
 
             if sl_hit:
                 shd["status"] = "SAVED_FROM_LOSS"
@@ -170,8 +173,8 @@ class MLFeedbackSkill:
                 coin_mults[coin] = 1.0
                 continue
 
-            wins = sum(1 for t in c_trades if float(t.get("net_pnl_usdt", 0.0)) > 0)
-            avg_r = float(np.mean([float(t.get("r_multiple", 0.0)) for t in c_trades]))
+            wins = sum(1 for t in c_trades if float(t.get("net_pnl_usdt", t.get("pnl_usdt", 0.0))) > 0)
+            avg_r = float(np.mean([float(t.get("r_multiple", t.get("realized_r", 0.0))) for t in c_trades]))
             post_wr = (wins + self.prior_alpha) / (n_tr + self.prior_alpha + self.prior_beta)
 
             raw_mult = 1.0 + ((post_wr - 0.50) * 0.50) + (avg_r * 0.05)
@@ -190,7 +193,7 @@ class MLFeedbackSkill:
                 regime_mults[reg] = 1.0
                 continue
 
-            r_wins = sum(1 for t in r_trades if float(t.get("net_pnl_usdt", 0.0)) > 0)
+            r_wins = sum(1 for t in r_trades if float(t.get("net_pnl_usdt", t.get("pnl_usdt", 0.0))) > 0)
             post_r_wr = (r_wins + self.prior_alpha) / (n_rt + self.prior_alpha + self.prior_beta)
             raw_r_mult = 1.0 + ((post_r_wr - 0.50) * 0.40)
             regime_mults[reg] = round(float(np.clip(raw_r_mult, 0.85, 1.12)), 4)

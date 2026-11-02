@@ -1,6 +1,6 @@
 """
 مهارت هفتم: شبیه‌ساز مونت‌کارلو (۱۰۰۰ مسیر آینده در افق ۱۶ کندل) (TimeMachine Skill)
-Institutional Trading Bot V2 - Monte Carlo & Ornstein-Uhlenbeck Path Simulator
+Institutional Trading Bot V2.5 - Monte Carlo & Ornstein-Uhlenbeck Path Simulator
 """
 
 from typing import Dict, Any, Optional
@@ -17,11 +17,15 @@ class TimeMachineSkill:
     """
 
     def __init__(self) -> None:
-        self.num_simulations: int = 1000
-        self.horizon_candles: int = 16
+        self.num_simulations: int = int(SCORING_RULES.get("NUM_PATHS", 1000))
+        self.horizon_candles: int = int(SCORING_RULES.get("HORIZON_CANDLES_15M", 16))
         self.theta_reversion: float = 0.12
-        self.min_winrate_pct: float = float(SCORING_RULES.get("min_timemachine_winrate", 42.0))
-        self.min_ev_r: float = float(SCORING_RULES.get("min_timemachine_ev_r", 0.05))
+        self.min_winrate_pct: float = float(
+            SCORING_RULES.get("MIN_WIN_RATE_PCT", SCORING_RULES.get("min_timemachine_winrate", 42.0))
+        )
+        self.min_ev_r: float = float(
+            SCORING_RULES.get("MIN_EXPECTED_VALUE_R", SCORING_RULES.get("min_timemachine_ev_r", 0.05))
+        )
 
     def run_simulation(
         self,

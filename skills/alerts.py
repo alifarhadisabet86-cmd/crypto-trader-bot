@@ -5,8 +5,11 @@ Institutional Trading Bot V2.5 - Telegram Command Center, Volume Charts, PnL Car
 
 import json
 import os
+import tempfile
 from pathlib import Path
 from typing import Dict, Any, List, Optional
+
+os.environ.setdefault("MPLCONFIGDIR", str(Path(tempfile.gettempdir()) / "mplconfig_v25"))
 
 import matplotlib
 matplotlib.use("Agg")
@@ -335,11 +338,11 @@ class TelegramAlertsSkill:
         """
         coin = str(trade_record.get("coin", "BTC")).upper()
         side = str(trade_record.get("side", "LONG")).upper()
-        pnl_usdt = float(trade_record.get("net_pnl_usdt", 0.0))
-        r_mult = float(trade_record.get("r_multiple", 0.0))
+        pnl_usdt = float(trade_record.get("net_pnl_usdt", trade_record.get("pnl_usdt", 0.0)))
+        r_mult = float(trade_record.get("r_multiple", trade_record.get("realized_r", 0.0)))
         entry_p = float(trade_record.get("entry_price", 0.0))
         exit_p = float(trade_record.get("exit_price", 0.0))
-        reason = str(trade_record.get("exit_reason", "TARGET_HIT"))
+        reason = str(trade_record.get("exit_reason", trade_record.get("close_reason", "TARGET_HIT")))
 
         is_win = pnl_usdt >= 0.0
         accent_color = self.BULL_COLOR if is_win else self.BEAR_COLOR
@@ -457,7 +460,7 @@ class TelegramAlertsSkill:
                 u_pnl = float(p.get("unrealized_pnl_usdt", 0.0))
                 margin_u = max(float(p.get("margin_used_usdt", 1.0)), 1e-8)
                 u_pct = (u_pnl / margin_u) * 100.0
-                st_icon = "🛡️ Risk-Free" if p.get("is_risk_free") else "⚡ فعال"
+                st_icon = "🛡️ Risk-Free" if (p.get("is_risk_free") or p.get("risk_free")) else "⚡ فعال"
                 pnl_ic = "🟢" if u_pnl >= 0 else "🔴"
                 pos_lines.append(
                     f"  {idx}. {pnl_ic} <b>{c}</b> ({s}) | PnL: <code>{u_pnl:+.2f}$ ({u_pct:+.1f}%)</code> | {st_icon}"
@@ -535,17 +538,17 @@ class TelegramAlertsSkill:
             for idx, p in enumerate(open_pos, start=1):
                 c = p["coin"]
                 s = p["side"]
-                sc = float(p.get("confluence_score", 70.0))
-                ep = format_price(p["entry_price"], c)
-                sl = format_price(p["stop_loss"], c)
-                tp1 = format_price(p["tp1_breakeven"], c)
-                tp2 = format_price(p["tp2_final"], c)
+                sc = float(p.get("confluence_score", p.get("score", 70.0)))
+                ep = format_price(p.get("entry_price", 0.0), c)
+                sl = format_price(p.get("stop_loss", p.get("current_stop_loss", 0.0)), c)
+                tp1 = format_price(p.get("tp1_breakeven", p.get("tp1_price", 0.0)), c)
+                tp2 = format_price(p.get("tp2_final", p.get("tp2_price", 0.0)), c)
                 u_pnl = float(p.get("unrealized_pnl_usdt", 0.0))
-                r_usdt = float(p.get("initial_risk_usdt", 3.75))
-                notional = float(p.get("remaining_notional_usdt", 0.0))
+                r_usdt = float(p.get("initial_risk_usdt", p.get("risk_amount_usdt", 3.75)))
+                notional = float(p.get("remaining_notional_usdt", p.get("notional_usdt", 0.0)))
                 if p.get("trailing_active"):
                     st_badge = "🚀 تریلینگ استاپ"
-                elif p.get("is_risk_free"):
+                elif p.get("is_risk_free") or p.get("risk_free"):
                     st_badge = "🛡️ ریسک‌فری"
                 else:
                     st_badge = "⚡ فعال"
@@ -559,6 +562,8 @@ class TelegramAlertsSkill:
         # خلاصه رادار ۵ دارایی
         radar_lines: List[str] = []
         regimes_dict = market_regimes or {}
+        if "regimes" in regimes_dict and isinstance(regimes_dict["regimes"], dict):
+            regimes_dict = regimes_dict["regimes"]
         for coin_key in WATCHLIST.keys():
             r_info = regimes_dict.get(coin_key, {})
             if isinstance(r_info, dict) and r_info:
@@ -577,13 +582,13 @@ class TelegramAlertsSkill:
         sh_stats = shadow_portfolio.get("stats", {})
         sh_filtered = int(sh_stats.get("total_filtered", 0))
         sh_saved = int(sh_stats.get("saved_from_loss", 0))
-        sh_eval = int(sh_stats.get("evaluated_count", 0))
+        sh_eval = int(sh_stats.get("evaluated_count", sh_saved + int(sh_stats.get("missed_winners", 0))))
         sh_acc_str = f"{float(sh_stats.get('shield_accuracy', 0.0)):.1f}%" if sh_eval > 0 else "در حال پایش"
 
         ml_line = ""
         if isinstance(strategy_memory, dict) and "coin_multipliers" in strategy_memory:
             cm = strategy_memory["coin_multipliers"]
-            ml_line = " | ".join([f"{k}:<code>{ float(cm.get(k, 1.0)):.2f}x</code>" for k in WATCHLIST.keys()])
+            ml_line = " | ".join([f"{k}:<code>{float(cm.get(k, 1.0)):.2f}x</code>" for k in WATCHLIST.keys()])
 
         session_str = (killzone_status or {}).get("session_fa", "🌐 سشن جهانی در جریان")
         news_str = (news_status or {}).get("summary_fa", "🟢 تقویم اقتصادی ایمن")
@@ -698,7 +703,7 @@ class TelegramAlertsSkill:
         curr_p = format_price(scan_data.get("current_price", 0.0), c)
         reg = regime_data.get("regime", "RANGING")
         htf = regime_data.get("htf_bias", "NEUTRAL")
-        adx = float(regime_data.get("adx", 20.0))
+        adx = float(regime_data.get("adx", regime_data.get("trend_strength", 20.0)))
 
         zone = scan_data.get("zone", "EQUILIBRIUM")
         rng_pct = float(scan_data.get("range_position_pct", 50.0))
@@ -1022,16 +1027,19 @@ class TelegramAlertsSkill:
             from skills.regime_detector import RegimeDetectorSkill
             from skills.scanner import MarketScannerSkill
             from skills.confluence_scorer import ConfluenceScorerSkill
+            from skills.market_intel import MarketIntelSkill
 
             de = DataEngine()
             rd = RegimeDetectorSkill()
             sc = MarketScannerSkill()
             cs = ConfluenceScorerSkill()
+            mi = MarketIntelSkill()
 
             df_4h = de.fetch_ohlcv(coin, "4h", limit=60)
             df_1h = de.fetch_ohlcv(coin, "1h", limit=80)
             df_15m = de.fetch_ohlcv(coin, "15m", limit=70)
             ob = de.fetch_order_book_imbalance(coin)
+            kz = mi.check_killzone_session()
 
             reg_res = rd.detect_regime(df_1h, df_4h)
             scan_res = sc.scan_structure(df_15m, reg_res)
@@ -1039,7 +1047,7 @@ class TelegramAlertsSkill:
             if side == "NONE":
                 side = "LONG" if reg_res.get("htf_bias") != "BEARISH" else "SHORT"
             mem = state_manager.load_strategy_memory()
-            conf_res = cs.evaluate_confluence(coin, side, reg_res, scan_res, ob, {}, {}, mem)
+            conf_res = cs.evaluate_confluence(coin, side, reg_res, scan_res, ob, kz, {}, mem)
 
             chart_path = self.generate_asset_analysis_chart(coin, df_15m, scan_res, reg_res)
             caption = self.build_asset_analysis_caption(coin, reg_res, scan_res, conf_res, ob)
