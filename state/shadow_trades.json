@@ -131,5 +131,23 @@
     "tp_price": 77742.9,
     "confluence_score": 82.86,
     "status": "MISSED_WINNER"
+  },
+  {
+    "shadow_id": "SHD-XAU-7EB73E",
+    "coin": "XAU",
+    "side": "LONG",
+    "regime": "RANGING",
+    "score": 55.84,
+    "entry_price": 3897.032286,
+    "stop_loss": 3891.771292,
+    "tp1_price": 3903.082429,
+    "tp2_price": 3906.239026,
+    "filter_reason": "LOW_CONFLUENCE_SCORE",
+    "created_at": "2026-11-01T17:22:43Z",
+    "id": "SHD-XAU-7EB73E",
+    "tp_price": 3906.239026,
+    "confluence_score": 55.84,
+    "status": "MISSED_WINNER",
+    "resolved_at": "2026-11-02T12:31:29Z"
   }
 ]

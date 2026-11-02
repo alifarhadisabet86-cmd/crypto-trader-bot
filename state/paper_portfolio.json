@@ -41,7 +41,7 @@
       "id": "POS-BTC-917A60",
       "stop_loss": 78200.106786,
       "stop_distance": 123.110357,
-      "current_price": 78076.996429,
+      "current_price": 77963.6,
       "tp1_breakeven": 77935.419518,
       "tp2_final": 77742.9,
       "initial_qty": 0.030313,
@@ -54,7 +54,7 @@
       "trailing_active": false,
       "realized_pnl_usdt": -0.4733,
       "fees_paid_usdt": 0.4733,
-      "unrealized_pnl_usdt": 0.0
+      "unrealized_pnl_usdt": 3.44
     }
   ],
   "trade_history": [
@@ -119,7 +119,7 @@
   "last_reset_week": "2026-W45",
   "paper_gate_target": 50,
   "paper_gate_unlocked": false,
-  "updated_at": "2026-11-02T11:52:38Z",
+  "updated_at": "2026-11-02T12:31:30Z",
   "trading_mode": "PAPER",
   "closed_trades": [
     {
