@@ -3,32 +3,32 @@
     "regime": "TRENDING_BEAR",
     "strategy": "SMC_TREND_CONTINUATION",
     "htf_bias": "BEARISH",
-    "adx": 45.15,
+    "adx": 41.96,
     "tradable": true,
-    "current_price": 76756.0,
+    "current_price": 76844.6,
     "candidate_side": "SHORT",
-    "confluence_score": 57.09,
+    "confluence_score": 46.18,
     "zone": "DISCOUNT",
     "asian_range": {
       "asian_high": 78864.8,
       "asian_low": 78250.5,
       "asian_sweep": "NONE"
     },
-    "xray_summary_fa": "هم‌راستا با روند ۱ ساعته (+24) | حمایت ساختار ۴ ساعته (+6) | مجاورت با FVG معتبر (+16) | تایید فشار اردربوک صرافی (+7)"
+    "xray_summary_fa": "هم‌راستا با روند ۱ ساعته (+24) | حمایت ساختار ۴ ساعته (+6) | مجاورت با FVG معتبر (+5) | تایید فشار اردربوک صرافی (+7)"
   },
   "ETH": {
     "regime": "RANGING",
     "strategy": "LIQUIDITY_SWEEP_REVERSAL",
     "htf_bias": "BEARISH",
-    "adx": 34.62,
+    "adx": 29.45,
     "tradable": true,
-    "current_price": 2248.89,
+    "current_price": 2252.82,
     "candidate_side": "NONE",
     "confluence_score": 27.98,
     "zone": "DISCOUNT",
     "asian_range": {
       "asian_high": 2317.65,
-      "asian_low": 2285.18,
+      "asian_low": 2287.19,
       "asian_sweep": "NONE"
     },
     "xray_summary_fa": "ساختار بازگشت به میانگین رنج (+14) | حمایت ساختار ۴ ساعته (+6)"
@@ -37,9 +37,9 @@
     "regime": "TRENDING_BEAR",
     "strategy": "SMC_TREND_CONTINUATION",
     "htf_bias": "BEARISH",
-    "adx": 46.19,
+    "adx": 42.39,
     "tradable": true,
-    "current_price": 91.55,
+    "current_price": 91.74,
     "candidate_side": "NONE",
     "confluence_score": 37.65,
     "zone": "DISCOUNT",
@@ -56,10 +56,10 @@
     "htf_bias": "BEARISH",
     "adx": 15.17,
     "tradable": true,
-    "current_price": 1.24642,
+    "current_price": 1.24891,
     "candidate_side": "NONE",
-    "confluence_score": 25.38,
-    "zone": "DISCOUNT",
+    "confluence_score": 28.58,
+    "zone": "EQUILIBRIUM",
     "asian_range": {
       "asian_high": 1.26425,
       "asian_low": 1.25156,
@@ -73,15 +73,15 @@
     "htf_bias": "NEUTRAL",
     "adx": 45.14,
     "tradable": true,
-    "current_price": 3951.4,
+    "current_price": 3952.04,
     "candidate_side": "LONG",
-    "confluence_score": 54.31,
+    "confluence_score": 50.9,
     "zone": "PREMIUM",
     "asian_range": {
       "asian_high": 3929.12,
       "asian_low": 3906.12,
       "asian_sweep": "NONE"
     },
-    "xray_summary_fa": "هم‌راستا با روند ۱ ساعته (+24) | مجاورت با FVG معتبر (+16)"
+    "xray_summary_fa": "هم‌راستا با روند ۱ ساعته (+24) | مجاورت با FVG معتبر (+15)"
   }
 }
