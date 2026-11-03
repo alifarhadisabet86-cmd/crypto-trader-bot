@@ -1,46 +1,14 @@
 {
   "version": "2.0",
-  "balance_usdt": 992.5082,
+  "balance_usdt": 990.267,
   "initial_balance_usdt": 1000.0,
   "day_start_date": "2026-11-01",
   "day_start_equity": 1000.0,
-  "daily_pnl_usdt": -0.2482,
+  "daily_pnl_usdt": -2.4894,
   "daily_circuit_breaker": false,
   "consecutive_wins": 0,
   "consecutive_losses": 1,
-  "open_positions": [
-    {
-      "id": "POS-XAU-1B319A",
-      "coin": "XAU",
-      "side": "LONG",
-      "order_type": "LIMIT",
-      "trigger_type": "5M_ENGULFING",
-      "regime": "TRENDING_BULL",
-      "confluence_score": 65.43,
-      "xray_summary_fa": "هم‌راستا با روند ۱ ساعته (+24) | حضور قیمت در ناحیه FVG دست‌نخورده (+18) | ناحیه ارزان‌فروشی Discount (+7) | واگرایی پول هوشمند SMT (+6)",
-      "slot_type": "STANDARD_SLOT",
-      "entry_price": 3954.521214,
-      "current_price": 3949.75,
-      "stop_loss": 3949.749071,
-      "initial_stop_loss": 3949.749071,
-      "stop_distance": 4.772143,
-      "tp1_breakeven": 3960.009178,
-      "tp2_final": 3974.57,
-      "initial_qty": 0.313804,
-      "remaining_qty": 0.313804,
-      "initial_notional_usdt": 1240.95,
-      "remaining_notional_usdt": 1240.95,
-      "margin_used_usdt": 248.19,
-      "initial_risk_usdt": 1.5,
-      "tp1_hit": false,
-      "is_risk_free": false,
-      "trailing_active": false,
-      "realized_pnl_usdt": -0.2482,
-      "unrealized_pnl_usdt": -1.5,
-      "fees_paid_usdt": 0.2482,
-      "opened_at": "2026-11-03T01:45:53Z"
-    }
-  ],
+  "open_positions": [],
   "trade_history": [
     {
       "position_id": "POS-XRP-A9D2C9",
@@ -95,30 +63,35 @@
       "timestamp": "2026-11-02T18:15:50Z",
       "equity": 992.76,
       "event": "BTC_STOP_LOSS"
+    },
+    {
+      "timestamp": "2026-11-03T02:26:42Z",
+      "equity": 990.27,
+      "event": "XAU_STOP_LOSS"
     }
   ],
   "stats": {
-    "total_trades": 4,
+    "total_trades": 5,
     "wins": 1,
-    "losses": 3,
-    "win_rate_pct": 25.0,
+    "losses": 4,
+    "win_rate_pct": 20.0,
     "total_pnl_usdt": -4.8578,
-    "max_drawdown_pct": 1.34,
+    "max_drawdown_pct": 1.41,
     "consecutive_wins": 0,
-    "consecutive_losses": 2,
+    "consecutive_losses": 3,
     "peak_equity_usdt": 1004.44,
-    "total_fees_paid_usdt": 2.6833
+    "total_fees_paid_usdt": 3.427
   },
   "last_updated": "2026-11-01T18:21:42Z",
   "daily_start_balance_usdt": 992.7564,
   "last_reset_date": "2026-11-03",
   "weekly_start_balance_usdt": 994.6689,
-  "weekly_pnl_usdt": -2.1607,
+  "weekly_pnl_usdt": -4.4019,
   "weekly_circuit_breaker": false,
   "last_reset_week": "2026-W45",
   "paper_gate_target": 50,
   "paper_gate_unlocked": false,
-  "updated_at": "2026-11-03T02:15:57Z",
+  "updated_at": "2026-11-03T02:26:44Z",
   "trading_mode": "PAPER",
   "closed_trades": [
     {
@@ -203,6 +176,24 @@
       "outcome": "LOSS",
       "opened_at": "2026-11-02T17:45:51Z",
       "closed_at": "2026-11-02T18:15:50Z"
+    },
+    {
+      "id": "POS-XAU-1B319A",
+      "coin": "XAU",
+      "side": "LONG",
+      "regime": "TRENDING_BULL",
+      "confluence_score": 65.43,
+      "entry_price": 3954.521214,
+      "exit_price": 3949.749071,
+      "exit_reason": "STOP_LOSS",
+      "tp1_hit": false,
+      "trailing_active": false,
+      "net_pnl_usdt": -2.49,
+      "r_multiple": -1.66,
+      "fees_paid_usdt": 0.9919,
+      "outcome": "LOSS",
+      "opened_at": "2026-11-03T01:45:53Z",
+      "closed_at": "2026-11-03T02:26:42Z"
     }
   ]
 }
