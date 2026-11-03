@@ -5,7 +5,7 @@
     "htf_bias": "BEARISH",
     "adx": 24.25,
     "tradable": true,
-    "current_price": 77218.2,
+    "current_price": 77189.0,
     "candidate_side": "NONE",
     "confluence_score": 41.96,
     "zone": "PREMIUM",
@@ -22,7 +22,7 @@
     "htf_bias": "NEUTRAL",
     "adx": 15.65,
     "tradable": true,
-    "current_price": 2271.24,
+    "current_price": 2269.33,
     "candidate_side": "SHORT",
     "confluence_score": 50.07,
     "zone": "PREMIUM",
@@ -39,7 +39,7 @@
     "htf_bias": "BEARISH",
     "adx": 28.36,
     "tradable": true,
-    "current_price": 92.64,
+    "current_price": 92.57,
     "candidate_side": "SHORT",
     "confluence_score": 52.04,
     "zone": "PREMIUM",
@@ -56,16 +56,16 @@
     "htf_bias": "NEUTRAL",
     "adx": 17.8,
     "tradable": true,
-    "current_price": 1.25979,
-    "candidate_side": "NONE",
-    "confluence_score": 32.96,
+    "current_price": 1.25779,
+    "candidate_side": "SHORT",
+    "confluence_score": 49.01,
     "zone": "PREMIUM",
     "asian_range": {
       "asian_high": 1.25819,
       "asian_low": 1.245,
-      "asian_sweep": "NONE"
+      "asian_sweep": "ASIAN_HIGH_SWEEP_BEAR"
     },
-    "xray_summary_fa": "ساختار بازگشت به میانگین رنج (+14) | تایید فشار اردربوک صرافی (+7) | سشن Killzone فعال (+7)"
+    "xray_summary_fa": "ساختار بازگشت به میانگین رنج (+14) | ناحیه گران‌فروشی Premium (+10) | شکار نقدینگی سشن آسیا (+11) | حجم تراکنش بالاتر از میانگین (+7) | سشن Killzone فعال (+7)"
   },
   "XAU": {
     "regime": "RANGING",
@@ -73,15 +73,15 @@
     "htf_bias": "BEARISH",
     "adx": 28.06,
     "tradable": true,
-    "current_price": 3918.7,
-    "candidate_side": "LONG",
-    "confluence_score": 49.85,
+    "current_price": 3914.09,
+    "candidate_side": "NONE",
+    "confluence_score": 33.1,
     "zone": "DISCOUNT",
     "asian_range": {
       "asian_high": 3967.97,
       "asian_low": 3925.0,
       "asian_sweep": "NONE"
     },
-    "xray_summary_fa": "ساختار بازگشت به میانگین رنج (+14) | حضور قیمت در ناحیه FVG دست‌نخورده (+18) | ناحیه ارزان‌فروشی Discount (+11) | سشن Killzone فعال (+7)"
+    "xray_summary_fa": "ساختار بازگشت به میانگین رنج (+14) | حمایت ساختار ۴ ساعته (+6) | تایید فشار اردربوک صرافی (+5) | سشن Killzone فعال (+7)"
   }
 }
