@@ -5,9 +5,9 @@
     "htf_bias": "BEARISH",
     "adx": 26.92,
     "tradable": true,
-    "current_price": 77272.0,
+    "current_price": 77220.4,
     "candidate_side": "SHORT",
-    "confluence_score": 41.07,
+    "confluence_score": 40.02,
     "zone": "DISCOUNT",
     "asian_range": {
       "asian_high": 78449.9,
@@ -20,11 +20,11 @@
     "regime": "TRENDING_BEAR",
     "strategy": "SMC_TREND_CONTINUATION",
     "htf_bias": "BEARISH",
-    "adx": 23.99,
+    "adx": 24.81,
     "tradable": true,
-    "current_price": 2261.83,
+    "current_price": 2261.1,
     "candidate_side": "SHORT",
-    "confluence_score": 41.83,
+    "confluence_score": 44.9,
     "zone": "DISCOUNT",
     "asian_range": {
       "asian_high": 2296.26,
@@ -39,10 +39,10 @@
     "htf_bias": "BEARISH",
     "adx": 29.1,
     "tradable": true,
-    "current_price": 92.49,
+    "current_price": 92.39,
     "candidate_side": "SHORT",
-    "confluence_score": 45.65,
-    "zone": "EQUILIBRIUM",
+    "confluence_score": 45.62,
+    "zone": "DISCOUNT",
     "asian_range": {
       "asian_high": 95.1,
       "asian_low": 91.94,
@@ -56,16 +56,16 @@
     "htf_bias": "BEARISH",
     "adx": 12.48,
     "tradable": true,
-    "current_price": 1.25101,
+    "current_price": 1.25012,
     "candidate_side": "NONE",
-    "confluence_score": 32.78,
+    "confluence_score": 31.69,
     "zone": "PREMIUM",
     "asian_range": {
       "asian_high": 1.25624,
       "asian_low": 1.24896,
       "asian_sweep": "NONE"
     },
-    "xray_summary_fa": "ساختار بازگشت به میانگین رنج (+14) | حمایت ساختار ۴ ساعته (+6) | ناحیه گران‌فروشی Premium (+10)"
+    "xray_summary_fa": "ساختار بازگشت به میانگین رنج (+14) | حمایت ساختار ۴ ساعته (+6) | ناحیه گران‌فروشی Premium (+8)"
   },
   "XAU": {
     "regime": "TRENDING_BULL",
@@ -73,15 +73,15 @@
     "htf_bias": "NEUTRAL",
     "adx": 46.38,
     "tradable": true,
-    "current_price": 3960.65,
+    "current_price": 3957.02,
     "candidate_side": "LONG",
-    "confluence_score": 51.17,
-    "zone": "EQUILIBRIUM",
+    "confluence_score": 60.53,
+    "zone": "DISCOUNT",
     "asian_range": {
       "asian_high": 3967.97,
       "asian_low": 3924.15,
       "asian_sweep": "NONE"
     },
-    "xray_summary_fa": "هم‌راستا با روند ۱ ساعته (+24) | مجاورت با FVG معتبر (+8) | واگرایی پول هوشمند SMT (+6)"
+    "xray_summary_fa": "هم‌راستا با روند ۱ ساعته (+24) | مجاورت با FVG معتبر (+15) | واگرایی پول هوشمند SMT (+6)"
   }
 }
