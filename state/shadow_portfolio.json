@@ -839,6 +839,54 @@
       "confluence_score": 42.35,
       "status": "ACTIVE",
       "created_at": "2026-11-03T11:45:54Z"
+    },
+    {
+      "id": "SHD-BTC-3E297B",
+      "coin": "BTC",
+      "side": "SHORT",
+      "entry_price": 77020.5,
+      "stop_loss": 77174.071429,
+      "tp_price": 76396.0,
+      "filter_reason": "LOW_CONFLUENCE_SCORE",
+      "confluence_score": 50.27,
+      "status": "ACTIVE",
+      "created_at": "2026-11-03T12:00:57Z"
+    },
+    {
+      "id": "SHD-ETH-A62FF1",
+      "coin": "ETH",
+      "side": "SHORT",
+      "entry_price": 2264.16,
+      "stop_loss": 2270.209107,
+      "tp_price": 2241.01,
+      "filter_reason": "LOW_CONFLUENCE_SCORE",
+      "confluence_score": 54.61,
+      "status": "ACTIVE",
+      "created_at": "2026-11-03T12:00:57Z"
+    },
+    {
+      "id": "SHD-SOL-169AF7",
+      "coin": "SOL",
+      "side": "SHORT",
+      "entry_price": 92.44,
+      "stop_loss": 92.739108,
+      "tp_price": 91.28,
+      "filter_reason": "LOW_CONFLUENCE_SCORE",
+      "confluence_score": 50.2,
+      "status": "ACTIVE",
+      "created_at": "2026-11-03T12:00:57Z"
+    },
+    {
+      "id": "SHD-XRP-7C4EE8",
+      "coin": "XRP",
+      "side": "LONG",
+      "entry_price": 1.25678,
+      "stop_loss": 1.254726,
+      "tp_price": 1.26233,
+      "filter_reason": "LOW_CONFLUENCE_SCORE",
+      "confluence_score": 54.29,
+      "status": "ACTIVE",
+      "created_at": "2026-11-03T12:00:57Z"
     }
   ],
   "resolved_shadows": [
@@ -3444,7 +3492,7 @@
     }
   ],
   "stats": {
-    "total_filtered": 351,
+    "total_filtered": 355,
     "saved_from_loss": 249,
     "missed_winners": 28,
     "shield_accuracy": 89.89,
@@ -3452,11 +3500,11 @@
   },
   "last_updated": "2026-11-01T18:21:42Z",
   "filter_breakdown": {
-    "LOW_CONFLUENCE_SCORE": 342,
+    "LOW_CONFLUENCE_SCORE": 346,
     "TIMEMACHINE_REJECTED": 0,
     "RISK_GUARDIAN_BLOCKED": 1,
     "SPREAD_GUARD_5PCT_BLOCKED": 0,
     "ECONOMIC_NEWS_BLOCKED": 0
   },
-  "updated_at": "2026-11-03T11:45:54Z"
+  "updated_at": "2026-11-03T12:00:57Z"
 }
