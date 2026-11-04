@@ -5,16 +5,16 @@
     "htf_bias": "NEUTRAL",
     "adx": 34.57,
     "tradable": true,
-    "current_price": 80515.2,
+    "current_price": 80492.3,
     "candidate_side": "LONG",
-    "confluence_score": 48.14,
+    "confluence_score": 51.17,
     "zone": "PREMIUM",
     "asian_range": {
       "asian_high": 78160.4,
-      "asian_low": 76142.9,
+      "asian_low": 76295.8,
       "asian_sweep": "NONE"
     },
-    "xray_summary_fa": "هم‌راستا با روند ۱ ساعته (+23) | حضور قیمت در ناحیه FVG دست‌نخورده (+18) | تایید فشار اردربوک صرافی (+7)"
+    "xray_summary_fa": "هم‌راستا با روند ۱ ساعته (+23) | حضور قیمت در ناحیه FVG دست‌نخورده (+18) | تایید فشار اردربوک صرافی (+6)"
   },
   "ETH": {
     "regime": "TRENDING_BULL",
@@ -22,13 +22,13 @@
     "htf_bias": "BULLISH",
     "adx": 39.75,
     "tradable": true,
-    "current_price": 2428.1,
+    "current_price": 2424.54,
     "candidate_side": "LONG",
     "confluence_score": 61.01,
     "zone": "PREMIUM",
     "asian_range": {
       "asian_high": 2306.97,
-      "asian_low": 2240.22,
+      "asian_low": 2244.06,
       "asian_sweep": "NONE"
     },
     "xray_summary_fa": "هم‌راستا با روند ۱ ساعته (+24) | حمایت ساختار ۴ ساعته (+6) | حضور قیمت در ناحیه FVG دست‌نخورده (+18) | تایید فشار اردربوک صرافی (+7)"
@@ -39,13 +39,13 @@
     "htf_bias": "NEUTRAL",
     "adx": 22.67,
     "tradable": true,
-    "current_price": 95.6,
+    "current_price": 95.47,
     "candidate_side": "LONG",
-    "confluence_score": 42.76,
+    "confluence_score": 46.96,
     "zone": "EQUILIBRIUM",
     "asian_range": {
       "asian_high": 93.32,
-      "asian_low": 90.67,
+      "asian_low": 90.75,
       "asian_sweep": "NONE"
     },
     "xray_summary_fa": "هم‌راستا با روند ۱ ساعته (+20) | حضور قیمت در ناحیه FVG دست‌نخورده (+18)"
@@ -56,13 +56,13 @@
     "htf_bias": "BULLISH",
     "adx": 31.65,
     "tradable": true,
-    "current_price": 1.30857,
+    "current_price": 1.30735,
     "candidate_side": "LONG",
-    "confluence_score": 51.98,
+    "confluence_score": 52.57,
     "zone": "EQUILIBRIUM",
     "asian_range": {
       "asian_high": 1.28322,
-      "asian_low": 1.25486,
+      "asian_low": 1.25707,
       "asian_sweep": "NONE"
     },
     "xray_summary_fa": "هم‌راستا با روند ۱ ساعته (+22) | حمایت ساختار ۴ ساعته (+6) | حضور قیمت در ناحیه FVG دست‌نخورده (+18)"
@@ -73,15 +73,15 @@
     "htf_bias": "BULLISH",
     "adx": 52.99,
     "tradable": true,
-    "current_price": 4059.1,
+    "current_price": 4061.24,
     "candidate_side": "LONG",
-    "confluence_score": 55.13,
+    "confluence_score": 48.58,
     "zone": "PREMIUM",
     "asian_range": {
       "asian_high": 4012.45,
       "asian_low": 3941.32,
       "asian_sweep": "NONE"
     },
-    "xray_summary_fa": "هم‌راستا با روند ۱ ساعته (+24) | حمایت ساختار ۴ ساعته (+6) | حضور قیمت در ناحیه FVG دست‌نخورده (+18) | تایید فشار اردربوک صرافی (+7)"
+    "xray_summary_fa": "هم‌راستا با روند ۱ ساعته (+24) | حمایت ساختار ۴ ساعته (+6) | مجاورت با FVG معتبر (+16)"
   }
 }
