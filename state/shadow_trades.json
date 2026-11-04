@@ -1,31 +1,5 @@
 [
   {
-    "id": "SHD-BTC-4D872C",
-    "coin": "BTC",
-    "side": "SHORT",
-    "entry_price": 77419.5,
-    "stop_loss": 77622.932857,
-    "tp_price": 76504.052143,
-    "filter_reason": "ECONOMIC_NEWS_BLOCKED",
-    "confluence_score": 59.55,
-    "status": "SAVED_FROM_LOSS",
-    "created_at": "2026-11-03T15:10:54Z",
-    "resolved_at": "2026-11-03T15:56:09Z"
-  },
-  {
-    "id": "SHD-BTC-69185C",
-    "coin": "BTC",
-    "side": "SHORT",
-    "entry_price": 77397.6,
-    "stop_loss": 77622.727143,
-    "tp_price": 76396.0,
-    "filter_reason": "ECONOMIC_NEWS_BLOCKED",
-    "confluence_score": 53.66,
-    "status": "SAVED_FROM_LOSS",
-    "created_at": "2026-11-03T15:15:51Z",
-    "resolved_at": "2026-11-03T15:56:09Z"
-  },
-  {
     "id": "SHD-BTC-4285A8",
     "coin": "BTC",
     "side": "SHORT",
@@ -2598,5 +2572,31 @@
     "status": "SAVED_FROM_LOSS",
     "created_at": "2026-11-04T04:30:45Z",
     "resolved_at": "2026-11-04T05:00:47Z"
+  },
+  {
+    "id": "SHD-BTC-6ADB03",
+    "coin": "BTC",
+    "side": "SHORT",
+    "entry_price": 76924.0,
+    "stop_loss": 77393.567143,
+    "tp_price": 75843.995571,
+    "filter_reason": "LOW_CONFLUENCE_SCORE",
+    "confluence_score": 39.12,
+    "status": "SAVED_FROM_LOSS",
+    "created_at": "2026-11-04T01:44:19Z",
+    "resolved_at": "2026-11-04T05:23:04Z"
+  },
+  {
+    "id": "SHD-BTC-332278",
+    "coin": "BTC",
+    "side": "SHORT",
+    "entry_price": 77014.5,
+    "stop_loss": 77412.712857,
+    "tp_price": 75739.5,
+    "filter_reason": "LOW_CONFLUENCE_SCORE",
+    "confluence_score": 51.71,
+    "status": "SAVED_FROM_LOSS",
+    "created_at": "2026-11-04T04:45:45Z",
+    "resolved_at": "2026-11-04T05:23:04Z"
   }
 ]
