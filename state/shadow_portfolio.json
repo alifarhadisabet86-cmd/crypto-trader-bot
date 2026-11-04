@@ -359,6 +359,54 @@
       "confluence_score": 49.04,
       "status": "ACTIVE",
       "created_at": "2026-11-04T12:15:54Z"
+    },
+    {
+      "id": "SHD-BTC-A9C5BF",
+      "coin": "BTC",
+      "side": "SHORT",
+      "entry_price": 78219.6,
+      "stop_loss": 78494.51,
+      "tp_price": 76982.505,
+      "filter_reason": "LOW_CONFLUENCE_SCORE",
+      "confluence_score": 43.97,
+      "status": "ACTIVE",
+      "created_at": "2026-11-04T12:23:52Z"
+    },
+    {
+      "id": "SHD-ETH-058F3D",
+      "coin": "ETH",
+      "side": "LONG",
+      "entry_price": 2317.51,
+      "stop_loss": 2311.366322,
+      "tp_price": 2338.93,
+      "filter_reason": "LOW_CONFLUENCE_SCORE",
+      "confluence_score": 63.83,
+      "status": "ACTIVE",
+      "created_at": "2026-11-04T12:23:52Z"
+    },
+    {
+      "id": "SHD-SOL-550AB7",
+      "coin": "SOL",
+      "side": "LONG",
+      "entry_price": 92.85,
+      "stop_loss": 92.393857,
+      "tp_price": 94.15,
+      "filter_reason": "LOW_CONFLUENCE_SCORE",
+      "confluence_score": 37.8,
+      "status": "ACTIVE",
+      "created_at": "2026-11-04T12:23:52Z"
+    },
+    {
+      "id": "SHD-XRP-5C3844",
+      "coin": "XRP",
+      "side": "SHORT",
+      "entry_price": 1.27818,
+      "stop_loss": 1.288646,
+      "tp_price": 1.24181,
+      "filter_reason": "LOW_CONFLUENCE_SCORE",
+      "confluence_score": 36.02,
+      "status": "ACTIVE",
+      "created_at": "2026-11-04T12:23:52Z"
     }
   ],
   "resolved_shadows": [
@@ -2964,7 +3012,7 @@
     }
   ],
   "stats": {
-    "total_filtered": 783,
+    "total_filtered": 787,
     "saved_from_loss": 580,
     "missed_winners": 162,
     "shield_accuracy": 78.17,
@@ -2972,11 +3020,11 @@
   },
   "last_updated": "2026-11-01T18:21:42Z",
   "filter_breakdown": {
-    "LOW_CONFLUENCE_SCORE": 754,
+    "LOW_CONFLUENCE_SCORE": 758,
     "TIMEMACHINE_REJECTED": 0,
     "RISK_GUARDIAN_BLOCKED": 1,
     "SPREAD_GUARD_5PCT_BLOCKED": 0,
     "ECONOMIC_NEWS_BLOCKED": 20
   },
-  "updated_at": "2026-11-04T12:15:55Z"
+  "updated_at": "2026-11-04T12:23:54Z"
 }
