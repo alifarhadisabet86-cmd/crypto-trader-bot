@@ -815,6 +815,66 @@
       "confluence_score": 49.8,
       "status": "ACTIVE",
       "created_at": "2026-11-04T05:00:47Z"
+    },
+    {
+      "id": "SHD-BTC-BCD82F",
+      "coin": "BTC",
+      "side": "SHORT",
+      "entry_price": 77327.9,
+      "stop_loss": 77871.985714,
+      "tp_price": 75739.5,
+      "filter_reason": "LOW_CONFLUENCE_SCORE",
+      "confluence_score": 50.59,
+      "status": "ACTIVE",
+      "created_at": "2026-11-04T05:15:51Z"
+    },
+    {
+      "id": "SHD-ETH-42957F",
+      "coin": "ETH",
+      "side": "LONG",
+      "entry_price": 2279.44,
+      "stop_loss": 2266.644571,
+      "tp_price": 2308.869487,
+      "filter_reason": "LOW_CONFLUENCE_SCORE",
+      "confluence_score": 49.57,
+      "status": "ACTIVE",
+      "created_at": "2026-11-04T05:15:51Z"
+    },
+    {
+      "id": "SHD-SOL-C638E8",
+      "coin": "SOL",
+      "side": "SHORT",
+      "entry_price": 92.09,
+      "stop_loss": 92.719857,
+      "tp_price": 89.91,
+      "filter_reason": "LOW_CONFLUENCE_SCORE",
+      "confluence_score": 49.06,
+      "status": "ACTIVE",
+      "created_at": "2026-11-04T05:15:51Z"
+    },
+    {
+      "id": "SHD-XRP-0BBCF6",
+      "coin": "XRP",
+      "side": "SHORT",
+      "entry_price": 1.26941,
+      "stop_loss": 1.275278,
+      "tp_price": 1.243004,
+      "filter_reason": "LOW_CONFLUENCE_SCORE",
+      "confluence_score": 33.91,
+      "status": "ACTIVE",
+      "created_at": "2026-11-04T05:15:51Z"
+    },
+    {
+      "id": "SHD-XAU-F0B594",
+      "coin": "XAU",
+      "side": "LONG",
+      "entry_price": 3955.71,
+      "stop_loss": 3939.623714,
+      "tp_price": 3992.708458,
+      "filter_reason": "LOW_CONFLUENCE_SCORE",
+      "confluence_score": 38.69,
+      "status": "ACTIVE",
+      "created_at": "2026-11-04T05:15:51Z"
     }
   ],
   "resolved_shadows": [
@@ -3420,7 +3480,7 @@
     }
   ],
   "stats": {
-    "total_filtered": 659,
+    "total_filtered": 664,
     "saved_from_loss": 501,
     "missed_winners": 79,
     "shield_accuracy": 86.38,
@@ -3428,11 +3488,11 @@
   },
   "last_updated": "2026-11-01T18:21:42Z",
   "filter_breakdown": {
-    "LOW_CONFLUENCE_SCORE": 630,
+    "LOW_CONFLUENCE_SCORE": 635,
     "TIMEMACHINE_REJECTED": 0,
     "RISK_GUARDIAN_BLOCKED": 1,
     "SPREAD_GUARD_5PCT_BLOCKED": 0,
     "ECONOMIC_NEWS_BLOCKED": 20
   },
-  "updated_at": "2026-11-04T05:00:48Z"
+  "updated_at": "2026-11-04T05:15:51Z"
 }
