@@ -10,7 +10,7 @@
     "xray_summary_fa": "هم‌راستا با روند ۱ ساعته (+24) | حمایت ساختار ۴ ساعته (+6) | حضور قیمت در ناحیه FVG دست‌نخورده (+18) | تایید فشار اردربوک صرافی (+7) | سشن Killzone فعال (+7)",
     "slot_type": "STANDARD_SLOT",
     "entry_price": 2427.442643,
-    "current_price": 2420.61,
+    "current_price": 2423.46,
     "stop_loss": 2387.291072,
     "initial_stop_loss": 2387.291072,
     "stop_distance": 40.151571,
@@ -26,7 +26,7 @@
     "is_risk_free": false,
     "trailing_active": false,
     "realized_pnl_usdt": -0.0223,
-    "unrealized_pnl_usdt": -0.31,
+    "unrealized_pnl_usdt": -0.18,
     "fees_paid_usdt": 0.0223,
     "opened_at": "2026-11-04T18:00:55Z"
   },
@@ -41,7 +41,7 @@
     "xray_summary_fa": "هم‌راستا با روند ۱ ساعته (+22) | حمایت ساختار ۴ ساعته (+6) | حضور قیمت در ناحیه FVG دست‌نخورده (+18) | ناحیه ارزان‌فروشی Discount (+6) | شکار نقدینگی و استاپ‌هانت ۱۵m (+12) | تایید فشار اردربوک صرافی (+7) | سشن Killzone فعال (+7)",
     "slot_type": "STANDARD_SLOT",
     "entry_price": 1.301906,
-    "current_price": 1.30501,
+    "current_price": 1.30811,
     "stop_loss": 1.289485,
     "initial_stop_loss": 1.289485,
     "stop_distance": 0.012421,
@@ -57,7 +57,7 @@
     "is_risk_free": false,
     "trailing_active": false,
     "realized_pnl_usdt": -0.0386,
-    "unrealized_pnl_usdt": 0.46,
+    "unrealized_pnl_usdt": 0.92,
     "fees_paid_usdt": 0.0386,
     "opened_at": "2026-11-04T20:16:11Z"
   }
