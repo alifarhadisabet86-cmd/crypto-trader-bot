@@ -10,7 +10,7 @@
     "xray_summary_fa": "هم‌راستا با روند ۱ ساعته (+24) | حمایت ساختار ۴ ساعته (+6) | حضور قیمت در ناحیه FVG دست‌نخورده (+18) | تایید فشار اردربوک صرافی (+7) | سشن Killzone فعال (+7)",
     "slot_type": "STANDARD_SLOT",
     "entry_price": 2427.442643,
-    "current_price": 2419.85,
+    "current_price": 2417.87,
     "stop_loss": 2387.291072,
     "initial_stop_loss": 2387.291072,
     "stop_distance": 40.151571,
@@ -26,7 +26,7 @@
     "is_risk_free": false,
     "trailing_active": false,
     "realized_pnl_usdt": -0.0223,
-    "unrealized_pnl_usdt": -0.35,
+    "unrealized_pnl_usdt": -0.44,
     "fees_paid_usdt": 0.0223,
     "opened_at": "2026-11-04T18:00:55Z"
   },
@@ -41,7 +41,7 @@
     "xray_summary_fa": "هم‌راستا با روند ۱ ساعته (+22) | حمایت ساختار ۴ ساعته (+6) | حضور قیمت در ناحیه FVG دست‌نخورده (+18) | ناحیه ارزان‌فروشی Discount (+6) | شکار نقدینگی و استاپ‌هانت ۱۵m (+12) | تایید فشار اردربوک صرافی (+7) | سشن Killzone فعال (+7)",
     "slot_type": "STANDARD_SLOT",
     "entry_price": 1.301906,
-    "current_price": 1.32011,
+    "current_price": 1.31741,
     "stop_loss": 1.31175,
     "initial_stop_loss": 1.289485,
     "stop_distance": 0.012421,
@@ -57,7 +57,7 @@
     "is_risk_free": true,
     "trailing_active": true,
     "realized_pnl_usdt": 1.0015,
-    "unrealized_pnl_usdt": 1.35,
+    "unrealized_pnl_usdt": 1.15,
     "fees_paid_usdt": 0.0581,
     "opened_at": "2026-11-04T20:16:11Z"
   },
@@ -72,7 +72,7 @@
     "xray_summary_fa": "هم‌راستا با روند ۱ ساعته (+23) | حمایت ساختار ۴ ساعته (+6) | مجاورت با FVG معتبر (+16) | ناحیه ارزان‌فروشی Discount (+10) | شکار نقدینگی و استاپ‌هانت ۱۵m (+12) | تایید فشار اردربوک صرافی (+7) | سشن Killzone فعال (+7)",
     "slot_type": "STANDARD_SLOT",
     "entry_price": 80435.822857,
-    "current_price": 80435.822857,
+    "current_price": 80389.9,
     "stop_loss": 80259.877143,
     "initial_stop_loss": 80259.877143,
     "stop_distance": 175.945714,
@@ -88,7 +88,7 @@
     "is_risk_free": false,
     "trailing_active": false,
     "realized_pnl_usdt": -0.1687,
-    "unrealized_pnl_usdt": 0.0,
+    "unrealized_pnl_usdt": -0.48,
     "fees_paid_usdt": 0.1687,
     "opened_at": "2026-11-05T10:00:42Z"
   }
