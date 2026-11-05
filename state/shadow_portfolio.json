@@ -1139,6 +1139,66 @@
       "confluence_score": 45.3,
       "status": "ACTIVE",
       "created_at": "2026-11-05T02:15:57Z"
+    },
+    {
+      "id": "SHD-BTC-74081B",
+      "coin": "BTC",
+      "side": "LONG",
+      "entry_price": 80680.5,
+      "stop_loss": 80494.077143,
+      "tp_price": 81109.272571,
+      "filter_reason": "LOW_CONFLUENCE_SCORE",
+      "confluence_score": 50.89,
+      "status": "ACTIVE",
+      "created_at": "2026-11-05T02:30:47Z"
+    },
+    {
+      "id": "SHD-ETH-0873E3",
+      "coin": "ETH",
+      "side": "LONG",
+      "entry_price": 2430.15,
+      "stop_loss": 2418.386143,
+      "tp_price": 2457.206871,
+      "filter_reason": "LOW_CONFLUENCE_SCORE",
+      "confluence_score": 55.15,
+      "status": "ACTIVE",
+      "created_at": "2026-11-05T02:30:47Z"
+    },
+    {
+      "id": "SHD-SOL-195E56",
+      "coin": "SOL",
+      "side": "LONG",
+      "entry_price": 96.26,
+      "stop_loss": 95.675714,
+      "tp_price": 97.603858,
+      "filter_reason": "LOW_CONFLUENCE_SCORE",
+      "confluence_score": 46.59,
+      "status": "ACTIVE",
+      "created_at": "2026-11-05T02:30:47Z"
+    },
+    {
+      "id": "SHD-XRP-DF2D53",
+      "coin": "XRP",
+      "side": "LONG",
+      "entry_price": 1.30582,
+      "stop_loss": 1.301673,
+      "tp_price": 1.31768,
+      "filter_reason": "LOW_CONFLUENCE_SCORE",
+      "confluence_score": 57.28,
+      "status": "ACTIVE",
+      "created_at": "2026-11-05T02:30:47Z"
+    },
+    {
+      "id": "SHD-XAU-E35928",
+      "coin": "XAU",
+      "side": "LONG",
+      "entry_price": 4122.3,
+      "stop_loss": 4113.051,
+      "tp_price": 4143.5727,
+      "filter_reason": "LOW_CONFLUENCE_SCORE",
+      "confluence_score": 46.95,
+      "status": "ACTIVE",
+      "created_at": "2026-11-05T02:30:47Z"
     }
   ],
   "resolved_shadows": [
@@ -3744,7 +3804,7 @@
     }
   ],
   "stats": {
-    "total_filtered": 1107,
+    "total_filtered": 1112,
     "saved_from_loss": 712,
     "missed_winners": 238,
     "shield_accuracy": 74.95,
@@ -3752,11 +3812,11 @@
   },
   "last_updated": "2026-11-01T18:21:42Z",
   "filter_breakdown": {
-    "LOW_CONFLUENCE_SCORE": 1074,
+    "LOW_CONFLUENCE_SCORE": 1079,
     "TIMEMACHINE_REJECTED": 0,
     "RISK_GUARDIAN_BLOCKED": 5,
     "SPREAD_GUARD_5PCT_BLOCKED": 0,
     "ECONOMIC_NEWS_BLOCKED": 20
   },
-  "updated_at": "2026-11-05T02:15:57Z"
+  "updated_at": "2026-11-05T02:30:47Z"
 }
