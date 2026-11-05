@@ -1,10 +1,10 @@
 {
   "version": "2.0",
-  "balance_usdt": 981.3762,
+  "balance_usdt": 982.0481,
   "initial_balance_usdt": 1000.0,
   "day_start_date": "2026-11-01",
   "day_start_equity": 1000.0,
-  "daily_pnl_usdt": -1.4783,
+  "daily_pnl_usdt": -0.8064,
   "daily_circuit_breaker": false,
   "consecutive_wins": 0,
   "consecutive_losses": 1,
@@ -20,7 +20,7 @@
       "xray_summary_fa": "هم‌راستا با روند ۱ ساعته (+24) | حمایت ساختار ۴ ساعته (+6) | حضور قیمت در ناحیه FVG دست‌نخورده (+18) | تایید فشار اردربوک صرافی (+7) | سشن Killzone فعال (+7)",
       "slot_type": "STANDARD_SLOT",
       "entry_price": 2427.442643,
-      "current_price": 2414.04,
+      "current_price": 2410.33,
       "stop_loss": 2387.291072,
       "initial_stop_loss": 2387.291072,
       "stop_distance": 40.151571,
@@ -36,40 +36,9 @@
       "is_risk_free": false,
       "trailing_active": false,
       "realized_pnl_usdt": -0.0223,
-      "unrealized_pnl_usdt": -0.62,
+      "unrealized_pnl_usdt": -0.79,
       "fees_paid_usdt": 0.0223,
       "opened_at": "2026-11-04T18:00:55Z"
-    },
-    {
-      "id": "POS-XRP-C2140A",
-      "coin": "XRP",
-      "side": "LONG",
-      "order_type": "LIMIT",
-      "trigger_type": "5M_MICRO_CHOCH",
-      "regime": "TRENDING_BULL",
-      "confluence_score": 71.24,
-      "xray_summary_fa": "هم‌راستا با روند ۱ ساعته (+22) | حمایت ساختار ۴ ساعته (+6) | حضور قیمت در ناحیه FVG دست‌نخورده (+18) | ناحیه ارزان‌فروشی Discount (+6) | شکار نقدینگی و استاپ‌هانت ۱۵m (+12) | تایید فشار اردربوک صرافی (+7) | سشن Killzone فعال (+7)",
-      "slot_type": "STANDARD_SLOT",
-      "entry_price": 1.301906,
-      "current_price": 1.31405,
-      "stop_loss": 1.31175,
-      "initial_stop_loss": 1.289485,
-      "stop_distance": 0.012421,
-      "tp1_breakeven": 1.31619,
-      "tp2_final": 1.34173,
-      "initial_qty": 148.371674,
-      "remaining_qty": 74.185837,
-      "initial_notional_usdt": 193.17,
-      "remaining_notional_usdt": 96.58,
-      "margin_used_usdt": 19.32,
-      "initial_risk_usdt": 1.84,
-      "tp1_hit": true,
-      "is_risk_free": true,
-      "trailing_active": true,
-      "realized_pnl_usdt": 1.0015,
-      "unrealized_pnl_usdt": 0.9,
-      "fees_paid_usdt": 0.0581,
-      "opened_at": "2026-11-04T20:16:11Z"
     }
   ],
   "trade_history": [
@@ -151,30 +120,35 @@
       "timestamp": "2026-11-05T12:16:01Z",
       "equity": 981.38,
       "event": "BTC_STOP_LOSS"
+    },
+    {
+      "timestamp": "2026-11-05T12:30:50Z",
+      "equity": 982.05,
+      "event": "XRP_TRAILING_STOP_PROFIT"
     }
   ],
   "stats": {
-    "total_trades": 9,
-    "wins": 1,
+    "total_trades": 10,
+    "wins": 2,
     "losses": 8,
-    "win_rate_pct": 11.11,
+    "win_rate_pct": 20.0,
     "total_pnl_usdt": -4.8578,
-    "max_drawdown_pct": 2.3,
-    "consecutive_wins": 0,
-    "consecutive_losses": 7,
+    "max_drawdown_pct": 2.31,
+    "consecutive_wins": 1,
+    "consecutive_losses": 0,
     "peak_equity_usdt": 1004.44,
-    "total_fees_paid_usdt": 5.9764
+    "total_fees_paid_usdt": 6.0348
   },
   "last_updated": "2026-11-01T18:21:42Z",
   "daily_start_balance_usdt": 982.8545,
   "last_reset_date": "2026-11-05",
   "weekly_start_balance_usdt": 994.6689,
-  "weekly_pnl_usdt": -13.2927,
+  "weekly_pnl_usdt": -12.6208,
   "weekly_circuit_breaker": false,
   "last_reset_week": "2026-W45",
   "paper_gate_target": 50,
   "paper_gate_unlocked": false,
-  "updated_at": "2026-11-05T12:16:02Z",
+  "updated_at": "2026-11-05T12:30:51Z",
   "trading_mode": "PAPER",
   "closed_trades": [
     {
@@ -349,6 +323,24 @@
       "outcome": "LOSS",
       "opened_at": "2026-11-05T10:00:42Z",
       "closed_at": "2026-11-05T12:16:01Z"
+    },
+    {
+      "id": "POS-XRP-C2140A",
+      "coin": "XRP",
+      "side": "LONG",
+      "regime": "TRENDING_BULL",
+      "confluence_score": 71.24,
+      "entry_price": 1.301906,
+      "exit_price": 1.31175,
+      "exit_reason": "TRAILING_STOP_PROFIT",
+      "tp1_hit": true,
+      "trailing_active": true,
+      "net_pnl_usdt": 1.67,
+      "r_multiple": 0.91,
+      "fees_paid_usdt": 0.1165,
+      "outcome": "WIN",
+      "opened_at": "2026-11-04T20:16:11Z",
+      "closed_at": "2026-11-05T12:30:50Z"
     }
   ]
 }
