@@ -1,1 +1,33 @@
-[]
+[
+  {
+    "id": "POS-SOL-6A0A27",
+    "coin": "SOL",
+    "side": "SHORT",
+    "order_type": "LIMIT",
+    "trigger_type": "5M_PINBAR",
+    "regime": "TRENDING_BEAR",
+    "confluence_score": 69.82,
+    "xray_summary_fa": "هم‌راستا با روند ۱ ساعته (+23) | حمایت ساختار ۴ ساعته (+6) | حضور قیمت در ناحیه FVG دست‌نخورده (+18) | ناحیه گران‌فروشی Premium (+10) | شکار نقدینگی سشن آسیا (+11) | سشن Killzone فعال (+7)",
+    "slot_type": "STANDARD_SLOT",
+    "entry_price": 90.373429,
+    "current_price": 90.373429,
+    "stop_loss": 90.666679,
+    "initial_stop_loss": 90.666679,
+    "stop_distance": 0.29325,
+    "tp1_breakeven": 90.036192,
+    "tp2_final": 89.053804,
+    "initial_qty": 12.512739,
+    "remaining_qty": 12.512739,
+    "initial_notional_usdt": 1130.82,
+    "remaining_notional_usdt": 1130.82,
+    "margin_used_usdt": 226.16,
+    "initial_risk_usdt": 3.67,
+    "tp1_hit": false,
+    "is_risk_free": false,
+    "trailing_active": false,
+    "realized_pnl_usdt": -0.2262,
+    "unrealized_pnl_usdt": 0.0,
+    "fees_paid_usdt": 0.2262,
+    "opened_at": "2026-11-06T14:00:54Z"
+  }
+]
