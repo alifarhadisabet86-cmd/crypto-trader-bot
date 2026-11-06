@@ -779,6 +779,54 @@
       "confluence_score": 44.25,
       "status": "ACTIVE",
       "created_at": "2026-11-06T16:56:26Z"
+    },
+    {
+      "id": "SHD-BTC-126A76",
+      "coin": "BTC",
+      "side": "SHORT",
+      "entry_price": 76001.2,
+      "stop_loss": 76524.173214,
+      "tp_price": 74798.361608,
+      "filter_reason": "LOW_CONFLUENCE_SCORE",
+      "confluence_score": 51.24,
+      "status": "ACTIVE",
+      "created_at": "2026-11-06T17:00:50Z"
+    },
+    {
+      "id": "SHD-ETH-F41192",
+      "coin": "ETH",
+      "side": "SHORT",
+      "entry_price": 2234.98,
+      "stop_loss": 2252.463036,
+      "tp_price": 2194.769017,
+      "filter_reason": "LOW_CONFLUENCE_SCORE",
+      "confluence_score": 50.3,
+      "status": "ACTIVE",
+      "created_at": "2026-11-06T17:00:50Z"
+    },
+    {
+      "id": "SHD-XRP-1D29CB",
+      "coin": "XRP",
+      "side": "SHORT",
+      "entry_price": 1.196347,
+      "stop_loss": 1.203524,
+      "tp_price": 1.1745,
+      "filter_reason": "RISK_GUARDIAN_BLOCKED",
+      "confluence_score": 75.45,
+      "status": "ACTIVE",
+      "created_at": "2026-11-06T17:00:50Z"
+    },
+    {
+      "id": "SHD-XAU-4E1913",
+      "coin": "XAU",
+      "side": "SHORT",
+      "entry_price": 4058.63,
+      "stop_loss": 4065.834357,
+      "tp_price": 4026.210393,
+      "filter_reason": "LOW_CONFLUENCE_SCORE",
+      "confluence_score": 45.1,
+      "status": "ACTIVE",
+      "created_at": "2026-11-06T17:00:50Z"
     }
   ],
   "resolved_shadows": [
@@ -3384,7 +3432,7 @@
     }
   ],
   "stats": {
-    "total_filtered": 1832,
+    "total_filtered": 1836,
     "saved_from_loss": 1247,
     "missed_winners": 363,
     "shield_accuracy": 77.45,
@@ -3392,11 +3440,11 @@
   },
   "last_updated": "2026-11-01T18:21:42Z",
   "filter_breakdown": {
-    "LOW_CONFLUENCE_SCORE": 1770,
+    "LOW_CONFLUENCE_SCORE": 1773,
     "TIMEMACHINE_REJECTED": 0,
-    "RISK_GUARDIAN_BLOCKED": 10,
+    "RISK_GUARDIAN_BLOCKED": 11,
     "SPREAD_GUARD_5PCT_BLOCKED": 0,
     "ECONOMIC_NEWS_BLOCKED": 44
   },
-  "updated_at": "2026-11-06T16:56:26Z"
+  "updated_at": "2026-11-06T17:00:51Z"
 }
