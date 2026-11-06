@@ -1,46 +1,14 @@
 {
   "version": "2.0",
-  "balance_usdt": 980.2672,
+  "balance_usdt": 979.928,
   "initial_balance_usdt": 1000.0,
   "day_start_date": "2026-11-01",
   "day_start_equity": 1000.0,
-  "daily_pnl_usdt": 4.4412,
+  "daily_pnl_usdt": 4.102,
   "daily_circuit_breaker": false,
   "consecutive_wins": 0,
   "consecutive_losses": 1,
-  "open_positions": [
-    {
-      "id": "POS-SOL-6A0A27",
-      "coin": "SOL",
-      "side": "SHORT",
-      "order_type": "LIMIT",
-      "trigger_type": "5M_PINBAR",
-      "regime": "TRENDING_BEAR",
-      "confluence_score": 69.82,
-      "xray_summary_fa": "هم‌راستا با روند ۱ ساعته (+23) | حمایت ساختار ۴ ساعته (+6) | حضور قیمت در ناحیه FVG دست‌نخورده (+18) | ناحیه گران‌فروشی Premium (+10) | شکار نقدینگی سشن آسیا (+11) | سشن Killzone فعال (+7)",
-      "slot_type": "STANDARD_SLOT",
-      "entry_price": 90.373429,
-      "current_price": 89.94,
-      "stop_loss": 90.373429,
-      "initial_stop_loss": 90.666679,
-      "stop_distance": 0.29325,
-      "tp1_breakeven": 90.036192,
-      "tp2_final": 89.053804,
-      "initial_qty": 12.512739,
-      "remaining_qty": 6.256369,
-      "initial_notional_usdt": 1130.82,
-      "remaining_notional_usdt": 565.41,
-      "margin_used_usdt": 113.08,
-      "initial_risk_usdt": 3.67,
-      "tp1_hit": true,
-      "is_risk_free": true,
-      "trailing_active": false,
-      "realized_pnl_usdt": 1.771,
-      "unrealized_pnl_usdt": 2.71,
-      "fees_paid_usdt": 0.3389,
-      "opened_at": "2026-11-06T14:00:54Z"
-    }
-  ],
+  "open_positions": [],
   "trade_history": [
     {
       "position_id": "POS-XRP-A9D2C9",
@@ -145,30 +113,35 @@
       "timestamp": "2026-11-06T13:30:59Z",
       "equity": 978.5,
       "event": "XRP_TP2_FINAL_TARGET"
+    },
+    {
+      "timestamp": "2026-11-06T14:30:56Z",
+      "equity": 979.93,
+      "event": "SOL_BREAKEVEN_STOP"
     }
   ],
   "stats": {
-    "total_trades": 14,
-    "wins": 3,
+    "total_trades": 15,
+    "wins": 4,
     "losses": 11,
-    "win_rate_pct": 21.43,
+    "win_rate_pct": 26.67,
     "total_pnl_usdt": -4.8578,
     "max_drawdown_pct": 3.2,
-    "consecutive_wins": 1,
+    "consecutive_wins": 2,
     "consecutive_losses": 0,
     "peak_equity_usdt": 1004.44,
-    "total_fees_paid_usdt": 8.0858
+    "total_fees_paid_usdt": 8.425
   },
   "last_updated": "2026-11-01T18:21:42Z",
   "daily_start_balance_usdt": 975.826,
   "last_reset_date": "2026-11-06",
   "weekly_start_balance_usdt": 994.6689,
-  "weekly_pnl_usdt": -14.4017,
+  "weekly_pnl_usdt": -14.7409,
   "weekly_circuit_breaker": false,
   "last_reset_week": "2026-W45",
   "paper_gate_target": 50,
   "paper_gate_unlocked": false,
-  "updated_at": "2026-11-06T14:15:46Z",
+  "updated_at": "2026-11-06T14:30:57Z",
   "trading_mode": "PAPER",
   "closed_trades": [
     {
@@ -433,6 +406,24 @@
       "outcome": "WIN",
       "opened_at": "2026-11-06T12:00:57Z",
       "closed_at": "2026-11-06T13:30:59Z"
+    },
+    {
+      "id": "POS-SOL-6A0A27",
+      "coin": "SOL",
+      "side": "SHORT",
+      "regime": "TRENDING_BEAR",
+      "confluence_score": 69.82,
+      "entry_price": 90.373429,
+      "exit_price": 90.373429,
+      "exit_reason": "BREAKEVEN_STOP",
+      "tp1_hit": true,
+      "trailing_active": false,
+      "net_pnl_usdt": 1.43,
+      "r_multiple": 0.39,
+      "fees_paid_usdt": 0.6781,
+      "outcome": "WIN",
+      "opened_at": "2026-11-06T14:00:54Z",
+      "closed_at": "2026-11-06T14:30:56Z"
     }
   ]
 }
