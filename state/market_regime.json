@@ -5,9 +5,9 @@
     "htf_bias": "BEARISH",
     "adx": 49.61,
     "tradable": true,
-    "current_price": 75950.3,
+    "current_price": 75924.3,
     "candidate_side": "SHORT",
-    "confluence_score": 45.28,
+    "confluence_score": 44.84,
     "zone": "PREMIUM",
     "asian_range": {
       "asian_high": 76408.1,
@@ -22,9 +22,9 @@
     "htf_bias": "BEARISH",
     "adx": 51.63,
     "tradable": true,
-    "current_price": 2233.59,
+    "current_price": 2232.8,
     "candidate_side": "SHORT",
-    "confluence_score": 49.37,
+    "confluence_score": 48.85,
     "zone": "PREMIUM",
     "asian_range": {
       "asian_high": 2249.83,
@@ -39,16 +39,16 @@
     "htf_bias": "BEARISH",
     "adx": 28.33,
     "tradable": true,
-    "current_price": 90.58,
+    "current_price": 90.35,
     "candidate_side": "SHORT",
-    "confluence_score": 45.08,
-    "zone": "PREMIUM",
+    "confluence_score": 47.18,
+    "zone": "DISCOUNT",
     "asian_range": {
       "asian_high": 90.57,
       "asian_low": 88.94,
-      "asian_sweep": "NONE"
+      "asian_sweep": "ASIAN_HIGH_SWEEP_BEAR"
     },
-    "xray_summary_fa": "هم‌راستا با روند ۱ ساعته (+22) | حمایت ساختار ۴ ساعته (+6) | سشن Killzone فعال (+7)"
+    "xray_summary_fa": "هم‌راستا با روند ۱ ساعته (+22) | حمایت ساختار ۴ ساعته (+6) | شکار نقدینگی سشن آسیا (+11) | سشن Killzone فعال (+7)"
   },
   "XRP": {
     "regime": "TRENDING_BEAR",
@@ -56,16 +56,16 @@
     "htf_bias": "BEARISH",
     "adx": 49.83,
     "tradable": true,
-    "current_price": 1.19367,
+    "current_price": 1.19326,
     "candidate_side": "SHORT",
-    "confluence_score": 67.15,
+    "confluence_score": 68.65,
     "zone": "PREMIUM",
     "asian_range": {
       "asian_high": 1.22335,
       "asian_low": 1.19477,
       "asian_sweep": "NONE"
     },
-    "xray_summary_fa": "هم‌راستا با روند ۱ ساعته (+24) | حمایت ساختار ۴ ساعته (+6) | مجاورت با FVG معتبر (+16) | ناحیه گران‌فروشی Premium (+8) | سشن Killzone فعال (+7)"
+    "xray_summary_fa": "هم‌راستا با روند ۱ ساعته (+24) | حمایت ساختار ۴ ساعته (+6) | مجاورت با FVG معتبر (+15) | ناحیه گران‌فروشی Premium (+8) | سشن Killzone فعال (+7)"
   },
   "XAU": {
     "regime": "RANGING",
@@ -73,15 +73,15 @@
     "htf_bias": "BULLISH",
     "adx": 23.48,
     "tradable": true,
-    "current_price": 4051.2,
+    "current_price": 4051.5,
     "candidate_side": "SHORT",
-    "confluence_score": 35.51,
+    "confluence_score": 35.31,
     "zone": "PREMIUM",
     "asian_range": {
       "asian_high": 4103.91,
       "asian_low": 4034.72,
       "asian_sweep": "NONE"
     },
-    "xray_summary_fa": "ساختار بازگشت به میانگین رنج (+14) | مجاورت با FVG معتبر (+8) | سشن Killzone فعال (+7)"
+    "xray_summary_fa": "ساختار بازگشت به میانگین رنج (+14) | مجاورت با FVG معتبر (+8) | ناحیه گران‌فروشی Premium (+6) | سشن Killzone فعال (+7)"
   }
 }
