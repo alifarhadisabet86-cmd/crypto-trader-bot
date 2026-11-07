@@ -5,7 +5,7 @@
     "htf_bias": "BEARISH",
     "adx": 33.63,
     "tradable": false,
-    "current_price": 76124.2,
+    "current_price": 76132.3,
     "candidate_side": "NONE",
     "confluence_score": 0.0,
     "zone": "PREMIUM",
@@ -22,7 +22,7 @@
     "htf_bias": "BEARISH",
     "adx": 28.23,
     "tradable": false,
-    "current_price": 2248.71,
+    "current_price": 2248.56,
     "candidate_side": "NONE",
     "confluence_score": 0.0,
     "zone": "PREMIUM",
@@ -37,18 +37,18 @@
     "regime": "RANGING",
     "strategy": "LIQUIDITY_SWEEP_REVERSAL",
     "htf_bias": "BEARISH",
-    "adx": 15.22,
+    "adx": 15.16,
     "tradable": true,
-    "current_price": 90.31,
+    "current_price": 90.33,
     "candidate_side": "SHORT",
-    "confluence_score": 67.53,
+    "confluence_score": 62.19,
     "zone": "PREMIUM",
     "asian_range": {
       "asian_high": 90.66,
       "asian_low": 89.78,
       "asian_sweep": "NONE"
     },
-    "xray_summary_fa": "ساختار بازگشت به میانگین رنج (+14) | حمایت ساختار ۴ ساعته (+6) | حضور قیمت در ناحیه FVG دست‌نخورده (+18) | ناحیه گران‌فروشی Premium (+6) | حجم تراکنش بالاتر از میانگین (+7) | سشن Killzone فعال (+7) | واگرایی پول هوشمند SMT (+6)"
+    "xray_summary_fa": "ساختار بازگشت به میانگین رنج (+14) | حمایت ساختار ۴ ساعته (+6) | حضور قیمت در ناحیه FVG دست‌نخورده (+18) | ناحیه گران‌فروشی Premium (+7) | سشن Killzone فعال (+7) | واگرایی پول هوشمند SMT (+6)"
   },
   "XRP": {
     "regime": "RANGING",
@@ -56,16 +56,16 @@
     "htf_bias": "BEARISH",
     "adx": 46.93,
     "tradable": true,
-    "current_price": 1.18058,
-    "candidate_side": "NONE",
-    "confluence_score": 49.33,
+    "current_price": 1.18104,
+    "candidate_side": "SHORT",
+    "confluence_score": 56.06,
     "zone": "PREMIUM",
     "asian_range": {
       "asian_high": 1.18263,
       "asian_low": 1.15193,
       "asian_sweep": "NONE"
     },
-    "xray_summary_fa": "ساختار بازگشت به میانگین رنج (+14) | حمایت ساختار ۴ ساعته (+6) | ناحیه گران‌فروشی Premium (+12) | سشن Killzone فعال (+7) | واگرایی پول هوشمند SMT (+6)"
+    "xray_summary_fa": "ساختار بازگشت به میانگین رنج (+14) | حمایت ساختار ۴ ساعته (+6) | ناحیه گران‌فروشی Premium (+12) | شکار نقدینگی و استاپ‌هانت ۱۵m (+12) | سشن Killzone فعال (+7) | واگرایی پول هوشمند SMT (+6)"
   },
   "XAU": {
     "regime": "CHOPPY_NO_TRADE",
@@ -73,7 +73,7 @@
     "htf_bias": "BULLISH",
     "adx": 11.23,
     "tradable": false,
-    "current_price": 4063.61,
+    "current_price": 4063.62,
     "candidate_side": "NONE",
     "confluence_score": 0.0,
     "zone": "DISCOUNT",
