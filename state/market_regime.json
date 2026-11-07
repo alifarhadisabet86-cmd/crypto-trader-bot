@@ -5,7 +5,7 @@
     "htf_bias": "BEARISH",
     "adx": 30.88,
     "tradable": false,
-    "current_price": 75761.2,
+    "current_price": 75761.4,
     "candidate_side": "NONE",
     "confluence_score": 0.0,
     "zone": "DISCOUNT",
@@ -22,16 +22,16 @@
     "htf_bias": "BEARISH",
     "adx": 26.63,
     "tradable": true,
-    "current_price": 2234.21,
+    "current_price": 2234.22,
     "candidate_side": "SHORT",
-    "confluence_score": 55.52,
+    "confluence_score": 50.28,
     "zone": "DISCOUNT",
     "asian_range": {
       "asian_high": 2250.51,
       "asian_low": 2238.48,
       "asian_sweep": "NONE"
     },
-    "xray_summary_fa": "هم‌راستا با روند ۱ ساعته (+21) | حمایت ساختار ۴ ساعته (+6) | مجاورت با FVG معتبر (+16) | تایید فشار اردربوک صرافی (+7) | سشن Killzone فعال (+7)"
+    "xray_summary_fa": "هم‌راستا با روند ۱ ساعته (+21) | حمایت ساختار ۴ ساعته (+6) | مجاورت با FVG معتبر (+16) | سشن Killzone فعال (+7)"
   },
   "SOL": {
     "regime": "TRENDING_BEAR",
@@ -39,16 +39,16 @@
     "htf_bias": "BEARISH",
     "adx": 20.94,
     "tradable": true,
-    "current_price": 89.6,
-    "candidate_side": "NONE",
-    "confluence_score": 42.44,
-    "zone": "DISCOUNT",
+    "current_price": 89.65,
+    "candidate_side": "SHORT",
+    "confluence_score": 51.83,
+    "zone": "EQUILIBRIUM",
     "asian_range": {
       "asian_high": 90.66,
       "asian_low": 89.78,
       "asian_sweep": "NONE"
     },
-    "xray_summary_fa": "هم‌راستا با روند ۱ ساعته (+20) | حمایت ساختار ۴ ساعته (+6) | سشن Killzone فعال (+7)"
+    "xray_summary_fa": "هم‌راستا با روند ۱ ساعته (+20) | حمایت ساختار ۴ ساعته (+6) | مجاورت با FVG معتبر (+8) | سشن Killzone فعال (+7)"
   },
   "XRP": {
     "regime": "TRENDING_BEAR",
@@ -56,10 +56,10 @@
     "htf_bias": "BEARISH",
     "adx": 41.67,
     "tradable": true,
-    "current_price": 1.16183,
+    "current_price": 1.16224,
     "candidate_side": "SHORT",
-    "confluence_score": 69.61,
-    "zone": "DISCOUNT",
+    "confluence_score": 70.21,
+    "zone": "EQUILIBRIUM",
     "asian_range": {
       "asian_high": 1.18263,
       "asian_low": 1.15193,
