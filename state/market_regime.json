@@ -5,7 +5,7 @@
     "htf_bias": "BEARISH",
     "adx": 31.12,
     "tradable": false,
-    "current_price": 76164.9,
+    "current_price": 76143.0,
     "candidate_side": "NONE",
     "confluence_score": 0.0,
     "zone": "PREMIUM",
@@ -22,7 +22,7 @@
     "htf_bias": "BEARISH",
     "adx": 26.29,
     "tradable": false,
-    "current_price": 2247.9,
+    "current_price": 2247.51,
     "candidate_side": "NONE",
     "confluence_score": 0.0,
     "zone": "PREMIUM",
@@ -37,35 +37,35 @@
     "regime": "RANGING",
     "strategy": "LIQUIDITY_SWEEP_REVERSAL",
     "htf_bias": "BEARISH",
-    "adx": 14.54,
+    "adx": 14.66,
     "tradable": true,
-    "current_price": 90.2,
+    "current_price": 90.14,
     "candidate_side": "LONG",
-    "confluence_score": 37.74,
-    "zone": "EQUILIBRIUM",
+    "confluence_score": 44.28,
+    "zone": "DISCOUNT",
     "asian_range": {
       "asian_high": 90.66,
       "asian_low": 89.78,
       "asian_sweep": "NONE"
     },
-    "xray_summary_fa": "ساختار بازگشت به میانگین رنج (+14) | مجاورت با FVG معتبر (+11) | سشن Killzone فعال (+7)"
+    "xray_summary_fa": "ساختار بازگشت به میانگین رنج (+14) | مجاورت با FVG معتبر (+16) | سشن Killzone فعال (+7)"
   },
   "XRP": {
     "regime": "TRENDING_BEAR",
     "strategy": "SMC_TREND_CONTINUATION",
     "htf_bias": "BEARISH",
-    "adx": 45.02,
+    "adx": 45.16,
     "tradable": true,
-    "current_price": 1.17345,
+    "current_price": 1.17229,
     "candidate_side": "SHORT",
-    "confluence_score": 66.49,
+    "confluence_score": 63.6,
     "zone": "PREMIUM",
     "asian_range": {
       "asian_high": 1.18263,
       "asian_low": 1.15193,
       "asian_sweep": "NONE"
     },
-    "xray_summary_fa": "هم‌راستا با روند ۱ ساعته (+24) | حمایت ساختار ۴ ساعته (+6) | مجاورت با FVG معتبر (+12) | ناحیه گران‌فروشی Premium (+9) | سشن Killzone فعال (+7)"
+    "xray_summary_fa": "هم‌راستا با روند ۱ ساعته (+24) | حمایت ساختار ۴ ساعته (+6) | مجاورت با FVG معتبر (+10) | ناحیه گران‌فروشی Premium (+8) | سشن Killzone فعال (+7)"
   },
   "XAU": {
     "regime": "CHOPPY_NO_TRADE",
