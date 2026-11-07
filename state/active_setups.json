@@ -1,1 +1,33 @@
-[]
+[
+  {
+    "id": "POS-XRP-742972",
+    "coin": "XRP",
+    "side": "SHORT",
+    "order_type": "LIMIT",
+    "trigger_type": "LIMIT_SNIPER_FVG",
+    "regime": "TRENDING_BEAR",
+    "confluence_score": 79.58,
+    "xray_summary_fa": "هم‌راستا با روند ۱ ساعته (+24) | حمایت ساختار ۴ ساعته (+6) | حضور قیمت در ناحیه FVG دست‌نخورده (+18) | ناحیه گران‌فروشی Premium (+12) | سشن Killzone فعال (+7) | واگرایی پول هوشمند SMT (+6)",
+    "slot_type": "STANDARD_SLOT",
+    "entry_price": 1.176991,
+    "current_price": 1.176991,
+    "stop_loss": 1.179952,
+    "initial_stop_loss": 1.179952,
+    "stop_distance": 0.002961,
+    "tp1_breakeven": 1.173586,
+    "tp2_final": 1.163666,
+    "initial_qty": 618.482776,
+    "remaining_qty": 618.482776,
+    "initial_notional_usdt": 727.95,
+    "remaining_notional_usdt": 727.95,
+    "margin_used_usdt": 145.59,
+    "initial_risk_usdt": 1.83,
+    "tp1_hit": false,
+    "is_risk_free": false,
+    "trailing_active": false,
+    "realized_pnl_usdt": -0.1456,
+    "unrealized_pnl_usdt": 0.0,
+    "fees_paid_usdt": 0.1456,
+    "opened_at": "2026-11-07T08:00:52Z"
+  }
+]
