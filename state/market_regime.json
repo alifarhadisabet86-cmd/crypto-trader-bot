@@ -5,7 +5,7 @@
     "htf_bias": "BEARISH",
     "adx": 29.68,
     "tradable": false,
-    "current_price": 75787.8,
+    "current_price": 75768.3,
     "candidate_side": "NONE",
     "confluence_score": 0.0,
     "zone": "DISCOUNT",
@@ -22,16 +22,16 @@
     "htf_bias": "BEARISH",
     "adx": 23.23,
     "tradable": true,
-    "current_price": 2234.99,
+    "current_price": 2234.77,
     "candidate_side": "SHORT",
-    "confluence_score": 45.22,
+    "confluence_score": 44.34,
     "zone": "DISCOUNT",
     "asian_range": {
       "asian_high": 2250.51,
       "asian_low": 2238.48,
       "asian_sweep": "NONE"
     },
-    "xray_summary_fa": "هم‌راستا با روند ۱ ساعته (+21) | حمایت ساختار ۴ ساعته (+6) | مجاورت با FVG معتبر (+11) | سشن Killzone فعال (+7) | واگرایی پول هوشمند SMT (+6)"
+    "xray_summary_fa": "هم‌راستا با روند ۱ ساعته (+21) | حمایت ساختار ۴ ساعته (+6) | مجاورت با FVG معتبر (+10) | سشن Killzone فعال (+7) | واگرایی پول هوشمند SMT (+6)"
   },
   "SOL": {
     "regime": "RANGING",
@@ -39,9 +39,9 @@
     "htf_bias": "BEARISH",
     "adx": 17.75,
     "tradable": true,
-    "current_price": 89.63,
+    "current_price": 89.58,
     "candidate_side": "NONE",
-    "confluence_score": 38.13,
+    "confluence_score": 38.77,
     "zone": "DISCOUNT",
     "asian_range": {
       "asian_high": 90.66,
@@ -56,9 +56,9 @@
     "htf_bias": "BEARISH",
     "adx": 39.31,
     "tradable": true,
-    "current_price": 1.16042,
+    "current_price": 1.15921,
     "candidate_side": "SHORT",
-    "confluence_score": 78.19,
+    "confluence_score": 74.77,
     "zone": "DISCOUNT",
     "asian_range": {
       "asian_high": 1.18263,
@@ -73,7 +73,7 @@
     "htf_bias": "BULLISH",
     "adx": 7.92,
     "tradable": false,
-    "current_price": 4064.28,
+    "current_price": 4064.29,
     "candidate_side": "LONG",
     "confluence_score": 0.0,
     "zone": "DISCOUNT",
