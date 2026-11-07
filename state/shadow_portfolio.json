@@ -275,6 +275,18 @@
       "confluence_score": 54.26,
       "status": "ACTIVE",
       "created_at": "2026-11-07T14:45:51Z"
+    },
+    {
+      "id": "SHD-XRP-971D96",
+      "coin": "XRP",
+      "side": "SHORT",
+      "entry_price": 1.16788,
+      "stop_loss": 1.172129,
+      "tp_price": 1.15479,
+      "filter_reason": "LOW_CONFLUENCE_SCORE",
+      "confluence_score": 64.93,
+      "status": "ACTIVE",
+      "created_at": "2026-11-07T15:00:26Z"
     }
   ],
   "resolved_shadows": [
@@ -2880,7 +2892,7 @@
     }
   ],
   "stats": {
-    "total_filtered": 2131,
+    "total_filtered": 2132,
     "saved_from_loss": 1465,
     "missed_winners": 406,
     "shield_accuracy": 78.3,
@@ -2888,11 +2900,11 @@
   },
   "last_updated": "2026-11-01T18:21:42Z",
   "filter_breakdown": {
-    "LOW_CONFLUENCE_SCORE": 2063,
+    "LOW_CONFLUENCE_SCORE": 2064,
     "TIMEMACHINE_REJECTED": 0,
     "RISK_GUARDIAN_BLOCKED": 16,
     "SPREAD_GUARD_5PCT_BLOCKED": 0,
     "ECONOMIC_NEWS_BLOCKED": 44
   },
-  "updated_at": "2026-11-07T14:45:52Z"
+  "updated_at": "2026-11-07T15:00:27Z"
 }
