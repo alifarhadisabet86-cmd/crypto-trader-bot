@@ -8,14 +8,14 @@
     "BTC": 0.8554,
     "ETH": 0.8892,
     "SOL": 1.0176,
-    "XRP": 1.0484,
+    "XRP": 1.0133,
     "XAU": 0.8762
   },
   "total_feedback_cycles": 18,
   "last_updated": "2026-11-01T18:21:42Z",
   "regime_multipliers": {
     "TRENDING_BULL": 0.9538,
-    "TRENDING_BEAR": 0.9778,
+    "TRENDING_BEAR": 0.9684,
     "RANGING": 0.9538
   },
   "coin_stats": {
@@ -38,10 +38,10 @@
       "avg_r": -0.103
     },
     "XRP": {
-      "trades": 5,
+      "trades": 6,
       "wins": 3,
-      "posterior_wr": 0.5385,
-      "avg_r": 0.584
+      "posterior_wr": 0.5,
+      "avg_r": 0.267
     },
     "XAU": {
       "trades": 2,
@@ -50,5 +50,5 @@
       "avg_r": -1.475
     }
   },
-  "updated_at": "2026-11-07T08:30:56Z"
+  "updated_at": "2026-11-07T08:36:27Z"
 }

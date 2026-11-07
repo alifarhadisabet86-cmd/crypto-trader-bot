@@ -1,46 +1,14 @@
 {
   "version": "2.0",
-  "balance_usdt": 976.5624,
+  "balance_usdt": 974.2932,
   "initial_balance_usdt": 1000.0,
   "day_start_date": "2026-11-01",
   "day_start_equity": 1000.0,
-  "daily_pnl_usdt": -5.6484,
+  "daily_pnl_usdt": -7.9176,
   "daily_circuit_breaker": false,
   "consecutive_wins": 0,
   "consecutive_losses": 1,
-  "open_positions": [
-    {
-      "id": "POS-XRP-742972",
-      "coin": "XRP",
-      "side": "SHORT",
-      "order_type": "LIMIT",
-      "trigger_type": "LIMIT_SNIPER_FVG",
-      "regime": "TRENDING_BEAR",
-      "confluence_score": 79.58,
-      "xray_summary_fa": "هم‌راستا با روند ۱ ساعته (+24) | حمایت ساختار ۴ ساعته (+6) | حضور قیمت در ناحیه FVG دست‌نخورده (+18) | ناحیه گران‌فروشی Premium (+12) | سشن Killzone فعال (+7) | واگرایی پول هوشمند SMT (+6)",
-      "slot_type": "STANDARD_SLOT",
-      "entry_price": 1.176991,
-      "current_price": 1.17874,
-      "stop_loss": 1.179952,
-      "initial_stop_loss": 1.179952,
-      "stop_distance": 0.002961,
-      "tp1_breakeven": 1.173586,
-      "tp2_final": 1.163666,
-      "initial_qty": 618.482776,
-      "remaining_qty": 618.482776,
-      "initial_notional_usdt": 727.95,
-      "remaining_notional_usdt": 727.95,
-      "margin_used_usdt": 145.59,
-      "initial_risk_usdt": 1.83,
-      "tp1_hit": false,
-      "is_risk_free": false,
-      "trailing_active": false,
-      "realized_pnl_usdt": -0.1456,
-      "unrealized_pnl_usdt": -1.08,
-      "fees_paid_usdt": 0.1456,
-      "opened_at": "2026-11-07T08:00:52Z"
-    }
-  ],
+  "open_positions": [],
   "trade_history": [
     {
       "position_id": "POS-XRP-A9D2C9",
@@ -175,30 +143,35 @@
       "timestamp": "2026-11-07T02:00:52Z",
       "equity": 976.71,
       "event": "BTC_STOP_LOSS"
+    },
+    {
+      "timestamp": "2026-11-07T08:36:26Z",
+      "equity": 974.29,
+      "event": "XRP_STOP_LOSS"
     }
   ],
   "stats": {
-    "total_trades": 20,
+    "total_trades": 21,
     "wins": 6,
-    "losses": 14,
-    "win_rate_pct": 30.0,
+    "losses": 15,
+    "win_rate_pct": 28.57,
     "total_pnl_usdt": -4.8578,
     "max_drawdown_pct": 3.67,
     "consecutive_wins": 0,
-    "consecutive_losses": 2,
+    "consecutive_losses": 3,
     "peak_equity_usdt": 1004.44,
-    "total_fees_paid_usdt": 12.0514
+    "total_fees_paid_usdt": 12.4893
   },
   "last_updated": "2026-11-01T18:21:42Z",
   "daily_start_balance_usdt": 982.2108,
   "last_reset_date": "2026-11-07",
   "weekly_start_balance_usdt": 994.6689,
-  "weekly_pnl_usdt": -18.1065,
+  "weekly_pnl_usdt": -20.3757,
   "weekly_circuit_breaker": false,
   "last_reset_week": "2026-W45",
   "paper_gate_target": 50,
   "paper_gate_unlocked": false,
-  "updated_at": "2026-11-07T08:30:56Z",
+  "updated_at": "2026-11-07T08:36:27Z",
   "trading_mode": "PAPER",
   "closed_trades": [
     {
@@ -571,6 +544,24 @@
       "outcome": "LOSS",
       "opened_at": "2026-11-07T00:15:44Z",
       "closed_at": "2026-11-07T02:00:52Z"
+    },
+    {
+      "id": "POS-XRP-742972",
+      "coin": "XRP",
+      "side": "SHORT",
+      "regime": "TRENDING_BEAR",
+      "confluence_score": 79.58,
+      "entry_price": 1.176991,
+      "exit_price": 1.179952,
+      "exit_reason": "STOP_LOSS",
+      "tp1_hit": false,
+      "trailing_active": false,
+      "net_pnl_usdt": -2.41,
+      "r_multiple": -1.32,
+      "fees_paid_usdt": 0.5835,
+      "outcome": "LOSS",
+      "opened_at": "2026-11-07T08:00:52Z",
+      "closed_at": "2026-11-07T08:36:26Z"
     }
   ]
 }
