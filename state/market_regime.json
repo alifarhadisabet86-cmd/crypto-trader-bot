@@ -5,8 +5,8 @@
     "htf_bias": "BEARISH",
     "adx": 36.42,
     "tradable": false,
-    "current_price": 76026.3,
-    "candidate_side": "SHORT",
+    "current_price": 76038.3,
+    "candidate_side": "NONE",
     "confluence_score": 0.0,
     "zone": "PREMIUM",
     "asian_range": {
@@ -22,33 +22,33 @@
     "htf_bias": "BEARISH",
     "adx": 31.28,
     "tradable": true,
-    "current_price": 2249.04,
+    "current_price": 2247.46,
     "candidate_side": "NONE",
-    "confluence_score": 39.95,
+    "confluence_score": 41.11,
     "zone": "PREMIUM",
     "asian_range": {
       "asian_high": 2250.51,
       "asian_low": 2238.48,
       "asian_sweep": "NONE"
     },
-    "xray_summary_fa": "ساختار بازگشت به میانگین رنج (+14) | حمایت ساختار ۴ ساعته (+6) | ناحیه گران‌فروشی Premium (+12) | تایید فشار اردربوک صرافی (+7)"
+    "xray_summary_fa": "ساختار بازگشت به میانگین رنج (+14) | حمایت ساختار ۴ ساعته (+6) | ناحیه گران‌فروشی Premium (+11) | حجم تراکنش بالاتر از میانگین (+8)"
   },
   "SOL": {
     "regime": "RANGING",
     "strategy": "LIQUIDITY_SWEEP_REVERSAL",
     "htf_bias": "BEARISH",
-    "adx": 17.01,
+    "adx": 16.99,
     "tradable": true,
     "current_price": 90.28,
     "candidate_side": "SHORT",
-    "confluence_score": 55.34,
+    "confluence_score": 50.58,
     "zone": "PREMIUM",
     "asian_range": {
       "asian_high": 90.66,
       "asian_low": 89.78,
       "asian_sweep": "NONE"
     },
-    "xray_summary_fa": "ساختار بازگشت به میانگین رنج (+14) | حمایت ساختار ۴ ساعته (+6) | حضور قیمت در ناحیه FVG دست‌نخورده (+18) | تایید فشار اردربوک صرافی (+6)"
+    "xray_summary_fa": "ساختار بازگشت به میانگین رنج (+14) | حمایت ساختار ۴ ساعته (+6) | حضور قیمت در ناحیه FVG دست‌نخورده (+18)"
   },
   "XRP": {
     "regime": "TRENDING_BEAR",
@@ -56,7 +56,7 @@
     "htf_bias": "BEARISH",
     "adx": 52.79,
     "tradable": true,
-    "current_price": 1.16178,
+    "current_price": 1.16313,
     "candidate_side": "SHORT",
     "confluence_score": 58.53,
     "zone": "DISCOUNT",
@@ -71,9 +71,9 @@
     "regime": "CHOPPY_NO_TRADE",
     "strategy": "NONE",
     "htf_bias": "BULLISH",
-    "adx": 20.99,
+    "adx": 20.83,
     "tradable": false,
-    "current_price": 4066.43,
+    "current_price": 4066.28,
     "candidate_side": "SHORT",
     "confluence_score": 0.0,
     "zone": "PREMIUM",
