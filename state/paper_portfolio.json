@@ -1,46 +1,14 @@
 {
   "version": "2.0",
-  "balance_usdt": 978.656,
+  "balance_usdt": 976.708,
   "initial_balance_usdt": 1000.0,
   "day_start_date": "2026-11-01",
   "day_start_equity": 1000.0,
-  "daily_pnl_usdt": -3.5548,
+  "daily_pnl_usdt": -5.5028,
   "daily_circuit_breaker": false,
   "consecutive_wins": 0,
   "consecutive_losses": 1,
-  "open_positions": [
-    {
-      "id": "POS-BTC-1411DA",
-      "coin": "BTC",
-      "side": "SHORT",
-      "order_type": "LIMIT",
-      "trigger_type": "5M_PINBAR",
-      "regime": "TRENDING_BEAR",
-      "confluence_score": 65.54,
-      "xray_summary_fa": "هم‌راستا با روند ۱ ساعته (+24) | حمایت ساختار ۴ ساعته (+6) | حضور قیمت در ناحیه FVG دست‌نخورده (+18) | ناحیه گران‌فروشی Premium (+12) | شکار نقدینگی سشن آسیا (+11)",
-      "slot_type": "STANDARD_SLOT",
-      "entry_price": 75956.664286,
-      "current_price": 76012.1,
-      "stop_loss": 76031.962143,
-      "initial_stop_loss": 76031.962143,
-      "stop_distance": 75.297857,
-      "tp1_breakeven": 75870.07175,
-      "tp2_final": 75617.82393,
-      "initial_qty": 0.01611,
-      "remaining_qty": 0.01611,
-      "initial_notional_usdt": 1223.63,
-      "remaining_notional_usdt": 1223.63,
-      "margin_used_usdt": 244.73,
-      "initial_risk_usdt": 1.21,
-      "tp1_hit": false,
-      "is_risk_free": false,
-      "trailing_active": false,
-      "realized_pnl_usdt": -0.2447,
-      "unrealized_pnl_usdt": -0.89,
-      "fees_paid_usdt": 0.2447,
-      "opened_at": "2026-11-07T00:15:44Z"
-    }
-  ],
+  "open_positions": [],
   "trade_history": [
     {
       "position_id": "POS-XRP-A9D2C9",
@@ -170,30 +138,35 @@
       "timestamp": "2026-11-07T00:15:44Z",
       "equity": 978.9,
       "event": "ETH_STOP_LOSS"
+    },
+    {
+      "timestamp": "2026-11-07T02:00:52Z",
+      "equity": 976.71,
+      "event": "BTC_STOP_LOSS"
     }
   ],
   "stats": {
-    "total_trades": 19,
+    "total_trades": 20,
     "wins": 6,
-    "losses": 13,
-    "win_rate_pct": 31.58,
+    "losses": 14,
+    "win_rate_pct": 30.0,
     "total_pnl_usdt": -4.8578,
     "max_drawdown_pct": 3.67,
     "consecutive_wins": 0,
-    "consecutive_losses": 1,
+    "consecutive_losses": 2,
     "peak_equity_usdt": 1004.44,
-    "total_fees_paid_usdt": 11.1709
+    "total_fees_paid_usdt": 11.9058
   },
   "last_updated": "2026-11-01T18:21:42Z",
   "daily_start_balance_usdt": 982.2108,
   "last_reset_date": "2026-11-07",
   "weekly_start_balance_usdt": 994.6689,
-  "weekly_pnl_usdt": -16.0129,
+  "weekly_pnl_usdt": -17.9609,
   "weekly_circuit_breaker": false,
   "last_reset_week": "2026-W45",
   "paper_gate_target": 50,
   "paper_gate_unlocked": false,
-  "updated_at": "2026-11-07T01:45:53Z",
+  "updated_at": "2026-11-07T02:00:53Z",
   "trading_mode": "PAPER",
   "closed_trades": [
     {
@@ -548,6 +521,24 @@
       "outcome": "LOSS",
       "opened_at": "2026-11-06T23:00:44Z",
       "closed_at": "2026-11-07T00:15:44Z"
+    },
+    {
+      "id": "POS-BTC-1411DA",
+      "coin": "BTC",
+      "side": "SHORT",
+      "regime": "TRENDING_BEAR",
+      "confluence_score": 65.54,
+      "entry_price": 75956.664286,
+      "exit_price": 76031.962143,
+      "exit_reason": "STOP_LOSS",
+      "tp1_hit": false,
+      "trailing_active": false,
+      "net_pnl_usdt": -2.19,
+      "r_multiple": -1.81,
+      "fees_paid_usdt": 0.9796,
+      "outcome": "LOSS",
+      "opened_at": "2026-11-07T00:15:44Z",
+      "closed_at": "2026-11-07T02:00:52Z"
     }
   ]
 }
