@@ -5,8 +5,8 @@
     "htf_bias": "BEARISH",
     "adx": 31.12,
     "tradable": false,
-    "current_price": 76143.0,
-    "candidate_side": "NONE",
+    "current_price": 76099.7,
+    "candidate_side": "SHORT",
     "confluence_score": 0.0,
     "zone": "PREMIUM",
     "asian_range": {
@@ -22,8 +22,8 @@
     "htf_bias": "BEARISH",
     "adx": 26.29,
     "tradable": false,
-    "current_price": 2247.51,
-    "candidate_side": "NONE",
+    "current_price": 2247.12,
+    "candidate_side": "SHORT",
     "confluence_score": 0.0,
     "zone": "PREMIUM",
     "asian_range": {
@@ -37,18 +37,18 @@
     "regime": "RANGING",
     "strategy": "LIQUIDITY_SWEEP_REVERSAL",
     "htf_bias": "BEARISH",
-    "adx": 14.66,
+    "adx": 14.68,
     "tradable": true,
-    "current_price": 90.14,
+    "current_price": 90.11,
     "candidate_side": "LONG",
-    "confluence_score": 44.28,
+    "confluence_score": 51.2,
     "zone": "DISCOUNT",
     "asian_range": {
       "asian_high": 90.66,
       "asian_low": 89.78,
       "asian_sweep": "NONE"
     },
-    "xray_summary_fa": "ساختار بازگشت به میانگین رنج (+14) | مجاورت با FVG معتبر (+16) | سشن Killzone فعال (+7)"
+    "xray_summary_fa": "ساختار بازگشت به میانگین رنج (+14) | حضور قیمت در ناحیه FVG دست‌نخورده (+18) | ناحیه ارزان‌فروشی Discount (+7) | سشن Killzone فعال (+7)"
   },
   "XRP": {
     "regime": "TRENDING_BEAR",
@@ -56,24 +56,24 @@
     "htf_bias": "BEARISH",
     "adx": 45.16,
     "tradable": true,
-    "current_price": 1.17229,
+    "current_price": 1.17415,
     "candidate_side": "SHORT",
-    "confluence_score": 63.6,
+    "confluence_score": 70.37,
     "zone": "PREMIUM",
     "asian_range": {
       "asian_high": 1.18263,
       "asian_low": 1.15193,
       "asian_sweep": "NONE"
     },
-    "xray_summary_fa": "هم‌راستا با روند ۱ ساعته (+24) | حمایت ساختار ۴ ساعته (+6) | مجاورت با FVG معتبر (+10) | ناحیه گران‌فروشی Premium (+8) | سشن Killzone فعال (+7)"
+    "xray_summary_fa": "هم‌راستا با روند ۱ ساعته (+24) | حمایت ساختار ۴ ساعته (+6) | حضور قیمت در ناحیه FVG دست‌نخورده (+18) | ناحیه گران‌فروشی Premium (+10) | سشن Killzone فعال (+7)"
   },
   "XAU": {
     "regime": "CHOPPY_NO_TRADE",
     "strategy": "NONE",
     "htf_bias": "BULLISH",
-    "adx": 15.51,
+    "adx": 15.11,
     "tradable": false,
-    "current_price": 4064.29,
+    "current_price": 4063.83,
     "candidate_side": "LONG",
     "confluence_score": 0.0,
     "zone": "DISCOUNT",
