@@ -5,7 +5,7 @@
     "htf_bias": "BEARISH",
     "adx": 26.75,
     "tradable": false,
-    "current_price": 75989.6,
+    "current_price": 75987.9,
     "candidate_side": "LONG",
     "confluence_score": 0.0,
     "zone": "DISCOUNT",
@@ -20,12 +20,12 @@
     "regime": "CHOPPY_NO_TRADE",
     "strategy": "NONE",
     "htf_bias": "BEARISH",
-    "adx": 21.15,
+    "adx": 21.09,
     "tradable": false,
-    "current_price": 2246.97,
-    "candidate_side": "NONE",
+    "current_price": 2245.94,
+    "candidate_side": "LONG",
     "confluence_score": 0.0,
-    "zone": "PREMIUM",
+    "zone": "EQUILIBRIUM",
     "asian_range": {
       "asian_high": 2250.51,
       "asian_low": 2238.48,
@@ -39,14 +39,14 @@
     "htf_bias": "BEARISH",
     "adx": 13.11,
     "tradable": false,
-    "current_price": 89.98,
+    "current_price": 89.95,
     "candidate_side": "LONG",
     "confluence_score": 0.0,
     "zone": "DISCOUNT",
     "asian_range": {
       "asian_high": 90.66,
       "asian_low": 89.78,
-      "asian_sweep": "ASIAN_LOW_SWEEP_BULL"
+      "asian_sweep": "NONE"
     },
     "xray_summary_fa": "بدون تاییدیه ساختاری کافی"
   },
@@ -56,24 +56,24 @@
     "htf_bias": "BEARISH",
     "adx": 41.57,
     "tradable": true,
-    "current_price": 1.17135,
+    "current_price": 1.1708,
     "candidate_side": "SHORT",
-    "confluence_score": 60.66,
+    "confluence_score": 58.55,
     "zone": "PREMIUM",
     "asian_range": {
       "asian_high": 1.18263,
       "asian_low": 1.15193,
       "asian_sweep": "NONE"
     },
-    "xray_summary_fa": "هم‌راستا با روند ۱ ساعته (+24) | حمایت ساختار ۴ ساعته (+6) | مجاورت با FVG معتبر (+10) | ناحیه گران‌فروشی Premium (+7) | سشن Killzone فعال (+7)"
+    "xray_summary_fa": "هم‌راستا با روند ۱ ساعته (+24) | حمایت ساختار ۴ ساعته (+6) | مجاورت با FVG معتبر (+9) | ناحیه گران‌فروشی Premium (+7) | سشن Killzone فعال (+7)"
   },
   "XAU": {
     "regime": "CHOPPY_NO_TRADE",
     "strategy": "NONE",
     "htf_bias": "BULLISH",
-    "adx": 23.43,
+    "adx": 23.47,
     "tradable": false,
-    "current_price": 4065.34,
+    "current_price": 4065.35,
     "candidate_side": "LONG",
     "confluence_score": 0.0,
     "zone": "DISCOUNT",
