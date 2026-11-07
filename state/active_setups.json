@@ -10,7 +10,7 @@
     "xray_summary_fa": "هم‌راستا با روند ۱ ساعته (+24) | حمایت ساختار ۴ ساعته (+6) | مجاورت با FVG معتبر (+16) | سشن Killzone فعال (+7)",
     "slot_type": "STANDARD_SLOT",
     "entry_price": 1.168385,
-    "current_price": 1.16221,
+    "current_price": 1.1597,
     "stop_loss": 1.166519,
     "initial_stop_loss": 1.172116,
     "stop_distance": 0.003731,
@@ -26,7 +26,7 @@
     "is_risk_free": true,
     "trailing_active": true,
     "realized_pnl_usdt": 1.7602,
-    "unrealized_pnl_usdt": 3.03,
+    "unrealized_pnl_usdt": 4.26,
     "fees_paid_usdt": 0.3432,
     "opened_at": "2026-11-07T12:15:51Z"
   }
