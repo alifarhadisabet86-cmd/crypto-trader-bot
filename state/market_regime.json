@@ -3,9 +3,9 @@
     "regime": "CHOPPY_NO_TRADE",
     "strategy": "NONE",
     "htf_bias": "BEARISH",
-    "adx": 30.7,
+    "adx": 30.72,
     "tradable": false,
-    "current_price": 75808.2,
+    "current_price": 75802.6,
     "candidate_side": "NONE",
     "confluence_score": 0.0,
     "zone": "DISCOUNT",
@@ -20,18 +20,18 @@
     "regime": "TRENDING_BEAR",
     "strategy": "SMC_TREND_CONTINUATION",
     "htf_bias": "BEARISH",
-    "adx": 26.37,
+    "adx": 26.55,
     "tradable": true,
-    "current_price": 2236.29,
+    "current_price": 2233.9,
     "candidate_side": "SHORT",
-    "confluence_score": 53.51,
+    "confluence_score": 43.28,
     "zone": "DISCOUNT",
     "asian_range": {
       "asian_high": 2250.51,
       "asian_low": 2238.48,
       "asian_sweep": "NONE"
     },
-    "xray_summary_fa": "هم‌راستا با روند ۱ ساعته (+21) | حمایت ساختار ۴ ساعته (+6) | مجاورت با FVG معتبر (+14) | تایید فشار اردربوک صرافی (+7) | سشن Killzone فعال (+7)"
+    "xray_summary_fa": "هم‌راستا با روند ۱ ساعته (+21) | حمایت ساختار ۴ ساعته (+6) | مجاورت با FVG معتبر (+8) | سشن Killzone فعال (+7)"
   },
   "SOL": {
     "regime": "TRENDING_BEAR",
@@ -39,16 +39,16 @@
     "htf_bias": "BEARISH",
     "adx": 20.88,
     "tradable": true,
-    "current_price": 89.76,
+    "current_price": 89.66,
     "candidate_side": "SHORT",
-    "confluence_score": 61.83,
-    "zone": "EQUILIBRIUM",
+    "confluence_score": 53.79,
+    "zone": "DISCOUNT",
     "asian_range": {
       "asian_high": 90.66,
       "asian_low": 89.78,
       "asian_sweep": "NONE"
     },
-    "xray_summary_fa": "هم‌راستا با روند ۱ ساعته (+20) | حمایت ساختار ۴ ساعته (+6) | مجاورت با FVG معتبر (+15) | سشن Killzone فعال (+7)"
+    "xray_summary_fa": "هم‌راستا با روند ۱ ساعته (+20) | حمایت ساختار ۴ ساعته (+6) | مجاورت با FVG معتبر (+10) | سشن Killzone فعال (+7)"
   },
   "XRP": {
     "regime": "TRENDING_BEAR",
@@ -56,10 +56,10 @@
     "htf_bias": "BEARISH",
     "adx": 41.64,
     "tradable": true,
-    "current_price": 1.1634,
+    "current_price": 1.16228,
     "candidate_side": "SHORT",
-    "confluence_score": 70.47,
-    "zone": "EQUILIBRIUM",
+    "confluence_score": 68.98,
+    "zone": "DISCOUNT",
     "asian_range": {
       "asian_high": 1.18263,
       "asian_low": 1.15193,
@@ -71,9 +71,9 @@
     "regime": "CHOPPY_NO_TRADE",
     "strategy": "NONE",
     "htf_bias": "BULLISH",
-    "adx": 23.11,
+    "adx": 23.17,
     "tradable": false,
-    "current_price": 4065.45,
+    "current_price": 4065.44,
     "candidate_side": "SHORT",
     "confluence_score": 0.0,
     "zone": "PREMIUM",
