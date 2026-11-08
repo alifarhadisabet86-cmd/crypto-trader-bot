@@ -20,7 +20,7 @@
       "xray_summary_fa": "هم‌راستا با روند ۱ ساعته (+24) | حمایت ساختار ۴ ساعته (+6) | ناحیه گران‌فروشی Premium (+7) | شکار نقدینگی سشن آسیا (+11) | تایید فشار اردربوک صرافی (+7) | سشن Killzone فعال (+7)",
       "slot_type": "STANDARD_SLOT",
       "entry_price": 1.163115,
-      "current_price": 1.16411,
+      "current_price": 1.16367,
       "stop_loss": 1.165929,
       "initial_stop_loss": 1.165929,
       "stop_distance": 0.002814,
@@ -36,7 +36,7 @@
       "is_risk_free": false,
       "trailing_active": false,
       "realized_pnl_usdt": -0.2455,
-      "unrealized_pnl_usdt": -1.05,
+      "unrealized_pnl_usdt": -0.59,
       "fees_paid_usdt": 0.2455,
       "opened_at": "2026-11-08T08:04:59Z"
     },
@@ -51,7 +51,7 @@
       "xray_summary_fa": "هم‌راستا با روند ۱ ساعته (+22) | حمایت ساختار ۴ ساعته (+6) | مجاورت با FVG معتبر (+16) | ناحیه گران‌فروشی Premium (+7) | شکار نقدینگی سشن آسیا (+11) | تایید فشار اردربوک صرافی (+7) | سشن Killzone فعال (+7)",
       "slot_type": "STANDARD_SLOT",
       "entry_price": 2237.516214,
-      "current_price": 2237.19,
+      "current_price": 2236.84,
       "stop_loss": 2239.418103,
       "initial_stop_loss": 2239.418103,
       "stop_distance": 1.901889,
@@ -67,7 +67,7 @@
       "is_risk_free": false,
       "trailing_active": false,
       "realized_pnl_usdt": -0.2454,
-      "unrealized_pnl_usdt": 0.18,
+      "unrealized_pnl_usdt": 0.37,
       "fees_paid_usdt": 0.2454,
       "opened_at": "2026-11-08T08:30:50Z"
     }
@@ -289,7 +289,7 @@
   "last_reset_week": "2026-W45",
   "paper_gate_target": 50,
   "paper_gate_unlocked": false,
-  "updated_at": "2026-11-08T09:45:43Z",
+  "updated_at": "2026-11-08T10:00:50Z",
   "trading_mode": "PAPER",
   "closed_trades": [
     {
