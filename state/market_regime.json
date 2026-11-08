@@ -5,9 +5,9 @@
     "htf_bias": "BEARISH",
     "adx": 20.34,
     "tradable": true,
-    "current_price": 75987.9,
+    "current_price": 75998.7,
     "candidate_side": "SHORT",
-    "confluence_score": 44.06,
+    "confluence_score": 44.38,
     "zone": "PREMIUM",
     "asian_range": {
       "asian_high": 75962.6,
@@ -22,7 +22,7 @@
     "htf_bias": "BEARISH",
     "adx": 24.23,
     "tradable": true,
-    "current_price": 2240.64,
+    "current_price": 2240.88,
     "candidate_side": "SHORT",
     "confluence_score": 50.89,
     "zone": "PREMIUM",
@@ -39,16 +39,16 @@
     "htf_bias": "BEARISH",
     "adx": 25.69,
     "tradable": true,
-    "current_price": 89.66,
+    "current_price": 89.68,
     "candidate_side": "SHORT",
-    "confluence_score": 58.75,
+    "confluence_score": 57.41,
     "zone": "PREMIUM",
     "asian_range": {
       "asian_high": 89.8,
       "asian_low": 88.83,
       "asian_sweep": "ASIAN_HIGH_SWEEP_BEAR"
     },
-    "xray_summary_fa": "ساختار بازگشت به میانگین رنج (+14) | حمایت ساختار ۴ ساعته (+6) | ناحیه گران‌فروشی Premium (+12) | شکار نقدینگی سشن آسیا (+11) | تایید فشار اردربوک صرافی (+5) | سشن Killzone فعال (+7)"
+    "xray_summary_fa": "ساختار بازگشت به میانگین رنج (+14) | حمایت ساختار ۴ ساعته (+6) | ناحیه گران‌فروشی Premium (+12) | شکار نقدینگی سشن آسیا (+11) | سشن Killzone فعال (+7)"
   },
   "XRP": {
     "regime": "RANGING",
@@ -56,24 +56,24 @@
     "htf_bias": "BEARISH",
     "adx": 35.26,
     "tradable": true,
-    "current_price": 1.16578,
+    "current_price": 1.16552,
     "candidate_side": "SHORT",
-    "confluence_score": 57.69,
+    "confluence_score": 62.99,
     "zone": "PREMIUM",
     "asian_range": {
       "asian_high": 1.1655,
       "asian_low": 1.15542,
       "asian_sweep": "NONE"
     },
-    "xray_summary_fa": "ساختار بازگشت به میانگین رنج (+14) | حمایت ساختار ۴ ساعته (+6) | ناحیه گران‌فروشی Premium (+12) | شکار نقدینگی و استاپ‌هانت ۱۵m (+12) | تایید فشار اردربوک صرافی (+7) | سشن Killzone فعال (+7)"
+    "xray_summary_fa": "ساختار بازگشت به میانگین رنج (+14) | حمایت ساختار ۴ ساعته (+6) | ناحیه گران‌فروشی Premium (+12) | شکار نقدینگی و استاپ‌هانت ۱۵m (+12) | حجم تراکنش بالاتر از میانگین (+6) | تایید فشار اردربوک صرافی (+7) | سشن Killzone فعال (+7)"
   },
   "XAU": {
     "regime": "CHOPPY_NO_TRADE",
     "strategy": "NONE",
     "htf_bias": "BULLISH",
-    "adx": 30.68,
+    "adx": 27.73,
     "tradable": false,
-    "current_price": 4057.03,
+    "current_price": 4058.38,
     "candidate_side": "NONE",
     "confluence_score": 0.0,
     "zone": "DISCOUNT",
