@@ -1,6 +1,6 @@
 """
-مهارت سوم (نسخه V2.5): اطلاعات بازار، تقویم اقتصادی فارکس، سنتیمنت، سشن‌ها و واگرایی SMT
-Institutional Trading Bot V2.5 - Market Intelligence & Economic Calendar Shield
+مهارت سوم (نسخه V2.6 Pro): اطلاعات بازار، تقویم اقتصادی فارکس، سنتیمنت، سشن‌ها، SMT و قطب‌نمای لیدر BTC
+Institutional Trading Bot V2.6 Pro - Market Intelligence, Economic Calendar Shield & BTC Lead-Lag Compass
 """
 
 from datetime import datetime, timezone
@@ -17,7 +17,7 @@ class MarketIntelSkill:
     1. شاخص ترس و طمع (Fear & Greed) با نوار گرافیکی ۱۰ تایی
     2. تقویم اقتصادی فارکس (فیلتر پیشگیرانه اخبار قرمز USD برای طلا و کریپتو)
     3. تشخیص سشن‌های معاملاتی (London / NY Killzones & Asian Session)
-    4. همبستگی پیرسون (Pearson Correlation) و واگرایی پول هوشمند (SMT Divergence)
+    4. همبستگی پیرسون (Pearson Correlation)، واگرایی SMT و قطب‌نمای مومنتوم لیدر BTC
     """
 
     def __init__(self, timeout_sec: int = 8) -> None:
@@ -225,7 +225,7 @@ class MarketIntelSkill:
         }
 
     # ==========================================================================
-    # ۴. محاسبه همبستگی پیرسون و تشخیص واگرایی پول هوشمند (SMT Divergence)
+    # ۴. محاسبه همبستگی پیرسون، واگرایی SMT و قطب‌نمای مومنتوم لیدر BTC
     # ==========================================================================
     def analyze_correlation_and_smt(
         self,
@@ -239,6 +239,8 @@ class MarketIntelSkill:
             "bullish_smt": False,
             "bearish_smt": False,
             "smt_score_bonus": 0.0,
+            "btc_ret_3_pct": 0.0,
+            "btc_impulse": "NEUTRAL",
         }
 
         if df_btc is None or df_eth is None:
@@ -251,6 +253,17 @@ class MarketIntelSkill:
 
         b_close = b_df["close"].astype(float).values
         e_close = e_df["close"].astype(float).values
+
+        # محاسبه بازده ۳ کندل اخیر ۱۵ دقیقه بیت‌کوین (قطب‌نمای لیدر بازار برای آلت‌کوین‌ها)
+        btc_ret_3_pct = 0.0
+        if len(b_close) >= 4 and b_close[-4] > 0:
+            btc_ret_3_pct = float(((b_close[-1] - b_close[-4]) / b_close[-4]) * 100.0)
+
+        btc_impulse = "NEUTRAL"
+        if btc_ret_3_pct <= -0.65:
+            btc_impulse = "STRONG_DUMP"
+        elif btc_ret_3_pct >= 0.65:
+            btc_impulse = "STRONG_PUMP"
 
         b_ret = pd.Series(b_close).pct_change().dropna().values
         e_ret = pd.Series(e_close).pct_change().dropna().values
@@ -294,4 +307,6 @@ class MarketIntelSkill:
             "bullish_smt": bool(bullish_smt),
             "bearish_smt": bool(bearish_smt),
             "smt_score_bonus": bonus,
+            "btc_ret_3_pct": round(btc_ret_3_pct, 3),
+            "btc_impulse": btc_impulse,
         }

@@ -1,8 +1,9 @@
 """
-مهارت هشتم (نسخه V2.5): نگهبان ریسک، مدارشکن روزانه ۲٪، مدارشکن هفتگی ۵٪ و سپر همبستگی
-Institutional Trading Bot V2.5 - Risk Guardian & Dual Circuit Breakers
+مهارت هشتم (نسخه V2.6 Pro): نگهبان ریسک، مدارشکن ۲٪/۵٪، کول‌داون ۶۰ دقیقه، سایزینگ با احتساب کارمزد و تخصیص Hot-Hand
+Institutional Trading Bot V2.6 Pro - Risk Guardian, Post-Trade Cooldown, Fee-Aware Sizing & Hot-Hand ML Allocation
 """
 
+from datetime import datetime, timezone
 from typing import Dict, Any, Optional
 import numpy as np
 
@@ -13,10 +14,10 @@ from core.slot_manager import can_open_new_position
 class RiskGuardianSkill:
     """
     کلاس نگهبان ریسک پرتفوی شامل:
-    - مدارشکن روزانه (Daily Circuit Breaker 2.0%)
-    - مدارشکن هفتگی (Weekly Circuit Breaker 5.0%)
-    - محاسبه درصد ریسک پویا بر اساس Win/Loss Streak و مد ریسک تلگرام
-    - بررسی قوانین ماتریس ۵ اسلات و سپر همبستگی
+    - مدارشکن روزانه (Daily Circuit Breaker 2.0%) و هفتگی (Weekly Circuit Breaker 5.0%)
+    - کول‌داون ۶۰ دقیقه‌ای پس از بسته شدن معامله هر ارز (جلوگیری از ورود مجدد در انتهای موج)
+    - تخصیص سرمایه هوشمند Hot-Hand / Cold-Coin بر اساس ضریب یادگیری ماشین هر ارز
+    - محاسبه حجم پوزیشن با کسر کارمزد رفت‌وبرگشت از بودجه ریسک (Fee-Aware Sizing)
     """
 
     def __init__(self) -> None:
@@ -27,6 +28,10 @@ class RiskGuardianSkill:
         self.loss_streak_risk_pct: float = float(RISK_CONFIG["LOSS_STREAK_RISK_PCT"])
         self.max_margin_per_trade_pct: float = float(RISK_CONFIG["MAX_MARGIN_USAGE_PER_TRADE_PCT"])
         self.default_leverage: int = int(RISK_CONFIG["DEFAULT_LEVERAGE"])
+        self.cooldown_minutes: int = int(RISK_CONFIG.get("TRADE_COOLDOWN_MINUTES", 60))
+        self.round_trip_fee_rate: float = float(
+            RISK_CONFIG.get("MAKER_FEE_RATE", 0.0002) + RISK_CONFIG.get("TAKER_FEE_RATE", 0.0006)
+        )
 
     # ==========================================================================
     # ۱. بررسی مدارشکن روزانه ۲٪ و مدارشکن هفتگی ۵٪
@@ -39,7 +44,6 @@ class RiskGuardianSkill:
         """
         بررسی همزمان افت سرمایه روزانه (سقف ۲٪) و هفتگی (سقف ۵٪).
         """
-        # الف) محاسبه افت روزانه
         daily_start = float(
             portfolio.get(
                 "daily_start_balance_usdt",
@@ -59,7 +63,6 @@ class RiskGuardianSkill:
         if daily_triggered:
             portfolio["daily_circuit_breaker"] = True
 
-        # ب) محاسبه افت هفتگی
         weekly_start = float(
             portfolio.get(
                 "weekly_start_balance_usdt",
@@ -100,13 +103,55 @@ class RiskGuardianSkill:
         }
 
     # ==========================================================================
-    # ۲. محاسبه درصد ریسک پویا
+    # ۲. بررسی کول‌داون ۶۰ دقیقه‌ای پس از بسته شدن معامله هر ارز
+    # ==========================================================================
+    def check_coin_cooldown(
+        self,
+        portfolio: Dict[str, Any],
+        coin: str,
+        now_utc: Optional[datetime] = None,
+    ) -> Dict[str, Any]:
+        """
+        جلوگیری از ورود مجدد بلافاصله پس از بسته شدن معامله روی همان ارز (حداقل ۶۰ دقیقه تنفس).
+        """
+        if now_utc is None:
+            now_utc = datetime.now(timezone.utc)
+
+        target_coin = str(coin).upper().strip()
+        closed_list = portfolio.get("closed_trades", portfolio.get("trade_history", []))
+        if not closed_list:
+            return {"in_cooldown": False, "minutes_since_close": 999.0}
+
+        for tr in reversed(closed_list):
+            if str(tr.get("coin", "")).upper().strip() != target_coin:
+                continue
+            closed_str = str(tr.get("closed_at", "")).strip()
+            if not closed_str:
+                continue
+            try:
+                closed_dt = datetime.fromisoformat(closed_str.replace("Z", "+00:00")).astimezone(timezone.utc)
+                elapsed_min = (now_utc - closed_dt).total_seconds() / 60.0
+                if 0.0 <= elapsed_min < float(self.cooldown_minutes):
+                    return {
+                        "in_cooldown": True,
+                        "minutes_since_close": round(elapsed_min, 1),
+                        "remaining_minutes": round(float(self.cooldown_minutes) - elapsed_min, 1),
+                    }
+                break
+            except Exception:
+                continue
+
+        return {"in_cooldown": False, "minutes_since_close": 999.0}
+
+    # ==========================================================================
+    # ۳. محاسبه درصد ریسک پویا + ضریب Hot-Hand / Cold-Coin یادگیری ماشین
     # ==========================================================================
     def compute_dynamic_risk_pct(
         self,
         portfolio: Dict[str, Any],
         bot_config: Optional[Dict[str, Any]] = None,
         size_multiplier: float = 1.0,
+        coin_multiplier: float = 1.0,
     ) -> Dict[str, Any]:
         stats = portfolio.get("stats", {})
         c_wins = int(stats.get("consecutive_wins", portfolio.get("consecutive_wins", 0)))
@@ -129,8 +174,17 @@ class RiskGuardianSkill:
         elif risk_mode == "HIGH":
             mode_mult = 1.25
 
+        # ضریب تخصیص سرمایه ستاره میدان (Hot-Hand) یا محافظت ارز سرد (Cold-Coin)
+        c_mult = float(coin_multiplier)
+        if c_mult < 0.90:
+            hot_hand_mult = 0.60
+        elif c_mult >= 1.03:
+            hot_hand_mult = 1.20
+        else:
+            hot_hand_mult = 1.00
+
         effective_risk_pct = float(
-            np.clip(base_pct * mode_mult * float(size_multiplier), 0.10, 1.20)
+            np.clip(base_pct * mode_mult * float(size_multiplier) * hot_hand_mult, 0.10, 1.20)
         )
 
         return {
@@ -139,11 +193,12 @@ class RiskGuardianSkill:
             "risk_mode": risk_mode,
             "mode_multiplier": mode_mult,
             "size_multiplier": round(float(size_multiplier), 2),
+            "hot_hand_multiplier": hot_hand_mult,
             "effective_risk_pct": round(effective_risk_pct, 4),
         }
 
     # ==========================================================================
-    # ۳. ارزیابی کامل مجوز ریسک و محاسبه حجم پوزیشن
+    # ۴. ارزیابی کامل مجوز ریسک و محاسبه حجم پوزیشن با احتساب کارمزد صرافی
     # ==========================================================================
     def evaluate_trade_risk(
         self,
@@ -156,6 +211,7 @@ class RiskGuardianSkill:
         size_multiplier: float = 1.0,
         bot_config: Optional[Dict[str, Any]] = None,
         unrealized_pnl_usdt: float = 0.0,
+        coin_multiplier: float = 1.0,
     ) -> Dict[str, Any]:
         cfg = bot_config or {}
 
@@ -167,6 +223,10 @@ class RiskGuardianSkill:
         cb_status = self.check_circuit_breaker(portfolio, unrealized_pnl_usdt)
         if cb_status["locked"]:
             return self._reject(cb_status["reason"], cb_status)
+
+        cooldown_status = self.check_coin_cooldown(portfolio, coin)
+        if cooldown_status["in_cooldown"]:
+            return self._reject("COIN_COOLDOWN_ACTIVE_60M", cooldown_status)
 
         open_positions = portfolio.get("open_positions", [])
         slot_check = can_open_new_position(
@@ -188,12 +248,14 @@ class RiskGuardianSkill:
         if balance <= 10.0:
             return self._reject("INSUFFICIENT_BALANCE")
 
-        risk_info = self.compute_dynamic_risk_pct(portfolio, cfg, size_multiplier)
+        risk_info = self.compute_dynamic_risk_pct(portfolio, cfg, size_multiplier, coin_multiplier)
         effective_risk_pct = risk_info["effective_risk_pct"]
         risk_amount_usdt = balance * (effective_risk_pct / 100.0)
 
+        # لحاظ کردن کارمزد رفت‌وبرگشت در فاصله استاپ تا کل ضرر (قیمت + کارمزد) از 1.0R تجاوز نکند
         stop_dist_pct = stop_dist / entry
-        raw_notional_usdt = risk_amount_usdt / stop_dist_pct
+        effective_loss_pct = stop_dist_pct + self.round_trip_fee_rate
+        raw_notional_usdt = risk_amount_usdt / effective_loss_pct
 
         leverage = self.default_leverage
         max_margin_usdt = balance * (self.max_margin_per_trade_pct / 100.0)
@@ -202,7 +264,7 @@ class RiskGuardianSkill:
         capped_by_margin = False
         if raw_notional_usdt > max_notional_usdt:
             notional_usdt = max_notional_usdt
-            risk_amount_usdt = notional_usdt * stop_dist_pct
+            risk_amount_usdt = notional_usdt * effective_loss_pct
             capped_by_margin = True
         else:
             notional_usdt = raw_notional_usdt
@@ -224,6 +286,7 @@ class RiskGuardianSkill:
             "qty": round(qty, 6),
             "capped_by_margin": capped_by_margin,
             "streak_state": risk_info["streak_state"],
+            "hot_hand_multiplier": risk_info["hot_hand_multiplier"],
             "daily_drawdown_pct": cb_status["daily_drawdown_pct"],
             "weekly_drawdown_pct": cb_status["weekly_drawdown_pct"],
             "reason": "APPROVED",
@@ -252,6 +315,7 @@ class RiskGuardianSkill:
             size_multiplier=float(conf.get("size_multiplier", 1.0)),
             bot_config=bot_config,
             unrealized_pnl_usdt=unrealized_pnl_usdt,
+            coin_multiplier=float(conf.get("coin_multiplier", 1.0)),
         )
 
     @staticmethod

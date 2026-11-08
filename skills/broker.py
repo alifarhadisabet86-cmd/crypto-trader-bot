@@ -1,6 +1,6 @@
 """
-مهارت دهم (نسخه V2.5): اجرای سفارشات، گارد اسپرد ۵٪، تریلینگ استاپ ساختاری و اکشن‌های فوری تلگرام
-Institutional Trading Bot V2.5 - Broker Execution, Structural Trailing Stop & Quick Actions
+مهارت دهم (نسخه V2.6 Pro): اجرای سفارشات، گارد اسپرد ۵٪، قفل سود ۳ پله‌ای با حفظ ۱۰۰٪ حجم در TP1 و اکشن‌های فوری تلگرام
+Institutional Trading Bot V2.6 Pro - Broker Execution, 3-Stage Full-Volume Profit Lock & Quick Actions
 """
 
 from datetime import datetime, timezone
@@ -9,22 +9,25 @@ import uuid
 
 import pandas as pd
 
-from core.config import RISK_CONFIG
+from core.config import RISK_CONFIG, EXCHANGE_CONFIG
 
 
 class BrokerExecutionSkill:
     """
     کلاس مدیریت چرخه حیات پوزیشن‌ها در پرتفوی شامل:
     - گارد اسپرد ۵٪ و باز کردن پوزیشن با کارمزد Maker (0.02%)
-    - مدیریت خودکار TP1 (50% Partial Close + Break-Even)
-    - تریلینگ استاپ ساختاری (Structural Trailing Stop) پس از عبور از 1.6R
-    - اکشن‌های فوری تلگرام: ریسک‌فری سریع (Instant Break-Even) و سیو سود پله‌ای ۵۰٪
+    - قفل سود ۳ پله‌ای با حفظ ۱۰۰٪ حجم پوزیشن:
+      * پله ۱ (لمس TP1 در 1.15R): حفظ ۱۰۰٪ حجم + انتقال استاپ به Entry + 0.25R (پوشش کامل کارمزد + سود اولیه)
+      * پله ۲ (عبور از 1.60R): انتقال استاپ ۱۰۰٪ پوزیشن به روی خط TP1 (1.15R) یا پشت سوئینگ ۱۵ دقیقه
+      * پله ۳ (رسیدن به ۸۰٪ مسیر TP2): قفل استاپ روی ۷۰٪ مسیر TP2 برای جلوگیری از بازگشت سود در لحظه آخر
+    - اکشن‌های فوری تلگرام: ریسک‌فری سریع و سیو سود پله‌ای دستی ۵۰٪
     """
 
     def __init__(self) -> None:
         self.maker_fee: float = float(RISK_CONFIG["MAKER_FEE_RATE"])
         self.taker_fee: float = float(RISK_CONFIG["TAKER_FEE_RATE"])
         self.max_spread_ratio: float = float(RISK_CONFIG["MAX_SPREAD_TO_TP_RATIO"])
+        self.tp1_lock_offset_r: float = float(EXCHANGE_CONFIG.get("TP1_LOCK_OFFSET_R", 0.25))
 
     @staticmethod
     def _now_utc_iso() -> str:
@@ -137,7 +140,7 @@ class BrokerExecutionSkill:
         return {"opened": True, "position": position_obj, "reason": "OK"}
 
     # ==========================================================================
-    # ۳. مدیریت پوزیشن‌های باز + تریلینگ استاپ ساختاری (بدون خروج زمانی)
+    # ۳. مدیریت پوزیشن‌های باز + قفل سود ۳ پله‌ای (بدون فروش حجم در TP1)
     # ==========================================================================
     def update_open_positions(
         self,
@@ -192,7 +195,7 @@ class BrokerExecutionSkill:
                 events.append({"type": reason, "coin": coin, "side": side, "trade": closed_record})
                 continue
 
-            # ۲. بررسی برخورد با تارگت اول (TP1: بستن ۵۰٪ حجم + انتقال استاپ به نقطه ورود)
+            # ۲. بررسی برخورد با تارگت اول (پله ۱: حفظ ۱۰۰٪ حجم + انتقال استاپ به Entry + 0.25R)
             if not pos.get("tp1_hit", False):
                 tp1_reached = (side == "LONG" and c_high >= tp1) or (
                     side == "SHORT" and c_low <= tp1
@@ -207,9 +210,9 @@ class BrokerExecutionSkill:
                     })
                     rem_qty = float(pos["remaining_qty"])
 
-            # ۳. بررسی تریلینگ استاپ ساختاری (Structural Trailing Stop پس از ریسک‌فری شدن)
+            # ۳. بررسی تریلینگ استاپ پله ۲ (در 1.60R قفل روی TP1) و پله ۳ (در 80% مسیر TP2 قفل روی 70% سود)
             if (pos.get("is_risk_free", False) or pos.get("risk_free", False)) and len(df) >= 6:
-                trail_event = self._apply_structural_trailing_stop(pos, df, c_close)
+                trail_event = self._apply_structural_trailing_stop(pos, df, c_close, c_high, c_low)
                 if trail_event is not None:
                     events.append(trail_event)
 
@@ -248,29 +251,47 @@ class BrokerExecutionSkill:
         }
 
     def _apply_structural_trailing_stop(
-        self, pos: Dict[str, Any], df_15m: pd.DataFrame, current_price: float
+        self,
+        pos: Dict[str, Any],
+        df_15m: pd.DataFrame,
+        current_price: float,
+        candle_high: Optional[float] = None,
+        candle_low: Optional[float] = None,
     ) -> Optional[Dict[str, Any]]:
         """
-        تریلینگ استاپ ساختاری بر اساس آخرین سوئینگ ۱۵ دقیقه:
-        وقتی قیمت بیش از 1.6R در سود حرکت کند، استاپ را از نقطه ورود به پشت آخرین کف/سقف
-        ۵ کندل اخیر ارتقا می‌دهد تا سود قفل شود.
+        تریلینگ استاپ هوشمند دوپله‌ای پس از ریسک‌فری شدن:
+        - پله ۲: وقتی قیمت به 1.60R رسید، استاپِ کل ۱۰۰٪ پوزیشن مستقیماً روی خط TP1 (1.15R) یا پشت سوئینگ ۱۵ دقیقه قفل می‌شود.
+        - پله ۳: وقتی قیمت به ۸۰٪ فاصله تا TP2 رسید، استاپ روی ۷۰٪ فاصله تا TP2 چسبانده می‌شود تا سود بزرگ از دست نرود.
         """
         side = pos["side"]
         entry = float(pos["entry_price"])
         curr_sl = float(pos.get("stop_loss", entry))
+        tp1 = float(pos.get("tp1_breakeven", entry))
+        tp2 = float(pos.get("tp2_final", entry))
         stop_dist = max(float(pos.get("stop_distance", abs(entry - float(pos.get("initial_stop_loss", entry))))), 1e-8)
+        tp2_dist = max(abs(tp2 - entry), stop_dist)
 
         recent_5 = df_15m.iloc[-6:-1]
         if recent_5.empty:
             return None
 
+        best_high = max(float(candle_high or current_price), current_price)
+        best_low = min(float(candle_low or current_price), current_price)
+
         if side == "LONG":
-            current_r = (current_price - entry) / stop_dist
-            if current_r >= 1.60:
+            peak_r = (best_high - entry) / stop_dist
+            tp2_progress = (best_high - entry) / tp2_dist
+            if peak_r >= 1.60:
                 swing_low = float(recent_5["low"].min())
-                min_locked_sl = entry + (0.50 * stop_dist)
+                # در پله ۲، کف استاپ دقیقاً روی TP1 (1.15R) قرار می‌گیرد
+                min_locked_sl = max(tp1, entry + (1.15 * stop_dist))
+                # در پله ۳ (رسیدن به ۸۰٪ مسیر TP2)، کف استاپ به ۷۰٪ مسیر TP2 ارتقا می‌یابد
+                if tp2_progress >= 0.80:
+                    min_locked_sl = max(min_locked_sl, entry + (0.70 * tp2_dist))
                 candidate_sl = max(swing_low, min_locked_sl)
-                if candidate_sl > curr_sl + (0.10 * stop_dist) and candidate_sl < current_price:
+                if candidate_sl >= current_price:
+                    candidate_sl = min_locked_sl
+                if candidate_sl > curr_sl + (0.05 * stop_dist) and candidate_sl < current_price:
                     old_sl = curr_sl
                     pos["stop_loss"] = round(candidate_sl, 6)
                     pos["trailing_active"] = True
@@ -282,12 +303,19 @@ class BrokerExecutionSkill:
                         "new_sl": pos["stop_loss"],
                     }
         else:
-            current_r = (entry - current_price) / stop_dist
-            if current_r >= 1.60:
+            peak_r = (entry - best_low) / stop_dist
+            tp2_progress = (entry - best_low) / tp2_dist
+            if peak_r >= 1.60:
                 swing_high = float(recent_5["high"].max())
-                min_locked_sl = entry - (0.50 * stop_dist)
+                # در پله ۲، سقف استاپ شورت دقیقاً روی TP1 (1.15R) قرار می‌گیرد
+                min_locked_sl = min(tp1, entry - (1.15 * stop_dist))
+                # در پله ۳ (رسیدن به ۸۰٪ مسیر TP2)، استاپ به ۷۰٪ مسیر TP2 نزدیک می‌شود
+                if tp2_progress >= 0.80:
+                    min_locked_sl = min(min_locked_sl, entry - (0.70 * tp2_dist))
                 candidate_sl = min(swing_high, min_locked_sl)
-                if candidate_sl < curr_sl - (0.10 * stop_dist) and candidate_sl > current_price:
+                if candidate_sl <= current_price:
+                    candidate_sl = min_locked_sl
+                if candidate_sl < curr_sl - (0.05 * stop_dist) and candidate_sl > current_price:
                     old_sl = curr_sl
                     pos["stop_loss"] = round(candidate_sl, 6)
                     pos["trailing_active"] = True
@@ -347,7 +375,7 @@ class BrokerExecutionSkill:
         live_prices: Optional[Dict[str, float]] = None,
     ) -> Dict[str, Any]:
         """
-        مخصوص دکمه [ 💰 سیو سود پله‌ای (۵۰٪) ]:
+        مخصوص دکمه دستی [ 💰 سیو سود پله‌ای (۵۰٪) ]:
         نقد کردن فوری ۵۰٪ از حجم تمام پوزیشن‌های در سود روی قیمت فعلی بازار،
         افزودن سود قطعی به موجودی حساب، و ریسک‌فری کردن ۵۰٪ باقی‌مانده.
         """
@@ -390,7 +418,6 @@ class BrokerExecutionSkill:
             pos["fees_paid_usdt"] = round(float(pos.get("fees_paid_usdt", pos.get("entry_fee_usdt", 0.0))) + fee_usdt, 4)
             pos["unrealized_pnl_usdt"] = round(raw_u_pnl * (1.0 - fraction), 2)
 
-            # همزمان استاپ نیمه باقی‌مانده را ریسک‌فری می‌کنیم
             pos["stop_loss"] = round(entry, 6)
             pos["is_risk_free"] = True
             pos["tp1_hit"] = True
@@ -429,41 +456,30 @@ class BrokerExecutionSkill:
     def _execute_partial_tp1(
         self, portfolio: Dict[str, Any], pos: Dict[str, Any], tp1_price: float
     ) -> Dict[str, Any]:
+        """
+        پله اول قفل سود هنگام لمس TP1 (1.15R):
+        بدون فروش هیچ حجمی (نگهداری ۱۰۰٪ حجم برای سود بزرگ تا TP2)،
+        استاپ‌لاس به نقطه Entry + 0.25R منتقل می‌شود تا کارمزد صرافی + سود اولیه تضمین گردد.
+        """
         side = pos["side"]
         entry = float(pos["entry_price"])
-        rem_qty = float(pos.get("remaining_qty", pos.get("remaining_quantity", 0.0)))
-        close_qty = rem_qty * 0.50
-        left_qty = rem_qty - close_qty
+        stop_dist = max(float(pos.get("stop_distance", abs(entry - float(pos.get("initial_stop_loss", entry))))), 1e-8)
+        lock_offset = self.tp1_lock_offset_r * stop_dist
 
         if side == "LONG":
-            gross_pnl = (tp1_price - entry) * close_qty
+            new_sl = round(entry + lock_offset, 6)
         else:
-            gross_pnl = (entry - tp1_price) * close_qty
+            new_sl = round(entry - lock_offset, 6)
 
-        exit_notional = close_qty * tp1_price
-        fee_usdt = exit_notional * self.maker_fee
-        net_partial_pnl = gross_pnl - fee_usdt
-
-        portfolio["balance_usdt"] = round(float(portfolio["balance_usdt"]) + net_partial_pnl, 4)
-        portfolio["daily_pnl_usdt"] = round(float(portfolio.get("daily_pnl_usdt", 0.0)) + net_partial_pnl, 4)
-        portfolio["weekly_pnl_usdt"] = round(float(portfolio.get("weekly_pnl_usdt", 0.0)) + net_partial_pnl, 4)
-        portfolio["stats"]["total_fees_paid_usdt"] = round(
-            float(portfolio["stats"].get("total_fees_paid_usdt", 0.0)) + fee_usdt, 4
-        )
-
-        pos["remaining_qty"] = round(left_qty, 6)
-        pos["remaining_notional_usdt"] = round(left_qty * entry, 2)
-        pos["margin_used_usdt"] = round(float(pos.get("margin_used_usdt", 0.0)) * 0.50, 2)
-        pos["realized_pnl_usdt"] = round(float(pos.get("realized_pnl_usdt", pos.get("realized_partial_pnl", 0.0))) + net_partial_pnl, 4)
-        pos["fees_paid_usdt"] = round(float(pos.get("fees_paid_usdt", pos.get("entry_fee_usdt", 0.0))) + fee_usdt, 4)
         pos["tp1_hit"] = True
         pos["is_risk_free"] = True
-        pos["stop_loss"] = round(entry, 6)
+        pos["stop_loss"] = new_sl
 
         return {
-            "closed_qty": round(close_qty, 6),
-            "net_partial_pnl_usdt": round(net_partial_pnl, 2),
+            "closed_qty": 0.0,
+            "net_partial_pnl_usdt": 0.0,
             "new_stop_loss": pos["stop_loss"],
+            "locked_r": self.tp1_lock_offset_r,
         }
 
     def _execute_full_close(

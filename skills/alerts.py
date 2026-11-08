@@ -195,7 +195,7 @@ class TelegramAlertsSkill:
         # رسم خطوط ورود، استاپ، TP1 و TP2
         ax.axhline(entry_price, color="#58a6ff", linestyle="--", linewidth=1.5, label=f"LIMIT ENTRY: {format_price(entry_price, clean_coin)}")
         ax.axhline(stop_loss, color="#f85149", linestyle="-", linewidth=1.6, label=f"STOP LOSS: {format_price(stop_loss, clean_coin)}")
-        ax.axhline(tp1_price, color="#d29922", linestyle="-.", linewidth=1.4, label=f"TP1 (50% + Risk-Free): {format_price(tp1_price, clean_coin)}")
+        ax.axhline(tp1_price, color="#d29922", linestyle="-.", linewidth=1.4, label=f"TP1 (100% Vol Lock +0.25R): {format_price(tp1_price, clean_coin)}")
         ax.axhline(tp2_price, color="#3fb950", linestyle="-", linewidth=1.7, label=f"TP2 (Final Target): {format_price(tp2_price, clean_coin)}")
 
         symbol_str = WATCHLIST.get(clean_coin, {}).get("symbol", f"{clean_coin}/USDT")

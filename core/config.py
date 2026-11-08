@@ -1,6 +1,6 @@
 """
-تنظیمات مرکزی، واچ‌لیست، مدیریت ریسک، دروازه ۵۰ معامله و فرمت‌بندی قیمت‌ها (Core Configuration V2.5)
-Institutional Trading Bot V2.5 - Centralized Configuration
+تنظیمات مرکزی، واچ‌لیست، مدیریت ریسک، دروازه ۵۰ معامله و فرمت‌بندی قیمت‌ها (Core Configuration V2.6 Pro)
+Institutional Trading Bot V2.6 Pro - Centralized Configuration
 """
 
 import os
@@ -82,8 +82,10 @@ EXCHANGE_CONFIG: Dict[str, Any] = {
     "SL_MIN_ATR_MULT": 0.85,
     "SL_MAX_ATR_MULT": 2.20,
     "SL_BUFFER_ATR_MULT": 0.20,
+    "MIN_SL_PCT": 0.0035,
     "TP1_R_MULTIPLE": 1.15,
-    "TP1_CLOSE_PCT": 0.50,
+    "TP1_CLOSE_PCT": 0.0,
+    "TP1_LOCK_OFFSET_R": 0.25,
     "MIN_RR_RANGING": 1.75,
     "MIN_RR_TRENDING": 2.30,
 }
@@ -98,7 +100,8 @@ RISK_CONFIG: Dict[str, Any] = {
     "MAX_CORRELATED_ALTS": 3,
     "STANDARD_SLOTS": 3,
     "GOLDEN_SLOTS_MIN_SCORE": 80.0,
-    "MIN_CONFLUENCE_SCORE": 65.0,
+    "MIN_CONFLUENCE_SCORE": 68.0,
+    "TRADE_COOLDOWN_MINUTES": 60,
     "BASE_RISK_PCT": 0.50,
     "WIN_STREAK_RISK_PCT": 0.80,
     "LOSS_STREAK_RISK_PCT": 0.25,
@@ -121,7 +124,7 @@ TIMEMACHINE_CONFIG: Dict[str, Any] = {
     "MONTE_CARLO_PATHS": 1000,
     "MONTE_CARLO_HORIZON_CANDLES": 16,
     "MIN_MONTE_CARLO_WINRATE": 42.0,
-    "MIN_CONFLUENCE_SCORE": 65.0,
+    "MIN_CONFLUENCE_SCORE": 68.0,
     "GOLDEN_CONFLUENCE_SCORE": 80.0,
     "SNIPER_LIMIT_MIN_SCORE": 75.0,
 }

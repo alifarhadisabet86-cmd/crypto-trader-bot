@@ -1,6 +1,6 @@
 """
-مهارت ششم (نسخه V2.5 Pro): طراحی نقشه خروج، استاپ ساختاری + بافر 0.20*ATR و تارگت دوگانه (TP1/TP2)
-Institutional Trading Bot V2.5 - Structural Stop-Loss & Dual-Target Planner
+مهارت ششم (نسخه V2.6 Pro): طراحی نقشه خروج، استاپ ساختاری (حداقل 0.35%) و تارگت مغناطیسی نقدینگی
+Institutional Trading Bot V2.6 Pro - Structural Stop-Loss & Magnetic Liquidity Target Planner
 """
 
 from typing import Dict, Any, Optional, List
@@ -12,8 +12,9 @@ from core.config import EXCHANGE_CONFIG
 class ExitPlannerSkill:
     """
     کلاس محاسبه حد ضرر ساختاری (پشت شدوی استاپ‌هانت یا مرز بیرونی FVG + بافر 0.20*ATR_15m)
-    کلمپ‌شده بین [0.85*ATR, 2.20*ATR]، تارگت اول (TP1 در 1.15R برای بستن ۵۰٪ حجم و ریسک‌فری)
-    و تارگت دوم (TP2 بر اساس استخر نقدینگی با حداقل R:R 1.75 در رنج و 2.30 در روند).
+    با کف حداقل 0.35% فاصله قیمتی (برای جلوگیری از حجم کاذب و کارمزد سنگین)،
+    تارگت اول (TP1 در 1.15R برای قفل سود پله اول بدون فروش حجم)
+    و تارگت دوم مغناطیسی (TP2 کمی جلوتر از استخر نقدینگی مقابل).
     """
 
     def __init__(self) -> None:
@@ -21,8 +22,9 @@ class ExitPlannerSkill:
         self.sl_buffer_atr_mult: float = float(EXCHANGE_CONFIG.get("SL_BUFFER_ATR_MULT", 0.20))
         self.min_sl_atr_mult: float = float(EXCHANGE_CONFIG.get("SL_MIN_ATR_MULT", 0.85))
         self.max_sl_atr_mult: float = float(EXCHANGE_CONFIG.get("SL_MAX_ATR_MULT", 2.20))
+        self.min_sl_pct: float = float(EXCHANGE_CONFIG.get("MIN_SL_PCT", 0.0035))
         self.tp1_rr_ratio: float = float(EXCHANGE_CONFIG.get("TP1_R_MULTIPLE", 1.15))
-        self.tp1_close_pct: float = float(EXCHANGE_CONFIG.get("TP1_CLOSE_PCT", 0.50))
+        self.tp1_close_pct: float = float(EXCHANGE_CONFIG.get("TP1_CLOSE_PCT", 0.0))
         self.min_tp2_rr_ranging: float = float(EXCHANGE_CONFIG.get("MIN_RR_RANGING", 1.75))
         self.min_tp2_rr_trending: float = float(EXCHANGE_CONFIG.get("MIN_RR_TRENDING", 2.30))
 
@@ -79,13 +81,13 @@ class ExitPlannerSkill:
             or 0.0
         )
 
-        min_sl_dist = self.min_sl_atr_mult * atr
-        max_sl_dist = self.max_sl_atr_mult * atr
+        # تضمین حداقل فاصله استاپ 0.35% برای جلوگیری از پوزیشن‌های غول‌پیکر و کارمزدخوار
+        min_sl_dist = max(self.min_sl_atr_mult * atr, entry * self.min_sl_pct)
+        max_sl_dist = max(self.max_sl_atr_mult * atr, min_sl_dist * 1.35)
         buffer_dist = self.sl_buffer_atr_mult * atr
 
         # ======================================================================
         # ۱. محاسبه حد ضرر ساختاری (پشت شدوی استاپ‌هانت یا مرز بیرونی باکس FVG + 0.20*ATR)
-        #    و کلمپ در بازه [0.85 * ATR, 2.20 * ATR]
         # ======================================================================
         if clean_side == "LONG":
             structural_candidates: List[float] = []
@@ -130,7 +132,7 @@ class ExitPlannerSkill:
         sl_dist = max(abs(entry - stop_loss), 1e-8)
 
         # ======================================================================
-        # ۲. محاسبه تارگت اول (TP1: سیو سود ۵۰٪ و انتقال استاپ به نقطه ورود در 1.15R)
+        # ۲. محاسبه تارگت اول (TP1 در 1.15R: نقطه فعال‌سازی قفل ریسک‌فری +0.25R بدون فروش حجم)
         # ======================================================================
         tp1_dist = self.tp1_rr_ratio * sl_dist
         if clean_side == "LONG":
@@ -139,19 +141,22 @@ class ExitPlannerSkill:
             tp1_breakeven = round(entry - tp1_dist, 6)
 
         # ======================================================================
-        # ۳. محاسبه تارگت دوم (TP2: استخر نقدینگی با تضمین حداقل R:R رژیم بازار)
+        # ۳. محاسبه تارگت دوم مغناطیسی (Magnetic Liquidity TP2):
+        #    قرار دادن TP2 به اندازه ۵٪ جلوتر از استخر نقدینگی مقابل تا قبل از برگشت نهنگ‌ها پر شود
         # ======================================================================
         is_trending = regime_name in ("TRENDING_BULL", "TRENDING_BEAR")
         min_tp2_rr = self.min_tp2_rr_trending if is_trending else self.min_tp2_rr_ranging
         min_tp2_dist = min_tp2_rr * sl_dist
 
         if clean_side == "LONG":
-            pool_dist = (high_pool - entry) if high_pool > entry else 0.0
-            tp2_dist = max(min_tp2_dist, min(pool_dist, 4.5 * sl_dist))
+            raw_pool_dist = (high_pool - entry) if high_pool > entry else 0.0
+            magnetic_pool_dist = raw_pool_dist * 0.95
+            tp2_dist = max(min_tp2_dist, min(magnetic_pool_dist, 4.2 * sl_dist))
             tp2_final = round(entry + tp2_dist, 6)
         else:
-            pool_dist = (entry - low_pool) if (0.0 < low_pool < entry) else 0.0
-            tp2_dist = max(min_tp2_dist, min(pool_dist, 4.5 * sl_dist))
+            raw_pool_dist = (entry - low_pool) if (0.0 < low_pool < entry) else 0.0
+            magnetic_pool_dist = raw_pool_dist * 0.95
+            tp2_dist = max(min_tp2_dist, min(magnetic_pool_dist, 4.2 * sl_dist))
             tp2_final = round(entry - tp2_dist, 6)
 
         rr_tp1 = round(abs(tp1_breakeven - entry) / sl_dist, 2)

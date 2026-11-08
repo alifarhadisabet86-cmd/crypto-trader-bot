@@ -1,8 +1,8 @@
-name: Institutional Trading Bot V2.5 (15m Cloud Cycle)
+name: Institutional Trading Bot V2.6 Pro (10m Cloud Cycle)
 
 on:
   schedule:
-    - cron: "*/15 * * * *"
+    - cron: "*/10 * * * *"
   workflow_dispatch:
     inputs:
       analyze_coin:
@@ -18,7 +18,7 @@ permissions:
   contents: write
 
 concurrency:
-  group: institutional-trading-bot-v2-${{ github.event.inputs.telegram_command || github.event.inputs.analyze_coin || '15m-cycle' }}
+  group: institutional-trading-bot-v2-${{ github.event.inputs.telegram_command || github.event.inputs.analyze_coin || '10m-cycle' }}
   cancel-in-progress: false
 
 jobs:
@@ -43,7 +43,7 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
-      - name: 4. Run Institutional 15m Cycle (V2.5 Pro)
+      - name: 4. Run Institutional 10m Cycle (V2.6 Pro)
         env:
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
@@ -54,13 +54,13 @@ jobs:
 
       - name: 5. Commit & Push Updated State Files
         run: |
-          git config user.name "Institutional-Bot-V2.5"
-          git config user.email "bot-v2.5@institutional-quant.local"
+          git config user.name "Institutional-Bot-V2.6"
+          git config user.email "bot-v2.6@institutional-quant.local"
           git add state/*.json
           if git diff --staged --quiet; then
             echo "No state changes to commit."
           else
-            git commit -m "chore(state): update V2.5 portfolio & radar [skip ci]"
+            git commit -m "chore(state): update V2.6 portfolio & radar [skip ci]"
             git pull --rebase origin main || true
             git push origin HEAD:main
           fi

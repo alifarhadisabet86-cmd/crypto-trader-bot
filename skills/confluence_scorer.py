@@ -1,6 +1,6 @@
 """
-مهارت چهارم (نسخه V2.5 Pro): موتور امتیازدهی فازی ۰ تا ۱۰۰ به همراه دلایل فارسی X-Ray
-Institutional Trading Bot V2.5 - Fuzzy Confluence Scorer & X-Ray Breakdown
+مهارت چهارم (نسخه V2.6 Pro): موتور امتیازدهی فازی ۰ تا ۱۰۰ به همراه دلایل فارسی X-Ray و قطب‌نمای لیدر BTC
+Institutional Trading Bot V2.6 Pro - Fuzzy Confluence Scorer, BTC Lead-Lag Filter & X-Ray Breakdown
 """
 
 from typing import Dict, Any, List, Optional
@@ -35,6 +35,7 @@ class ConfluenceScorerSkill:
             return self._build_result(0.0, 0.0, 1.0, 1.0, {}, [], "NON_TRADABLE_OR_NO_SIDE")
 
         xray_reasons: List[str] = []
+        coin_key = str(coin).upper().strip()
 
         # ۱. امتیاز هم‌راستایی رژیم و روند (حداکثر ۳۰ امتیاز)
         regime_score = self._score_regime_alignment(side, regime_data, xray_reasons)
@@ -45,9 +46,9 @@ class ConfluenceScorerSkill:
         # ۳. امتیاز نقدینگی و شکار استاپ + حجم (حداکثر ۲۰ امتیاز)
         liquidity_score = self._score_liquidity_and_volume(side, scan_data, xray_reasons)
 
-        # ۴. امتیاز جریان سفارشات، سشن Killzone و واگرایی SMT (حداکثر ۲۰ امتیاز)
+        # ۴. امتیاز جریان سفارشات، سشن Killzone، واگرایی SMT و قطب‌نمای لیدر BTC (حداکثر ۲۰ امتیاز)
         flow_score = self._score_orderflow_and_intel(
-            side, orderbook_data or {}, killzone_data or {}, smt_data or {}, xray_reasons
+            coin_key, side, orderbook_data or {}, killzone_data or {}, smt_data or {}, xray_reasons
         )
 
         raw_score = float(
@@ -59,7 +60,6 @@ class ConfluenceScorerSkill:
         )
 
         # ۵. اعمال ضرایب یادگیری ماشین
-        coin_key = str(coin).upper().strip()
         regime_name = str(regime_data.get("regime", "RANGING"))
 
         coin_mult = 1.0
@@ -192,6 +192,7 @@ class ConfluenceScorerSkill:
 
     @staticmethod
     def _score_orderflow_and_intel(
+        coin_key: str,
         side: str,
         orderbook_data: Dict[str, Any],
         killzone_data: Dict[str, Any],
@@ -223,7 +224,22 @@ class ConfluenceScorerSkill:
         elif smt_data.get("smt_divergence") == "NONE":
             score += 2.0
 
-        return float(np.clip(score, 0.0, 20.0))
+        # قطب‌نمای رهبری بیت‌کوین برای آلت‌کوین‌ها (BTC Lead-Lag Filter)
+        btc_impulse = str(smt_data.get("btc_impulse", "NEUTRAL"))
+        if coin_key in ("ETH", "SOL", "XRP"):
+            if side == "LONG" and btc_impulse == "STRONG_DUMP":
+                score -= 10.0
+                xray_reasons.append("⚠️ ریزش شارپ لیدر BTC (-10)")
+            elif side == "SHORT" and btc_impulse == "STRONG_PUMP":
+                score -= 10.0
+                xray_reasons.append("⚠️ پامپ شارپ لیدر BTC (-10)")
+            elif (side == "LONG" and btc_impulse == "STRONG_PUMP") or (
+                side == "SHORT" and btc_impulse == "STRONG_DUMP"
+            ):
+                score += 3.0
+                xray_reasons.append("هم‌سو با مومنتوم لیدر BTC (+3)")
+
+        return float(np.clip(score, -10.0, 20.0))
 
     def _build_result(
         self,
