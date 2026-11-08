@@ -10,7 +10,7 @@
     "xray_summary_fa": "هم‌راستا با روند ۱ ساعته (+21) | حمایت ساختار ۴ ساعته (+6) | مجاورت با FVG معتبر (+16) | تایید فشار اردربوک صرافی (+5) | واگرایی پول هوشمند SMT (+6)",
     "slot_type": "STANDARD_SLOT",
     "entry_price": 89.167357,
-    "current_price": 88.94,
+    "current_price": 89.07,
     "stop_loss": 89.167357,
     "initial_stop_loss": 89.333571,
     "stop_distance": 0.166214,
@@ -26,7 +26,7 @@
     "is_risk_free": true,
     "trailing_active": false,
     "realized_pnl_usdt": 0.9505,
-    "unrealized_pnl_usdt": 1.57,
+    "unrealized_pnl_usdt": 0.67,
     "fees_paid_usdt": 0.369,
     "opened_at": "2026-11-08T05:45:53Z"
   }
