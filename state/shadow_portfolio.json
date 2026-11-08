@@ -695,6 +695,30 @@
       "confluence_score": 41.01,
       "status": "ACTIVE",
       "created_at": "2026-11-08T12:51:48Z"
+    },
+    {
+      "id": "SHD-XRP-FAB26E",
+      "coin": "XRP",
+      "side": "SHORT",
+      "entry_price": 1.16365,
+      "stop_loss": 1.167723,
+      "tp_price": 1.154282,
+      "filter_reason": "LOW_CONFLUENCE_SCORE",
+      "confluence_score": 61.3,
+      "status": "ACTIVE",
+      "created_at": "2026-11-08T13:01:00Z"
+    },
+    {
+      "id": "SHD-XAU-F26AEE",
+      "coin": "XAU",
+      "side": "SHORT",
+      "entry_price": 4058.1,
+      "stop_loss": 4072.30335,
+      "tp_price": 4025.432295,
+      "filter_reason": "LOW_CONFLUENCE_SCORE",
+      "confluence_score": 42.09,
+      "status": "ACTIVE",
+      "created_at": "2026-11-08T13:01:00Z"
     }
   ],
   "resolved_shadows": [
@@ -3300,7 +3324,7 @@
     }
   ],
   "stats": {
-    "total_filtered": 2457,
+    "total_filtered": 2459,
     "saved_from_loss": 1705,
     "missed_winners": 457,
     "shield_accuracy": 78.86,
@@ -3308,11 +3332,11 @@
   },
   "last_updated": "2026-11-01T18:21:42Z",
   "filter_breakdown": {
-    "LOW_CONFLUENCE_SCORE": 2375,
+    "LOW_CONFLUENCE_SCORE": 2377,
     "TIMEMACHINE_REJECTED": 0,
     "RISK_GUARDIAN_BLOCKED": 30,
     "SPREAD_GUARD_5PCT_BLOCKED": 0,
     "ECONOMIC_NEWS_BLOCKED": 44
   },
-  "updated_at": "2026-11-08T12:51:49Z"
+  "updated_at": "2026-11-08T13:01:00Z"
 }
