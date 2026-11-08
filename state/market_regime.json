@@ -3,35 +3,35 @@
     "regime": "RANGING",
     "strategy": "LIQUIDITY_SWEEP_REVERSAL",
     "htf_bias": "BEARISH",
-    "adx": 28.87,
+    "adx": 24.2,
     "tradable": true,
-    "current_price": 76175.6,
+    "current_price": 76066.7,
     "candidate_side": "NONE",
-    "confluence_score": 37.53,
+    "confluence_score": 34.42,
     "zone": "PREMIUM",
     "asian_range": {
       "asian_high": 75962.6,
       "asian_low": 75669.4,
       "asian_sweep": "NONE"
     },
-    "xray_summary_fa": "ساختار بازگشت به میانگین رنج (+14) | حمایت ساختار ۴ ساعته (+6) | ناحیه گران‌فروشی Premium (+12) | سشن Killzone فعال (+7)"
+    "xray_summary_fa": "ساختار بازگشت به میانگین رنج (+14) | حمایت ساختار ۴ ساعته (+6) | ناحیه گران‌فروشی Premium (+8) | سشن Killzone فعال (+7)"
   },
   "ETH": {
     "regime": "RANGING",
     "strategy": "LIQUIDITY_SWEEP_REVERSAL",
     "htf_bias": "BEARISH",
-    "adx": 23.21,
+    "adx": 23.23,
     "tradable": true,
-    "current_price": 2245.12,
-    "candidate_side": "NONE",
-    "confluence_score": 45.8,
+    "current_price": 2242.16,
+    "candidate_side": "SHORT",
+    "confluence_score": 46.19,
     "zone": "PREMIUM",
     "asian_range": {
       "asian_high": 2240.18,
       "asian_low": 2229.47,
       "asian_sweep": "NONE"
     },
-    "xray_summary_fa": "ساختار بازگشت به میانگین رنج (+14) | حمایت ساختار ۴ ساعته (+6) | ناحیه گران‌فروشی Premium (+12) | حجم تراکنش بالاتر از میانگین (+8) | سشن Killzone فعال (+7)"
+    "xray_summary_fa": "ساختار بازگشت به میانگین رنج (+14) | حمایت ساختار ۴ ساعته (+6) | ناحیه گران‌فروشی Premium (+9) | شکار نقدینگی و استاپ‌هانت ۱۵m (+12) | سشن Killzone فعال (+7)"
   },
   "SOL": {
     "regime": "RANGING",
@@ -39,49 +39,49 @@
     "htf_bias": "BEARISH",
     "adx": 21.34,
     "tradable": true,
-    "current_price": 89.86,
+    "current_price": 89.65,
     "candidate_side": "SHORT",
-    "confluence_score": 60.8,
+    "confluence_score": 57.26,
     "zone": "PREMIUM",
     "asian_range": {
       "asian_high": 89.8,
       "asian_low": 88.83,
-      "asian_sweep": "NONE"
+      "asian_sweep": "ASIAN_HIGH_SWEEP_BEAR"
     },
-    "xray_summary_fa": "ساختار بازگشت به میانگین رنج (+14) | حمایت ساختار ۴ ساعته (+6) | ناحیه گران‌فروشی Premium (+12) | شکار نقدینگی و استاپ‌هانت ۱۵m (+12) | سشن Killzone فعال (+7)"
+    "xray_summary_fa": "ساختار بازگشت به میانگین رنج (+14) | حمایت ساختار ۴ ساعته (+6) | ناحیه گران‌فروشی Premium (+10) | شکار نقدینگی و استاپ‌هانت ۱۵m (+12) | سشن Killzone فعال (+7)"
   },
   "XRP": {
     "regime": "RANGING",
     "strategy": "LIQUIDITY_SWEEP_REVERSAL",
     "htf_bias": "BEARISH",
-    "adx": 31.12,
+    "adx": 31.09,
     "tradable": true,
-    "current_price": 1.16874,
-    "candidate_side": "NONE",
-    "confluence_score": 49.99,
+    "current_price": 1.16605,
+    "candidate_side": "SHORT",
+    "confluence_score": 53.65,
     "zone": "PREMIUM",
     "asian_range": {
       "asian_high": 1.1655,
       "asian_low": 1.15542,
       "asian_sweep": "NONE"
     },
-    "xray_summary_fa": "ساختار بازگشت به میانگین رنج (+14) | حمایت ساختار ۴ ساعته (+6) | ناحیه گران‌فروشی Premium (+12) | تایید فشار اردربوک صرافی (+7) | سشن Killzone فعال (+7)"
+    "xray_summary_fa": "ساختار بازگشت به میانگین رنج (+14) | حمایت ساختار ۴ ساعته (+6) | ناحیه گران‌فروشی Premium (+8) | شکار نقدینگی و استاپ‌هانت ۱۵m (+12) | تایید فشار اردربوک صرافی (+7) | سشن Killzone فعال (+7)"
   },
   "XAU": {
     "regime": "TRENDING_BEAR",
     "strategy": "SMC_TREND_CONTINUATION",
     "htf_bias": "BULLISH",
-    "adx": 31.41,
+    "adx": 29.42,
     "tradable": true,
-    "current_price": 4058.32,
+    "current_price": 4058.63,
     "candidate_side": "SHORT",
-    "confluence_score": 42.05,
+    "confluence_score": 44.13,
     "zone": "DISCOUNT",
     "asian_range": {
       "asian_high": 4065.47,
       "asian_low": 4059.85,
       "asian_sweep": "NONE"
     },
-    "xray_summary_fa": "هم‌راستا با روند ۱ ساعته (+22) | مجاورت با FVG معتبر (+12) | سشن Killzone فعال (+7)"
+    "xray_summary_fa": "هم‌راستا با روند ۱ ساعته (+22) | مجاورت با FVG معتبر (+15) | سشن Killzone فعال (+7)"
   }
 }
