@@ -3,9 +3,9 @@
     "regime": "EXTREME_VOLATILITY",
     "strategy": "NONE",
     "htf_bias": "BEARISH",
-    "adx": 23.15,
+    "adx": 23.21,
     "tradable": false,
-    "current_price": 74871.3,
+    "current_price": 74996.2,
     "candidate_side": "SHORT",
     "confluence_score": 0.0,
     "zone": "PREMIUM",
@@ -20,9 +20,9 @@
     "regime": "EXTREME_VOLATILITY",
     "strategy": "NONE",
     "htf_bias": "BEARISH",
-    "adx": 38.04,
+    "adx": 36.61,
     "tradable": false,
-    "current_price": 2141.91,
+    "current_price": 2144.26,
     "candidate_side": "LONG",
     "confluence_score": 0.0,
     "zone": "EQUILIBRIUM",
@@ -39,16 +39,16 @@
     "htf_bias": "BEARISH",
     "adx": 22.77,
     "tradable": true,
-    "current_price": 87.58,
+    "current_price": 87.64,
     "candidate_side": "SHORT",
-    "confluence_score": 67.24,
+    "confluence_score": 62.59,
     "zone": "EQUILIBRIUM",
     "asian_range": {
       "asian_high": 88.45,
       "asian_low": 86.24,
       "asian_sweep": "NONE"
     },
-    "xray_summary_fa": "هم‌راستا با روند ۱ ساعته (+21) | حمایت ساختار ۴ ساعته (+6) | حضور قیمت در ناحیه FVG دست‌نخورده (+18) | تایید فشار اردربوک صرافی (+7)"
+    "xray_summary_fa": "هم‌راستا با روند ۱ ساعته (+21) | حمایت ساختار ۴ ساعته (+6) | حضور قیمت در ناحیه FVG دست‌نخورده (+18)"
   },
   "XRP": {
     "regime": "TRENDING_BEAR",
@@ -56,16 +56,16 @@
     "htf_bias": "BEARISH",
     "adx": 43.7,
     "tradable": true,
-    "current_price": 1.11354,
+    "current_price": 1.11309,
     "candidate_side": "SHORT",
-    "confluence_score": 57.11,
+    "confluence_score": 58.61,
     "zone": "DISCOUNT",
     "asian_range": {
       "asian_high": 1.12638,
       "asian_low": 1.10381,
       "asian_sweep": "NONE"
     },
-    "xray_summary_fa": "هم‌راستا با روند ۱ ساعته (+24) | حمایت ساختار ۴ ساعته (+6) | مجاورت با FVG معتبر (+14) | تایید فشار اردربوک صرافی (+6)"
+    "xray_summary_fa": "هم‌راستا با روند ۱ ساعته (+24) | حمایت ساختار ۴ ساعته (+6) | مجاورت با FVG معتبر (+14) | تایید فشار اردربوک صرافی (+7)"
   },
   "XAU": {
     "regime": "EXTREME_VOLATILITY",
@@ -73,7 +73,7 @@
     "htf_bias": "BULLISH",
     "adx": 31.79,
     "tradable": false,
-    "current_price": 4107.22,
+    "current_price": 4111.14,
     "candidate_side": "SHORT",
     "confluence_score": 0.0,
     "zone": "PREMIUM",
