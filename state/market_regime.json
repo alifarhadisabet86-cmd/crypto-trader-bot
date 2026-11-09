@@ -5,7 +5,7 @@
     "htf_bias": "BEARISH",
     "adx": 21.82,
     "tradable": false,
-    "current_price": 75517.1,
+    "current_price": 75486.9,
     "candidate_side": "SHORT",
     "confluence_score": 0.0,
     "zone": "PREMIUM",
@@ -22,10 +22,10 @@
     "htf_bias": "BEARISH",
     "adx": 34.3,
     "tradable": false,
-    "current_price": 2156.39,
-    "candidate_side": "SHORT",
+    "current_price": 2154.57,
+    "candidate_side": "LONG",
     "confluence_score": 0.0,
-    "zone": "PREMIUM",
+    "zone": "EQUILIBRIUM",
     "asian_range": {
       "asian_high": 2157.64,
       "asian_low": 2117.98,
@@ -39,16 +39,16 @@
     "htf_bias": "BEARISH",
     "adx": 22.62,
     "tradable": true,
-    "current_price": 88.31,
+    "current_price": 88.18,
     "candidate_side": "SHORT",
-    "confluence_score": 68.48,
+    "confluence_score": 69.05,
     "zone": "PREMIUM",
     "asian_range": {
       "asian_high": 88.43,
       "asian_low": 86.24,
       "asian_sweep": "NONE"
     },
-    "xray_summary_fa": "هم‌راستا با روند ۱ ساعته (+20) | حمایت ساختار ۴ ساعته (+6) | حضور قیمت در ناحیه FVG دست‌نخورده (+18) | ناحیه گران‌فروشی Premium (+8)"
+    "xray_summary_fa": "هم‌راستا با روند ۱ ساعته (+20) | حمایت ساختار ۴ ساعته (+6) | حضور قیمت در ناحیه FVG دست‌نخورده (+18) | ناحیه گران‌فروشی Premium (+7) | تایید فشار اردربوک صرافی (+5)"
   },
   "XRP": {
     "regime": "TRENDING_BEAR",
@@ -56,24 +56,24 @@
     "htf_bias": "BEARISH",
     "adx": 41.15,
     "tradable": true,
-    "current_price": 1.12194,
+    "current_price": 1.12055,
     "candidate_side": "SHORT",
-    "confluence_score": 62.17,
+    "confluence_score": 58.77,
     "zone": "DISCOUNT",
     "asian_range": {
       "asian_high": 1.12638,
       "asian_low": 1.106,
       "asian_sweep": "NONE"
     },
-    "xray_summary_fa": "هم‌راستا با روند ۱ ساعته (+24) | حمایت ساختار ۴ ساعته (+6) | حضور قیمت در ناحیه FVG دست‌نخورده (+18) | تایید فشار اردربوک صرافی (+7)"
+    "xray_summary_fa": "هم‌راستا با روند ۱ ساعته (+24) | حمایت ساختار ۴ ساعته (+6) | حضور قیمت در ناحیه FVG دست‌نخورده (+18)"
   },
   "XAU": {
     "regime": "EXTREME_VOLATILITY",
     "strategy": "NONE",
     "htf_bias": "BULLISH",
-    "adx": 31.47,
+    "adx": 31.32,
     "tradable": false,
-    "current_price": 4117.78,
+    "current_price": 4116.62,
     "candidate_side": "NONE",
     "confluence_score": 0.0,
     "zone": "PREMIUM",
