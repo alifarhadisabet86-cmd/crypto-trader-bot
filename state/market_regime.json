@@ -5,7 +5,7 @@
     "htf_bias": "BEARISH",
     "adx": 23.21,
     "tradable": false,
-    "current_price": 74991.3,
+    "current_price": 74971.3,
     "candidate_side": "SHORT",
     "confluence_score": 0.0,
     "zone": "PREMIUM",
@@ -20,9 +20,9 @@
     "regime": "EXTREME_VOLATILITY",
     "strategy": "NONE",
     "htf_bias": "BEARISH",
-    "adx": 36.52,
+    "adx": 37.39,
     "tradable": false,
-    "current_price": 2144.42,
+    "current_price": 2142.97,
     "candidate_side": "LONG",
     "confluence_score": 0.0,
     "zone": "EQUILIBRIUM",
@@ -39,16 +39,16 @@
     "htf_bias": "BEARISH",
     "adx": 22.77,
     "tradable": true,
-    "current_price": 87.45,
+    "current_price": 87.54,
     "candidate_side": "SHORT",
-    "confluence_score": 53.03,
+    "confluence_score": 57.71,
     "zone": "EQUILIBRIUM",
     "asian_range": {
       "asian_high": 88.45,
       "asian_low": 86.24,
       "asian_sweep": "NONE"
     },
-    "xray_summary_fa": "هم‌راستا با روند ۱ ساعته (+21) | حمایت ساختار ۴ ساعته (+6) | مجاورت با FVG معتبر (+11)"
+    "xray_summary_fa": "هم‌راستا با روند ۱ ساعته (+21) | حمایت ساختار ۴ ساعته (+6) | مجاورت با FVG معتبر (+12)"
   },
   "XRP": {
     "regime": "TRENDING_BEAR",
@@ -56,24 +56,24 @@
     "htf_bias": "BEARISH",
     "adx": 43.7,
     "tradable": true,
-    "current_price": 1.114,
+    "current_price": 1.11183,
     "candidate_side": "SHORT",
-    "confluence_score": 58.39,
+    "confluence_score": 51.19,
     "zone": "DISCOUNT",
     "asian_range": {
       "asian_high": 1.12638,
       "asian_low": 1.10381,
       "asian_sweep": "NONE"
     },
-    "xray_summary_fa": "هم‌راستا با روند ۱ ساعته (+24) | حمایت ساختار ۴ ساعته (+6) | مجاورت با FVG معتبر (+15) | تایید فشار اردربوک صرافی (+7)"
+    "xray_summary_fa": "هم‌راستا با روند ۱ ساعته (+24) | حمایت ساختار ۴ ساعته (+6) | مجاورت با FVG معتبر (+12)"
   },
   "XAU": {
     "regime": "EXTREME_VOLATILITY",
     "strategy": "NONE",
     "htf_bias": "BULLISH",
-    "adx": 31.8,
+    "adx": 31.95,
     "tradable": false,
-    "current_price": 4112.39,
+    "current_price": 4114.53,
     "candidate_side": "SHORT",
     "confluence_score": 0.0,
     "zone": "PREMIUM",
