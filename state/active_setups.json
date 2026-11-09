@@ -10,7 +10,7 @@
     "xray_summary_fa": "هم‌راستا با روند ۱ ساعته (+20) | حمایت ساختار ۴ ساعته (+6) | مجاورت با FVG معتبر (+16) | ناحیه گران‌فروشی Premium (+9) | شکار نقدینگی و استاپ‌هانت ۱۵m (+12) | تایید فشار اردربوک صرافی (+7) | سشن Killzone فعال (+7)",
     "slot_type": "GOLDEN_SLOT",
     "entry_price": 87.219286,
-    "current_price": 86.99,
+    "current_price": 87.05,
     "stop_loss": 88.04,
     "initial_stop_loss": 88.04,
     "stop_distance": 0.820714,
@@ -26,7 +26,7 @@
     "is_risk_free": false,
     "trailing_active": false,
     "realized_pnl_usdt": -0.1147,
-    "unrealized_pnl_usdt": 1.51,
+    "unrealized_pnl_usdt": 1.11,
     "fees_paid_usdt": 0.1147,
     "opened_at": "2026-11-09T16:20:59Z"
   }
