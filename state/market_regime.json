@@ -5,9 +5,9 @@
     "htf_bias": "BEARISH",
     "adx": 18.15,
     "tradable": true,
-    "current_price": 74788.9,
+    "current_price": 74786.1,
     "candidate_side": "LONG",
-    "confluence_score": 49.99,
+    "confluence_score": 50.04,
     "zone": "EQUILIBRIUM",
     "asian_range": {
       "asian_high": 75586.6,
@@ -22,16 +22,16 @@
     "htf_bias": "BEARISH",
     "adx": 31.45,
     "tradable": true,
-    "current_price": 2128.99,
+    "current_price": 2127.08,
     "candidate_side": "SHORT",
-    "confluence_score": 51.08,
+    "confluence_score": 43.17,
     "zone": "EQUILIBRIUM",
     "asian_range": {
       "asian_high": 2160.31,
       "asian_low": 2125.05,
-      "asian_sweep": "NONE"
+      "asian_sweep": "ASIAN_LOW_SWEEP_BULL"
     },
-    "xray_summary_fa": "هم‌راستا با روند ۱ ساعته (+22) | حمایت ساختار ۴ ساعته (+6) | مجاورت با FVG معتبر (+8) | تایید فشار اردربوک صرافی (+7) | سشن Killzone فعال (+7)"
+    "xray_summary_fa": "هم‌راستا با روند ۱ ساعته (+22) | حمایت ساختار ۴ ساعته (+6) | مجاورت با FVG معتبر (+6) | سشن Killzone فعال (+7)"
   },
   "SOL": {
     "regime": "RANGING",
@@ -39,9 +39,9 @@
     "htf_bias": "BEARISH",
     "adx": 15.08,
     "tradable": true,
-    "current_price": 86.81,
+    "current_price": 86.76,
     "candidate_side": "LONG",
-    "confluence_score": 45.57,
+    "confluence_score": 46.87,
     "zone": "DISCOUNT",
     "asian_range": {
       "asian_high": 88.45,
@@ -54,18 +54,18 @@
     "regime": "TRENDING_BEAR",
     "strategy": "SMC_TREND_CONTINUATION",
     "htf_bias": "BEARISH",
-    "adx": 35.06,
+    "adx": 35.11,
     "tradable": true,
-    "current_price": 1.09131,
+    "current_price": 1.09367,
     "candidate_side": "NONE",
-    "confluence_score": 46.45,
+    "confluence_score": 41.24,
     "zone": "DISCOUNT",
     "asian_range": {
       "asian_high": 1.12638,
       "asian_low": 1.09351,
-      "asian_sweep": "NONE"
+      "asian_sweep": "ASIAN_LOW_SWEEP_BULL"
     },
-    "xray_summary_fa": "هم‌راستا با روند ۱ ساعته (+23) | حمایت ساختار ۴ ساعته (+6) | تایید فشار اردربوک صرافی (+7) | سشن Killzone فعال (+7)"
+    "xray_summary_fa": "هم‌راستا با روند ۱ ساعته (+23) | حمایت ساختار ۴ ساعته (+6) | سشن Killzone فعال (+7)"
   },
   "XAU": {
     "regime": "TRENDING_BULL",
@@ -73,15 +73,15 @@
     "htf_bias": "BULLISH",
     "adx": 24.95,
     "tradable": true,
-    "current_price": 4130.82,
+    "current_price": 4131.32,
     "candidate_side": "LONG",
-    "confluence_score": 54.61,
+    "confluence_score": 58.2,
     "zone": "PREMIUM",
     "asian_range": {
       "asian_high": 4124.15,
       "asian_low": 4087.05,
       "asian_sweep": "NONE"
     },
-    "xray_summary_fa": "هم‌راستا با روند ۱ ساعته (+21) | حمایت ساختار ۴ ساعته (+6) | مجاورت با FVG معتبر (+16) | تایید فشار اردربوک صرافی (+5) | سشن Killzone فعال (+7) | واگرایی پول هوشمند SMT (+6)"
+    "xray_summary_fa": "هم‌راستا با روند ۱ ساعته (+21) | حمایت ساختار ۴ ساعته (+6) | مجاورت با FVG معتبر (+15) | حجم تراکنش بالاتر از میانگین (+7) | سشن Killzone فعال (+7) | واگرایی پول هوشمند SMT (+6)"
   }
 }
