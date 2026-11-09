@@ -3,18 +3,18 @@
     "regime": "TRENDING_BEAR",
     "strategy": "SMC_TREND_CONTINUATION",
     "htf_bias": "BEARISH",
-    "adx": 21.38,
+    "adx": 21.59,
     "tradable": true,
-    "current_price": 74710.3,
+    "current_price": 74510.5,
     "candidate_side": "SHORT",
-    "confluence_score": 52.44,
+    "confluence_score": 44.43,
     "zone": "PREMIUM",
     "asian_range": {
       "asian_high": 75586.6,
       "asian_low": 74324.0,
       "asian_sweep": "NONE"
     },
-    "xray_summary_fa": "هم‌راستا با روند ۱ ساعته (+20) | حمایت ساختار ۴ ساعته (+6) | ناحیه گران‌فروشی Premium (+10) | تایید فشار اردربوک صرافی (+7) | سشن Killzone فعال (+7) | واگرایی پول هوشمند SMT (+6)"
+    "xray_summary_fa": "هم‌راستا با روند ۱ ساعته (+20) | حمایت ساختار ۴ ساعته (+6) | سشن Killzone فعال (+7) | واگرایی پول هوشمند SMT (+6)"
   },
   "ETH": {
     "regime": "TRENDING_BEAR",
@@ -22,16 +22,16 @@
     "htf_bias": "BEARISH",
     "adx": 40.42,
     "tradable": true,
-    "current_price": 2125.66,
-    "candidate_side": "SHORT",
-    "confluence_score": 49.46,
-    "zone": "PREMIUM",
+    "current_price": 2118.12,
+    "candidate_side": "LONG",
+    "confluence_score": 37.81,
+    "zone": "EQUILIBRIUM",
     "asian_range": {
       "asian_high": 2160.31,
       "asian_low": 2117.98,
       "asian_sweep": "ASIAN_LOW_SWEEP_BULL"
     },
-    "xray_summary_fa": "هم‌راستا با روند ۱ ساعته (+24) | حمایت ساختار ۴ ساعته (+6) | ناحیه گران‌فروشی Premium (+8) | سشن Killzone فعال (+7) | واگرایی پول هوشمند SMT (+6)"
+    "xray_summary_fa": "مجاورت با FVG معتبر (+16) | شکار نقدینگی سشن آسیا (+11) | تایید فشار اردربوک صرافی (+7) | سشن Killzone فعال (+7)"
   },
   "SOL": {
     "regime": "TRENDING_BEAR",
@@ -39,49 +39,49 @@
     "htf_bias": "BEARISH",
     "adx": 23.57,
     "tradable": true,
-    "current_price": 86.8,
+    "current_price": 86.69,
     "candidate_side": "SHORT",
-    "confluence_score": 56.35,
+    "confluence_score": 62.03,
     "zone": "PREMIUM",
     "asian_range": {
       "asian_high": 88.45,
       "asian_low": 86.24,
       "asian_sweep": "NONE"
     },
-    "xray_summary_fa": "هم‌راستا با روند ۱ ساعته (+21) | حمایت ساختار ۴ ساعته (+6) | ناحیه گران‌فروشی Premium (+6) | سشن Killzone فعال (+7) | واگرایی پول هوشمند SMT (+6)"
+    "xray_summary_fa": "هم‌راستا با روند ۱ ساعته (+21) | حمایت ساختار ۴ ساعته (+6) | حجم تراکنش بالاتر از میانگین (+5) | سشن Killzone فعال (+7) | واگرایی پول هوشمند SMT (+6)"
   },
   "XRP": {
     "regime": "TRENDING_BEAR",
     "strategy": "SMC_TREND_CONTINUATION",
     "htf_bias": "BEARISH",
-    "adx": 42.01,
+    "adx": 42.04,
     "tradable": true,
-    "current_price": 1.09671,
+    "current_price": 1.09349,
     "candidate_side": "SHORT",
-    "confluence_score": 68.35,
-    "zone": "EQUILIBRIUM",
+    "confluence_score": 66.64,
+    "zone": "DISCOUNT",
     "asian_range": {
       "asian_high": 1.12638,
       "asian_low": 1.09351,
-      "asian_sweep": "ASIAN_LOW_SWEEP_BULL"
+      "asian_sweep": "NONE"
     },
-    "xray_summary_fa": "هم‌راستا با روند ۱ ساعته (+24) | حمایت ساختار ۴ ساعته (+6) | مجاورت با FVG معتبر (+16) | سشن Killzone فعال (+7) | واگرایی پول هوشمند SMT (+6)"
+    "xray_summary_fa": "هم‌راستا با روند ۱ ساعته (+24) | حمایت ساختار ۴ ساعته (+6) | مجاورت با FVG معتبر (+12) | تایید فشار اردربوک صرافی (+7) | سشن Killzone فعال (+7) | واگرایی پول هوشمند SMT (+6)"
   },
   "XAU": {
     "regime": "TRENDING_BULL",
     "strategy": "SMC_TREND_CONTINUATION",
     "htf_bias": "BULLISH",
-    "adx": 27.75,
+    "adx": 26.29,
     "tradable": true,
-    "current_price": 4115.68,
-    "candidate_side": "NONE",
-    "confluence_score": 33.09,
+    "current_price": 4112.08,
+    "candidate_side": "LONG",
+    "confluence_score": 41.2,
     "zone": "PREMIUM",
     "asian_range": {
       "asian_high": 4124.15,
       "asian_low": 4052.03,
       "asian_sweep": "NONE"
     },
-    "xray_summary_fa": "هم‌راستا با روند ۱ ساعته (+22) | حمایت ساختار ۴ ساعته (+6) | سشن Killzone فعال (+7)"
+    "xray_summary_fa": "هم‌راستا با روند ۱ ساعته (+21) | حمایت ساختار ۴ ساعته (+6) | مجاورت با FVG معتبر (+10) | سشن Killzone فعال (+7)"
   }
 }
