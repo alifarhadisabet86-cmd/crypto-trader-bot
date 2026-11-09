@@ -5,7 +5,7 @@
     "htf_bias": "BEARISH",
     "adx": 25.73,
     "tradable": false,
-    "current_price": 74391.1,
+    "current_price": 74525.0,
     "candidate_side": "NONE",
     "confluence_score": 0.0,
     "zone": "DISCOUNT",
@@ -22,7 +22,7 @@
     "htf_bias": "BEARISH",
     "adx": 40.29,
     "tradable": false,
-    "current_price": 2129.77,
+    "current_price": 2131.96,
     "candidate_side": "NONE",
     "confluence_score": 0.0,
     "zone": "DISCOUNT",
@@ -39,33 +39,33 @@
     "htf_bias": "BEARISH",
     "adx": 27.38,
     "tradable": true,
-    "current_price": 86.93,
+    "current_price": 86.9,
     "candidate_side": "NONE",
-    "confluence_score": 47.81,
+    "confluence_score": 38.81,
     "zone": "DISCOUNT",
     "asian_range": {
       "asian_high": 88.45,
       "asian_low": 86.24,
       "asian_sweep": "NONE"
     },
-    "xray_summary_fa": "هم‌راستا با روند ۱ ساعته (+22) | حمایت ساختار ۴ ساعته (+6) | حجم تراکنش بالاتر از میانگین (+8)"
+    "xray_summary_fa": "هم‌راستا با روند ۱ ساعته (+22) | حمایت ساختار ۴ ساعته (+6)"
   },
   "XRP": {
     "regime": "TRENDING_BEAR",
     "strategy": "SMC_TREND_CONTINUATION",
     "htf_bias": "BEARISH",
-    "adx": 47.13,
+    "adx": 47.25,
     "tradable": true,
-    "current_price": 1.10018,
-    "candidate_side": "SHORT",
-    "confluence_score": 39.26,
+    "current_price": 1.09856,
+    "candidate_side": "NONE",
+    "confluence_score": 36.23,
     "zone": "DISCOUNT",
     "asian_range": {
       "asian_high": 1.12638,
-      "asian_low": 1.09927,
+      "asian_low": 1.09628,
       "asian_sweep": "NONE"
     },
-    "xray_summary_fa": "هم‌راستا با روند ۱ ساعته (+24) | حمایت ساختار ۴ ساعته (+6) | مجاورت با FVG معتبر (+7)"
+    "xray_summary_fa": "هم‌راستا با روند ۱ ساعته (+24) | حمایت ساختار ۴ ساعته (+6)"
   },
   "XAU": {
     "regime": "EXTREME_VOLATILITY",
@@ -73,7 +73,7 @@
     "htf_bias": "BULLISH",
     "adx": 38.1,
     "tradable": false,
-    "current_price": 4110.53,
+    "current_price": 4112.79,
     "candidate_side": "SHORT",
     "confluence_score": 0.0,
     "zone": "PREMIUM",
