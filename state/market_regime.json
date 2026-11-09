@@ -5,7 +5,7 @@
     "htf_bias": "BEARISH",
     "adx": 21.75,
     "tradable": false,
-    "current_price": 75414.9,
+    "current_price": 75272.5,
     "candidate_side": "SHORT",
     "confluence_score": 0.0,
     "zone": "PREMIUM",
@@ -20,12 +20,12 @@
     "regime": "EXTREME_VOLATILITY",
     "strategy": "NONE",
     "htf_bias": "BEARISH",
-    "adx": 34.14,
+    "adx": 35.17,
     "tradable": false,
-    "current_price": 2156.32,
-    "candidate_side": "SHORT",
+    "current_price": 2147.26,
+    "candidate_side": "LONG",
     "confluence_score": 0.0,
-    "zone": "PREMIUM",
+    "zone": "EQUILIBRIUM",
     "asian_range": {
       "asian_high": 2160.31,
       "asian_low": 2117.98,
@@ -39,16 +39,16 @@
     "htf_bias": "BEARISH",
     "adx": 22.6,
     "tradable": true,
-    "current_price": 88.22,
+    "current_price": 88.03,
     "candidate_side": "SHORT",
-    "confluence_score": 64.85,
+    "confluence_score": 65.8,
     "zone": "PREMIUM",
     "asian_range": {
       "asian_high": 88.45,
       "asian_low": 86.24,
       "asian_sweep": "NONE"
     },
-    "xray_summary_fa": "هم‌راستا با روند ۱ ساعته (+20) | حمایت ساختار ۴ ساعته (+6) | حضور قیمت در ناحیه FVG دست‌نخورده (+18) | ناحیه گران‌فروشی Premium (+7)"
+    "xray_summary_fa": "هم‌راستا با روند ۱ ساعته (+20) | حمایت ساختار ۴ ساعته (+6) | حضور قیمت در ناحیه FVG دست‌نخورده (+18) | ناحیه گران‌فروشی Premium (+6)"
   },
   "XRP": {
     "regime": "TRENDING_BEAR",
@@ -56,24 +56,24 @@
     "htf_bias": "BEARISH",
     "adx": 41.15,
     "tradable": true,
-    "current_price": 1.11932,
+    "current_price": 1.11681,
     "candidate_side": "SHORT",
-    "confluence_score": 56.56,
+    "confluence_score": 59.0,
     "zone": "DISCOUNT",
     "asian_range": {
       "asian_high": 1.12638,
       "asian_low": 1.106,
       "asian_sweep": "NONE"
     },
-    "xray_summary_fa": "هم‌راستا با روند ۱ ساعته (+24) | حمایت ساختار ۴ ساعته (+6) | حضور قیمت در ناحیه FVG دست‌نخورده (+18)"
+    "xray_summary_fa": "هم‌راستا با روند ۱ ساعته (+24) | حمایت ساختار ۴ ساعته (+6) | مجاورت با FVG معتبر (+16) | تایید فشار اردربوک صرافی (+6)"
   },
   "XAU": {
     "regime": "EXTREME_VOLATILITY",
     "strategy": "NONE",
     "htf_bias": "BULLISH",
-    "adx": 32.78,
+    "adx": 31.32,
     "tradable": false,
-    "current_price": 4122.51,
+    "current_price": 4114.13,
     "candidate_side": "NONE",
     "confluence_score": 0.0,
     "zone": "PREMIUM",
