@@ -10,7 +10,7 @@
     "xray_summary_fa": "هم‌راستا با روند ۱ ساعته (+22) | حمایت ساختار ۴ ساعته (+6) | حضور قیمت در ناحیه FVG دست‌نخورده (+18) | شکار نقدینگی و استاپ‌هانت ۱۵m (+12) | حجم تراکنش بالاتر از میانگین (+8) | تایید فشار اردربوک صرافی (+7) | سشن Killzone فعال (+7)",
     "slot_type": "STANDARD_SLOT",
     "entry_price": 74731.229286,
-    "current_price": 74390.1,
+    "current_price": 74495.1,
     "stop_loss": 74665.83946,
     "initial_stop_loss": 74992.788589,
     "stop_distance": 261.559303,
@@ -26,7 +26,7 @@
     "is_risk_free": true,
     "trailing_active": false,
     "realized_pnl_usdt": -0.0513,
-    "unrealized_pnl_usdt": 1.17,
+    "unrealized_pnl_usdt": 0.81,
     "fees_paid_usdt": 0.0513,
     "opened_at": "2026-11-09T11:21:04Z"
   }
