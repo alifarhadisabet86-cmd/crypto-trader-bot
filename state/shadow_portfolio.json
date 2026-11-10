@@ -1031,6 +1031,54 @@
       "confluence_score": 56.31,
       "status": "ACTIVE",
       "created_at": "2026-11-10T03:11:00Z"
+    },
+    {
+      "id": "SHD-BTC-6C3478",
+      "coin": "BTC",
+      "side": "LONG",
+      "entry_price": 74800.3,
+      "stop_loss": 74538.49895,
+      "tp_price": 75393.29,
+      "filter_reason": "LOW_CONFLUENCE_SCORE",
+      "confluence_score": 37.24,
+      "status": "ACTIVE",
+      "created_at": "2026-11-10T03:13:26Z"
+    },
+    {
+      "id": "SHD-ETH-C2EDF3",
+      "coin": "ETH",
+      "side": "SHORT",
+      "entry_price": 2121.05,
+      "stop_loss": 2132.358,
+      "tp_price": 2095.0416,
+      "filter_reason": "LOW_CONFLUENCE_SCORE",
+      "confluence_score": 39.54,
+      "status": "ACTIVE",
+      "created_at": "2026-11-10T03:13:26Z"
+    },
+    {
+      "id": "SHD-SOL-63408B",
+      "coin": "SOL",
+      "side": "LONG",
+      "entry_price": 86.13,
+      "stop_loss": 85.825571,
+      "tp_price": 87.061,
+      "filter_reason": "LOW_CONFLUENCE_SCORE",
+      "confluence_score": 61.56,
+      "status": "ACTIVE",
+      "created_at": "2026-11-10T03:13:26Z"
+    },
+    {
+      "id": "SHD-XRP-6662B5",
+      "coin": "XRP",
+      "side": "SHORT",
+      "entry_price": 1.09441,
+      "stop_loss": 1.098342,
+      "tp_price": 1.084634,
+      "filter_reason": "LOW_CONFLUENCE_SCORE",
+      "confluence_score": 52.57,
+      "status": "ACTIVE",
+      "created_at": "2026-11-10T03:13:26Z"
     }
   ],
   "resolved_shadows": [
@@ -3636,7 +3684,7 @@
     }
   ],
   "stats": {
-    "total_filtered": 3248,
+    "total_filtered": 3252,
     "saved_from_loss": 2075,
     "missed_winners": 627,
     "shield_accuracy": 76.79,
@@ -3644,11 +3692,11 @@
   },
   "last_updated": "2026-11-01T18:21:42Z",
   "filter_breakdown": {
-    "LOW_CONFLUENCE_SCORE": 3166,
+    "LOW_CONFLUENCE_SCORE": 3170,
     "TIMEMACHINE_REJECTED": 0,
     "RISK_GUARDIAN_BLOCKED": 30,
     "SPREAD_GUARD_5PCT_BLOCKED": 0,
     "ECONOMIC_NEWS_BLOCKED": 44
   },
-  "updated_at": "2026-11-10T03:11:00Z"
+  "updated_at": "2026-11-10T03:13:26Z"
 }
