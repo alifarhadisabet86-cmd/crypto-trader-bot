@@ -3,11 +3,11 @@
     "regime": "TRENDING_BEAR",
     "strategy": "SMC_TREND_CONTINUATION",
     "htf_bias": "BEARISH",
-    "adx": 29.01,
+    "adx": 28.93,
     "tradable": true,
-    "current_price": 73968.5,
+    "current_price": 73896.6,
     "candidate_side": "SHORT",
-    "confluence_score": 57.85,
+    "confluence_score": 56.95,
     "zone": "PREMIUM",
     "asian_range": {
       "asian_high": 75141.2,
@@ -22,16 +22,16 @@
     "htf_bias": "BEARISH",
     "adx": 46.44,
     "tradable": true,
-    "current_price": 2061.04,
+    "current_price": 2058.42,
     "candidate_side": "SHORT",
-    "confluence_score": 56.32,
+    "confluence_score": 59.89,
     "zone": "EQUILIBRIUM",
     "asian_range": {
       "asian_high": 2131.75,
       "asian_low": 2108.37,
       "asian_sweep": "NONE"
     },
-    "xray_summary_fa": "هم‌راستا با روند ۱ ساعته (+24) | حمایت ساختار ۴ ساعته (+6) | مجاورت با FVG معتبر (+13) | شکار نقدینگی و استاپ‌هانت ۱۵m (+12)"
+    "xray_summary_fa": "هم‌راستا با روند ۱ ساعته (+24) | حمایت ساختار ۴ ساعته (+6) | حضور قیمت در ناحیه FVG دست‌نخورده (+18) | شکار نقدینگی و استاپ‌هانت ۱۵m (+12)"
   },
   "SOL": {
     "regime": "TRENDING_BEAR",
@@ -39,10 +39,10 @@
     "htf_bias": "BEARISH",
     "adx": 39.54,
     "tradable": true,
-    "current_price": 83.48,
+    "current_price": 83.42,
     "candidate_side": "SHORT",
-    "confluence_score": 74.54,
-    "zone": "PREMIUM",
+    "confluence_score": 73.11,
+    "zone": "EQUILIBRIUM",
     "asian_range": {
       "asian_high": 86.6,
       "asian_low": 85.5,
@@ -56,9 +56,9 @@
     "htf_bias": "BEARISH",
     "adx": 34.88,
     "tradable": true,
-    "current_price": 1.06059,
+    "current_price": 1.06159,
     "candidate_side": "SHORT",
-    "confluence_score": 56.66,
+    "confluence_score": 57.41,
     "zone": "PREMIUM",
     "asian_range": {
       "asian_high": 1.10318,
@@ -71,17 +71,17 @@
     "regime": "TRENDING_BEAR",
     "strategy": "SMC_TREND_CONTINUATION",
     "htf_bias": "NEUTRAL",
-    "adx": 42.51,
+    "adx": 42.62,
     "tradable": true,
-    "current_price": 4023.03,
-    "candidate_side": "LONG",
-    "confluence_score": 33.41,
+    "current_price": 4022.32,
+    "candidate_side": "SHORT",
+    "confluence_score": 45.02,
     "zone": "DISCOUNT",
     "asian_range": {
       "asian_high": 4118.93,
       "asian_low": 4098.44,
       "asian_sweep": "NONE"
     },
-    "xray_summary_fa": "مجاورت با FVG معتبر (+16) | ناحیه ارزان‌فروشی Discount (+11)"
+    "xray_summary_fa": "هم‌راستا با روند ۱ ساعته (+24) | مجاورت با FVG معتبر (+16)"
   }
 }
