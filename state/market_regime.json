@@ -3,11 +3,11 @@
     "regime": "RANGING",
     "strategy": "LIQUIDITY_SWEEP_REVERSAL",
     "htf_bias": "BEARISH",
-    "adx": 15.44,
+    "adx": 15.24,
     "tradable": true,
-    "current_price": 74259.1,
+    "current_price": 74265.3,
     "candidate_side": "NONE",
-    "confluence_score": 28.86,
+    "confluence_score": 30.81,
     "zone": "DISCOUNT",
     "asian_range": {
       "asian_high": 75424.5,
@@ -20,28 +20,28 @@
     "regime": "TRENDING_BEAR",
     "strategy": "SMC_TREND_CONTINUATION",
     "htf_bias": "BEARISH",
-    "adx": 28.37,
+    "adx": 30.95,
     "tradable": true,
-    "current_price": 2093.32,
+    "current_price": 2091.43,
     "candidate_side": "SHORT",
-    "confluence_score": 53.86,
+    "confluence_score": 49.73,
     "zone": "DISCOUNT",
     "asian_range": {
       "asian_high": 2136.75,
       "asian_low": 2108.37,
       "asian_sweep": "NONE"
     },
-    "xray_summary_fa": "هم‌راستا با روند ۱ ساعته (+22) | حمایت ساختار ۴ ساعته (+6) | مجاورت با FVG معتبر (+12) | تایید فشار اردربوک صرافی (+7) | سشن Killzone فعال (+7)"
+    "xray_summary_fa": "هم‌راستا با روند ۱ ساعته (+22) | حمایت ساختار ۴ ساعته (+6) | مجاورت با FVG معتبر (+11) | سشن Killzone فعال (+7)"
   },
   "SOL": {
     "regime": "TRENDING_BEAR",
     "strategy": "SMC_TREND_CONTINUATION",
     "htf_bias": "BEARISH",
-    "adx": 29.46,
+    "adx": 29.68,
     "tradable": true,
-    "current_price": 84.56,
+    "current_price": 84.55,
     "candidate_side": "SHORT",
-    "confluence_score": 62.92,
+    "confluence_score": 63.01,
     "zone": "DISCOUNT",
     "asian_range": {
       "asian_high": 86.81,
@@ -56,9 +56,9 @@
     "htf_bias": "BEARISH",
     "adx": 18.61,
     "tradable": true,
-    "current_price": 1.07992,
+    "current_price": 1.08077,
     "candidate_side": "LONG",
-    "confluence_score": 44.98,
+    "confluence_score": 45.13,
     "zone": "DISCOUNT",
     "asian_range": {
       "asian_high": 1.10572,
@@ -71,17 +71,17 @@
     "regime": "RANGING",
     "strategy": "LIQUIDITY_SWEEP_REVERSAL",
     "htf_bias": "NEUTRAL",
-    "adx": 33.13,
+    "adx": 33.22,
     "tradable": true,
-    "current_price": 4064.22,
+    "current_price": 4063.9,
     "candidate_side": "LONG",
-    "confluence_score": 47.12,
+    "confluence_score": 42.96,
     "zone": "DISCOUNT",
     "asian_range": {
       "asian_high": 4126.97,
       "asian_low": 4098.44,
       "asian_sweep": "NONE"
     },
-    "xray_summary_fa": "ساختار بازگشت به میانگین رنج (+14) | ناحیه ارزان‌فروشی Discount (+12) | شکار نقدینگی و استاپ‌هانت ۱۵m (+12) | تایید فشار اردربوک صرافی (+6) | سشن Killzone فعال (+7)"
+    "xray_summary_fa": "ساختار بازگشت به میانگین رنج (+14) | ناحیه ارزان‌فروشی Discount (+12) | شکار نقدینگی و استاپ‌هانت ۱۵m (+12) | سشن Killzone فعال (+7)"
   }
 }
