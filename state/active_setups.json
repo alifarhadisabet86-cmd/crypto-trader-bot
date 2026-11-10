@@ -1,1 +1,33 @@
-[]
+[
+  {
+    "id": "POS-SOL-33CC51",
+    "coin": "SOL",
+    "side": "SHORT",
+    "order_type": "LIMIT",
+    "trigger_type": "5M_ENGULFING",
+    "regime": "TRENDING_BEAR",
+    "confluence_score": 69.26,
+    "xray_summary_fa": "هم‌راستا با روند ۱ ساعته (+22) | حمایت ساختار ۴ ساعته (+6) | مجاورت با FVG معتبر (+16) | تایید فشار اردربوک صرافی (+6) | سشن Killzone فعال (+7)",
+    "slot_type": "STANDARD_SLOT",
+    "entry_price": 84.683429,
+    "current_price": 84.683429,
+    "stop_loss": 85.083286,
+    "initial_stop_loss": 85.083286,
+    "stop_distance": 0.399857,
+    "tp1_breakeven": 84.223593,
+    "tp2_final": 83.763758,
+    "initial_qty": 9.402702,
+    "remaining_qty": 9.402702,
+    "initial_notional_usdt": 796.25,
+    "remaining_notional_usdt": 796.25,
+    "margin_used_usdt": 159.25,
+    "initial_risk_usdt": 4.4,
+    "tp1_hit": false,
+    "is_risk_free": false,
+    "trailing_active": false,
+    "realized_pnl_usdt": -0.1593,
+    "unrealized_pnl_usdt": 0.0,
+    "fees_paid_usdt": 0.1593,
+    "opened_at": "2026-11-10T12:31:01Z"
+  }
+]
