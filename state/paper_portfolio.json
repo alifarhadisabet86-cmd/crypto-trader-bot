@@ -20,7 +20,7 @@
       "xray_summary_fa": "هم‌راستا با روند ۱ ساعته (+22) | حمایت ساختار ۴ ساعته (+6) | مجاورت با FVG معتبر (+16) | تایید فشار اردربوک صرافی (+6) | سشن Killzone فعال (+7)",
       "slot_type": "STANDARD_SLOT",
       "entry_price": 84.683429,
-      "current_price": 84.87,
+      "current_price": 84.73,
       "stop_loss": 85.083286,
       "initial_stop_loss": 85.083286,
       "stop_distance": 0.399857,
@@ -36,7 +36,7 @@
       "is_risk_free": false,
       "trailing_active": false,
       "realized_pnl_usdt": -0.1593,
-      "unrealized_pnl_usdt": -1.75,
+      "unrealized_pnl_usdt": -0.44,
       "fees_paid_usdt": 0.1593,
       "opened_at": "2026-11-10T12:31:01Z"
     }
@@ -288,7 +288,7 @@
   "last_reset_week": "2026-W46",
   "paper_gate_target": 50,
   "paper_gate_unlocked": false,
-  "updated_at": "2026-11-10T13:10:51Z",
+  "updated_at": "2026-11-10T13:21:03Z",
   "trading_mode": "PAPER",
   "closed_trades": [
     {
