@@ -1,5 +1,18 @@
 {
-  "active_shadows": [],
+  "active_shadows": [
+    {
+      "id": "SHD-SOL-54E149",
+      "coin": "SOL",
+      "side": "SHORT",
+      "entry_price": 84.22,
+      "stop_loss": 85.114286,
+      "tp_price": 82.163142,
+      "filter_reason": "ECONOMIC_NEWS_BLOCKED",
+      "confluence_score": 58.41,
+      "status": "ACTIVE",
+      "created_at": "2026-11-10T13:39:59Z"
+    }
+  ],
   "resolved_shadows": [
     {
       "id": "SHD-ETH-52CA52",
@@ -2603,7 +2616,7 @@
     }
   ],
   "stats": {
-    "total_filtered": 3472,
+    "total_filtered": 3473,
     "saved_from_loss": 2250,
     "missed_winners": 734,
     "shield_accuracy": 75.4,
@@ -2615,7 +2628,7 @@
     "TIMEMACHINE_REJECTED": 0,
     "RISK_GUARDIAN_BLOCKED": 31,
     "SPREAD_GUARD_5PCT_BLOCKED": 0,
-    "ECONOMIC_NEWS_BLOCKED": 55
+    "ECONOMIC_NEWS_BLOCKED": 56
   },
-  "updated_at": "2026-11-10T13:30:59Z"
+  "updated_at": "2026-11-10T13:39:59Z"
 }
