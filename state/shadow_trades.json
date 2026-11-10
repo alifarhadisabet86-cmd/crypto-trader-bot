@@ -1,31 +1,5 @@
 [
   {
-    "id": "SHD-XRP-EEC0B4",
-    "coin": "XRP",
-    "side": "SHORT",
-    "entry_price": 1.09125,
-    "stop_loss": 1.096987,
-    "tp_price": 1.078055,
-    "filter_reason": "LOW_CONFLUENCE_SCORE",
-    "confluence_score": 56.17,
-    "status": "MISSED_WINNER",
-    "created_at": "2026-11-10T08:30:58Z",
-    "resolved_at": "2026-11-10T10:40:47Z"
-  },
-  {
-    "id": "SHD-SOL-C6983C",
-    "coin": "SOL",
-    "side": "SHORT",
-    "entry_price": 85.66,
-    "stop_loss": 85.964429,
-    "tp_price": 84.959813,
-    "filter_reason": "LOW_CONFLUENCE_SCORE",
-    "confluence_score": 66.2,
-    "status": "MISSED_WINNER",
-    "created_at": "2026-11-10T08:41:01Z",
-    "resolved_at": "2026-11-10T10:40:47Z"
-  },
-  {
     "id": "SHD-SOL-7BF0C9",
     "coin": "SOL",
     "side": "SHORT",
@@ -2598,5 +2572,31 @@
     "status": "SAVED_FROM_LOSS",
     "created_at": "2026-11-10T22:32:26Z",
     "resolved_at": "2026-11-10T23:11:04Z"
+  },
+  {
+    "id": "SHD-SOL-745441",
+    "coin": "SOL",
+    "side": "SHORT",
+    "entry_price": 82.78,
+    "stop_loss": 83.06973,
+    "tp_price": 81.563134,
+    "filter_reason": "LOW_CONFLUENCE_SCORE",
+    "confluence_score": 53.72,
+    "status": "SAVED_FROM_LOSS",
+    "created_at": "2026-11-10T23:00:58Z",
+    "resolved_at": "2026-11-10T23:30:51Z"
+  },
+  {
+    "id": "SHD-SOL-D594EE",
+    "coin": "SOL",
+    "side": "SHORT",
+    "entry_price": 82.67,
+    "stop_loss": 83.061714,
+    "tp_price": 81.416,
+    "filter_reason": "LOW_CONFLUENCE_SCORE",
+    "confluence_score": 52.4,
+    "status": "SAVED_FROM_LOSS",
+    "created_at": "2026-11-10T23:11:04Z",
+    "resolved_at": "2026-11-10T23:30:51Z"
   }
 ]
