@@ -4,7 +4,7 @@
   "initial_balance_usdt": 1000.0,
   "day_start_date": "2026-11-01",
   "day_start_equity": 1000.0,
-  "daily_pnl_usdt": -2.7656,
+  "daily_pnl_usdt": 0.0,
   "daily_circuit_breaker": false,
   "consecutive_wins": 0,
   "consecutive_losses": 1,
@@ -248,15 +248,15 @@
     "total_fees_paid_usdt": 23.3598
   },
   "last_updated": "2026-11-01T18:21:42Z",
-  "daily_start_balance_usdt": 979.8186,
-  "last_reset_date": "2026-11-09",
+  "daily_start_balance_usdt": 977.053,
+  "last_reset_date": "2026-11-10",
   "weekly_start_balance_usdt": 979.8186,
   "weekly_pnl_usdt": -2.7656,
   "weekly_circuit_breaker": false,
   "last_reset_week": "2026-W46",
   "paper_gate_target": 50,
   "paper_gate_unlocked": false,
-  "updated_at": "2026-11-09T23:50:57Z",
+  "updated_at": "2026-11-10T00:01:04Z",
   "trading_mode": "PAPER",
   "closed_trades": [
     {
