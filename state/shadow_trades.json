@@ -1,44 +1,5 @@
 [
   {
-    "id": "SHD-SOL-7BF0C9",
-    "coin": "SOL",
-    "side": "SHORT",
-    "entry_price": 85.45,
-    "stop_loss": 85.751571,
-    "tp_price": 84.756387,
-    "filter_reason": "LOW_CONFLUENCE_SCORE",
-    "confluence_score": 66.3,
-    "status": "MISSED_WINNER",
-    "created_at": "2026-11-10T09:30:59Z",
-    "resolved_at": "2026-11-10T10:40:47Z"
-  },
-  {
-    "id": "SHD-BTC-90809B",
-    "coin": "BTC",
-    "side": "LONG",
-    "entry_price": 74518.3,
-    "stop_loss": 74257.48595,
-    "tp_price": 75379.19,
-    "filter_reason": "LOW_CONFLUENCE_SCORE",
-    "confluence_score": 42.81,
-    "status": "SAVED_FROM_LOSS",
-    "created_at": "2026-11-10T09:47:21Z",
-    "resolved_at": "2026-11-10T10:40:47Z"
-  },
-  {
-    "id": "SHD-SOL-62B495",
-    "coin": "SOL",
-    "side": "SHORT",
-    "entry_price": 85.53,
-    "stop_loss": 85.829355,
-    "tp_price": 84.841483,
-    "filter_reason": "LOW_CONFLUENCE_SCORE",
-    "confluence_score": 64.15,
-    "status": "MISSED_WINNER",
-    "created_at": "2026-11-10T09:51:03Z",
-    "resolved_at": "2026-11-10T10:40:47Z"
-  },
-  {
     "id": "SHD-SOL-DCC37C",
     "coin": "SOL",
     "side": "SHORT",
@@ -2598,5 +2559,44 @@
     "status": "SAVED_FROM_LOSS",
     "created_at": "2026-11-10T23:11:04Z",
     "resolved_at": "2026-11-10T23:30:51Z"
+  },
+  {
+    "id": "SHD-SOL-2635D6",
+    "coin": "SOL",
+    "side": "SHORT",
+    "entry_price": 83.03,
+    "stop_loss": 83.320605,
+    "tp_price": 81.809459,
+    "filter_reason": "LOW_CONFLUENCE_SCORE",
+    "confluence_score": 57.04,
+    "status": "SAVED_FROM_LOSS",
+    "created_at": "2026-11-10T22:32:26Z",
+    "resolved_at": "2026-11-10T23:41:01Z"
+  },
+  {
+    "id": "SHD-SOL-139D6A",
+    "coin": "SOL",
+    "side": "SHORT",
+    "entry_price": 82.82,
+    "stop_loss": 83.10987,
+    "tp_price": 81.602546,
+    "filter_reason": "LOW_CONFLUENCE_SCORE",
+    "confluence_score": 61.53,
+    "status": "SAVED_FROM_LOSS",
+    "created_at": "2026-11-10T23:14:46Z",
+    "resolved_at": "2026-11-10T23:41:01Z"
+  },
+  {
+    "id": "SHD-SOL-20867F",
+    "coin": "SOL",
+    "side": "SHORT",
+    "entry_price": 83.03,
+    "stop_loss": 83.320605,
+    "tp_price": 81.809459,
+    "filter_reason": "LOW_CONFLUENCE_SCORE",
+    "confluence_score": 56.0,
+    "status": "SAVED_FROM_LOSS",
+    "created_at": "2026-11-10T23:20:58Z",
+    "resolved_at": "2026-11-10T23:41:01Z"
   }
 ]
