@@ -1,31 +1,5 @@
 [
   {
-    "id": "SHD-ETH-C8988A",
-    "coin": "ETH",
-    "side": "SHORT",
-    "entry_price": 2113.15,
-    "stop_loss": 2120.546025,
-    "tp_price": 2096.139143,
-    "filter_reason": "LOW_CONFLUENCE_SCORE",
-    "confluence_score": 50.2,
-    "status": "MISSED_WINNER",
-    "created_at": "2026-11-10T08:41:01Z",
-    "resolved_at": "2026-11-10T09:10:56Z"
-  },
-  {
-    "id": "SHD-ETH-950D36",
-    "coin": "ETH",
-    "side": "SHORT",
-    "entry_price": 2116.14,
-    "stop_loss": 2123.54649,
-    "tp_price": 2099.105073,
-    "filter_reason": "LOW_CONFLUENCE_SCORE",
-    "confluence_score": 49.92,
-    "status": "MISSED_WINNER",
-    "created_at": "2026-11-10T08:50:53Z",
-    "resolved_at": "2026-11-10T09:10:56Z"
-  },
-  {
     "id": "SHD-SOL-C5F67D",
     "coin": "SOL",
     "side": "SHORT",
@@ -2598,5 +2572,31 @@
     "status": "SAVED_FROM_LOSS",
     "created_at": "2026-11-10T22:01:05Z",
     "resolved_at": "2026-11-10T22:21:01Z"
+  },
+  {
+    "id": "SHD-ETH-46513D",
+    "coin": "ETH",
+    "side": "LONG",
+    "entry_price": 2058.17,
+    "stop_loss": 2050.966405,
+    "tp_price": 2088.425099,
+    "filter_reason": "LOW_CONFLUENCE_SCORE",
+    "confluence_score": 30.18,
+    "status": "SAVED_FROM_LOSS",
+    "created_at": "2026-11-10T22:01:05Z",
+    "resolved_at": "2026-11-10T22:31:00Z"
+  },
+  {
+    "id": "SHD-ETH-5F158E",
+    "coin": "ETH",
+    "side": "LONG",
+    "entry_price": 2058.94,
+    "stop_loss": 2051.73371,
+    "tp_price": 2089.206418,
+    "filter_reason": "LOW_CONFLUENCE_SCORE",
+    "confluence_score": 30.68,
+    "status": "SAVED_FROM_LOSS",
+    "created_at": "2026-11-10T22:11:01Z",
+    "resolved_at": "2026-11-10T22:31:00Z"
   }
 ]
