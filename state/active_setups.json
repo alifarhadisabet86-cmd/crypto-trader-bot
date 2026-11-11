@@ -10,7 +10,7 @@
     "xray_summary_fa": "هم‌راستا با روند ۱ ساعته (+24) | حمایت ساختار ۴ ساعته (+6) | ناحیه گران‌فروشی Premium (+12) | شکار نقدینگی و استاپ‌هانت ۱۵m (+12) | واگرایی پول هوشمند SMT (+6)",
     "slot_type": "STANDARD_SLOT",
     "entry_price": 83.6305,
-    "current_price": 83.21,
+    "current_price": 83.09,
     "stop_loss": 83.293887,
     "initial_stop_loss": 83.923207,
     "stop_distance": 0.292707,
@@ -26,7 +26,7 @@
     "is_risk_free": true,
     "trailing_active": true,
     "realized_pnl_usdt": -0.2043,
-    "unrealized_pnl_usdt": 5.14,
+    "unrealized_pnl_usdt": 6.6,
     "fees_paid_usdt": 0.2043,
     "opened_at": "2026-11-11T01:50:56Z"
   }
