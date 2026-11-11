@@ -20,7 +20,7 @@
       "xray_summary_fa": "هم‌راستا با روند ۱ ساعته (+20) | حمایت ساختار ۴ ساعته (+6) | مجاورت با FVG معتبر (+16) | ناحیه گران‌فروشی Premium (+7) | شکار نقدینگی و استاپ‌هانت ۱۵m (+12) | تایید فشار اردربوک صرافی (+5) | سشن Killzone فعال (+7) | واگرایی پول هوشمند SMT (+6)",
       "slot_type": "STANDARD_SLOT",
       "entry_price": 73814.704286,
-      "current_price": 73815.6,
+      "current_price": 74049.8,
       "stop_loss": 74156.724286,
       "initial_stop_loss": 74156.724286,
       "stop_distance": 342.02,
@@ -36,7 +36,7 @@
       "is_risk_free": false,
       "trailing_active": false,
       "realized_pnl_usdt": -0.0805,
-      "unrealized_pnl_usdt": -0.0,
+      "unrealized_pnl_usdt": -1.28,
       "fees_paid_usdt": 0.0805,
       "opened_at": "2026-11-11T08:30:58Z"
     }
@@ -308,7 +308,7 @@
   "last_reset_week": "2026-W46",
   "paper_gate_target": 50,
   "paper_gate_unlocked": false,
-  "updated_at": "2026-11-11T10:21:01Z",
+  "updated_at": "2026-11-11T10:31:06Z",
   "trading_mode": "PAPER",
   "closed_trades": [
     {
