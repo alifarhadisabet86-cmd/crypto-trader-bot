@@ -5,16 +5,16 @@
     "htf_bias": "BEARISH",
     "adx": 17.84,
     "tradable": true,
-    "current_price": 74045.1,
+    "current_price": 74047.0,
     "candidate_side": "NONE",
-    "confluence_score": 36.99,
+    "confluence_score": 42.03,
     "zone": "PREMIUM",
     "asian_range": {
       "asian_high": 74016.0,
       "asian_low": 73221.4,
       "asian_sweep": "NONE"
     },
-    "xray_summary_fa": "ساختار بازگشت به میانگین رنج (+14) | حمایت ساختار ۴ ساعته (+6) | ناحیه گران‌فروشی Premium (+12) | سشن Killzone فعال (+7)"
+    "xray_summary_fa": "ساختار بازگشت به میانگین رنج (+14) | حمایت ساختار ۴ ساعته (+6) | ناحیه گران‌فروشی Premium (+12) | تایید فشار اردربوک صرافی (+7) | سشن Killzone فعال (+7)"
   },
   "ETH": {
     "regime": "TRENDING_BEAR",
@@ -22,16 +22,16 @@
     "htf_bias": "BEARISH",
     "adx": 34.1,
     "tradable": true,
-    "current_price": 2059.77,
+    "current_price": 2058.92,
     "candidate_side": "SHORT",
-    "confluence_score": 52.53,
+    "confluence_score": 50.47,
     "zone": "EQUILIBRIUM",
     "asian_range": {
       "asian_high": 2073.57,
       "asian_low": 2043.7,
       "asian_sweep": "NONE"
     },
-    "xray_summary_fa": "هم‌راستا با روند ۱ ساعته (+23) | حمایت ساختار ۴ ساعته (+6) | مجاورت با FVG معتبر (+16) | سشن Killzone فعال (+7)"
+    "xray_summary_fa": "هم‌راستا با روند ۱ ساعته (+23) | حمایت ساختار ۴ ساعته (+6) | مجاورت با FVG معتبر (+15) | سشن Killzone فعال (+7)"
   },
   "SOL": {
     "regime": "RANGING",
@@ -39,16 +39,16 @@
     "htf_bias": "BEARISH",
     "adx": 32.08,
     "tradable": true,
-    "current_price": 83.96,
+    "current_price": 83.97,
     "candidate_side": "NONE",
-    "confluence_score": 47.38,
+    "confluence_score": 50.88,
     "zone": "PREMIUM",
     "asian_range": {
       "asian_high": 84.06,
       "asian_low": 82.66,
       "asian_sweep": "NONE"
     },
-    "xray_summary_fa": "ساختار بازگشت به میانگین رنج (+14) | حمایت ساختار ۴ ساعته (+6) | ناحیه گران‌فروشی Premium (+12) | سشن Killzone فعال (+7)"
+    "xray_summary_fa": "ساختار بازگشت به میانگین رنج (+14) | حمایت ساختار ۴ ساعته (+6) | ناحیه گران‌فروشی Premium (+12) | تایید فشار اردربوک صرافی (+7) | سشن Killzone فعال (+7)"
   },
   "XRP": {
     "regime": "TRENDING_BEAR",
@@ -56,10 +56,10 @@
     "htf_bias": "BEARISH",
     "adx": 27.35,
     "tradable": true,
-    "current_price": 1.05839,
+    "current_price": 1.05857,
     "candidate_side": "SHORT",
-    "confluence_score": 58.73,
-    "zone": "EQUILIBRIUM",
+    "confluence_score": 59.85,
+    "zone": "PREMIUM",
     "asian_range": {
       "asian_high": 1.06519,
       "asian_low": 1.04723,
@@ -73,15 +73,15 @@
     "htf_bias": "NEUTRAL",
     "adx": 19.75,
     "tradable": true,
-    "current_price": 4044.22,
+    "current_price": 4043.69,
     "candidate_side": "NONE",
-    "confluence_score": 34.0,
+    "confluence_score": 34.54,
     "zone": "DISCOUNT",
     "asian_range": {
       "asian_high": 4058.61,
       "asian_low": 4021.76,
       "asian_sweep": "NONE"
     },
-    "xray_summary_fa": "ساختار بازگشت به میانگین رنج (+14) | سشن Killzone فعال (+7) | واگرایی پول هوشمند SMT (+6)"
+    "xray_summary_fa": "ساختار بازگشت به میانگین رنج (+14) | ناحیه ارزان‌فروشی Discount (+6) | سشن Killzone فعال (+7) | واگرایی پول هوشمند SMT (+6)"
   }
 }
