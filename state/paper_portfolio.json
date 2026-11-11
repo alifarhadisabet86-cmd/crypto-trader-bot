@@ -20,7 +20,7 @@
       "xray_summary_fa": "هم‌راستا با روند ۱ ساعته (+21) | حمایت ساختار ۴ ساعته (+6) | مجاورت با FVG معتبر (+16) | حجم تراکنش بالاتر از میانگین (+8) | تایید فشار اردربوک صرافی (+7) | واگرایی پول هوشمند SMT (+6)",
       "slot_type": "STANDARD_SLOT",
       "entry_price": 83.0085,
-      "current_price": 83.0085,
+      "current_price": 83.08,
       "stop_loss": 83.45,
       "initial_stop_loss": 83.45,
       "stop_distance": 0.4415,
@@ -36,7 +36,7 @@
       "is_risk_free": false,
       "trailing_active": false,
       "realized_pnl_usdt": -0.1424,
-      "unrealized_pnl_usdt": 0.0,
+      "unrealized_pnl_usdt": -0.61,
       "fees_paid_usdt": 0.1424,
       "opened_at": "2026-11-11T23:40:51Z"
     }
@@ -303,7 +303,7 @@
     "losses": 26,
     "win_rate_pct": 40.91,
     "total_pnl_usdt": -4.8578,
-    "max_drawdown_pct": 3.67,
+    "max_drawdown_pct": 3.68,
     "consecutive_wins": 0,
     "consecutive_losses": 1,
     "peak_equity_usdt": 1004.44,
@@ -318,7 +318,7 @@
   "last_reset_week": "2026-W46",
   "paper_gate_target": 50,
   "paper_gate_unlocked": false,
-  "updated_at": "2026-11-11T23:40:53Z",
+  "updated_at": "2026-11-11T23:50:59Z",
   "trading_mode": "PAPER",
   "closed_trades": [
     {
