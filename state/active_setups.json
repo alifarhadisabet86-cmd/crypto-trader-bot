@@ -1,1 +1,33 @@
-[]
+[
+  {
+    "id": "POS-SOL-026757",
+    "coin": "SOL",
+    "side": "SHORT",
+    "order_type": "LIMIT",
+    "trigger_type": "5M_ENGULFING",
+    "regime": "TRENDING_BEAR",
+    "confluence_score": 71.87,
+    "xray_summary_fa": "هم‌راستا با روند ۱ ساعته (+21) | حمایت ساختار ۴ ساعته (+6) | مجاورت با FVG معتبر (+16) | حجم تراکنش بالاتر از میانگین (+8) | تایید فشار اردربوک صرافی (+7) | واگرایی پول هوشمند SMT (+6)",
+    "slot_type": "STANDARD_SLOT",
+    "entry_price": 83.0085,
+    "current_price": 83.0085,
+    "stop_loss": 83.45,
+    "initial_stop_loss": 83.45,
+    "stop_distance": 0.4415,
+    "tp1_breakeven": 82.500775,
+    "tp2_final": 81.99305,
+    "initial_qty": 8.578698,
+    "remaining_qty": 8.578698,
+    "initial_notional_usdt": 712.1,
+    "remaining_notional_usdt": 712.1,
+    "margin_used_usdt": 142.42,
+    "initial_risk_usdt": 4.36,
+    "tp1_hit": false,
+    "is_risk_free": false,
+    "trailing_active": false,
+    "realized_pnl_usdt": -0.1424,
+    "unrealized_pnl_usdt": 0.0,
+    "fees_paid_usdt": 0.1424,
+    "opened_at": "2026-11-11T23:40:51Z"
+  }
+]
