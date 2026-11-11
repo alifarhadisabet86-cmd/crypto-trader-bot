@@ -1,45 +1,14 @@
 {
   "version": "2.0",
-  "balance_usdt": 972.3062,
+  "balance_usdt": 972.5314,
   "initial_balance_usdt": 1000.0,
   "day_start_date": "2026-11-01",
   "day_start_equity": 1000.0,
-  "daily_pnl_usdt": -3.9483,
+  "daily_pnl_usdt": -3.7231,
   "daily_circuit_breaker": false,
   "consecutive_wins": 0,
   "consecutive_losses": 1,
   "open_positions": [
-    {
-      "id": "POS-BTC-F69673",
-      "coin": "BTC",
-      "side": "SHORT",
-      "order_type": "LIMIT",
-      "trigger_type": "5M_PINBAR",
-      "regime": "TRENDING_BEAR",
-      "confluence_score": 68.99,
-      "xray_summary_fa": "هم‌راستا با روند ۱ ساعته (+20) | حمایت ساختار ۴ ساعته (+6) | مجاورت با FVG معتبر (+16) | ناحیه گران‌فروشی Premium (+7) | شکار نقدینگی و استاپ‌هانت ۱۵m (+12) | تایید فشار اردربوک صرافی (+5) | سشن Killzone فعال (+7) | واگرایی پول هوشمند SMT (+6)",
-      "slot_type": "STANDARD_SLOT",
-      "entry_price": 73814.704286,
-      "current_price": 73749.6,
-      "stop_loss": 73729.199286,
-      "initial_stop_loss": 74156.724286,
-      "stop_distance": 342.02,
-      "tp1_breakeven": 73421.381286,
-      "tp2_final": 73028.058286,
-      "initial_qty": 0.005456,
-      "remaining_qty": 0.005456,
-      "initial_notional_usdt": 402.71,
-      "remaining_notional_usdt": 402.71,
-      "margin_used_usdt": 80.54,
-      "initial_risk_usdt": 2.19,
-      "tp1_hit": true,
-      "is_risk_free": true,
-      "trailing_active": false,
-      "realized_pnl_usdt": -0.0805,
-      "unrealized_pnl_usdt": 0.36,
-      "fees_paid_usdt": 0.0805,
-      "opened_at": "2026-11-11T08:30:58Z"
-    },
     {
       "id": "POS-SOL-FEE2C1",
       "coin": "SOL",
@@ -51,7 +20,7 @@
       "xray_summary_fa": "ساختار بازگشت به میانگین رنج (+14) | حمایت ساختار ۴ ساعته (+6) | حضور قیمت در ناحیه FVG دست‌نخورده (+18) | ناحیه گران‌فروشی Premium (+11) | شکار نقدینگی و استاپ‌هانت ۱۵m (+12) | سشن Killzone فعال (+7)",
       "slot_type": "STANDARD_SLOT",
       "entry_price": 84.224143,
-      "current_price": 84.34,
+      "current_price": 84.31,
       "stop_loss": 84.834143,
       "initial_stop_loss": 84.834143,
       "stop_distance": 0.61,
@@ -67,7 +36,7 @@
       "is_risk_free": false,
       "trailing_active": false,
       "realized_pnl_usdt": -0.1088,
-      "unrealized_pnl_usdt": -0.75,
+      "unrealized_pnl_usdt": -0.55,
       "fees_paid_usdt": 0.1088,
       "opened_at": "2026-11-11T14:31:01Z"
     }
@@ -316,30 +285,35 @@
       "timestamp": "2026-11-11T08:00:59Z",
       "equity": 972.5,
       "event": "SOL_STOP_LOSS"
+    },
+    {
+      "timestamp": "2026-11-11T14:41:06Z",
+      "equity": 972.53,
+      "event": "BTC_BREAKEVEN_STOP"
     }
   ],
   "stats": {
-    "total_trades": 42,
-    "wins": 17,
+    "total_trades": 43,
+    "wins": 18,
     "losses": 25,
-    "win_rate_pct": 40.48,
+    "win_rate_pct": 41.86,
     "total_pnl_usdt": -4.8578,
     "max_drawdown_pct": 3.67,
-    "consecutive_wins": 0,
-    "consecutive_losses": 1,
+    "consecutive_wins": 1,
+    "consecutive_losses": 0,
     "peak_equity_usdt": 1004.44,
-    "total_fees_paid_usdt": 26.6084
+    "total_fees_paid_usdt": 26.8498
   },
   "last_updated": "2026-11-01T18:21:42Z",
   "daily_start_balance_usdt": 976.2545,
   "last_reset_date": "2026-11-11",
   "weekly_start_balance_usdt": 979.8186,
-  "weekly_pnl_usdt": -7.5124,
+  "weekly_pnl_usdt": -7.2872,
   "weekly_circuit_breaker": false,
   "last_reset_week": "2026-W46",
   "paper_gate_target": 50,
   "paper_gate_unlocked": false,
-  "updated_at": "2026-11-11T14:39:36Z",
+  "updated_at": "2026-11-11T14:41:07Z",
   "trading_mode": "PAPER",
   "closed_trades": [
     {
@@ -1108,6 +1082,24 @@
       "outcome": "LOSS",
       "opened_at": "2026-11-11T07:00:57Z",
       "closed_at": "2026-11-11T08:00:59Z"
+    },
+    {
+      "id": "POS-BTC-F69673",
+      "coin": "BTC",
+      "side": "SHORT",
+      "regime": "TRENDING_BEAR",
+      "confluence_score": 68.99,
+      "entry_price": 73814.704286,
+      "exit_price": 73729.199286,
+      "exit_reason": "BREAKEVEN_STOP",
+      "tp1_hit": true,
+      "trailing_active": false,
+      "net_pnl_usdt": 0.14,
+      "r_multiple": 0.07,
+      "fees_paid_usdt": 0.3219,
+      "outcome": "WIN",
+      "opened_at": "2026-11-11T08:30:58Z",
+      "closed_at": "2026-11-11T14:41:06Z"
     }
   ]
 }
