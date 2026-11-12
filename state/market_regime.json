@@ -3,85 +3,85 @@
     "regime": "TRENDING_BEAR",
     "strategy": "SMC_TREND_CONTINUATION",
     "htf_bias": "BEARISH",
-    "adx": 49.26,
+    "adx": 45.34,
     "tradable": true,
-    "current_price": 71344.8,
+    "current_price": 71520.6,
     "candidate_side": "SHORT",
-    "confluence_score": 36.37,
+    "confluence_score": 59.38,
     "zone": "DISCOUNT",
     "asian_range": {
       "asian_high": 73873.9,
       "asian_low": 73532.2,
       "asian_sweep": "NONE"
     },
-    "xray_summary_fa": "هم‌راستا با روند ۱ ساعته (+24) | حمایت ساختار ۴ ساعته (+6) | مجاورت با FVG معتبر (+7)"
+    "xray_summary_fa": "هم‌راستا با روند ۱ ساعته (+24) | حمایت ساختار ۴ ساعته (+6) | حضور قیمت در ناحیه FVG دست‌نخورده (+18) | حجم تراکنش بالاتر از میانگین (+8) | تایید فشار اردربوک صرافی (+7)"
   },
   "ETH": {
     "regime": "TRENDING_BEAR",
     "strategy": "SMC_TREND_CONTINUATION",
     "htf_bias": "BEARISH",
-    "adx": 36.13,
+    "adx": 34.5,
     "tradable": true,
-    "current_price": 2012.67,
+    "current_price": 2019.18,
     "candidate_side": "SHORT",
-    "confluence_score": 52.64,
+    "confluence_score": 52.24,
     "zone": "PREMIUM",
     "asian_range": {
       "asian_high": 2057.09,
       "asian_low": 2041.41,
       "asian_sweep": "NONE"
     },
-    "xray_summary_fa": "هم‌راستا با روند ۱ ساعته (+23) | حمایت ساختار ۴ ساعته (+6) | مجاورت با FVG معتبر (+14) | ناحیه گران‌فروشی Premium (+8)"
+    "xray_summary_fa": "هم‌راستا با روند ۱ ساعته (+23) | حمایت ساختار ۴ ساعته (+6) | ناحیه گران‌فروشی Premium (+12) | تایید فشار اردربوک صرافی (+7)"
   },
   "SOL": {
     "regime": "TRENDING_BEAR",
     "strategy": "SMC_TREND_CONTINUATION",
     "htf_bias": "BEARISH",
-    "adx": 38.29,
+    "adx": 37.73,
     "tradable": true,
-    "current_price": 81.41,
+    "current_price": 81.71,
     "candidate_side": "SHORT",
-    "confluence_score": 55.19,
-    "zone": "EQUILIBRIUM",
+    "confluence_score": 54.19,
+    "zone": "PREMIUM",
     "asian_range": {
       "asian_high": 83.46,
       "asian_low": 82.68,
       "asian_sweep": "NONE"
     },
-    "xray_summary_fa": "هم‌راستا با روند ۱ ساعته (+24) | حمایت ساختار ۴ ساعته (+6) | مجاورت با FVG معتبر (+10)"
+    "xray_summary_fa": "هم‌راستا با روند ۱ ساعته (+24) | حمایت ساختار ۴ ساعته (+6) | ناحیه گران‌فروشی Premium (+9) | تایید فشار اردربوک صرافی (+6)"
   },
   "XRP": {
-    "regime": "TRENDING_BEAR",
-    "strategy": "SMC_TREND_CONTINUATION",
+    "regime": "RANGING",
+    "strategy": "LIQUIDITY_SWEEP_REVERSAL",
     "htf_bias": "BEARISH",
-    "adx": 23.7,
+    "adx": 23.57,
     "tradable": true,
-    "current_price": 1.03526,
-    "candidate_side": "SHORT",
-    "confluence_score": 58.42,
+    "current_price": 1.03972,
+    "candidate_side": "LONG",
+    "confluence_score": 39.92,
     "zone": "PREMIUM",
     "asian_range": {
       "asian_high": 1.04995,
       "asian_low": 1.0378,
-      "asian_sweep": "NONE"
+      "asian_sweep": "ASIAN_LOW_SWEEP_BULL"
     },
-    "xray_summary_fa": "هم‌راستا با روند ۱ ساعته (+21) | حمایت ساختار ۴ ساعته (+6) | مجاورت با FVG معتبر (+11) | ناحیه گران‌فروشی Premium (+9) | تایید فشار اردربوک صرافی (+7)"
+    "xray_summary_fa": "ساختار بازگشت به میانگین رنج (+14) | مجاورت با FVG معتبر (+4) | شکار نقدینگی سشن آسیا (+11) | تایید فشار اردربوک صرافی (+7) | واگرایی پول هوشمند SMT (+6)"
   },
   "XAU": {
     "regime": "TRENDING_BEAR",
     "strategy": "SMC_TREND_CONTINUATION",
     "htf_bias": "BEARISH",
-    "adx": 59.66,
+    "adx": 59.69,
     "tradable": true,
-    "current_price": 3879.36,
+    "current_price": 3877.85,
     "candidate_side": "SHORT",
-    "confluence_score": 49.68,
+    "confluence_score": 61.11,
     "zone": "DISCOUNT",
     "asian_range": {
       "asian_high": 3980.71,
       "asian_low": 3967.02,
       "asian_sweep": "NONE"
     },
-    "xray_summary_fa": "هم‌راستا با روند ۱ ساعته (+24) | حمایت ساختار ۴ ساعته (+6) | حضور قیمت در ناحیه FVG دست‌نخورده (+18)"
+    "xray_summary_fa": "هم‌راستا با روند ۱ ساعته (+24) | حمایت ساختار ۴ ساعته (+6) | حضور قیمت در ناحیه FVG دست‌نخورده (+18) | حجم تراکنش بالاتر از میانگین (+8) | تایید فشار اردربوک صرافی (+7)"
   }
 }
