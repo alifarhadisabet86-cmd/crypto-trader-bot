@@ -10,7 +10,7 @@
     "xray_summary_fa": "هم‌راستا با روند ۱ ساعته (+22) | حمایت ساختار ۴ ساعته (+6) | مجاورت با FVG معتبر (+13) | حجم تراکنش بالاتر از میانگین (+8) | سشن Killzone فعال (+7) | واگرایی پول هوشمند SMT (+6) | هم‌سو با مومنتوم لیدر BTC (+3)",
     "slot_type": "STANDARD_SLOT",
     "entry_price": 82.475071,
-    "current_price": 82.18,
+    "current_price": 82.25,
     "stop_loss": 82.801286,
     "initial_stop_loss": 82.801286,
     "stop_distance": 0.326215,
@@ -26,7 +26,7 @@
     "is_risk_free": false,
     "trailing_active": false,
     "realized_pnl_usdt": -0.076,
-    "unrealized_pnl_usdt": 1.36,
+    "unrealized_pnl_usdt": 1.04,
     "fees_paid_usdt": 0.076,
     "opened_at": "2026-11-12T11:51:00Z"
   }
