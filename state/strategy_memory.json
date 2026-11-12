@@ -7,7 +7,7 @@
   "coin_multipliers": {
     "BTC": 0.9042,
     "ETH": 0.8892,
-    "SOL": 1.0451,
+    "SOL": 1.026,
     "XRP": 0.9824,
     "XAU": 0.8762
   },
@@ -32,10 +32,10 @@
       "avg_r": -0.853
     },
     "SOL": {
-      "trades": 11,
+      "trades": 12,
       "wins": 7,
-      "posterior_wr": 0.5789,
-      "avg_r": 0.113
+      "posterior_wr": 0.55,
+      "avg_r": 0.02
     },
     "XRP": {
       "trades": 18,
@@ -50,5 +50,5 @@
       "avg_r": -1.475
     }
   },
-  "updated_at": "2026-11-12T00:01:00Z"
+  "updated_at": "2026-11-12T00:11:04Z"
 }
