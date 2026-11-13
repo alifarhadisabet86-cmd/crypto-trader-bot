@@ -10,7 +10,7 @@
     "xray_summary_fa": "هم‌راستا با روند ۱ ساعته (+21) | حمایت ساختار ۴ ساعته (+6) | حضور قیمت در ناحیه FVG دست‌نخورده (+18) | ناحیه گران‌فروشی Premium (+12) | شکار نقدینگی و استاپ‌هانت ۱۵m (+12) | تایید فشار اردربوک صرافی (+7)",
     "slot_type": "STANDARD_SLOT",
     "entry_price": 1.038707,
-    "current_price": 1.03052,
+    "current_price": 1.0329,
     "stop_loss": 1.037186,
     "initial_stop_loss": 1.044791,
     "stop_distance": 0.006084,
@@ -26,7 +26,7 @@
     "is_risk_free": true,
     "trailing_active": false,
     "realized_pnl_usdt": -0.1744,
-    "unrealized_pnl_usdt": 6.87,
+    "unrealized_pnl_usdt": 4.88,
     "fees_paid_usdt": 0.1744,
     "opened_at": "2026-11-12T22:10:59Z"
   }
