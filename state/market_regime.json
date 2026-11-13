@@ -3,85 +3,85 @@
     "regime": "TRENDING_BEAR",
     "strategy": "SMC_TREND_CONTINUATION",
     "htf_bias": "BEARISH",
-    "adx": 50.35,
+    "adx": 49.66,
     "tradable": true,
-    "current_price": 70893.5,
-    "candidate_side": "NONE",
-    "confluence_score": 48.89,
+    "current_price": 71051.5,
+    "candidate_side": "SHORT",
+    "confluence_score": 53.09,
     "zone": "DISCOUNT",
     "asian_range": {
-      "asian_high": 73818.5,
+      "asian_high": 73737.8,
       "asian_low": 70688.7,
       "asian_sweep": "NONE"
     },
-    "xray_summary_fa": "هم‌راستا با روند ۱ ساعته (+24) | حمایت ساختار ۴ ساعته (+6) | حجم تراکنش بالاتر از میانگین (+8) | تایید فشار اردربوک صرافی (+7)"
+    "xray_summary_fa": "هم‌راستا با روند ۱ ساعته (+24) | حمایت ساختار ۴ ساعته (+6) | مجاورت با FVG معتبر (+9) | تایید فشار اردربوک صرافی (+7)"
   },
   "ETH": {
     "regime": "TRENDING_BEAR",
     "strategy": "SMC_TREND_CONTINUATION",
     "htf_bias": "BEARISH",
-    "adx": 33.97,
+    "adx": 33.35,
     "tradable": true,
-    "current_price": 2004.39,
-    "candidate_side": "NONE",
-    "confluence_score": 49.71,
-    "zone": "DISCOUNT",
+    "current_price": 2009.79,
+    "candidate_side": "SHORT",
+    "confluence_score": 45.97,
+    "zone": "EQUILIBRIUM",
     "asian_range": {
-      "asian_high": 2053.86,
+      "asian_high": 2050.55,
       "asian_low": 2001.0,
       "asian_sweep": "NONE"
     },
-    "xray_summary_fa": "هم‌راستا با روند ۱ ساعته (+23) | حمایت ساختار ۴ ساعته (+6) | حجم تراکنش بالاتر از میانگین (+8) | تایید فشار اردربوک صرافی (+7) | هم‌سو با مومنتوم لیدر BTC (+3)"
+    "xray_summary_fa": "هم‌راستا با روند ۱ ساعته (+23) | حمایت ساختار ۴ ساعته (+6) | مجاورت با FVG معتبر (+12)"
   },
   "SOL": {
     "regime": "TRENDING_BEAR",
     "strategy": "SMC_TREND_CONTINUATION",
     "htf_bias": "BEARISH",
-    "adx": 36.5,
+    "adx": 36.59,
     "tradable": true,
-    "current_price": 81.18,
+    "current_price": 81.41,
     "candidate_side": "NONE",
-    "confluence_score": 47.27,
-    "zone": "DISCOUNT",
+    "confluence_score": 46.8,
+    "zone": "EQUILIBRIUM",
     "asian_range": {
-      "asian_high": 83.24,
-      "asian_low": 81.1,
+      "asian_high": 83.13,
+      "asian_low": 81.03,
       "asian_sweep": "NONE"
     },
-    "xray_summary_fa": "هم‌راستا با روند ۱ ساعته (+23) | حمایت ساختار ۴ ساعته (+6) | تایید فشار اردربوک صرافی (+6) | هم‌سو با مومنتوم لیدر BTC (+3)"
+    "xray_summary_fa": "هم‌راستا با روند ۱ ساعته (+23) | حمایت ساختار ۴ ساعته (+6) | تایید فشار اردربوک صرافی (+5)"
   },
   "XRP": {
     "regime": "TRENDING_BEAR",
     "strategy": "SMC_TREND_CONTINUATION",
     "htf_bias": "BEARISH",
-    "adx": 22.0,
+    "adx": 22.17,
     "tradable": true,
-    "current_price": 1.0327,
+    "current_price": 1.03397,
     "candidate_side": "SHORT",
-    "confluence_score": 49.68,
+    "confluence_score": 57.64,
     "zone": "PREMIUM",
     "asian_range": {
-      "asian_high": 1.04647,
-      "asian_low": 1.0316,
+      "asian_high": 1.04478,
+      "asian_low": 1.03016,
       "asian_sweep": "NONE"
     },
-    "xray_summary_fa": "هم‌راستا با روند ۱ ساعته (+20) | حمایت ساختار ۴ ساعته (+6) | مجاورت با FVG معتبر (+4) | هم‌سو با مومنتوم لیدر BTC (+3)"
+    "xray_summary_fa": "هم‌راستا با روند ۱ ساعته (+20) | حمایت ساختار ۴ ساعته (+6) | مجاورت با FVG معتبر (+14) | ناحیه گران‌فروشی Premium (+7)"
   },
   "XAU": {
     "regime": "TRENDING_BEAR",
     "strategy": "SMC_TREND_CONTINUATION",
     "htf_bias": "BEARISH",
-    "adx": 56.88,
+    "adx": 56.76,
     "tradable": true,
-    "current_price": 3886.74,
+    "current_price": 3890.89,
     "candidate_side": "SHORT",
-    "confluence_score": 52.73,
+    "confluence_score": 45.59,
     "zone": "PREMIUM",
     "asian_range": {
       "asian_high": 3976.79,
       "asian_low": 3882.45,
       "asian_sweep": "NONE"
     },
-    "xray_summary_fa": "هم‌راستا با روند ۱ ساعته (+24) | حمایت ساختار ۴ ساعته (+6) | ناحیه گران‌فروشی Premium (+12) | شکار نقدینگی و استاپ‌هانت ۱۵m (+12)"
+    "xray_summary_fa": "هم‌راستا با روند ۱ ساعته (+24) | حمایت ساختار ۴ ساعته (+6) | ناحیه گران‌فروشی Premium (+12)"
   }
 }
