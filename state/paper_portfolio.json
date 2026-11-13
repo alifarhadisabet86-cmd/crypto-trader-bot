@@ -20,8 +20,8 @@
       "xray_summary_fa": "هم‌راستا با روند ۱ ساعته (+21) | حمایت ساختار ۴ ساعته (+6) | حضور قیمت در ناحیه FVG دست‌نخورده (+18) | ناحیه گران‌فروشی Premium (+12) | شکار نقدینگی و استاپ‌هانت ۱۵m (+12) | تایید فشار اردربوک صرافی (+7)",
       "slot_type": "STANDARD_SLOT",
       "entry_price": 1.038707,
-      "current_price": 1.0315,
-      "stop_loss": 1.037186,
+      "current_price": 1.02761,
+      "stop_loss": 1.03171,
       "initial_stop_loss": 1.044791,
       "stop_distance": 0.006084,
       "tp1_breakeven": 1.03171,
@@ -34,9 +34,9 @@
       "initial_risk_usdt": 5.81,
       "tp1_hit": true,
       "is_risk_free": true,
-      "trailing_active": false,
+      "trailing_active": true,
       "realized_pnl_usdt": -0.1744,
-      "unrealized_pnl_usdt": 6.05,
+      "unrealized_pnl_usdt": 9.32,
       "fees_paid_usdt": 0.1744,
       "opened_at": "2026-11-12T22:10:59Z"
     }
@@ -333,7 +333,7 @@
   "last_reset_week": "2026-W46",
   "paper_gate_target": 50,
   "paper_gate_unlocked": false,
-  "updated_at": "2026-11-13T02:00:53Z",
+  "updated_at": "2026-11-13T02:10:56Z",
   "trading_mode": "PAPER",
   "closed_trades": [
     {
