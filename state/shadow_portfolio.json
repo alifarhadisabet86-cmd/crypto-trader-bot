@@ -49,30 +49,6 @@
       "created_at": "2026-11-13T02:31:05Z"
     },
     {
-      "id": "SHD-BTC-7B8654",
-      "coin": "BTC",
-      "side": "SHORT",
-      "entry_price": 70307.3,
-      "stop_loss": 70950.925714,
-      "tp_price": 68826.960858,
-      "filter_reason": "LOW_CONFLUENCE_SCORE",
-      "confluence_score": 46.86,
-      "status": "ACTIVE",
-      "created_at": "2026-11-13T03:00:51Z"
-    },
-    {
-      "id": "SHD-ETH-5EC239",
-      "coin": "ETH",
-      "side": "SHORT",
-      "entry_price": 1992.1,
-      "stop_loss": 2012.137,
-      "tp_price": 1946.0149,
-      "filter_reason": "LOW_CONFLUENCE_SCORE",
-      "confluence_score": 43.57,
-      "status": "ACTIVE",
-      "created_at": "2026-11-13T03:00:51Z"
-    },
-    {
       "id": "SHD-XRP-45E713",
       "coin": "XRP",
       "side": "SHORT",
@@ -275,35 +251,33 @@
       "confluence_score": 59.66,
       "status": "ACTIVE",
       "created_at": "2026-11-13T03:51:02Z"
+    },
+    {
+      "id": "SHD-BTC-87B29D",
+      "coin": "BTC",
+      "side": "SHORT",
+      "entry_price": 68896.0,
+      "stop_loss": 69818.46,
+      "tp_price": 66774.342,
+      "filter_reason": "LOW_CONFLUENCE_SCORE",
+      "confluence_score": 49.26,
+      "status": "ACTIVE",
+      "created_at": "2026-11-13T03:55:48Z"
+    },
+    {
+      "id": "SHD-XRP-A32732",
+      "coin": "XRP",
+      "side": "SHORT",
+      "entry_price": 1.00332,
+      "stop_loss": 1.015949,
+      "tp_price": 0.974273,
+      "filter_reason": "LOW_CONFLUENCE_SCORE",
+      "confluence_score": 57.34,
+      "status": "ACTIVE",
+      "created_at": "2026-11-13T03:55:48Z"
     }
   ],
   "resolved_shadows": [
-    {
-      "id": "SHD-XRP-B74DF2",
-      "coin": "XRP",
-      "side": "SHORT",
-      "entry_price": 1.02716,
-      "stop_loss": 1.033574,
-      "tp_price": 1.012408,
-      "filter_reason": "LOW_CONFLUENCE_SCORE",
-      "confluence_score": 55.42,
-      "status": "SAVED_FROM_LOSS",
-      "created_at": "2026-11-12T19:41:03Z",
-      "resolved_at": "2026-11-12T20:31:07Z"
-    },
-    {
-      "id": "SHD-XRP-8AD3BD",
-      "coin": "XRP",
-      "side": "SHORT",
-      "entry_price": 1.02998,
-      "stop_loss": 1.035387,
-      "tp_price": 1.017051,
-      "filter_reason": "LOW_CONFLUENCE_SCORE",
-      "confluence_score": 62.17,
-      "status": "SAVED_FROM_LOSS",
-      "created_at": "2026-11-12T18:11:04Z",
-      "resolved_at": "2026-11-12T20:40:56Z"
-    },
     {
       "id": "SHD-XRP-97E481",
       "coin": "XRP",
@@ -2877,22 +2851,48 @@
       "status": "MISSED_WINNER",
       "created_at": "2026-11-13T02:41:02Z",
       "resolved_at": "2026-11-13T03:51:01Z"
+    },
+    {
+      "id": "SHD-BTC-7B8654",
+      "coin": "BTC",
+      "side": "SHORT",
+      "entry_price": 70307.3,
+      "stop_loss": 70950.925714,
+      "tp_price": 68826.960858,
+      "filter_reason": "LOW_CONFLUENCE_SCORE",
+      "confluence_score": 46.86,
+      "status": "MISSED_WINNER",
+      "created_at": "2026-11-13T03:00:51Z",
+      "resolved_at": "2026-11-13T03:55:48Z"
+    },
+    {
+      "id": "SHD-ETH-5EC239",
+      "coin": "ETH",
+      "side": "SHORT",
+      "entry_price": 1992.1,
+      "stop_loss": 2012.137,
+      "tp_price": 1946.0149,
+      "filter_reason": "LOW_CONFLUENCE_SCORE",
+      "confluence_score": 43.57,
+      "status": "MISSED_WINNER",
+      "created_at": "2026-11-13T03:00:51Z",
+      "resolved_at": "2026-11-13T03:55:48Z"
     }
   ],
   "stats": {
-    "total_filtered": 5154,
+    "total_filtered": 5156,
     "saved_from_loss": 3079,
-    "missed_winners": 1115,
-    "shield_accuracy": 73.41,
-    "evaluated_count": 4194
+    "missed_winners": 1117,
+    "shield_accuracy": 73.38,
+    "evaluated_count": 4196
   },
   "last_updated": "2026-11-01T18:21:42Z",
   "filter_breakdown": {
-    "LOW_CONFLUENCE_SCORE": 5053,
+    "LOW_CONFLUENCE_SCORE": 5055,
     "TIMEMACHINE_REJECTED": 0,
     "RISK_GUARDIAN_BLOCKED": 32,
     "SPREAD_GUARD_5PCT_BLOCKED": 0,
     "ECONOMIC_NEWS_BLOCKED": 61
   },
-  "updated_at": "2026-11-13T03:51:02Z"
+  "updated_at": "2026-11-13T03:55:49Z"
 }
