@@ -3,52 +3,52 @@
     "regime": "TRENDING_BEAR",
     "strategy": "SMC_TREND_CONTINUATION",
     "htf_bias": "BEARISH",
-    "adx": 44.78,
+    "adx": 44.86,
     "tradable": true,
-    "current_price": 68247.5,
+    "current_price": 68320.0,
     "candidate_side": "SHORT",
-    "confluence_score": 49.7,
+    "confluence_score": 53.1,
     "zone": "DISCOUNT",
     "asian_range": {
-      "asian_high": 71012.9,
+      "asian_high": 70967.8,
       "asian_low": 67612.5,
       "asian_sweep": "NONE"
     },
-    "xray_summary_fa": "هم‌راستا با روند ۱ ساعته (+24) | حمایت ساختار ۴ ساعته (+6) | مجاورت با FVG معتبر (+8) | تایید فشار اردربوک صرافی (+7) | واگرایی پول هوشمند SMT (+6)"
+    "xray_summary_fa": "هم‌راستا با روند ۱ ساعته (+24) | حمایت ساختار ۴ ساعته (+6) | مجاورت با FVG معتبر (+12) | تایید فشار اردربوک صرافی (+7) | واگرایی پول هوشمند SMT (+6)"
   },
   "ETH": {
     "regime": "TRENDING_BEAR",
     "strategy": "SMC_TREND_CONTINUATION",
     "htf_bias": "BEARISH",
-    "adx": 37.85,
+    "adx": 38.02,
     "tradable": true,
-    "current_price": 1926.29,
-    "candidate_side": "NONE",
-    "confluence_score": 44.02,
+    "current_price": 1928.2,
+    "candidate_side": "SHORT",
+    "confluence_score": 49.74,
     "zone": "DISCOUNT",
     "asian_range": {
-      "asian_high": 2013.64,
+      "asian_high": 2012.42,
       "asian_low": 1895.24,
       "asian_sweep": "NONE"
     },
-    "xray_summary_fa": "هم‌راستا با روند ۱ ساعته (+24) | حمایت ساختار ۴ ساعته (+6) | واگرایی پول هوشمند SMT (+6) | هم‌سو با مومنتوم لیدر BTC (+3)"
+    "xray_summary_fa": "هم‌راستا با روند ۱ ساعته (+24) | حمایت ساختار ۴ ساعته (+6) | مجاورت با FVG معتبر (+6) | تایید فشار اردربوک صرافی (+7) | واگرایی پول هوشمند SMT (+6)"
   },
   "SOL": {
     "regime": "TRENDING_BEAR",
     "strategy": "SMC_TREND_CONTINUATION",
     "htf_bias": "BEARISH",
-    "adx": 24.14,
+    "adx": 24.59,
     "tradable": true,
-    "current_price": 79.27,
+    "current_price": 78.72,
     "candidate_side": "SHORT",
-    "confluence_score": 52.33,
+    "confluence_score": 61.06,
     "zone": "DISCOUNT",
     "asian_range": {
-      "asian_high": 81.43,
+      "asian_high": 81.31,
       "asian_low": 77.94,
       "asian_sweep": "NONE"
     },
-    "xray_summary_fa": "هم‌راستا با روند ۱ ساعته (+21) | حمایت ساختار ۴ ساعته (+6) | مجاورت با FVG معتبر (+10) | واگرایی پول هوشمند SMT (+6) | هم‌سو با مومنتوم لیدر BTC (+3)"
+    "xray_summary_fa": "هم‌راستا با روند ۱ ساعته (+21) | حمایت ساختار ۴ ساعته (+6) | مجاورت با FVG معتبر (+13) | حجم تراکنش بالاتر از میانگین (+8) | واگرایی پول هوشمند SMT (+6)"
   },
   "XRP": {
     "regime": "RANGING",
@@ -56,32 +56,32 @@
     "htf_bias": "BEARISH",
     "adx": 18.3,
     "tradable": true,
-    "current_price": 1.01041,
+    "current_price": 1.01236,
     "candidate_side": "LONG",
-    "confluence_score": 38.69,
+    "confluence_score": 39.11,
     "zone": "DISCOUNT",
     "asian_range": {
-      "asian_high": 1.03301,
+      "asian_high": 1.03222,
       "asian_low": 0.9977,
       "asian_sweep": "NONE"
     },
-    "xray_summary_fa": "ساختار بازگشت به میانگین رنج (+14) | ناحیه ارزان‌فروشی Discount (+12) | شکار نقدینگی و استاپ‌هانت ۱۵m (+12) | تایید فشار اردربوک صرافی (+5) | واگرایی پول هوشمند SMT (+6) | ⚠️ ریزش شارپ لیدر BTC (-10)"
+    "xray_summary_fa": "ساختار بازگشت به میانگین رنج (+14) | ناحیه ارزان‌فروشی Discount (+12) | شکار نقدینگی و استاپ‌هانت ۱۵m (+12)"
   },
   "XAU": {
     "regime": "TRENDING_BEAR",
     "strategy": "SMC_TREND_CONTINUATION",
     "htf_bias": "BEARISH",
-    "adx": 31.46,
+    "adx": 31.12,
     "tradable": true,
-    "current_price": 3871.39,
+    "current_price": 3877.78,
     "candidate_side": "NONE",
-    "confluence_score": 38.3,
-    "zone": "DISCOUNT",
+    "confluence_score": 42.56,
+    "zone": "EQUILIBRIUM",
     "asian_range": {
       "asian_high": 3918.23,
       "asian_low": 3885.85,
       "asian_sweep": "NONE"
     },
-    "xray_summary_fa": "هم‌راستا با روند ۱ ساعته (+22) | حمایت ساختار ۴ ساعته (+6) | واگرایی پول هوشمند SMT (+6)"
+    "xray_summary_fa": "هم‌راستا با روند ۱ ساعته (+22) | حمایت ساختار ۴ ساعته (+6) | تایید فشار اردربوک صرافی (+6) | واگرایی پول هوشمند SMT (+6)"
   }
 }
