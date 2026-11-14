@@ -5,7 +5,7 @@
     "htf_bias": "BEARISH",
     "adx": 54.19,
     "tradable": true,
-    "current_price": 65199.4,
+    "current_price": 65242.5,
     "candidate_side": "NONE",
     "confluence_score": 37.8,
     "zone": "DISCOUNT",
@@ -22,7 +22,7 @@
     "htf_bias": "BEARISH",
     "adx": 43.87,
     "tradable": true,
-    "current_price": 1818.94,
+    "current_price": 1822.44,
     "candidate_side": "NONE",
     "confluence_score": 36.22,
     "zone": "DISCOUNT",
@@ -39,26 +39,26 @@
     "htf_bias": "BEARISH",
     "adx": 40.35,
     "tradable": true,
-    "current_price": 72.37,
+    "current_price": 72.47,
     "candidate_side": "SHORT",
-    "confluence_score": 51.26,
+    "confluence_score": 52.55,
     "zone": "DISCOUNT",
     "asian_range": {
       "asian_high": 78.49,
       "asian_low": 74.85,
       "asian_sweep": "NONE"
     },
-    "xray_summary_fa": "هم‌راستا با روند ۱ ساعته (+24) | حمایت ساختار ۴ ساعته (+6) | مجاورت با FVG معتبر (+8) | سشن Killzone فعال (+7)"
+    "xray_summary_fa": "هم‌راستا با روند ۱ ساعته (+24) | حمایت ساختار ۴ ساعته (+6) | مجاورت با FVG معتبر (+9) | سشن Killzone فعال (+7)"
   },
   "XRP": {
     "regime": "TRENDING_BEAR",
     "strategy": "SMC_TREND_CONTINUATION",
     "htf_bias": "BEARISH",
-    "adx": 36.09,
+    "adx": 36.07,
     "tradable": true,
-    "current_price": 0.94893,
+    "current_price": 0.95064,
     "candidate_side": "NONE",
-    "confluence_score": 41.92,
+    "confluence_score": 40.27,
     "zone": "DISCOUNT",
     "asian_range": {
       "asian_high": 1.01376,
@@ -71,17 +71,17 @@
     "regime": "TRENDING_BEAR",
     "strategy": "SMC_TREND_CONTINUATION",
     "htf_bias": "BEARISH",
-    "adx": 43.73,
+    "adx": 44.45,
     "tradable": true,
-    "current_price": 3834.21,
+    "current_price": 3833.78,
     "candidate_side": "SHORT",
-    "confluence_score": 53.4,
+    "confluence_score": 52.97,
     "zone": "EQUILIBRIUM",
     "asian_range": {
       "asian_high": 3880.66,
       "asian_low": 3859.18,
       "asian_sweep": "NONE"
     },
-    "xray_summary_fa": "هم‌راستا با روند ۱ ساعته (+24) | حمایت ساختار ۴ ساعته (+6) | مجاورت با FVG معتبر (+14) | سشن Killzone فعال (+7)"
+    "xray_summary_fa": "هم‌راستا با روند ۱ ساعته (+24) | حمایت ساختار ۴ ساعته (+6) | مجاورت با FVG معتبر (+13) | سشن Killzone فعال (+7)"
   }
 }
