@@ -3,85 +3,85 @@
     "regime": "TRENDING_BEAR",
     "strategy": "SMC_TREND_CONTINUATION",
     "htf_bias": "BEARISH",
-    "adx": 43.4,
+    "adx": 46.04,
     "tradable": true,
-    "current_price": 66933.1,
+    "current_price": 66754.7,
     "candidate_side": "SHORT",
-    "confluence_score": 56.79,
+    "confluence_score": 46.58,
     "zone": "DISCOUNT",
     "asian_range": {
       "asian_high": 68438.8,
       "asian_low": 66635.3,
       "asian_sweep": "NONE"
     },
-    "xray_summary_fa": "هم‌راستا با روند ۱ ساعته (+24) | حمایت ساختار ۴ ساعته (+6) | مجاورت با FVG معتبر (+15) | تایید فشار اردربوک صرافی (+7)"
+    "xray_summary_fa": "هم‌راستا با روند ۱ ساعته (+24) | حمایت ساختار ۴ ساعته (+6) | مجاورت با FVG معتبر (+10)"
   },
   "ETH": {
     "regime": "TRENDING_BEAR",
     "strategy": "SMC_TREND_CONTINUATION",
     "htf_bias": "BEARISH",
-    "adx": 33.85,
+    "adx": 36.23,
     "tradable": true,
-    "current_price": 1889.6,
+    "current_price": 1884.84,
     "candidate_side": "SHORT",
-    "confluence_score": 50.97,
+    "confluence_score": 48.08,
     "zone": "DISCOUNT",
     "asian_range": {
       "asian_high": 1937.64,
       "asian_low": 1877.54,
       "asian_sweep": "NONE"
     },
-    "xray_summary_fa": "هم‌راستا با روند ۱ ساعته (+23) | حمایت ساختار ۴ ساعته (+6) | مجاورت با FVG معتبر (+15) | هم‌سو با مومنتوم لیدر BTC (+3)"
+    "xray_summary_fa": "هم‌راستا با روند ۱ ساعته (+23) | حمایت ساختار ۴ ساعته (+6) | مجاورت با FVG معتبر (+12) | هم‌سو با مومنتوم لیدر BTC (+3)"
   },
   "SOL": {
     "regime": "TRENDING_BEAR",
     "strategy": "SMC_TREND_CONTINUATION",
     "htf_bias": "BEARISH",
-    "adx": 37.21,
+    "adx": 37.81,
     "tradable": true,
-    "current_price": 75.35,
+    "current_price": 75.14,
     "candidate_side": "SHORT",
-    "confluence_score": 53.25,
+    "confluence_score": 49.87,
     "zone": "DISCOUNT",
     "asian_range": {
       "asian_high": 78.49,
-      "asian_low": 74.9,
+      "asian_low": 74.85,
       "asian_sweep": "NONE"
     },
-    "xray_summary_fa": "هم‌راستا با روند ۱ ساعته (+23) | حمایت ساختار ۴ ساعته (+6) | مجاورت با FVG معتبر (+12) | هم‌سو با مومنتوم لیدر BTC (+3)"
+    "xray_summary_fa": "هم‌راستا با روند ۱ ساعته (+24) | حمایت ساختار ۴ ساعته (+6) | مجاورت با FVG معتبر (+9) | هم‌سو با مومنتوم لیدر BTC (+3)"
   },
   "XRP": {
     "regime": "TRENDING_BEAR",
     "strategy": "SMC_TREND_CONTINUATION",
     "htf_bias": "BEARISH",
-    "adx": 22.07,
+    "adx": 22.88,
     "tradable": true,
-    "current_price": 0.99383,
+    "current_price": 0.99148,
     "candidate_side": "NONE",
-    "confluence_score": 39.21,
+    "confluence_score": 39.41,
     "zone": "DISCOUNT",
     "asian_range": {
       "asian_high": 1.01376,
       "asian_low": 0.9847,
       "asian_sweep": "NONE"
     },
-    "xray_summary_fa": "هم‌راستا با روند ۱ ساعته (+20) | حمایت ساختار ۴ ساعته (+6) | هم‌سو با مومنتوم لیدر BTC (+3)"
+    "xray_summary_fa": "هم‌راستا با روند ۱ ساعته (+21) | حمایت ساختار ۴ ساعته (+6) | هم‌سو با مومنتوم لیدر BTC (+3)"
   },
   "XAU": {
     "regime": "TRENDING_BEAR",
     "strategy": "SMC_TREND_CONTINUATION",
     "htf_bias": "BEARISH",
-    "adx": 27.32,
+    "adx": 27.75,
     "tradable": true,
-    "current_price": 3865.75,
+    "current_price": 3863.81,
     "candidate_side": "SHORT",
-    "confluence_score": 49.66,
+    "confluence_score": 54.15,
     "zone": "DISCOUNT",
     "asian_range": {
       "asian_high": 3880.66,
-      "asian_low": 3864.9,
+      "asian_low": 3863.81,
       "asian_sweep": "NONE"
     },
-    "xray_summary_fa": "هم‌راستا با روند ۱ ساعته (+22) | حمایت ساختار ۴ ساعته (+6) | حضور قیمت در ناحیه FVG دست‌نخورده (+18)"
+    "xray_summary_fa": "هم‌راستا با روند ۱ ساعته (+22) | حمایت ساختار ۴ ساعته (+6) | حضور قیمت در ناحیه FVG دست‌نخورده (+18) | تایید فشار اردربوک صرافی (+7)"
   }
 }
