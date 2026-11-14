@@ -5,16 +5,16 @@
     "htf_bias": "BEARISH",
     "adx": 56.24,
     "tradable": true,
-    "current_price": 64348.7,
+    "current_price": 64382.8,
     "candidate_side": "SHORT",
-    "confluence_score": 41.48,
+    "confluence_score": 42.33,
     "zone": "DISCOUNT",
     "asian_range": {
       "asian_high": 68238.6,
       "asian_low": 66474.6,
       "asian_sweep": "NONE"
     },
-    "xray_summary_fa": "هم‌راستا با روند ۱ ساعته (+24) | حمایت ساختار ۴ ساعته (+6) | مجاورت با FVG معتبر (+5)"
+    "xray_summary_fa": "هم‌راستا با روند ۱ ساعته (+24) | حمایت ساختار ۴ ساعته (+6) | مجاورت با FVG معتبر (+6)"
   },
   "ETH": {
     "regime": "TRENDING_BEAR",
@@ -22,9 +22,9 @@
     "htf_bias": "BEARISH",
     "adx": 49.23,
     "tradable": true,
-    "current_price": 1768.45,
+    "current_price": 1768.99,
     "candidate_side": "SHORT",
-    "confluence_score": 40.95,
+    "confluence_score": 40.74,
     "zone": "DISCOUNT",
     "asian_range": {
       "asian_high": 1924.71,
@@ -39,7 +39,7 @@
     "htf_bias": "BEARISH",
     "adx": 50.48,
     "tradable": true,
-    "current_price": 69.68,
+    "current_price": 69.63,
     "candidate_side": "NONE",
     "confluence_score": 41.29,
     "zone": "DISCOUNT",
@@ -54,11 +54,11 @@
     "regime": "TRENDING_BEAR",
     "strategy": "SMC_TREND_CONTINUATION",
     "htf_bias": "BEARISH",
-    "adx": 47.46,
+    "adx": 47.48,
     "tradable": true,
-    "current_price": 0.906,
+    "current_price": 0.90587,
     "candidate_side": "NONE",
-    "confluence_score": 35.44,
+    "confluence_score": 36.31,
     "zone": "DISCOUNT",
     "asian_range": {
       "asian_high": 1.00785,
@@ -73,15 +73,15 @@
     "htf_bias": "BEARISH",
     "adx": 52.44,
     "tradable": true,
-    "current_price": 3787.07,
+    "current_price": 3784.6,
     "candidate_side": "SHORT",
-    "confluence_score": 39.97,
+    "confluence_score": 38.54,
     "zone": "DISCOUNT",
     "asian_range": {
       "asian_high": 3877.45,
       "asian_low": 3859.18,
       "asian_sweep": "NONE"
     },
-    "xray_summary_fa": "هم‌راستا با روند ۱ ساعته (+24) | حمایت ساختار ۴ ساعته (+6) | مجاورت با FVG معتبر (+6)"
+    "xray_summary_fa": "هم‌راستا با روند ۱ ساعته (+24) | حمایت ساختار ۴ ساعته (+6) | مجاورت با FVG معتبر (+5)"
   }
 }
