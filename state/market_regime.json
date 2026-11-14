@@ -5,9 +5,9 @@
     "htf_bias": "BEARISH",
     "adx": 54.25,
     "tradable": true,
-    "current_price": 65547.6,
+    "current_price": 65535.6,
     "candidate_side": "LONG",
-    "confluence_score": 40.84,
+    "confluence_score": 40.98,
     "zone": "DISCOUNT",
     "asian_range": {
       "asian_high": 68422.2,
@@ -22,9 +22,9 @@
     "htf_bias": "BEARISH",
     "adx": 44.96,
     "tradable": true,
-    "current_price": 1826.93,
+    "current_price": 1826.34,
     "candidate_side": "LONG",
-    "confluence_score": 39.91,
+    "confluence_score": 41.38,
     "zone": "DISCOUNT",
     "asian_range": {
       "asian_high": 1934.49,
@@ -39,12 +39,12 @@
     "htf_bias": "BEARISH",
     "adx": 45.65,
     "tradable": true,
-    "current_price": 71.86,
+    "current_price": 71.9,
     "candidate_side": "NONE",
     "confluence_score": 42.89,
     "zone": "DISCOUNT",
     "asian_range": {
-      "asian_high": 78.35,
+      "asian_high": 78.08,
       "asian_low": 74.85,
       "asian_sweep": "NONE"
     },
@@ -56,32 +56,32 @@
     "htf_bias": "BEARISH",
     "adx": 42.08,
     "tradable": true,
-    "current_price": 0.94279,
+    "current_price": 0.94328,
     "candidate_side": "SHORT",
-    "confluence_score": 62.07,
+    "confluence_score": 63.37,
     "zone": "DISCOUNT",
     "asian_range": {
       "asian_high": 1.01376,
       "asian_low": 0.9847,
       "asian_sweep": "NONE"
     },
-    "xray_summary_fa": "هم‌راستا با روند ۱ ساعته (+24) | حمایت ساختار ۴ ساعته (+6) | مجاورت با FVG معتبر (+16) | سشن Killzone فعال (+7)"
+    "xray_summary_fa": "هم‌راستا با روند ۱ ساعته (+24) | حمایت ساختار ۴ ساعته (+6) | مجاورت با FVG معتبر (+15) | سشن Killzone فعال (+7)"
   },
   "XAU": {
     "regime": "TRENDING_BEAR",
     "strategy": "SMC_TREND_CONTINUATION",
     "htf_bias": "BEARISH",
-    "adx": 48.57,
+    "adx": 48.85,
     "tradable": true,
-    "current_price": 3826.16,
+    "current_price": 3822.88,
     "candidate_side": "SHORT",
-    "confluence_score": 46.66,
+    "confluence_score": 49.5,
     "zone": "DISCOUNT",
     "asian_range": {
-      "asian_high": 3880.58,
+      "asian_high": 3880.36,
       "asian_low": 3859.18,
       "asian_sweep": "NONE"
     },
-    "xray_summary_fa": "هم‌راستا با روند ۱ ساعته (+24) | حمایت ساختار ۴ ساعته (+6) | مجاورت با FVG معتبر (+8) | سشن Killzone فعال (+7)"
+    "xray_summary_fa": "هم‌راستا با روند ۱ ساعته (+24) | حمایت ساختار ۴ ساعته (+6) | مجاورت با FVG معتبر (+10) | سشن Killzone فعال (+7)"
   }
 }
