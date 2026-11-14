@@ -37,30 +37,6 @@
       "created_at": "2026-11-14T14:50:54Z"
     },
     {
-      "id": "SHD-SOL-C06BC4",
-      "coin": "SOL",
-      "side": "SHORT",
-      "entry_price": 74.13,
-      "stop_loss": 74.676143,
-      "tp_price": 72.873871,
-      "filter_reason": "LOW_CONFLUENCE_SCORE",
-      "confluence_score": 57.19,
-      "status": "ACTIVE",
-      "created_at": "2026-11-14T15:01:03Z"
-    },
-    {
-      "id": "SHD-SOL-4E1E82",
-      "coin": "SOL",
-      "side": "SHORT",
-      "entry_price": 74.15,
-      "stop_loss": 74.677286,
-      "tp_price": 72.937242,
-      "filter_reason": "LOW_CONFLUENCE_SCORE",
-      "confluence_score": 64.1,
-      "status": "ACTIVE",
-      "created_at": "2026-11-14T15:10:56Z"
-    },
-    {
       "id": "SHD-XRP-429548",
       "coin": "XRP",
       "side": "SHORT",
@@ -215,35 +191,33 @@
       "confluence_score": 50.92,
       "status": "ACTIVE",
       "created_at": "2026-11-14T16:10:54Z"
+    },
+    {
+      "id": "SHD-XRP-433FD6",
+      "coin": "XRP",
+      "side": "SHORT",
+      "entry_price": 0.96376,
+      "stop_loss": 0.980734,
+      "tp_price": 0.92472,
+      "filter_reason": "LOW_CONFLUENCE_SCORE",
+      "confluence_score": 58.67,
+      "status": "ACTIVE",
+      "created_at": "2026-11-14T16:20:55Z"
+    },
+    {
+      "id": "SHD-XAU-4AAFE4",
+      "coin": "XAU",
+      "side": "SHORT",
+      "entry_price": 3824.64,
+      "stop_loss": 3847.106715,
+      "tp_price": 3772.966555,
+      "filter_reason": "LOW_CONFLUENCE_SCORE",
+      "confluence_score": 50.58,
+      "status": "ACTIVE",
+      "created_at": "2026-11-14T16:20:55Z"
     }
   ],
   "resolved_shadows": [
-    {
-      "id": "SHD-ETH-B5B25E",
-      "coin": "ETH",
-      "side": "SHORT",
-      "entry_price": 1895.85,
-      "stop_loss": 1909.665429,
-      "tp_price": 1864.074513,
-      "filter_reason": "LOW_CONFLUENCE_SCORE",
-      "confluence_score": 51.88,
-      "status": "SAVED_FROM_LOSS",
-      "created_at": "2026-11-14T07:40:59Z",
-      "resolved_at": "2026-11-14T09:41:03Z"
-    },
-    {
-      "id": "SHD-ETH-C3B12D",
-      "coin": "ETH",
-      "side": "SHORT",
-      "entry_price": 1894.75,
-      "stop_loss": 1909.527857,
-      "tp_price": 1860.760929,
-      "filter_reason": "LOW_CONFLUENCE_SCORE",
-      "confluence_score": 44.64,
-      "status": "SAVED_FROM_LOSS",
-      "created_at": "2026-11-14T07:50:55Z",
-      "resolved_at": "2026-11-14T09:41:03Z"
-    },
     {
       "id": "SHD-ETH-2EC2E4",
       "coin": "ETH",
@@ -2817,22 +2791,48 @@
       "status": "MISSED_WINNER",
       "created_at": "2026-11-14T14:45:32Z",
       "resolved_at": "2026-11-14T16:10:54Z"
+    },
+    {
+      "id": "SHD-SOL-C06BC4",
+      "coin": "SOL",
+      "side": "SHORT",
+      "entry_price": 74.13,
+      "stop_loss": 74.676143,
+      "tp_price": 72.873871,
+      "filter_reason": "LOW_CONFLUENCE_SCORE",
+      "confluence_score": 57.19,
+      "status": "MISSED_WINNER",
+      "created_at": "2026-11-14T15:01:03Z",
+      "resolved_at": "2026-11-14T16:20:55Z"
+    },
+    {
+      "id": "SHD-SOL-4E1E82",
+      "coin": "SOL",
+      "side": "SHORT",
+      "entry_price": 74.15,
+      "stop_loss": 74.677286,
+      "tp_price": 72.937242,
+      "filter_reason": "LOW_CONFLUENCE_SCORE",
+      "confluence_score": 64.1,
+      "status": "MISSED_WINNER",
+      "created_at": "2026-11-14T15:10:56Z",
+      "resolved_at": "2026-11-14T16:20:55Z"
     }
   ],
   "stats": {
-    "total_filtered": 6112,
+    "total_filtered": 6114,
     "saved_from_loss": 3497,
-    "missed_winners": 1361,
-    "shield_accuracy": 71.98,
-    "evaluated_count": 4858
+    "missed_winners": 1363,
+    "shield_accuracy": 71.95,
+    "evaluated_count": 4860
   },
   "last_updated": "2026-11-01T18:21:42Z",
   "filter_breakdown": {
-    "LOW_CONFLUENCE_SCORE": 5982,
+    "LOW_CONFLUENCE_SCORE": 5984,
     "TIMEMACHINE_REJECTED": 0,
     "RISK_GUARDIAN_BLOCKED": 34,
     "SPREAD_GUARD_5PCT_BLOCKED": 0,
     "ECONOMIC_NEWS_BLOCKED": 88
   },
-  "updated_at": "2026-11-14T16:10:55Z"
+  "updated_at": "2026-11-14T16:20:56Z"
 }
