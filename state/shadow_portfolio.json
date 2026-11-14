@@ -323,6 +323,18 @@
       "confluence_score": 58.51,
       "status": "ACTIVE",
       "created_at": "2026-11-14T14:03:41Z"
+    },
+    {
+      "id": "SHD-XRP-8258DB",
+      "coin": "XRP",
+      "side": "SHORT",
+      "entry_price": 0.98669,
+      "stop_loss": 0.996482,
+      "tp_price": 0.964168,
+      "filter_reason": "LOW_CONFLUENCE_SCORE",
+      "confluence_score": 62.99,
+      "status": "ACTIVE",
+      "created_at": "2026-11-14T14:10:59Z"
     }
   ],
   "resolved_shadows": [
@@ -2928,7 +2940,7 @@
     }
   ],
   "stats": {
-    "total_filtered": 6077,
+    "total_filtered": 6078,
     "saved_from_loss": 3492,
     "missed_winners": 1322,
     "shield_accuracy": 72.54,
@@ -2936,11 +2948,11 @@
   },
   "last_updated": "2026-11-01T18:21:42Z",
   "filter_breakdown": {
-    "LOW_CONFLUENCE_SCORE": 5947,
+    "LOW_CONFLUENCE_SCORE": 5948,
     "TIMEMACHINE_REJECTED": 0,
     "RISK_GUARDIAN_BLOCKED": 34,
     "SPREAD_GUARD_5PCT_BLOCKED": 0,
     "ECONOMIC_NEWS_BLOCKED": 88
   },
-  "updated_at": "2026-11-14T14:03:41Z"
+  "updated_at": "2026-11-14T14:10:59Z"
 }
