@@ -5,7 +5,7 @@
     "htf_bias": "BEARISH",
     "adx": 55.35,
     "tradable": true,
-    "current_price": 63673.6,
+    "current_price": 63685.4,
     "candidate_side": "NONE",
     "confluence_score": 32.6,
     "zone": "DISCOUNT",
@@ -22,16 +22,16 @@
     "htf_bias": "BEARISH",
     "adx": 48.05,
     "tradable": true,
-    "current_price": 1750.06,
+    "current_price": 1746.62,
     "candidate_side": "NONE",
-    "confluence_score": 34.86,
+    "confluence_score": 42.83,
     "zone": "DISCOUNT",
     "asian_range": {
       "asian_high": 1908.57,
       "asian_low": 1878.84,
       "asian_sweep": "NONE"
     },
-    "xray_summary_fa": "هم‌راستا با روند ۱ ساعته (+24) | حمایت ساختار ۴ ساعته (+6)"
+    "xray_summary_fa": "هم‌راستا با روند ۱ ساعته (+24) | حمایت ساختار ۴ ساعته (+6) | حجم تراکنش بالاتر از میانگین (+8)"
   },
   "SOL": {
     "regime": "TRENDING_BEAR",
@@ -39,7 +39,7 @@
     "htf_bias": "BEARISH",
     "adx": 50.04,
     "tradable": true,
-    "current_price": 69.41,
+    "current_price": 69.25,
     "candidate_side": "NONE",
     "confluence_score": 41.29,
     "zone": "DISCOUNT",
@@ -56,9 +56,9 @@
     "htf_bias": "BEARISH",
     "adx": 49.08,
     "tradable": true,
-    "current_price": 0.90127,
+    "current_price": 0.89742,
     "candidate_side": "NONE",
-    "confluence_score": 39.55,
+    "confluence_score": 35.69,
     "zone": "DISCOUNT",
     "asian_range": {
       "asian_high": 1.00135,
@@ -71,17 +71,17 @@
     "regime": "TRENDING_BEAR",
     "strategy": "SMC_TREND_CONTINUATION",
     "htf_bias": "BEARISH",
-    "adx": 55.29,
+    "adx": 54.87,
     "tradable": true,
-    "current_price": 3796.68,
+    "current_price": 3805.12,
     "candidate_side": "SHORT",
-    "confluence_score": 49.09,
+    "confluence_score": 58.99,
     "zone": "DISCOUNT",
     "asian_range": {
       "asian_high": 3869.51,
       "asian_low": 3859.18,
       "asian_sweep": "NONE"
     },
-    "xray_summary_fa": "هم‌راستا با روند ۱ ساعته (+24) | حمایت ساختار ۴ ساعته (+6) | مجاورت با FVG معتبر (+14)"
+    "xray_summary_fa": "هم‌راستا با روند ۱ ساعته (+24) | حمایت ساختار ۴ ساعته (+6) | حضور قیمت در ناحیه FVG دست‌نخورده (+18) | تایید فشار اردربوک صرافی (+6)"
   }
 }
