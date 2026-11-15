@@ -1,1 +1,33 @@
-[]
+[
+  {
+    "id": "POS-SOL-700D57",
+    "coin": "SOL",
+    "side": "SHORT",
+    "order_type": "LIMIT",
+    "trigger_type": "5M_MICRO_CHOCH",
+    "regime": "TRENDING_BEAR",
+    "confluence_score": 74.59,
+    "xray_summary_fa": "هم‌راستا با روند ۱ ساعته (+22) | حمایت ساختار ۴ ساعته (+6) | مجاورت با FVG معتبر (+14) | شکار نقدینگی سشن آسیا (+11) | سشن Killzone فعال (+7) | هم‌سو با مومنتوم لیدر BTC (+3)",
+    "slot_type": "STANDARD_SLOT",
+    "entry_price": 71.717857,
+    "current_price": 71.717857,
+    "stop_loss": 72.248714,
+    "initial_stop_loss": 72.248714,
+    "stop_distance": 0.530857,
+    "tp1_breakeven": 71.107371,
+    "tp2_final": 69.639393,
+    "initial_qty": 3.741492,
+    "remaining_qty": 3.741492,
+    "initial_notional_usdt": 268.33,
+    "remaining_notional_usdt": 268.33,
+    "margin_used_usdt": 53.67,
+    "initial_risk_usdt": 2.2,
+    "tp1_hit": false,
+    "is_risk_free": false,
+    "trailing_active": false,
+    "realized_pnl_usdt": -0.0537,
+    "unrealized_pnl_usdt": 0.0,
+    "fees_paid_usdt": 0.0537,
+    "opened_at": "2026-11-15T14:31:00Z"
+  }
+]
