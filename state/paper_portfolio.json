@@ -1,46 +1,14 @@
 {
   "version": "2.0",
-  "balance_usdt": 979.9251,
+  "balance_usdt": 978.1612,
   "initial_balance_usdt": 1000.0,
   "day_start_date": "2026-11-01",
   "day_start_equity": 1000.0,
-  "daily_pnl_usdt": -10.4527,
+  "daily_pnl_usdt": -12.2166,
   "daily_circuit_breaker": false,
   "consecutive_wins": 0,
   "consecutive_losses": 1,
-  "open_positions": [
-    {
-      "id": "POS-BTC-E4668A",
-      "coin": "BTC",
-      "side": "SHORT",
-      "order_type": "LIMIT",
-      "trigger_type": "LIMIT_SNIPER_FVG",
-      "regime": "TRENDING_BEAR",
-      "confluence_score": 75.77,
-      "xray_summary_fa": "هم‌راستا با روند ۱ ساعته (+24) | حمایت ساختار ۴ ساعته (+6) | حضور قیمت در ناحیه FVG دست‌نخورده (+18) | ناحیه گران‌فروشی Premium (+10) | حجم تراکنش بالاتر از میانگین (+8) | سشن Killzone فعال (+7)",
-      "slot_type": "STANDARD_SLOT",
-      "entry_price": 64699.653571,
-      "current_price": 64673.3,
-      "stop_loss": 64966.747856,
-      "initial_stop_loss": 64966.747856,
-      "stop_distance": 267.094285,
-      "tp1_breakeven": 64392.495143,
-      "tp2_final": 63577.857574,
-      "initial_qty": 0.005763,
-      "remaining_qty": 0.005763,
-      "initial_notional_usdt": 372.85,
-      "remaining_notional_usdt": 372.85,
-      "margin_used_usdt": 74.57,
-      "initial_risk_usdt": 1.84,
-      "tp1_hit": false,
-      "is_risk_free": false,
-      "trailing_active": false,
-      "realized_pnl_usdt": -0.0746,
-      "unrealized_pnl_usdt": 0.15,
-      "fees_paid_usdt": 0.0746,
-      "opened_at": "2026-11-15T08:40:57Z"
-    }
-  ],
+  "open_positions": [],
   "trade_history": [
     {
       "position_id": "POS-XRP-A9D2C9",
@@ -335,30 +303,35 @@
       "timestamp": "2026-11-15T08:26:05Z",
       "equity": 980.0,
       "event": "SOL_STOP_LOSS"
+    },
+    {
+      "timestamp": "2026-11-15T09:00:57Z",
+      "equity": 978.16,
+      "event": "BTC_STOP_LOSS"
     }
   ],
   "stats": {
-    "total_trades": 52,
+    "total_trades": 53,
     "wins": 23,
-    "losses": 29,
-    "win_rate_pct": 44.23,
+    "losses": 30,
+    "win_rate_pct": 43.4,
     "total_pnl_usdt": -4.8578,
     "max_drawdown_pct": 4.11,
     "consecutive_wins": 0,
-    "consecutive_losses": 2,
+    "consecutive_losses": 3,
     "peak_equity_usdt": 1004.44,
-    "total_fees_paid_usdt": 31.206
+    "total_fees_paid_usdt": 31.4306
   },
   "last_updated": "2026-11-01T18:21:42Z",
   "daily_start_balance_usdt": 990.3778,
   "last_reset_date": "2026-11-15",
   "weekly_start_balance_usdt": 979.8186,
-  "weekly_pnl_usdt": 0.1065,
+  "weekly_pnl_usdt": -1.6574,
   "weekly_circuit_breaker": false,
   "last_reset_week": "2026-W46",
   "paper_gate_target": 50,
   "paper_gate_unlocked": true,
-  "updated_at": "2026-11-15T08:50:58Z",
+  "updated_at": "2026-11-15T09:00:58Z",
   "trading_mode": "PAPER",
   "closed_trades": [
     {
@@ -1307,6 +1280,24 @@
       "outcome": "LOSS",
       "opened_at": "2026-11-15T07:50:58Z",
       "closed_at": "2026-11-15T08:26:05Z"
+    },
+    {
+      "id": "POS-BTC-E4668A",
+      "coin": "BTC",
+      "side": "SHORT",
+      "regime": "TRENDING_BEAR",
+      "confluence_score": 75.77,
+      "entry_price": 64699.653571,
+      "exit_price": 64966.747856,
+      "exit_reason": "STOP_LOSS",
+      "tp1_hit": false,
+      "trailing_active": false,
+      "net_pnl_usdt": -1.84,
+      "r_multiple": -1.0,
+      "fees_paid_usdt": 0.2992,
+      "outcome": "LOSS",
+      "opened_at": "2026-11-15T08:40:57Z",
+      "closed_at": "2026-11-15T09:00:57Z"
     }
   ]
 }
