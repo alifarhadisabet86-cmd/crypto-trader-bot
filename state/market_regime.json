@@ -3,85 +3,85 @@
     "regime": "TRENDING_BEAR",
     "strategy": "SMC_TREND_CONTINUATION",
     "htf_bias": "BEARISH",
-    "adx": 57.86,
+    "adx": 57.03,
     "tradable": true,
-    "current_price": 62824.9,
-    "candidate_side": "SHORT",
-    "confluence_score": 52.63,
+    "current_price": 63678.5,
+    "candidate_side": "NONE",
+    "confluence_score": 39.03,
     "zone": "DISCOUNT",
     "asian_range": {
       "asian_high": 64558.6,
       "asian_low": 61987.9,
       "asian_sweep": "NONE"
     },
-    "xray_summary_fa": "هم‌راستا با روند ۱ ساعته (+24) | حمایت ساختار ۴ ساعته (+6) | مجاورت با FVG معتبر (+15) | تایید فشار اردربوک صرافی (+7)"
+    "xray_summary_fa": "هم‌راستا با روند ۱ ساعته (+24) | حمایت ساختار ۴ ساعته (+6) | حجم تراکنش بالاتر از میانگین (+6)"
   },
   "ETH": {
     "regime": "TRENDING_BEAR",
     "strategy": "SMC_TREND_CONTINUATION",
     "htf_bias": "BEARISH",
-    "adx": 55.44,
+    "adx": 53.97,
     "tradable": true,
-    "current_price": 1735.49,
+    "current_price": 1765.95,
     "candidate_side": "SHORT",
-    "confluence_score": 46.21,
+    "confluence_score": 36.31,
     "zone": "DISCOUNT",
     "asian_range": {
       "asian_high": 1778.52,
       "asian_low": 1711.0,
       "asian_sweep": "NONE"
     },
-    "xray_summary_fa": "هم‌راستا با روند ۱ ساعته (+24) | حمایت ساختار ۴ ساعته (+6) | مجاورت با FVG معتبر (+15)"
+    "xray_summary_fa": "هم‌راستا با روند ۱ ساعته (+24) | حمایت ساختار ۴ ساعته (+6) | مجاورت با FVG معتبر (+7) | حجم تراکنش بالاتر از میانگین (+8) | ⚠️ پامپ شارپ لیدر BTC (-10)"
   },
   "SOL": {
     "regime": "TRENDING_BEAR",
     "strategy": "SMC_TREND_CONTINUATION",
     "htf_bias": "BEARISH",
-    "adx": 55.38,
+    "adx": 55.01,
     "tradable": true,
-    "current_price": 68.08,
+    "current_price": 69.56,
     "candidate_side": "SHORT",
-    "confluence_score": 59.3,
+    "confluence_score": 54.8,
     "zone": "DISCOUNT",
     "asian_range": {
       "asian_high": 70.68,
       "asian_low": 67.42,
       "asian_sweep": "NONE"
     },
-    "xray_summary_fa": "هم‌راستا با روند ۱ ساعته (+24) | حمایت ساختار ۴ ساعته (+6) | مجاورت با FVG معتبر (+16)"
+    "xray_summary_fa": "هم‌راستا با روند ۱ ساعته (+24) | حمایت ساختار ۴ ساعته (+6) | حضور قیمت در ناحیه FVG دست‌نخورده (+18) | حجم تراکنش بالاتر از میانگین (+8) | ⚠️ پامپ شارپ لیدر BTC (-10)"
   },
   "XRP": {
     "regime": "TRENDING_BEAR",
     "strategy": "SMC_TREND_CONTINUATION",
     "htf_bias": "BEARISH",
-    "adx": 48.86,
+    "adx": 48.03,
     "tradable": true,
-    "current_price": 0.90966,
-    "candidate_side": "NONE",
-    "confluence_score": 40.8,
-    "zone": "DISCOUNT",
+    "current_price": 0.9323,
+    "candidate_side": "SHORT",
+    "confluence_score": 44.7,
+    "zone": "EQUILIBRIUM",
     "asian_range": {
       "asian_high": 0.93687,
       "asian_low": 0.89936,
       "asian_sweep": "NONE"
     },
-    "xray_summary_fa": "هم‌راستا با روند ۱ ساعته (+24) | حمایت ساختار ۴ ساعته (+6)"
+    "xray_summary_fa": "هم‌راستا با روند ۱ ساعته (+24) | حمایت ساختار ۴ ساعته (+6) | مجاورت با FVG معتبر (+9) | ⚠️ پامپ شارپ لیدر BTC (-10)"
   },
   "XAU": {
     "regime": "TRENDING_BEAR",
     "strategy": "SMC_TREND_CONTINUATION",
     "htf_bias": "BEARISH",
-    "adx": 55.24,
+    "adx": 54.67,
     "tradable": true,
-    "current_price": 3804.72,
+    "current_price": 3813.36,
     "candidate_side": "SHORT",
-    "confluence_score": 54.74,
-    "zone": "EQUILIBRIUM",
+    "confluence_score": 57.8,
+    "zone": "PREMIUM",
     "asian_range": {
       "asian_high": 3818.86,
       "asian_low": 3786.34,
       "asian_sweep": "NONE"
     },
-    "xray_summary_fa": "هم‌راستا با روند ۱ ساعته (+24) | حمایت ساختار ۴ ساعته (+6) | حضور قیمت در ناحیه FVG دست‌نخورده (+18)"
+    "xray_summary_fa": "هم‌راستا با روند ۱ ساعته (+24) | حمایت ساختار ۴ ساعته (+6) | حضور قیمت در ناحیه FVG دست‌نخورده (+18) | ناحیه گران‌فروشی Premium (+8)"
   }
 }
