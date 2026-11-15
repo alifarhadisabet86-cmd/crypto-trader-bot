@@ -10,7 +10,7 @@
     "xray_summary_fa": "هم‌راستا با روند ۱ ساعته (+24) | حمایت ساختار ۴ ساعته (+6) | حضور قیمت در ناحیه FVG دست‌نخورده (+18) | ناحیه گران‌فروشی Premium (+10) | حجم تراکنش بالاتر از میانگین (+8) | سشن Killzone فعال (+7)",
     "slot_type": "STANDARD_SLOT",
     "entry_price": 64699.653571,
-    "current_price": 64699.653571,
+    "current_price": 64673.3,
     "stop_loss": 64966.747856,
     "initial_stop_loss": 64966.747856,
     "stop_distance": 267.094285,
@@ -26,7 +26,7 @@
     "is_risk_free": false,
     "trailing_active": false,
     "realized_pnl_usdt": -0.0746,
-    "unrealized_pnl_usdt": 0.0,
+    "unrealized_pnl_usdt": 0.15,
     "fees_paid_usdt": 0.0746,
     "opened_at": "2026-11-15T08:40:57Z"
   }
