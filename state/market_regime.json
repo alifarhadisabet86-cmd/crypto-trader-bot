@@ -5,16 +5,16 @@
     "htf_bias": "BEARISH",
     "adx": 53.26,
     "tradable": true,
-    "current_price": 64708.3,
+    "current_price": 64912.7,
     "candidate_side": "SHORT",
-    "confluence_score": 44.82,
+    "confluence_score": 46.27,
     "zone": "PREMIUM",
     "asian_range": {
       "asian_high": 65582.7,
       "asian_low": 61987.9,
       "asian_sweep": "NONE"
     },
-    "xray_summary_fa": "هم‌راستا با روند ۱ ساعته (+24) | حمایت ساختار ۴ ساعته (+6) | ناحیه گران‌فروشی Premium (+8)"
+    "xray_summary_fa": "هم‌راستا با روند ۱ ساعته (+24) | حمایت ساختار ۴ ساعته (+6) | ناحیه گران‌فروشی Premium (+10)"
   },
   "ETH": {
     "regime": "TRENDING_BEAR",
@@ -22,16 +22,16 @@
     "htf_bias": "BEARISH",
     "adx": 47.81,
     "tradable": true,
-    "current_price": 1813.79,
+    "current_price": 1819.71,
     "candidate_side": "SHORT",
-    "confluence_score": 45.4,
+    "confluence_score": 46.27,
     "zone": "PREMIUM",
     "asian_range": {
       "asian_high": 1834.27,
       "asian_low": 1711.0,
       "asian_sweep": "NONE"
     },
-    "xray_summary_fa": "هم‌راستا با روند ۱ ساعته (+24) | حمایت ساختار ۴ ساعته (+6) | ناحیه گران‌فروشی Premium (+11)"
+    "xray_summary_fa": "هم‌راستا با روند ۱ ساعته (+24) | حمایت ساختار ۴ ساعته (+6) | ناحیه گران‌فروشی Premium (+12)"
   },
   "SOL": {
     "regime": "TRENDING_BEAR",
@@ -39,29 +39,29 @@
     "htf_bias": "BEARISH",
     "adx": 51.76,
     "tradable": true,
-    "current_price": 71.11,
+    "current_price": 71.47,
     "candidate_side": "SHORT",
-    "confluence_score": 50.84,
+    "confluence_score": 52.97,
     "zone": "PREMIUM",
     "asian_range": {
       "asian_high": 72.03,
       "asian_low": 67.42,
       "asian_sweep": "NONE"
     },
-    "xray_summary_fa": "هم‌راستا با روند ۱ ساعته (+24) | حمایت ساختار ۴ ساعته (+6) | ناحیه گران‌فروشی Premium (+8)"
+    "xray_summary_fa": "هم‌راستا با روند ۱ ساعته (+24) | حمایت ساختار ۴ ساعته (+6) | ناحیه گران‌فروشی Premium (+10)"
   },
   "XRP": {
     "regime": "RANGING",
     "strategy": "LIQUIDITY_SWEEP_REVERSAL",
     "htf_bias": "BEARISH",
-    "adx": 43.48,
+    "adx": 43.3,
     "tradable": true,
-    "current_price": 0.96564,
+    "current_price": 0.97341,
     "candidate_side": "SHORT",
     "confluence_score": 46.75,
     "zone": "PREMIUM",
     "asian_range": {
-      "asian_high": 0.97136,
+      "asian_high": 0.97472,
       "asian_low": 0.89936,
       "asian_sweep": "NONE"
     },
@@ -73,9 +73,9 @@
     "htf_bias": "BEARISH",
     "adx": 48.11,
     "tradable": true,
-    "current_price": 3830.53,
+    "current_price": 3830.92,
     "candidate_side": "NONE",
-    "confluence_score": 35.34,
+    "confluence_score": 34.1,
     "zone": "PREMIUM",
     "asian_range": {
       "asian_high": 3839.36,
