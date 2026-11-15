@@ -5,7 +5,7 @@
     "htf_bias": "BEARISH",
     "adx": 36.76,
     "tradable": true,
-    "current_price": 65546.3,
+    "current_price": 65476.1,
     "candidate_side": "SHORT",
     "confluence_score": 50.96,
     "zone": "PREMIUM",
@@ -22,16 +22,16 @@
     "htf_bias": "BEARISH",
     "adx": 33.03,
     "tradable": true,
-    "current_price": 1834.8,
-    "candidate_side": "NONE",
-    "confluence_score": 41.51,
+    "current_price": 1832.68,
+    "candidate_side": "SHORT",
+    "confluence_score": 44.44,
     "zone": "PREMIUM",
     "asian_range": {
       "asian_high": 1834.27,
       "asian_low": 1711.0,
-      "asian_sweep": "NONE"
+      "asian_sweep": "ASIAN_HIGH_SWEEP_BEAR"
     },
-    "xray_summary_fa": "ساختار بازگشت به میانگین رنج (+14) | حمایت ساختار ۴ ساعته (+6) | ناحیه گران‌فروشی Premium (+12) | سشن Killzone فعال (+7)"
+    "xray_summary_fa": "ساختار بازگشت به میانگین رنج (+14) | حمایت ساختار ۴ ساعته (+6) | ناحیه گران‌فروشی Premium (+12) | شکار نقدینگی سشن آسیا (+11) | سشن Killzone فعال (+7)"
   },
   "SOL": {
     "regime": "RANGING",
@@ -39,9 +39,9 @@
     "htf_bias": "BEARISH",
     "adx": 39.74,
     "tradable": true,
-    "current_price": 72.64,
+    "current_price": 72.53,
     "candidate_side": "SHORT",
-    "confluence_score": 57.15,
+    "confluence_score": 52.78,
     "zone": "PREMIUM",
     "asian_range": {
       "asian_high": 72.03,
@@ -56,9 +56,9 @@
     "htf_bias": "BEARISH",
     "adx": 27.67,
     "tradable": true,
-    "current_price": 0.96843,
+    "current_price": 0.96645,
     "candidate_side": "NONE",
-    "confluence_score": 44.4,
+    "confluence_score": 43.79,
     "zone": "PREMIUM",
     "asian_range": {
       "asian_high": 0.97944,
@@ -73,15 +73,15 @@
     "htf_bias": "BEARISH",
     "adx": 40.64,
     "tradable": true,
-    "current_price": 3826.9,
+    "current_price": 3825.91,
     "candidate_side": "SHORT",
-    "confluence_score": 46.94,
+    "confluence_score": 46.49,
     "zone": "PREMIUM",
     "asian_range": {
       "asian_high": 3839.36,
       "asian_low": 3786.34,
       "asian_sweep": "NONE"
     },
-    "xray_summary_fa": "هم‌راستا با روند ۱ ساعته (+24) | حمایت ساختار ۴ ساعته (+6) | ناحیه گران‌فروشی Premium (+9) | سشن Killzone فعال (+7)"
+    "xray_summary_fa": "هم‌راستا با روند ۱ ساعته (+24) | حمایت ساختار ۴ ساعته (+6) | ناحیه گران‌فروشی Premium (+8) | سشن Killzone فعال (+7)"
   }
 }
