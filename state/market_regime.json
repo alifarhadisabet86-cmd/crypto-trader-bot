@@ -5,16 +5,16 @@
     "htf_bias": "BEARISH",
     "adx": 15.31,
     "tradable": true,
-    "current_price": 64719.4,
+    "current_price": 64644.9,
     "candidate_side": "NONE",
-    "confluence_score": 36.14,
+    "confluence_score": 29.37,
     "zone": "DISCOUNT",
     "asian_range": {
       "asian_high": 65390.4,
       "asian_low": 64363.2,
       "asian_sweep": "NONE"
     },
-    "xray_summary_fa": "ساختار بازگشت به میانگین رنج (+14) | حمایت ساختار ۴ ساعته (+6) | حجم تراکنش بالاتر از میانگین (+8) | سشن Killzone فعال (+7)"
+    "xray_summary_fa": "ساختار بازگشت به میانگین رنج (+14) | حمایت ساختار ۴ ساعته (+6) | سشن Killzone فعال (+7)"
   },
   "ETH": {
     "regime": "RANGING",
@@ -22,16 +22,16 @@
     "htf_bias": "BEARISH",
     "adx": 13.49,
     "tradable": true,
-    "current_price": 1812.21,
+    "current_price": 1808.93,
     "candidate_side": "NONE",
-    "confluence_score": 35.01,
+    "confluence_score": 29.55,
     "zone": "DISCOUNT",
     "asian_range": {
       "asian_high": 1838.27,
       "asian_low": 1803.98,
       "asian_sweep": "NONE"
     },
-    "xray_summary_fa": "ساختار بازگشت به میانگین رنج (+14) | حمایت ساختار ۴ ساعته (+6) | حجم تراکنش بالاتر از میانگین (+6) | سشن Killzone فعال (+7)"
+    "xray_summary_fa": "ساختار بازگشت به میانگین رنج (+14) | حمایت ساختار ۴ ساعته (+6) | سشن Killzone فعال (+7)"
   },
   "SOL": {
     "regime": "RANGING",
@@ -39,7 +39,7 @@
     "htf_bias": "BEARISH",
     "adx": 17.58,
     "tradable": true,
-    "current_price": 71.01,
+    "current_price": 70.82,
     "candidate_side": "NONE",
     "confluence_score": 33.52,
     "zone": "DISCOUNT",
@@ -56,9 +56,9 @@
     "htf_bias": "BEARISH",
     "adx": 11.76,
     "tradable": true,
-    "current_price": 0.95478,
+    "current_price": 0.95383,
     "candidate_side": "NONE",
-    "confluence_score": 33.82,
+    "confluence_score": 33.97,
     "zone": "DISCOUNT",
     "asian_range": {
       "asian_high": 0.97471,
@@ -71,11 +71,11 @@
     "regime": "RANGING",
     "strategy": "LIQUIDITY_SWEEP_REVERSAL",
     "htf_bias": "BEARISH",
-    "adx": 22.97,
+    "adx": 22.89,
     "tradable": true,
-    "current_price": 3846.73,
+    "current_price": 3850.18,
     "candidate_side": "NONE",
-    "confluence_score": 31.51,
+    "confluence_score": 28.34,
     "zone": "DISCOUNT",
     "asian_range": {
       "asian_high": 3886.08,
