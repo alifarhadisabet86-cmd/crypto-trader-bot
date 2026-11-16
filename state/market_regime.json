@@ -3,11 +3,11 @@
     "regime": "RANGING",
     "strategy": "LIQUIDITY_SWEEP_REVERSAL",
     "htf_bias": "BEARISH",
-    "adx": 13.13,
+    "adx": 12.33,
     "tradable": true,
-    "current_price": 64174.2,
+    "current_price": 64217.8,
     "candidate_side": "NONE",
-    "confluence_score": 30.4,
+    "confluence_score": 29.37,
     "zone": "DISCOUNT",
     "asian_range": {
       "asian_high": 65390.4,
@@ -20,11 +20,11 @@
     "regime": "RANGING",
     "strategy": "LIQUIDITY_SWEEP_REVERSAL",
     "htf_bias": "BEARISH",
-    "adx": 10.38,
+    "adx": 10.28,
     "tradable": true,
-    "current_price": 1799.96,
+    "current_price": 1801.8,
     "candidate_side": "NONE",
-    "confluence_score": 29.92,
+    "confluence_score": 28.51,
     "zone": "DISCOUNT",
     "asian_range": {
       "asian_high": 1838.27,
@@ -39,24 +39,24 @@
     "htf_bias": "BEARISH",
     "adx": 13.12,
     "tradable": true,
-    "current_price": 70.9,
+    "current_price": 71.0,
     "candidate_side": "LONG",
-    "confluence_score": 53.5,
+    "confluence_score": 46.97,
     "zone": "DISCOUNT",
     "asian_range": {
       "asian_high": 72.78,
       "asian_low": 71.03,
       "asian_sweep": "NONE"
     },
-    "xray_summary_fa": "ساختار بازگشت به میانگین رنج (+14) | ناحیه ارزان‌فروشی Discount (+11) | شکار نقدینگی و استاپ‌هانت ۱۵m (+12) | سشن Killzone فعال (+7)"
+    "xray_summary_fa": "ساختار بازگشت به میانگین رنج (+14) | ناحیه ارزان‌فروشی Discount (+9) | شکار نقدینگی و استاپ‌هانت ۱۵m (+12) | سشن Killzone فعال (+7)"
   },
   "XRP": {
     "regime": "RANGING",
     "strategy": "LIQUIDITY_SWEEP_REVERSAL",
     "htf_bias": "BEARISH",
-    "adx": 10.51,
+    "adx": 10.76,
     "tradable": true,
-    "current_price": 0.94994,
+    "current_price": 0.94964,
     "candidate_side": "NONE",
     "confluence_score": 32.37,
     "zone": "DISCOUNT",
@@ -71,17 +71,17 @@
     "regime": "RANGING",
     "strategy": "LIQUIDITY_SWEEP_REVERSAL",
     "htf_bias": "BEARISH",
-    "adx": 17.94,
+    "adx": 18.24,
     "tradable": true,
-    "current_price": 3857.96,
+    "current_price": 3856.28,
     "candidate_side": "NONE",
-    "confluence_score": 37.71,
+    "confluence_score": 43.34,
     "zone": "PREMIUM",
     "asian_range": {
       "asian_high": 3886.08,
       "asian_low": 3824.45,
       "asian_sweep": "NONE"
     },
-    "xray_summary_fa": "ساختار بازگشت به میانگین رنج (+14) | حمایت ساختار ۴ ساعته (+6) | ناحیه گران‌فروشی Premium (+12) | سشن Killzone فعال (+7)"
+    "xray_summary_fa": "ساختار بازگشت به میانگین رنج (+14) | حمایت ساختار ۴ ساعته (+6) | ناحیه گران‌فروشی Premium (+10) | حجم تراکنش بالاتر از میانگین (+8) | سشن Killzone فعال (+7)"
   }
 }
