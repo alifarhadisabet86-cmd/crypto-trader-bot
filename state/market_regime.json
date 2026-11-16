@@ -3,9 +3,9 @@
     "regime": "RANGING",
     "strategy": "LIQUIDITY_SWEEP_REVERSAL",
     "htf_bias": "BEARISH",
-    "adx": 15.31,
+    "adx": 15.62,
     "tradable": true,
-    "current_price": 64626.9,
+    "current_price": 64474.8,
     "candidate_side": "NONE",
     "confluence_score": 32.82,
     "zone": "DISCOUNT",
@@ -20,11 +20,11 @@
     "regime": "RANGING",
     "strategy": "LIQUIDITY_SWEEP_REVERSAL",
     "htf_bias": "BEARISH",
-    "adx": 13.48,
+    "adx": 13.65,
     "tradable": true,
-    "current_price": 1809.36,
+    "current_price": 1805.98,
     "candidate_side": "LONG",
-    "confluence_score": 44.94,
+    "confluence_score": 43.6,
     "zone": "DISCOUNT",
     "asian_range": {
       "asian_high": 1838.27,
@@ -37,28 +37,28 @@
     "regime": "RANGING",
     "strategy": "LIQUIDITY_SWEEP_REVERSAL",
     "htf_bias": "BEARISH",
-    "adx": 17.58,
+    "adx": 17.64,
     "tradable": true,
-    "current_price": 71.05,
-    "candidate_side": "LONG",
-    "confluence_score": 52.48,
+    "current_price": 70.85,
+    "candidate_side": "NONE",
+    "confluence_score": 31.55,
     "zone": "DISCOUNT",
     "asian_range": {
       "asian_high": 72.78,
       "asian_low": 71.03,
-      "asian_sweep": "ASIAN_LOW_SWEEP_BULL"
+      "asian_sweep": "NONE"
     },
-    "xray_summary_fa": "ساختار بازگشت به میانگین رنج (+14) | ناحیه ارزان‌فروشی Discount (+12) | شکار نقدینگی سشن آسیا (+11) | سشن Killzone فعال (+7) | واگرایی پول هوشمند SMT (+6)"
+    "xray_summary_fa": "ساختار بازگشت به میانگین رنج (+14) | حمایت ساختار ۴ ساعته (+6) | سشن Killzone فعال (+7)"
   },
   "XRP": {
     "regime": "RANGING",
     "strategy": "LIQUIDITY_SWEEP_REVERSAL",
     "htf_bias": "BEARISH",
-    "adx": 11.76,
+    "adx": 11.28,
     "tradable": true,
-    "current_price": 0.95679,
+    "current_price": 0.95212,
     "candidate_side": "NONE",
-    "confluence_score": 31.19,
+    "confluence_score": 30.47,
     "zone": "DISCOUNT",
     "asian_range": {
       "asian_high": 0.97471,
@@ -71,17 +71,17 @@
     "regime": "RANGING",
     "strategy": "LIQUIDITY_SWEEP_REVERSAL",
     "htf_bias": "BEARISH",
-    "adx": 22.83,
+    "adx": 21.72,
     "tradable": true,
-    "current_price": 3850.08,
+    "current_price": 3849.38,
     "candidate_side": "NONE",
-    "confluence_score": 33.25,
+    "confluence_score": 27.05,
     "zone": "DISCOUNT",
     "asian_range": {
       "asian_high": 3886.08,
       "asian_low": 3824.45,
       "asian_sweep": "NONE"
     },
-    "xray_summary_fa": "ساختار بازگشت به میانگین رنج (+14) | حمایت ساختار ۴ ساعته (+6) | حجم تراکنش بالاتر از میانگین (+8) | سشن Killzone فعال (+7)"
+    "xray_summary_fa": "ساختار بازگشت به میانگین رنج (+14) | حمایت ساختار ۴ ساعته (+6) | سشن Killzone فعال (+7)"
   }
 }
