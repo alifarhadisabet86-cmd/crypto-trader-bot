@@ -695,6 +695,66 @@
       "confluence_score": 34.57,
       "status": "ACTIVE",
       "created_at": "2026-11-16T16:30:57Z"
+    },
+    {
+      "id": "SHD-BTC-586DD0",
+      "coin": "BTC",
+      "side": "LONG",
+      "entry_price": 64717.2,
+      "stop_loss": 64366.842143,
+      "tp_price": 65631.1,
+      "filter_reason": "ECONOMIC_NEWS_BLOCKED",
+      "confluence_score": 52.01,
+      "status": "ACTIVE",
+      "created_at": "2026-11-16T16:32:34Z"
+    },
+    {
+      "id": "SHD-ETH-43CAB0",
+      "coin": "ETH",
+      "side": "LONG",
+      "entry_price": 1825.29,
+      "stop_loss": 1805.321,
+      "tp_price": 1864.658,
+      "filter_reason": "ECONOMIC_NEWS_BLOCKED",
+      "confluence_score": 38.16,
+      "status": "ACTIVE",
+      "created_at": "2026-11-16T16:32:34Z"
+    },
+    {
+      "id": "SHD-SOL-F43387",
+      "coin": "SOL",
+      "side": "LONG",
+      "entry_price": 71.08,
+      "stop_loss": 70.193393,
+      "tp_price": 72.8185,
+      "filter_reason": "ECONOMIC_NEWS_BLOCKED",
+      "confluence_score": 42.69,
+      "status": "ACTIVE",
+      "created_at": "2026-11-16T16:32:34Z"
+    },
+    {
+      "id": "SHD-XRP-567364",
+      "coin": "XRP",
+      "side": "LONG",
+      "entry_price": 0.95553,
+      "stop_loss": 0.945,
+      "tp_price": 0.975803,
+      "filter_reason": "ECONOMIC_NEWS_BLOCKED",
+      "confluence_score": 45.34,
+      "status": "ACTIVE",
+      "created_at": "2026-11-16T16:32:34Z"
+    },
+    {
+      "id": "SHD-XAU-CB63DB",
+      "coin": "XAU",
+      "side": "LONG",
+      "entry_price": 3846.61,
+      "stop_loss": 3833.146865,
+      "tp_price": 3874.521,
+      "filter_reason": "ECONOMIC_NEWS_BLOCKED",
+      "confluence_score": 35.45,
+      "status": "ACTIVE",
+      "created_at": "2026-11-16T16:32:34Z"
     }
   ],
   "resolved_shadows": [
@@ -3300,7 +3360,7 @@
     }
   ],
   "stats": {
-    "total_filtered": 7182,
+    "total_filtered": 7187,
     "saved_from_loss": 4204,
     "missed_winners": 1556,
     "shield_accuracy": 72.99,
@@ -3312,7 +3372,7 @@
     "TIMEMACHINE_REJECTED": 0,
     "RISK_GUARDIAN_BLOCKED": 34,
     "SPREAD_GUARD_5PCT_BLOCKED": 0,
-    "ECONOMIC_NEWS_BLOCKED": 93
+    "ECONOMIC_NEWS_BLOCKED": 98
   },
-  "updated_at": "2026-11-16T16:31:03Z"
+  "updated_at": "2026-11-16T16:32:40Z"
 }

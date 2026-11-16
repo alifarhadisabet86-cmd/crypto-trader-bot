@@ -5,16 +5,16 @@
     "htf_bias": "BEARISH",
     "adx": 12.43,
     "tradable": true,
-    "current_price": 64713.7,
+    "current_price": 64717.2,
     "candidate_side": "LONG",
-    "confluence_score": 49.57,
+    "confluence_score": 52.01,
     "zone": "EQUILIBRIUM",
     "asian_range": {
       "asian_high": 65390.4,
       "asian_low": 64363.2,
       "asian_sweep": "ASIAN_LOW_SWEEP_BULL"
     },
-    "xray_summary_fa": "ساختار بازگشت به میانگین رنج (+14) | حضور قیمت در ناحیه FVG دست‌نخورده (+18) | شکار نقدینگی سشن آسیا (+11) | سشن Killzone فعال (+7)"
+    "xray_summary_fa": "ساختار بازگشت به میانگین رنج (+14) | مجاورت با FVG معتبر (+16) | شکار نقدینگی سشن آسیا (+11) | تایید فشار اردربوک صرافی (+6) | سشن Killzone فعال (+7)"
   },
   "ETH": {
     "regime": "RANGING",
@@ -22,16 +22,16 @@
     "htf_bias": "BEARISH",
     "adx": 13.52,
     "tradable": true,
-    "current_price": 1825.27,
+    "current_price": 1825.29,
     "candidate_side": "LONG",
-    "confluence_score": 41.65,
+    "confluence_score": 38.16,
     "zone": "EQUILIBRIUM",
     "asian_range": {
       "asian_high": 1838.27,
       "asian_low": 1803.98,
       "asian_sweep": "NONE"
     },
-    "xray_summary_fa": "ساختار بازگشت به میانگین رنج (+14) | مجاورت با FVG معتبر (+14) | تایید فشار اردربوک صرافی (+5) | سشن Killzone فعال (+7)"
+    "xray_summary_fa": "ساختار بازگشت به میانگین رنج (+14) | مجاورت با FVG معتبر (+14) | سشن Killzone فعال (+7)"
   },
   "SOL": {
     "regime": "RANGING",
@@ -39,9 +39,9 @@
     "htf_bias": "BEARISH",
     "adx": 11.42,
     "tradable": true,
-    "current_price": 71.06,
+    "current_price": 71.08,
     "candidate_side": "LONG",
-    "confluence_score": 41.81,
+    "confluence_score": 42.69,
     "zone": "DISCOUNT",
     "asian_range": {
       "asian_high": 72.78,
@@ -56,9 +56,9 @@
     "htf_bias": "BEARISH",
     "adx": 11.29,
     "tradable": true,
-    "current_price": 0.95507,
+    "current_price": 0.95553,
     "candidate_side": "LONG",
-    "confluence_score": 45.73,
+    "confluence_score": 45.34,
     "zone": "DISCOUNT",
     "asian_range": {
       "asian_high": 0.97471,
@@ -73,15 +73,15 @@
     "htf_bias": "BEARISH",
     "adx": 16.31,
     "tradable": true,
-    "current_price": 3848.25,
+    "current_price": 3846.61,
     "candidate_side": "LONG",
-    "confluence_score": 34.57,
+    "confluence_score": 35.45,
     "zone": "DISCOUNT",
     "asian_range": {
       "asian_high": 3886.08,
       "asian_low": 3824.45,
       "asian_sweep": "NONE"
     },
-    "xray_summary_fa": "ساختار بازگشت به میانگین رنج (+14) | شکار نقدینگی و استاپ‌هانت ۱۵m (+12) | سشن Killzone فعال (+7)"
+    "xray_summary_fa": "ساختار بازگشت به میانگین رنج (+14) | ناحیه ارزان‌فروشی Discount (+7) | شکار نقدینگی و استاپ‌هانت ۱۵m (+12) | سشن Killzone فعال (+7)"
   }
 }
