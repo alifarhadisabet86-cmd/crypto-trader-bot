@@ -3,18 +3,18 @@
     "regime": "RANGING",
     "strategy": "LIQUIDITY_SWEEP_REVERSAL",
     "htf_bias": "BEARISH",
-    "adx": 13.85,
+    "adx": 13.05,
     "tradable": true,
-    "current_price": 64340.9,
+    "current_price": 64401.1,
     "candidate_side": "NONE",
-    "confluence_score": 34.25,
+    "confluence_score": 33.08,
     "zone": "DISCOUNT",
     "asian_range": {
       "asian_high": 65171.3,
       "asian_low": 64402.5,
       "asian_sweep": "NONE"
     },
-    "xray_summary_fa": "ساختار بازگشت به میانگین رنج (+14) | حمایت ساختار ۴ ساعته (+6) | تایید فشار اردربوک صرافی (+7) | واگرایی پول هوشمند SMT (+6)"
+    "xray_summary_fa": "ساختار بازگشت به میانگین رنج (+14) | حمایت ساختار ۴ ساعته (+6) | حجم تراکنش بالاتر از میانگین (+5) | واگرایی پول هوشمند SMT (+6)"
   },
   "ETH": {
     "regime": "RANGING",
@@ -22,50 +22,50 @@
     "htf_bias": "BEARISH",
     "adx": 19.0,
     "tradable": true,
-    "current_price": 1819.03,
+    "current_price": 1820.5,
     "candidate_side": "LONG",
-    "confluence_score": 47.67,
+    "confluence_score": 55.73,
     "zone": "DISCOUNT",
     "asian_range": {
       "asian_high": 1843.45,
       "asian_low": 1811.08,
       "asian_sweep": "NONE"
     },
-    "xray_summary_fa": "ساختار بازگشت به میانگین رنج (+14) | مجاورت با FVG معتبر (+16) | ناحیه ارزان‌فروشی Discount (+11) | حجم تراکنش بالاتر از میانگین (+7) | تایید فشار اردربوک صرافی (+7) | واگرایی پول هوشمند SMT (+6) | ⚠️ ریزش شارپ لیدر BTC (-10)"
+    "xray_summary_fa": "ساختار بازگشت به میانگین رنج (+14) | مجاورت با FVG معتبر (+16) | ناحیه ارزان‌فروشی Discount (+9) | حجم تراکنش بالاتر از میانگین (+8) | تایید فشار اردربوک صرافی (+7) | واگرایی پول هوشمند SMT (+6)"
   },
   "SOL": {
     "regime": "RANGING",
     "strategy": "LIQUIDITY_SWEEP_REVERSAL",
     "htf_bias": "BEARISH",
-    "adx": 12.52,
+    "adx": 12.44,
     "tradable": true,
-    "current_price": 72.2,
+    "current_price": 72.25,
     "candidate_side": "LONG",
-    "confluence_score": 45.19,
+    "confluence_score": 52.37,
     "zone": "EQUILIBRIUM",
     "asian_range": {
       "asian_high": 73.29,
       "asian_low": 71.32,
       "asian_sweep": "NONE"
     },
-    "xray_summary_fa": "ساختار بازگشت به میانگین رنج (+14) | مجاورت با FVG معتبر (+15) | حجم تراکنش بالاتر از میانگین (+6) | تایید فشار اردربوک صرافی (+6) | واگرایی پول هوشمند SMT (+6) | ⚠️ ریزش شارپ لیدر BTC (-10)"
+    "xray_summary_fa": "ساختار بازگشت به میانگین رنج (+14) | مجاورت با FVG معتبر (+14) | حجم تراکنش بالاتر از میانگین (+7) | واگرایی پول هوشمند SMT (+6)"
   },
   "XRP": {
     "regime": "RANGING",
     "strategy": "LIQUIDITY_SWEEP_REVERSAL",
     "htf_bias": "BEARISH",
-    "adx": 12.52,
+    "adx": 12.46,
     "tradable": true,
-    "current_price": 0.95537,
+    "current_price": 0.95558,
     "candidate_side": "NONE",
-    "confluence_score": 36.58,
+    "confluence_score": 34.79,
     "zone": "DISCOUNT",
     "asian_range": {
       "asian_high": 0.96845,
       "asian_low": 0.95063,
       "asian_sweep": "NONE"
     },
-    "xray_summary_fa": "ساختار بازگشت به میانگین رنج (+14) | حمایت ساختار ۴ ساعته (+6) | واگرایی پول هوشمند SMT (+6) | هم‌سو با مومنتوم لیدر BTC (+3)"
+    "xray_summary_fa": "ساختار بازگشت به میانگین رنج (+14) | حمایت ساختار ۴ ساعته (+6) | واگرایی پول هوشمند SMT (+6)"
   },
   "XAU": {
     "regime": "RANGING",
@@ -73,15 +73,15 @@
     "htf_bias": "NEUTRAL",
     "adx": 10.98,
     "tradable": true,
-    "current_price": 3865.7,
+    "current_price": 3864.67,
     "candidate_side": "SHORT",
-    "confluence_score": 47.0,
+    "confluence_score": 45.49,
     "zone": "PREMIUM",
     "asian_range": {
       "asian_high": 3876.21,
       "asian_low": 3833.66,
       "asian_sweep": "NONE"
     },
-    "xray_summary_fa": "ساختار بازگشت به میانگین رنج (+14) | مجاورت با FVG معتبر (+16) | ناحیه گران‌فروشی Premium (+11) | واگرایی پول هوشمند SMT (+6)"
+    "xray_summary_fa": "ساختار بازگشت به میانگین رنج (+14) | مجاورت با FVG معتبر (+15) | ناحیه گران‌فروشی Premium (+10) | واگرایی پول هوشمند SMT (+6)"
   }
 }
