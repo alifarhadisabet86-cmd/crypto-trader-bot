@@ -25,18 +25,6 @@
       "created_at": "2026-11-17T15:50:57Z"
     },
     {
-      "id": "SHD-XRP-F5AD87",
-      "coin": "XRP",
-      "side": "SHORT",
-      "entry_price": 0.94875,
-      "stop_loss": 0.964795,
-      "tp_price": 0.920671,
-      "filter_reason": "LOW_CONFLUENCE_SCORE",
-      "confluence_score": 56.86,
-      "status": "ACTIVE",
-      "created_at": "2026-11-17T15:50:57Z"
-    },
-    {
       "id": "SHD-XAU-F3947C",
       "coin": "XAU",
       "side": "SHORT",
@@ -107,22 +95,69 @@
       "confluence_score": 38.4,
       "status": "ACTIVE",
       "created_at": "2026-11-17T16:01:10Z"
+    },
+    {
+      "id": "SHD-BTC-945886",
+      "coin": "BTC",
+      "side": "LONG",
+      "entry_price": 64267.6,
+      "stop_loss": 63914.061429,
+      "tp_price": 65379.1,
+      "filter_reason": "LOW_CONFLUENCE_SCORE",
+      "confluence_score": 47.36,
+      "status": "ACTIVE",
+      "created_at": "2026-11-17T16:10:55Z"
+    },
+    {
+      "id": "SHD-ETH-DAAF0E",
+      "coin": "ETH",
+      "side": "SHORT",
+      "entry_price": 1788.9,
+      "stop_loss": 1801.480607,
+      "tp_price": 1753.2845,
+      "filter_reason": "LOW_CONFLUENCE_SCORE",
+      "confluence_score": 60.48,
+      "status": "ACTIVE",
+      "created_at": "2026-11-17T16:10:55Z"
+    },
+    {
+      "id": "SHD-SOL-4E9C18",
+      "coin": "SOL",
+      "side": "LONG",
+      "entry_price": 72.61,
+      "stop_loss": 71.095144,
+      "tp_price": 75.260998,
+      "filter_reason": "LOW_CONFLUENCE_SCORE",
+      "confluence_score": 32.68,
+      "status": "ACTIVE",
+      "created_at": "2026-11-17T16:10:55Z"
+    },
+    {
+      "id": "SHD-XRP-2CEF46",
+      "coin": "XRP",
+      "side": "LONG",
+      "entry_price": 0.96482,
+      "stop_loss": 0.947515,
+      "tp_price": 0.995104,
+      "filter_reason": "LOW_CONFLUENCE_SCORE",
+      "confluence_score": 46.77,
+      "status": "ACTIVE",
+      "created_at": "2026-11-17T16:10:55Z"
+    },
+    {
+      "id": "SHD-XAU-7DE7F0",
+      "coin": "XAU",
+      "side": "SHORT",
+      "entry_price": 3861.85,
+      "stop_loss": 3875.366475,
+      "tp_price": 3831.5925,
+      "filter_reason": "LOW_CONFLUENCE_SCORE",
+      "confluence_score": 41.13,
+      "status": "ACTIVE",
+      "created_at": "2026-11-17T16:10:55Z"
     }
   ],
   "resolved_shadows": [
-    {
-      "id": "SHD-ETH-9571B0",
-      "coin": "ETH",
-      "side": "LONG",
-      "entry_price": 1811.21,
-      "stop_loss": 1803.755536,
-      "tp_price": 1841.838,
-      "filter_reason": "LOW_CONFLUENCE_SCORE",
-      "confluence_score": 44.02,
-      "status": "SAVED_FROM_LOSS",
-      "created_at": "2026-11-17T10:01:09Z",
-      "resolved_at": "2026-11-17T10:10:58Z"
-    },
     {
       "id": "SHD-XAU-4F2877",
       "coin": "XAU",
@@ -2709,22 +2744,35 @@
       "status": "SAVED_FROM_LOSS",
       "created_at": "2026-11-17T15:45:45Z",
       "resolved_at": "2026-11-17T15:50:57Z"
+    },
+    {
+      "id": "SHD-XRP-F5AD87",
+      "coin": "XRP",
+      "side": "SHORT",
+      "entry_price": 0.94875,
+      "stop_loss": 0.964795,
+      "tp_price": 0.920671,
+      "filter_reason": "LOW_CONFLUENCE_SCORE",
+      "confluence_score": 56.86,
+      "status": "SAVED_FROM_LOSS",
+      "created_at": "2026-11-17T15:50:57Z",
+      "resolved_at": "2026-11-17T16:10:55Z"
     }
   ],
   "stats": {
-    "total_filtered": 7714,
-    "saved_from_loss": 4589,
+    "total_filtered": 7719,
+    "saved_from_loss": 4590,
     "missed_winners": 1673,
-    "shield_accuracy": 73.28,
-    "evaluated_count": 6262
+    "shield_accuracy": 73.29,
+    "evaluated_count": 6263
   },
   "last_updated": "2026-11-01T18:21:42Z",
   "filter_breakdown": {
-    "LOW_CONFLUENCE_SCORE": 7535,
+    "LOW_CONFLUENCE_SCORE": 7540,
     "TIMEMACHINE_REJECTED": 0,
     "RISK_GUARDIAN_BLOCKED": 34,
     "SPREAD_GUARD_5PCT_BLOCKED": 0,
     "ECONOMIC_NEWS_BLOCKED": 137
   },
-  "updated_at": "2026-11-17T16:01:11Z"
+  "updated_at": "2026-11-17T16:10:55Z"
 }
