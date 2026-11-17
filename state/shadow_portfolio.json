@@ -647,6 +647,18 @@
       "confluence_score": 51.47,
       "status": "ACTIVE",
       "created_at": "2026-11-17T20:10:59Z"
+    },
+    {
+      "id": "SHD-SOL-C26649",
+      "coin": "SOL",
+      "side": "SHORT",
+      "entry_price": 72.92,
+      "stop_loss": 73.303715,
+      "tp_price": 71.308397,
+      "filter_reason": "LOW_CONFLUENCE_SCORE",
+      "confluence_score": 57.2,
+      "status": "ACTIVE",
+      "created_at": "2026-11-17T20:20:50Z"
     }
   ],
   "resolved_shadows": [
@@ -3252,7 +3264,7 @@
     }
   ],
   "stats": {
-    "total_filtered": 7775,
+    "total_filtered": 7776,
     "saved_from_loss": 4605,
     "missed_winners": 1673,
     "shield_accuracy": 73.35,
@@ -3260,11 +3272,11 @@
   },
   "last_updated": "2026-11-01T18:21:42Z",
   "filter_breakdown": {
-    "LOW_CONFLUENCE_SCORE": 7596,
+    "LOW_CONFLUENCE_SCORE": 7597,
     "TIMEMACHINE_REJECTED": 0,
     "RISK_GUARDIAN_BLOCKED": 34,
     "SPREAD_GUARD_5PCT_BLOCKED": 0,
     "ECONOMIC_NEWS_BLOCKED": 137
   },
-  "updated_at": "2026-11-17T20:11:00Z"
+  "updated_at": "2026-11-17T20:20:50Z"
 }
