@@ -5,7 +5,7 @@
     "htf_bias": "BEARISH",
     "adx": 16.2,
     "tradable": true,
-    "current_price": 63920.9,
+    "current_price": 64041.2,
     "candidate_side": "NONE",
     "confluence_score": 29.37,
     "zone": "DISCOUNT",
@@ -22,10 +22,10 @@
     "htf_bias": "BEARISH",
     "adx": 22.03,
     "tradable": true,
-    "current_price": 1787.54,
+    "current_price": 1792.51,
     "candidate_side": "SHORT",
-    "confluence_score": 57.0,
-    "zone": "DISCOUNT",
+    "confluence_score": 54.89,
+    "zone": "EQUILIBRIUM",
     "asian_range": {
       "asian_high": 1843.45,
       "asian_low": 1811.08,
@@ -39,16 +39,16 @@
     "htf_bias": "BEARISH",
     "adx": 15.75,
     "tradable": true,
-    "current_price": 72.66,
+    "current_price": 72.86,
     "candidate_side": "SHORT",
-    "confluence_score": 60.06,
-    "zone": "EQUILIBRIUM",
+    "confluence_score": 55.73,
+    "zone": "PREMIUM",
     "asian_range": {
       "asian_high": 73.29,
       "asian_low": 71.32,
       "asian_sweep": "NONE"
     },
-    "xray_summary_fa": "ساختار بازگشت به میانگین رنج (+14) | حمایت ساختار ۴ ساعته (+6) | حضور قیمت در ناحیه FVG دست‌نخورده (+18) | حجم تراکنش بالاتر از میانگین (+6) | سشن Killzone فعال (+7)"
+    "xray_summary_fa": "ساختار بازگشت به میانگین رنج (+14) | حمایت ساختار ۴ ساعته (+6) | حضور قیمت در ناحیه FVG دست‌نخورده (+18) | سشن Killzone فعال (+7)"
   },
   "XRP": {
     "regime": "RANGING",
@@ -56,10 +56,10 @@
     "htf_bias": "BEARISH",
     "adx": 14.48,
     "tradable": true,
-    "current_price": 0.96088,
+    "current_price": 0.9642,
     "candidate_side": "NONE",
-    "confluence_score": 36.62,
-    "zone": "EQUILIBRIUM",
+    "confluence_score": 36.75,
+    "zone": "PREMIUM",
     "asian_range": {
       "asian_high": 0.96845,
       "asian_low": 0.95063,
@@ -70,18 +70,18 @@
   "XAU": {
     "regime": "RANGING",
     "strategy": "LIQUIDITY_SWEEP_REVERSAL",
-    "htf_bias": "BEARISH",
+    "htf_bias": "NEUTRAL",
     "adx": 10.25,
     "tradable": true,
-    "current_price": 3860.64,
+    "current_price": 3862.3,
     "candidate_side": "NONE",
-    "confluence_score": 33.39,
+    "confluence_score": 27.36,
     "zone": "PREMIUM",
     "asian_range": {
       "asian_high": 3876.21,
       "asian_low": 3833.66,
       "asian_sweep": "NONE"
     },
-    "xray_summary_fa": "ساختار بازگشت به میانگین رنج (+14) | حمایت ساختار ۴ ساعته (+6) | ناحیه گران‌فروشی Premium (+6) | سشن Killzone فعال (+7)"
+    "xray_summary_fa": "ساختار بازگشت به میانگین رنج (+14) | سشن Killzone فعال (+7)"
   }
 }
