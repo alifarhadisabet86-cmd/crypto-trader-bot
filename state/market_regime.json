@@ -3,69 +3,69 @@
     "regime": "RANGING",
     "strategy": "LIQUIDITY_SWEEP_REVERSAL",
     "htf_bias": "BEARISH",
-    "adx": 16.17,
+    "adx": 15.19,
     "tradable": true,
-    "current_price": 64442.3,
+    "current_price": 64737.5,
     "candidate_side": "LONG",
-    "confluence_score": 56.5,
-    "zone": "DISCOUNT",
+    "confluence_score": 38.55,
+    "zone": "PREMIUM",
     "asian_range": {
       "asian_high": 65171.3,
       "asian_low": 64402.5,
       "asian_sweep": "ASIAN_LOW_SWEEP_BULL"
     },
-    "xray_summary_fa": "ساختار بازگشت به میانگین رنج (+14) | مجاورت با FVG معتبر (+16) | ناحیه ارزان‌فروشی Discount (+8) | شکار نقدینگی سشن آسیا (+11) | تایید فشار اردربوک صرافی (+7) | سشن Killzone فعال (+7)"
+    "xray_summary_fa": "ساختار بازگشت به میانگین رنج (+14) | مجاورت با FVG معتبر (+4) | شکار نقدینگی سشن آسیا (+11) | حجم تراکنش بالاتر از میانگین (+8) | سشن Killzone فعال (+7)"
   },
   "ETH": {
     "regime": "RANGING",
     "strategy": "LIQUIDITY_SWEEP_REVERSAL",
     "htf_bias": "BEARISH",
-    "adx": 18.3,
+    "adx": 17.91,
     "tradable": true,
-    "current_price": 1807.61,
+    "current_price": 1815.55,
     "candidate_side": "LONG",
-    "confluence_score": 47.65,
-    "zone": "DISCOUNT",
+    "confluence_score": 43.04,
+    "zone": "EQUILIBRIUM",
     "asian_range": {
       "asian_high": 1843.45,
       "asian_low": 1811.08,
-      "asian_sweep": "NONE"
+      "asian_sweep": "ASIAN_LOW_SWEEP_BULL"
     },
-    "xray_summary_fa": "ساختار بازگشت به میانگین رنج (+14) | مجاورت با FVG معتبر (+16) | ناحیه ارزان‌فروشی Discount (+7) | تایید فشار اردربوک صرافی (+7) | سشن Killzone فعال (+7)"
+    "xray_summary_fa": "ساختار بازگشت به میانگین رنج (+14) | مجاورت با FVG معتبر (+9) | شکار نقدینگی سشن آسیا (+11) | سشن Killzone فعال (+7) | هم‌سو با مومنتوم لیدر BTC (+3)"
   },
   "SOL": {
     "regime": "RANGING",
     "strategy": "LIQUIDITY_SWEEP_REVERSAL",
     "htf_bias": "BEARISH",
-    "adx": 16.39,
+    "adx": 19.67,
     "tradable": true,
-    "current_price": 72.97,
+    "current_price": 73.38,
     "candidate_side": "SHORT",
-    "confluence_score": 53.24,
+    "confluence_score": 52.77,
     "zone": "PREMIUM",
     "asian_range": {
       "asian_high": 73.29,
       "asian_low": 71.32,
       "asian_sweep": "NONE"
     },
-    "xray_summary_fa": "ساختار بازگشت به میانگین رنج (+14) | حمایت ساختار ۴ ساعته (+6) | ناحیه گران‌فروشی Premium (+12) | شکار نقدینگی و استاپ‌هانت ۱۵m (+12) | سشن Killzone فعال (+7)"
+    "xray_summary_fa": "ساختار بازگشت به میانگین رنج (+14) | حمایت ساختار ۴ ساعته (+6) | ناحیه گران‌فروشی Premium (+12) | شکار نقدینگی و استاپ‌هانت ۱۵m (+12) | حجم تراکنش بالاتر از میانگین (+6) | سشن Killzone فعال (+7) | واگرایی پول هوشمند SMT (+6) | ⚠️ پامپ شارپ لیدر BTC (-10)"
   },
   "XRP": {
     "regime": "RANGING",
     "strategy": "LIQUIDITY_SWEEP_REVERSAL",
     "htf_bias": "BEARISH",
-    "adx": 10.44,
+    "adx": 10.98,
     "tradable": true,
-    "current_price": 0.965,
-    "candidate_side": "NONE",
-    "confluence_score": 45.44,
+    "current_price": 0.96818,
+    "candidate_side": "SHORT",
+    "confluence_score": 48.71,
     "zone": "PREMIUM",
     "asian_range": {
       "asian_high": 0.96845,
       "asian_low": 0.95063,
-      "asian_sweep": "NONE"
+      "asian_sweep": "ASIAN_HIGH_SWEEP_BEAR"
     },
-    "xray_summary_fa": "ساختار بازگشت به میانگین رنج (+14) | حمایت ساختار ۴ ساعته (+6) | ناحیه گران‌فروشی Premium (+11) | سشن Killzone فعال (+7)"
+    "xray_summary_fa": "ساختار بازگشت به میانگین رنج (+14) | حمایت ساختار ۴ ساعته (+6) | ناحیه گران‌فروشی Premium (+12) | شکار نقدینگی سشن آسیا (+11) | سشن Killzone فعال (+7) | واگرایی پول هوشمند SMT (+6) | ⚠️ پامپ شارپ لیدر BTC (-10)"
   },
   "XAU": {
     "regime": "RANGING",
@@ -73,15 +73,15 @@
     "htf_bias": "BEARISH",
     "adx": 10.29,
     "tradable": true,
-    "current_price": 3850.86,
+    "current_price": 3852.45,
     "candidate_side": "LONG",
-    "confluence_score": 49.41,
+    "confluence_score": 46.62,
     "zone": "DISCOUNT",
     "asian_range": {
       "asian_high": 3876.21,
       "asian_low": 3833.66,
       "asian_sweep": "NONE"
     },
-    "xray_summary_fa": "ساختار بازگشت به میانگین رنج (+14) | حضور قیمت در ناحیه FVG دست‌نخورده (+18) | ناحیه ارزان‌فروشی Discount (+12) | سشن Killzone فعال (+7)"
+    "xray_summary_fa": "ساختار بازگشت به میانگین رنج (+14) | مجاورت با FVG معتبر (+15) | ناحیه ارزان‌فروشی Discount (+10) | تایید فشار اردربوک صرافی (+6) | سشن Killzone فعال (+7)"
   }
 }
