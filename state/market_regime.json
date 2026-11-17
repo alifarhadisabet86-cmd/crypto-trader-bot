@@ -5,16 +5,16 @@
     "htf_bias": "BEARISH",
     "adx": 13.29,
     "tradable": true,
-    "current_price": 64954.6,
+    "current_price": 64993.0,
     "candidate_side": "LONG",
-    "confluence_score": 39.3,
+    "confluence_score": 34.16,
     "zone": "EQUILIBRIUM",
     "asian_range": {
       "asian_high": 65171.3,
       "asian_low": 64402.5,
       "asian_sweep": "NONE"
     },
-    "xray_summary_fa": "ساختار بازگشت به میانگین رنج (+14) | حضور قیمت در ناحیه FVG دست‌نخورده (+18)"
+    "xray_summary_fa": "ساختار بازگشت به میانگین رنج (+14) | مجاورت با FVG معتبر (+16)"
   },
   "ETH": {
     "regime": "RANGING",
@@ -22,43 +22,43 @@
     "htf_bias": "BEARISH",
     "adx": 18.86,
     "tradable": true,
-    "current_price": 1828.24,
-    "candidate_side": "SHORT",
-    "confluence_score": 40.43,
+    "current_price": 1828.74,
+    "candidate_side": "NONE",
+    "confluence_score": 35.35,
     "zone": "PREMIUM",
     "asian_range": {
       "asian_high": 1836.73,
       "asian_low": 1811.08,
       "asian_sweep": "NONE"
     },
-    "xray_summary_fa": "ساختار بازگشت به میانگین رنج (+14) | حمایت ساختار ۴ ساعته (+6) | ناحیه گران‌فروشی Premium (+7) | شکار نقدینگی و استاپ‌هانت ۱۵m (+12) | واگرایی پول هوشمند SMT (+6)"
+    "xray_summary_fa": "ساختار بازگشت به میانگین رنج (+14) | حمایت ساختار ۴ ساعته (+6) | ناحیه گران‌فروشی Premium (+8) | واگرایی پول هوشمند SMT (+6)"
   },
   "SOL": {
     "regime": "RANGING",
     "strategy": "LIQUIDITY_SWEEP_REVERSAL",
     "htf_bias": "BEARISH",
-    "adx": 23.27,
+    "adx": 25.18,
     "tradable": true,
-    "current_price": 72.75,
-    "candidate_side": "SHORT",
-    "confluence_score": 57.88,
+    "current_price": 72.92,
+    "candidate_side": "NONE",
+    "confluence_score": 44.88,
     "zone": "PREMIUM",
     "asian_range": {
-      "asian_high": 72.92,
+      "asian_high": 72.93,
       "asian_low": 71.32,
       "asian_sweep": "NONE"
     },
-    "xray_summary_fa": "ساختار بازگشت به میانگین رنج (+14) | حمایت ساختار ۴ ساعته (+6) | ناحیه گران‌فروشی Premium (+12) | شکار نقدینگی و استاپ‌هانت ۱۵m (+12) | حجم تراکنش بالاتر از میانگین (+6) | واگرایی پول هوشمند SMT (+6)"
+    "xray_summary_fa": "ساختار بازگشت به میانگین رنج (+14) | حمایت ساختار ۴ ساعته (+6) | ناحیه گران‌فروشی Premium (+12) | واگرایی پول هوشمند SMT (+6)"
   },
   "XRP": {
     "regime": "RANGING",
     "strategy": "LIQUIDITY_SWEEP_REVERSAL",
     "htf_bias": "BEARISH",
-    "adx": 13.18,
+    "adx": 13.08,
     "tradable": true,
-    "current_price": 0.96477,
+    "current_price": 0.96467,
     "candidate_side": "SHORT",
-    "confluence_score": 52.18,
+    "confluence_score": 50.27,
     "zone": "PREMIUM",
     "asian_range": {
       "asian_high": 0.96845,
@@ -71,17 +71,17 @@
     "regime": "RANGING",
     "strategy": "LIQUIDITY_SWEEP_REVERSAL",
     "htf_bias": "BEARISH",
-    "adx": 10.47,
+    "adx": 10.29,
     "tradable": true,
-    "current_price": 3858.22,
+    "current_price": 3856.51,
     "candidate_side": "SHORT",
-    "confluence_score": 51.16,
+    "confluence_score": 47.18,
     "zone": "PREMIUM",
     "asian_range": {
       "asian_high": 3866.6,
       "asian_low": 3833.66,
       "asian_sweep": "NONE"
     },
-    "xray_summary_fa": "ساختار بازگشت به میانگین رنج (+14) | حمایت ساختار ۴ ساعته (+6) | مجاورت با FVG معتبر (+16) | ناحیه گران‌فروشی Premium (+10) | واگرایی پول هوشمند SMT (+6)"
+    "xray_summary_fa": "ساختار بازگشت به میانگین رنج (+14) | حمایت ساختار ۴ ساعته (+6) | مجاورت با FVG معتبر (+15) | ناحیه گران‌فروشی Premium (+9) | واگرایی پول هوشمند SMT (+6)"
   }
 }
