@@ -5,9 +5,9 @@
     "htf_bias": "BEARISH",
     "adx": 13.29,
     "tradable": true,
-    "current_price": 64962.6,
+    "current_price": 64970.9,
     "candidate_side": "LONG",
-    "confluence_score": 43.33,
+    "confluence_score": 43.14,
     "zone": "EQUILIBRIUM",
     "asian_range": {
       "asian_high": 65171.3,
@@ -22,24 +22,24 @@
     "htf_bias": "BEARISH",
     "adx": 18.86,
     "tradable": true,
-    "current_price": 1827.41,
+    "current_price": 1829.21,
     "candidate_side": "NONE",
-    "confluence_score": 29.46,
+    "confluence_score": 31.13,
     "zone": "PREMIUM",
     "asian_range": {
       "asian_high": 1836.73,
       "asian_low": 1811.08,
       "asian_sweep": "NONE"
     },
-    "xray_summary_fa": "ساختار بازگشت به میانگین رنج (+14) | حمایت ساختار ۴ ساعته (+6) | ناحیه گران‌فروشی Premium (+6)"
+    "xray_summary_fa": "ساختار بازگشت به میانگین رنج (+14) | حمایت ساختار ۴ ساعته (+6) | ناحیه گران‌فروشی Premium (+8)"
   },
   "SOL": {
     "regime": "RANGING",
     "strategy": "LIQUIDITY_SWEEP_REVERSAL",
     "htf_bias": "BEARISH",
-    "adx": 22.2,
+    "adx": 21.89,
     "tradable": true,
-    "current_price": 72.68,
+    "current_price": 72.66,
     "candidate_side": "SHORT",
     "confluence_score": 48.41,
     "zone": "PREMIUM",
@@ -56,9 +56,9 @@
     "htf_bias": "BEARISH",
     "adx": 12.58,
     "tradable": true,
-    "current_price": 0.96259,
+    "current_price": 0.96267,
     "candidate_side": "SHORT",
-    "confluence_score": 58.59,
+    "confluence_score": 58.72,
     "zone": "PREMIUM",
     "asian_range": {
       "asian_high": 0.96845,
@@ -71,17 +71,17 @@
     "regime": "RANGING",
     "strategy": "LIQUIDITY_SWEEP_REVERSAL",
     "htf_bias": "BEARISH",
-    "adx": 10.17,
+    "adx": 10.01,
     "tradable": true,
-    "current_price": 3854.05,
+    "current_price": 3856.37,
     "candidate_side": "SHORT",
-    "confluence_score": 40.91,
+    "confluence_score": 43.52,
     "zone": "PREMIUM",
     "asian_range": {
       "asian_high": 3866.6,
       "asian_low": 3833.66,
       "asian_sweep": "NONE"
     },
-    "xray_summary_fa": "ساختار بازگشت به میانگین رنج (+14) | حمایت ساختار ۴ ساعته (+6) | مجاورت با FVG معتبر (+12) | ناحیه گران‌فروشی Premium (+7)"
+    "xray_summary_fa": "ساختار بازگشت به میانگین رنج (+14) | حمایت ساختار ۴ ساعته (+6) | مجاورت با FVG معتبر (+15) | ناحیه گران‌فروشی Premium (+9)"
   }
 }
