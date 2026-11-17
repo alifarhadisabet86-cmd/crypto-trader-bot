@@ -10,7 +10,7 @@
     "xray_summary_fa": "ساختار بازگشت به میانگین رنج (+14) | حمایت ساختار ۴ ساعته (+6) | حضور قیمت در ناحیه FVG دست‌نخورده (+18) | ناحیه گران‌فروشی Premium (+7) | شکار نقدینگی سشن آسیا (+11) | سشن Killzone فعال (+7) | واگرایی پول هوشمند SMT (+6)",
     "slot_type": "STANDARD_SLOT",
     "entry_price": 73.097643,
-    "current_price": 73.097643,
+    "current_price": 72.96,
     "stop_loss": 73.458893,
     "initial_stop_loss": 73.458893,
     "stop_distance": 0.36125,
@@ -26,7 +26,7 @@
     "is_risk_free": false,
     "trailing_active": false,
     "realized_pnl_usdt": -0.1534,
-    "unrealized_pnl_usdt": 0.0,
+    "unrealized_pnl_usdt": 1.44,
     "fees_paid_usdt": 0.1534,
     "opened_at": "2026-11-17T20:40:55Z"
   }
