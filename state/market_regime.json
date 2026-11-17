@@ -3,9 +3,9 @@
     "regime": "TRENDING_BEAR",
     "strategy": "SMC_TREND_CONTINUATION",
     "htf_bias": "BEARISH",
-    "adx": 21.88,
+    "adx": 21.96,
     "tradable": true,
-    "current_price": 63726.7,
+    "current_price": 63720.0,
     "candidate_side": "NONE",
     "confluence_score": 37.23,
     "zone": "DISCOUNT",
@@ -22,9 +22,9 @@
     "htf_bias": "BEARISH",
     "adx": 23.35,
     "tradable": true,
-    "current_price": 1788.94,
+    "current_price": 1788.75,
     "candidate_side": "NONE",
-    "confluence_score": 38.01,
+    "confluence_score": 37.94,
     "zone": "EQUILIBRIUM",
     "asian_range": {
       "asian_high": 1843.45,
@@ -39,16 +39,16 @@
     "htf_bias": "BEARISH",
     "adx": 15.32,
     "tradable": true,
-    "current_price": 72.5,
-    "candidate_side": "NONE",
-    "confluence_score": 35.3,
-    "zone": "DISCOUNT",
+    "current_price": 72.64,
+    "candidate_side": "SHORT",
+    "confluence_score": 54.6,
+    "zone": "EQUILIBRIUM",
     "asian_range": {
       "asian_high": 73.29,
       "asian_low": 71.32,
       "asian_sweep": "NONE"
     },
-    "xray_summary_fa": "ساختار بازگشت به میانگین رنج (+14) | حمایت ساختار ۴ ساعته (+6) | سشن Killzone فعال (+7)"
+    "xray_summary_fa": "ساختار بازگشت به میانگین رنج (+14) | حمایت ساختار ۴ ساعته (+6) | حضور قیمت در ناحیه FVG دست‌نخورده (+18) | سشن Killzone فعال (+7)"
   },
   "XRP": {
     "regime": "RANGING",
@@ -56,10 +56,10 @@
     "htf_bias": "BEARISH",
     "adx": 14.54,
     "tradable": true,
-    "current_price": 0.96016,
+    "current_price": 0.96222,
     "candidate_side": "NONE",
-    "confluence_score": 33.34,
-    "zone": "DISCOUNT",
+    "confluence_score": 35.08,
+    "zone": "EQUILIBRIUM",
     "asian_range": {
       "asian_high": 0.96845,
       "asian_low": 0.95063,
@@ -71,17 +71,17 @@
     "regime": "RANGING",
     "strategy": "LIQUIDITY_SWEEP_REVERSAL",
     "htf_bias": "BEARISH",
-    "adx": 9.28,
+    "adx": 9.72,
     "tradable": true,
-    "current_price": 3845.28,
+    "current_price": 3840.37,
     "candidate_side": "LONG",
-    "confluence_score": 53.2,
+    "confluence_score": 39.46,
     "zone": "DISCOUNT",
     "asian_range": {
       "asian_high": 3876.21,
       "asian_low": 3833.66,
       "asian_sweep": "NONE"
     },
-    "xray_summary_fa": "ساختار بازگشت به میانگین رنج (+14) | حضور قیمت در ناحیه FVG دست‌نخورده (+18) | ناحیه ارزان‌فروشی Discount (+9) | شکار نقدینگی و استاپ‌هانت ۱۵m (+12) | سشن Killzone فعال (+7)"
+    "xray_summary_fa": "ساختار بازگشت به میانگین رنج (+14) | ناحیه ارزان‌فروشی Discount (+12) | شکار نقدینگی و استاپ‌هانت ۱۵m (+12) | سشن Killzone فعال (+7)"
   }
 }
