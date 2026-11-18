@@ -1,44 +1,5 @@
 [
   {
-    "id": "SHD-ETH-ADAE0A",
-    "coin": "ETH",
-    "side": "SHORT",
-    "entry_price": 1815.81,
-    "stop_loss": 1822.671928,
-    "tp_price": 1786.989902,
-    "filter_reason": "LOW_CONFLUENCE_SCORE",
-    "confluence_score": 39.96,
-    "status": "SAVED_FROM_LOSS",
-    "created_at": "2026-11-17T23:00:55Z",
-    "resolved_at": "2026-11-17T23:11:22Z"
-  },
-  {
-    "id": "SHD-SOL-4BDB0F",
-    "coin": "SOL",
-    "side": "SHORT",
-    "entry_price": 74.01,
-    "stop_loss": 74.317215,
-    "tp_price": 72.719697,
-    "filter_reason": "LOW_CONFLUENCE_SCORE",
-    "confluence_score": 43.78,
-    "status": "SAVED_FROM_LOSS",
-    "created_at": "2026-11-17T23:00:55Z",
-    "resolved_at": "2026-11-17T23:11:22Z"
-  },
-  {
-    "id": "SHD-XAU-87F726",
-    "coin": "XAU",
-    "side": "LONG",
-    "entry_price": 3847.51,
-    "stop_loss": 3834.043715,
-    "tp_price": 3878.29,
-    "filter_reason": "LOW_CONFLUENCE_SCORE",
-    "confluence_score": 46.58,
-    "status": "SAVED_FROM_LOSS",
-    "created_at": "2026-11-17T18:50:57Z",
-    "resolved_at": "2026-11-18T00:20:52Z"
-  },
-  {
     "id": "SHD-XAU-46916D",
     "coin": "XAU",
     "side": "LONG",
@@ -2598,5 +2559,44 @@
     "status": "SAVED_FROM_LOSS",
     "created_at": "2026-11-18T07:31:01Z",
     "resolved_at": "2026-11-18T09:42:12Z"
+  },
+  {
+    "id": "SHD-BTC-F19F8B",
+    "coin": "BTC",
+    "side": "LONG",
+    "entry_price": 64782.0,
+    "stop_loss": 64555.263,
+    "tp_price": 65303.4951,
+    "filter_reason": "LOW_CONFLUENCE_SCORE",
+    "confluence_score": 42.07,
+    "status": "SAVED_FROM_LOSS",
+    "created_at": "2026-11-18T08:31:06Z",
+    "resolved_at": "2026-11-18T10:20:54Z"
+  },
+  {
+    "id": "SHD-BTC-2720C4",
+    "coin": "BTC",
+    "side": "LONG",
+    "entry_price": 64767.5,
+    "stop_loss": 64540.81375,
+    "tp_price": 65288.878375,
+    "filter_reason": "LOW_CONFLUENCE_SCORE",
+    "confluence_score": 48.18,
+    "status": "SAVED_FROM_LOSS",
+    "created_at": "2026-11-18T08:50:58Z",
+    "resolved_at": "2026-11-18T10:20:54Z"
+  },
+  {
+    "id": "SHD-SOL-56B599",
+    "coin": "SOL",
+    "side": "LONG",
+    "entry_price": 75.22,
+    "stop_loss": 74.95673,
+    "tp_price": 75.825521,
+    "filter_reason": "LOW_CONFLUENCE_SCORE",
+    "confluence_score": 53.88,
+    "status": "SAVED_FROM_LOSS",
+    "created_at": "2026-11-18T10:01:00Z",
+    "resolved_at": "2026-11-18T10:20:54Z"
   }
 ]
