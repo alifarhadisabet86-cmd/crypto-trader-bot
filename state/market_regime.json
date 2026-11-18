@@ -3,11 +3,11 @@
     "regime": "TRENDING_BEAR",
     "strategy": "SMC_TREND_CONTINUATION",
     "htf_bias": "BEARISH",
-    "adx": 31.7,
+    "adx": 31.18,
     "tradable": true,
-    "current_price": 62598.3,
+    "current_price": 62655.7,
     "candidate_side": "SHORT",
-    "confluence_score": 55.57,
+    "confluence_score": 55.48,
     "zone": "DISCOUNT",
     "asian_range": {
       "asian_high": 64831.7,
@@ -22,9 +22,9 @@
     "htf_bias": "BEARISH",
     "adx": 29.7,
     "tradable": true,
-    "current_price": 1750.48,
+    "current_price": 1751.99,
     "candidate_side": "SHORT",
-    "confluence_score": 51.98,
+    "confluence_score": 53.93,
     "zone": "DISCOUNT",
     "asian_range": {
       "asian_high": 1821.82,
@@ -37,9 +37,9 @@
     "regime": "RANGING",
     "strategy": "LIQUIDITY_SWEEP_REVERSAL",
     "htf_bias": "BEARISH",
-    "adx": 21.0,
+    "adx": 20.24,
     "tradable": true,
-    "current_price": 72.85,
+    "current_price": 72.96,
     "candidate_side": "NONE",
     "confluence_score": 32.71,
     "zone": "DISCOUNT",
@@ -56,9 +56,9 @@
     "htf_bias": "BEARISH",
     "adx": 17.71,
     "tradable": true,
-    "current_price": 0.9653,
+    "current_price": 0.96649,
     "candidate_side": "NONE",
-    "confluence_score": 32.04,
+    "confluence_score": 33.96,
     "zone": "DISCOUNT",
     "asian_range": {
       "asian_high": 0.98995,
@@ -73,15 +73,15 @@
     "htf_bias": "BEARISH",
     "adx": 40.65,
     "tradable": true,
-    "current_price": 3722.29,
+    "current_price": 3726.72,
     "candidate_side": "SHORT",
-    "confluence_score": 46.28,
+    "confluence_score": 53.99,
     "zone": "DISCOUNT",
     "asian_range": {
       "asian_high": 3822.2,
       "asian_low": 3776.12,
       "asian_sweep": "NONE"
     },
-    "xray_summary_fa": "هم‌راستا با روند ۱ ساعته (+24) | حمایت ساختار ۴ ساعته (+6) | مجاورت با FVG معتبر (+12) | سشن Killzone فعال (+7)"
+    "xray_summary_fa": "هم‌راستا با روند ۱ ساعته (+24) | حمایت ساختار ۴ ساعته (+6) | حضور قیمت در ناحیه FVG دست‌نخورده (+18) | سشن Killzone فعال (+7)"
   }
 }
