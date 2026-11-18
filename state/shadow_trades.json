@@ -1,18 +1,5 @@
 [
   {
-    "id": "SHD-SOL-7CBD3F",
-    "coin": "SOL",
-    "side": "SHORT",
-    "entry_price": 73.49,
-    "stop_loss": 74.175857,
-    "tp_price": 72.122,
-    "filter_reason": "ECONOMIC_NEWS_BLOCKED",
-    "confluence_score": 50.55,
-    "status": "SAVED_FROM_LOSS",
-    "created_at": "2026-11-17T13:40:55Z",
-    "resolved_at": "2026-11-17T14:40:58Z"
-  },
-  {
     "id": "SHD-ETH-C686CB",
     "coin": "ETH",
     "side": "SHORT",
@@ -2598,5 +2585,18 @@
     "status": "SAVED_FROM_LOSS",
     "created_at": "2026-11-18T00:00:58Z",
     "resolved_at": "2026-11-18T00:50:58Z"
+  },
+  {
+    "id": "SHD-ETH-1EE6C2",
+    "coin": "ETH",
+    "side": "LONG",
+    "entry_price": 1824.7,
+    "stop_loss": 1816.774965,
+    "tp_price": 1838.568811,
+    "filter_reason": "LOW_CONFLUENCE_SCORE",
+    "confluence_score": 43.07,
+    "status": "SAVED_FROM_LOSS",
+    "created_at": "2026-11-18T00:11:03Z",
+    "resolved_at": "2026-11-18T01:01:08Z"
   }
 ]
