@@ -1,30 +1,6 @@
 {
   "active_shadows": [
     {
-      "id": "SHD-BTC-35B6BC",
-      "coin": "BTC",
-      "side": "SHORT",
-      "entry_price": 64946.6,
-      "stop_loss": 65242.055358,
-      "tp_price": 63705.687496,
-      "filter_reason": "LOW_CONFLUENCE_SCORE",
-      "confluence_score": 40.21,
-      "status": "ACTIVE",
-      "created_at": "2026-11-18T00:11:03Z"
-    },
-    {
-      "id": "SHD-BTC-537F83",
-      "coin": "BTC",
-      "side": "LONG",
-      "entry_price": 64353.8,
-      "stop_loss": 64075.367143,
-      "tp_price": 65211.08,
-      "filter_reason": "LOW_CONFLUENCE_SCORE",
-      "confluence_score": 37.75,
-      "status": "ACTIVE",
-      "created_at": "2026-11-18T02:00:56Z"
-    },
-    {
       "id": "SHD-ETH-A9DD62",
       "coin": "ETH",
       "side": "LONG",
@@ -961,18 +937,6 @@
       "created_at": "2026-11-18T08:21:01Z"
     },
     {
-      "id": "SHD-XAU-90C9AE",
-      "coin": "XAU",
-      "side": "SHORT",
-      "entry_price": 3754.69,
-      "stop_loss": 3767.831415,
-      "tp_price": 3724.464745,
-      "filter_reason": "LOW_CONFLUENCE_SCORE",
-      "confluence_score": 54.6,
-      "status": "ACTIVE",
-      "created_at": "2026-11-18T08:21:01Z"
-    },
-    {
       "id": "SHD-BTC-F19F8B",
       "coin": "BTC",
       "side": "LONG",
@@ -1199,22 +1163,45 @@
       "confluence_score": 51.73,
       "status": "ACTIVE",
       "created_at": "2026-11-18T09:00:59Z"
+    },
+    {
+      "id": "SHD-ETH-A1F7C2",
+      "coin": "ETH",
+      "side": "LONG",
+      "entry_price": 1812.54,
+      "stop_loss": 1806.19611,
+      "tp_price": 1830.0485,
+      "filter_reason": "LOW_CONFLUENCE_SCORE",
+      "confluence_score": 43.61,
+      "status": "ACTIVE",
+      "created_at": "2026-11-18T09:11:02Z"
+    },
+    {
+      "id": "SHD-XRP-7E7702",
+      "coin": "XRP",
+      "side": "LONG",
+      "entry_price": 0.99892,
+      "stop_loss": 0.993984,
+      "tp_price": 1.010273,
+      "filter_reason": "LOW_CONFLUENCE_SCORE",
+      "confluence_score": 61.16,
+      "status": "ACTIVE",
+      "created_at": "2026-11-18T09:11:02Z"
+    },
+    {
+      "id": "SHD-XAU-36567C",
+      "coin": "XAU",
+      "side": "SHORT",
+      "entry_price": 3766.92,
+      "stop_loss": 3780.10422,
+      "tp_price": 3736.596294,
+      "filter_reason": "LOW_CONFLUENCE_SCORE",
+      "confluence_score": 51.04,
+      "status": "ACTIVE",
+      "created_at": "2026-11-18T09:11:02Z"
     }
   ],
   "resolved_shadows": [
-    {
-      "id": "SHD-SOL-7938DC",
-      "coin": "SOL",
-      "side": "SHORT",
-      "entry_price": 73.62,
-      "stop_loss": 74.166429,
-      "tp_price": 71.324998,
-      "filter_reason": "LOW_CONFLUENCE_SCORE",
-      "confluence_score": 51.03,
-      "status": "SAVED_FROM_LOSS",
-      "created_at": "2026-11-17T21:28:06Z",
-      "resolved_at": "2026-11-17T23:11:22Z"
-    },
     {
       "id": "SHD-XRP-FA672B",
       "coin": "XRP",
@@ -3801,22 +3788,35 @@
       "status": "SAVED_FROM_LOSS",
       "created_at": "2026-11-18T08:01:07Z",
       "resolved_at": "2026-11-18T08:21:01Z"
+    },
+    {
+      "id": "SHD-XAU-90C9AE",
+      "coin": "XAU",
+      "side": "SHORT",
+      "entry_price": 3754.69,
+      "stop_loss": 3767.831415,
+      "tp_price": 3724.464745,
+      "filter_reason": "LOW_CONFLUENCE_SCORE",
+      "confluence_score": 54.6,
+      "status": "SAVED_FROM_LOSS",
+      "created_at": "2026-11-18T08:21:01Z",
+      "resolved_at": "2026-11-18T09:11:02Z"
     }
   ],
   "stats": {
-    "total_filtered": 8110,
-    "saved_from_loss": 4829,
+    "total_filtered": 8113,
+    "saved_from_loss": 4830,
     "missed_winners": 1716,
-    "shield_accuracy": 73.78,
-    "evaluated_count": 6545
+    "shield_accuracy": 73.79,
+    "evaluated_count": 6546
   },
   "last_updated": "2026-11-01T18:21:42Z",
   "filter_breakdown": {
-    "LOW_CONFLUENCE_SCORE": 7931,
+    "LOW_CONFLUENCE_SCORE": 7934,
     "TIMEMACHINE_REJECTED": 0,
     "RISK_GUARDIAN_BLOCKED": 34,
     "SPREAD_GUARD_5PCT_BLOCKED": 0,
     "ECONOMIC_NEWS_BLOCKED": 137
   },
-  "updated_at": "2026-11-18T09:00:59Z"
+  "updated_at": "2026-11-18T09:11:02Z"
 }
