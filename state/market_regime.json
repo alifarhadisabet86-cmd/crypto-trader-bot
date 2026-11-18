@@ -3,69 +3,69 @@
     "regime": "TRENDING_BEAR",
     "strategy": "SMC_TREND_CONTINUATION",
     "htf_bias": "BEARISH",
-    "adx": 29.11,
+    "adx": 27.75,
     "tradable": true,
-    "current_price": 62987.1,
+    "current_price": 63268.3,
     "candidate_side": "SHORT",
-    "confluence_score": 59.46,
-    "zone": "EQUILIBRIUM",
+    "confluence_score": 36.91,
+    "zone": "PREMIUM",
     "asian_range": {
       "asian_high": 64831.7,
       "asian_low": 64324.9,
       "asian_sweep": "NONE"
     },
-    "xray_summary_fa": "هم‌راستا با روند ۱ ساعته (+22) | حمایت ساختار ۴ ساعته (+6) | حضور قیمت در ناحیه FVG دست‌نخورده (+18) | واگرایی پول هوشمند SMT (+6)"
+    "xray_summary_fa": "هم‌راستا با روند ۱ ساعته (+22) | حمایت ساختار ۴ ساعته (+6)"
   },
   "ETH": {
-    "regime": "TRENDING_BEAR",
-    "strategy": "SMC_TREND_CONTINUATION",
+    "regime": "RANGING",
+    "strategy": "LIQUIDITY_SWEEP_REVERSAL",
     "htf_bias": "BEARISH",
-    "adx": 28.93,
+    "adx": 28.49,
     "tradable": true,
-    "current_price": 1776.09,
+    "current_price": 1783.16,
     "candidate_side": "SHORT",
-    "confluence_score": 41.54,
+    "confluence_score": 29.64,
     "zone": "PREMIUM",
     "asian_range": {
       "asian_high": 1819.45,
       "asian_low": 1798.21,
       "asian_sweep": "NONE"
     },
-    "xray_summary_fa": "هم‌راستا با روند ۱ ساعته (+22) | حمایت ساختار ۴ ساعته (+6) | ناحیه گران‌فروشی Premium (+8) | شکار نقدینگی و استاپ‌هانت ۱۵m (+12) | واگرایی پول هوشمند SMT (+6) | ⚠️ پامپ شارپ لیدر BTC (-10)"
+    "xray_summary_fa": "ساختار بازگشت به میانگین رنج (+14) | حمایت ساختار ۴ ساعته (+6) | ناحیه گران‌فروشی Premium (+11) | شکار نقدینگی و استاپ‌هانت ۱۵m (+12) | ⚠️ پامپ شارپ لیدر BTC (-10)"
   },
   "SOL": {
     "regime": "RANGING",
     "strategy": "LIQUIDITY_SWEEP_REVERSAL",
-    "htf_bias": "BEARISH",
-    "adx": 19.79,
+    "htf_bias": "NEUTRAL",
+    "adx": 19.31,
     "tradable": true,
-    "current_price": 73.59,
-    "candidate_side": "LONG",
-    "confluence_score": 45.11,
-    "zone": "EQUILIBRIUM",
+    "current_price": 73.94,
+    "candidate_side": "NONE",
+    "confluence_score": 35.93,
+    "zone": "PREMIUM",
     "asian_range": {
       "asian_high": 75.65,
       "asian_low": 74.66,
       "asian_sweep": "NONE"
     },
-    "xray_summary_fa": "ساختار بازگشت به میانگین رنج (+14) | مجاورت با FVG معتبر (+12) | واگرایی پول هوشمند SMT (+6) | هم‌سو با مومنتوم لیدر BTC (+3)"
+    "xray_summary_fa": "ساختار بازگشت به میانگین رنج (+14) | تایید فشار اردربوک صرافی (+6) | واگرایی پول هوشمند SMT (+6) | هم‌سو با مومنتوم لیدر BTC (+3)"
   },
   "XRP": {
     "regime": "RANGING",
     "strategy": "LIQUIDITY_SWEEP_REVERSAL",
     "htf_bias": "BEARISH",
-    "adx": 25.92,
+    "adx": 21.89,
     "tradable": true,
-    "current_price": 0.96911,
-    "candidate_side": "NONE",
-    "confluence_score": 21.2,
+    "current_price": 0.97295,
+    "candidate_side": "LONG",
+    "confluence_score": 49.98,
     "zone": "DISCOUNT",
     "asian_range": {
       "asian_high": 0.98995,
       "asian_low": 0.97565,
       "asian_sweep": "NONE"
     },
-    "xray_summary_fa": "ساختار بازگشت به میانگین رنج (+14) | حمایت ساختار ۴ ساعته (+6) | واگرایی پول هوشمند SMT (+6) | ⚠️ پامپ شارپ لیدر BTC (-10)"
+    "xray_summary_fa": "ساختار بازگشت به میانگین رنج (+14) | مجاورت با FVG معتبر (+13) | تایید فشار اردربوک صرافی (+7) | واگرایی پول هوشمند SMT (+6) | هم‌سو با مومنتوم لیدر BTC (+3)"
   },
   "XAU": {
     "regime": "TRENDING_BEAR",
@@ -73,15 +73,15 @@
     "htf_bias": "BEARISH",
     "adx": 41.59,
     "tradable": true,
-    "current_price": 3739.77,
+    "current_price": 3737.82,
     "candidate_side": "SHORT",
-    "confluence_score": 47.99,
+    "confluence_score": 39.23,
     "zone": "DISCOUNT",
     "asian_range": {
       "asian_high": 3792.31,
       "asian_low": 3776.12,
       "asian_sweep": "NONE"
     },
-    "xray_summary_fa": "هم‌راستا با روند ۱ ساعته (+24) | حمایت ساختار ۴ ساعته (+6) | شکار نقدینگی و استاپ‌هانت ۱۵m (+12) | تایید فشار اردربوک صرافی (+5) | واگرایی پول هوشمند SMT (+6)"
+    "xray_summary_fa": "هم‌راستا با روند ۱ ساعته (+24) | حمایت ساختار ۴ ساعته (+6) | شکار نقدینگی و استاپ‌هانت ۱۵m (+12)"
   }
 }
