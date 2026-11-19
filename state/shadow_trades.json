@@ -1,44 +1,5 @@
 [
   {
-    "id": "SHD-BTC-4FD57A",
-    "coin": "BTC",
-    "side": "SHORT",
-    "entry_price": 63847.9,
-    "stop_loss": 64071.36765,
-    "tp_price": 62909.33587,
-    "filter_reason": "LOW_CONFLUENCE_SCORE",
-    "confluence_score": 57.31,
-    "status": "SAVED_FROM_LOSS",
-    "created_at": "2026-11-19T09:10:59Z",
-    "resolved_at": "2026-11-19T11:40:58Z"
-  },
-  {
-    "id": "SHD-SOL-03E3F1",
-    "coin": "SOL",
-    "side": "SHORT",
-    "entry_price": 74.62,
-    "stop_loss": 74.88117,
-    "tp_price": 73.523086,
-    "filter_reason": "LOW_CONFLUENCE_SCORE",
-    "confluence_score": 57.34,
-    "status": "SAVED_FROM_LOSS",
-    "created_at": "2026-11-19T09:10:59Z",
-    "resolved_at": "2026-11-19T11:40:58Z"
-  },
-  {
-    "id": "SHD-BTC-76243F",
-    "coin": "BTC",
-    "side": "SHORT",
-    "entry_price": 63809.1,
-    "stop_loss": 64032.43185,
-    "tp_price": 62871.10623,
-    "filter_reason": "LOW_CONFLUENCE_SCORE",
-    "confluence_score": 46.16,
-    "status": "SAVED_FROM_LOSS",
-    "created_at": "2026-11-19T09:21:00Z",
-    "resolved_at": "2026-11-19T11:40:58Z"
-  },
-  {
     "id": "SHD-SOL-52637F",
     "coin": "SOL",
     "side": "SHORT",
@@ -2598,5 +2559,44 @@
     "status": "SAVED_FROM_LOSS",
     "created_at": "2026-11-19T18:01:02Z",
     "resolved_at": "2026-11-19T18:30:55Z"
+  },
+  {
+    "id": "SHD-XRP-0AC3D8",
+    "coin": "XRP",
+    "side": "LONG",
+    "entry_price": 0.97786,
+    "stop_loss": 0.970163,
+    "tp_price": 0.996718,
+    "filter_reason": "LOW_CONFLUENCE_SCORE",
+    "confluence_score": 54.01,
+    "status": "SAVED_FROM_LOSS",
+    "created_at": "2026-11-19T18:30:55Z",
+    "resolved_at": "2026-11-19T19:11:09Z"
+  },
+  {
+    "id": "SHD-XRP-BAF441",
+    "coin": "XRP",
+    "side": "LONG",
+    "entry_price": 0.97723,
+    "stop_loss": 0.97014,
+    "tp_price": 0.996686,
+    "filter_reason": "LOW_CONFLUENCE_SCORE",
+    "confluence_score": 54.52,
+    "status": "SAVED_FROM_LOSS",
+    "created_at": "2026-11-19T18:40:58Z",
+    "resolved_at": "2026-11-19T19:11:09Z"
+  },
+  {
+    "id": "SHD-XRP-F8DF03",
+    "coin": "XRP",
+    "side": "LONG",
+    "entry_price": 0.97807,
+    "stop_loss": 0.97014,
+    "tp_price": 0.996728,
+    "filter_reason": "LOW_CONFLUENCE_SCORE",
+    "confluence_score": 53.88,
+    "status": "SAVED_FROM_LOSS",
+    "created_at": "2026-11-19T18:42:31Z",
+    "resolved_at": "2026-11-19T19:11:09Z"
   }
 ]
