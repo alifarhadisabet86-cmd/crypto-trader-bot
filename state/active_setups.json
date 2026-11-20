@@ -1,1 +1,33 @@
-[]
+[
+  {
+    "id": "POS-XRP-917111",
+    "coin": "XRP",
+    "side": "LONG",
+    "order_type": "LIMIT",
+    "trigger_type": "5M_PINBAR",
+    "regime": "RANGING",
+    "confluence_score": 71.62,
+    "xray_summary_fa": "ساختار بازگشت به میانگین رنج (+14) | حضور قیمت در ناحیه FVG دست‌نخورده (+18) | ناحیه ارزان‌فروشی Discount (+12) | حجم تراکنش بالاتر از میانگین (+8) | تایید فشار اردربوک صرافی (+7) | سشن Killzone فعال (+7) | واگرایی پول هوشمند SMT (+6)",
+    "slot_type": "STANDARD_SLOT",
+    "entry_price": 0.939653,
+    "current_price": 0.939653,
+    "stop_loss": 0.934116,
+    "initial_stop_loss": 0.934116,
+    "stop_distance": 0.005537,
+    "tp1_breakeven": 0.946021,
+    "tp2_final": 0.962908,
+    "initial_qty": 580.355379,
+    "remaining_qty": 580.355379,
+    "initial_notional_usdt": 545.33,
+    "remaining_notional_usdt": 545.33,
+    "margin_used_usdt": 109.07,
+    "initial_risk_usdt": 3.65,
+    "tp1_hit": false,
+    "is_risk_free": false,
+    "trailing_active": false,
+    "realized_pnl_usdt": -0.1091,
+    "unrealized_pnl_usdt": 0.0,
+    "fees_paid_usdt": 0.1091,
+    "opened_at": "2026-11-20T14:53:45Z"
+  }
+]
