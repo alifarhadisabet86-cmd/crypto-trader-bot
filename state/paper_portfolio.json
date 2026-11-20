@@ -20,8 +20,8 @@
       "xray_summary_fa": "ساختار بازگشت به میانگین رنج (+14) | حضور قیمت در ناحیه FVG دست‌نخورده (+18) | ناحیه ارزان‌فروشی Discount (+12) | حجم تراکنش بالاتر از میانگین (+8) | تایید فشار اردربوک صرافی (+7) | سشن Killzone فعال (+7) | واگرایی پول هوشمند SMT (+6)",
       "slot_type": "STANDARD_SLOT",
       "entry_price": 0.939653,
-      "current_price": 0.939653,
-      "stop_loss": 0.934116,
+      "current_price": 0.94496,
+      "stop_loss": 0.941037,
       "initial_stop_loss": 0.934116,
       "stop_distance": 0.005537,
       "tp1_breakeven": 0.946021,
@@ -32,11 +32,11 @@
       "remaining_notional_usdt": 545.33,
       "margin_used_usdt": 109.07,
       "initial_risk_usdt": 3.65,
-      "tp1_hit": false,
-      "is_risk_free": false,
+      "tp1_hit": true,
+      "is_risk_free": true,
       "trailing_active": false,
       "realized_pnl_usdt": -0.1091,
-      "unrealized_pnl_usdt": 0.0,
+      "unrealized_pnl_usdt": 3.08,
       "fees_paid_usdt": 0.1091,
       "opened_at": "2026-11-20T14:53:45Z"
     }
@@ -383,7 +383,7 @@
   "last_reset_week": "2026-W47",
   "paper_gate_target": 50,
   "paper_gate_unlocked": true,
-  "updated_at": "2026-11-20T14:53:46Z",
+  "updated_at": "2026-11-20T15:00:57Z",
   "trading_mode": "PAPER",
   "closed_trades": [
     {
