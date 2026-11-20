@@ -5,9 +5,9 @@
     "htf_bias": "BEARISH",
     "adx": 41.35,
     "tradable": true,
-    "current_price": 61975.5,
+    "current_price": 61950.0,
     "candidate_side": "SHORT",
-    "confluence_score": 59.42,
+    "confluence_score": 59.84,
     "zone": "EQUILIBRIUM",
     "asian_range": {
       "asian_high": 62632.4,
@@ -22,9 +22,9 @@
     "htf_bias": "BEARISH",
     "adx": 36.95,
     "tradable": true,
-    "current_price": 1747.71,
+    "current_price": 1747.21,
     "candidate_side": "SHORT",
-    "confluence_score": 57.56,
+    "confluence_score": 57.31,
     "zone": "PREMIUM",
     "asian_range": {
       "asian_high": 1770.4,
@@ -39,26 +39,26 @@
     "htf_bias": "BEARISH",
     "adx": 30.14,
     "tradable": true,
-    "current_price": 72.79,
+    "current_price": 72.72,
     "candidate_side": "SHORT",
-    "confluence_score": 49.59,
+    "confluence_score": 48.86,
     "zone": "PREMIUM",
     "asian_range": {
       "asian_high": 73.54,
       "asian_low": 71.6,
       "asian_sweep": "NONE"
     },
-    "xray_summary_fa": "هم‌راستا با روند ۱ ساعته (+22) | حمایت ساختار ۴ ساعته (+6) | ناحیه گران‌فروشی Premium (+6) | سشن Killzone فعال (+7)"
+    "xray_summary_fa": "هم‌راستا با روند ۱ ساعته (+22) | حمایت ساختار ۴ ساعته (+6) | سشن Killzone فعال (+7)"
   },
   "XRP": {
     "regime": "RANGING",
     "strategy": "LIQUIDITY_SWEEP_REVERSAL",
     "htf_bias": "BEARISH",
-    "adx": 18.28,
+    "adx": 18.24,
     "tradable": true,
-    "current_price": 0.97103,
+    "current_price": 0.96805,
     "candidate_side": "NONE",
-    "confluence_score": 43.35,
+    "confluence_score": 45.24,
     "zone": "PREMIUM",
     "asian_range": {
       "asian_high": 0.97308,
@@ -73,15 +73,15 @@
     "htf_bias": "BEARISH",
     "adx": 61.84,
     "tradable": true,
-    "current_price": 3557.79,
+    "current_price": 3550.62,
     "candidate_side": "SHORT",
-    "confluence_score": 53.99,
+    "confluence_score": 52.3,
     "zone": "DISCOUNT",
     "asian_range": {
       "asian_high": 3620.87,
       "asian_low": 3513.97,
       "asian_sweep": "NONE"
     },
-    "xray_summary_fa": "هم‌راستا با روند ۱ ساعته (+24) | حمایت ساختار ۴ ساعته (+6) | حضور قیمت در ناحیه FVG دست‌نخورده (+18) | سشن Killzone فعال (+7)"
+    "xray_summary_fa": "هم‌راستا با روند ۱ ساعته (+24) | حمایت ساختار ۴ ساعته (+6) | مجاورت با FVG معتبر (+15) | سشن Killzone فعال (+7)"
   }
 }
