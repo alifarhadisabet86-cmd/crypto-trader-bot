@@ -1,18 +1,5 @@
 [
   {
-    "id": "SHD-BTC-B26866",
-    "coin": "BTC",
-    "side": "SHORT",
-    "entry_price": 61595.5,
-    "stop_loss": 61863.662857,
-    "tp_price": 60978.725429,
-    "filter_reason": "LOW_CONFLUENCE_SCORE",
-    "confluence_score": 55.63,
-    "status": "SAVED_FROM_LOSS",
-    "created_at": "2026-11-20T05:20:57Z",
-    "resolved_at": "2026-11-20T05:51:01Z"
-  },
-  {
     "id": "SHD-SOL-079C74",
     "coin": "SOL",
     "side": "SHORT",
@@ -2598,5 +2585,18 @@
     "status": "SAVED_FROM_LOSS",
     "created_at": "2026-11-20T12:00:56Z",
     "resolved_at": "2026-11-20T12:10:57Z"
+  },
+  {
+    "id": "SHD-XAU-3633FD",
+    "coin": "XAU",
+    "side": "SHORT",
+    "entry_price": 3563.9,
+    "stop_loss": 3576.37365,
+    "tp_price": 3516.4665,
+    "filter_reason": "LOW_CONFLUENCE_SCORE",
+    "confluence_score": 55.55,
+    "status": "SAVED_FROM_LOSS",
+    "created_at": "2026-11-20T12:50:53Z",
+    "resolved_at": "2026-11-20T13:11:05Z"
   }
 ]
