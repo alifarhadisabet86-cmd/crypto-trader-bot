@@ -5,16 +5,16 @@
     "htf_bias": "BEARISH",
     "adx": 51.66,
     "tradable": true,
-    "current_price": 58979.5,
+    "current_price": 59079.7,
     "candidate_side": "LONG",
-    "confluence_score": 38.05,
+    "confluence_score": 37.03,
     "zone": "DISCOUNT",
     "asian_range": {
       "asian_high": 62390.0,
       "asian_low": 61392.3,
       "asian_sweep": "NONE"
     },
-    "xray_summary_fa": "مجاورت با FVG معتبر (+16) | ناحیه ارزان‌فروشی Discount (+10) | تایید فشار اردربوک صرافی (+7)"
+    "xray_summary_fa": "مجاورت با FVG معتبر (+16) | ناحیه ارزان‌فروشی Discount (+9) | تایید فشار اردربوک صرافی (+7)"
   },
   "ETH": {
     "regime": "TRENDING_BEAR",
@@ -22,50 +22,50 @@
     "htf_bias": "BEARISH",
     "adx": 48.31,
     "tradable": true,
-    "current_price": 1618.13,
+    "current_price": 1621.0,
     "candidate_side": "LONG",
-    "confluence_score": 32.03,
+    "confluence_score": 34.62,
     "zone": "DISCOUNT",
     "asian_range": {
       "asian_high": 1755.52,
       "asian_low": 1718.05,
       "asian_sweep": "NONE"
     },
-    "xray_summary_fa": "مجاورت با FVG معتبر (+16) | ناحیه ارزان‌فروشی Discount (+12)"
+    "xray_summary_fa": "مجاورت با FVG معتبر (+16) | ناحیه ارزان‌فروشی Discount (+11) | هم‌سو با مومنتوم لیدر BTC (+3)"
   },
   "SOL": {
     "regime": "TRENDING_BEAR",
     "strategy": "SMC_TREND_CONTINUATION",
     "htf_bias": "BEARISH",
-    "adx": 53.05,
+    "adx": 52.89,
     "tradable": true,
-    "current_price": 69.02,
+    "current_price": 69.11,
     "candidate_side": "LONG",
-    "confluence_score": 34.42,
+    "confluence_score": 29.86,
     "zone": "DISCOUNT",
     "asian_range": {
       "asian_high": 73.17,
       "asian_low": 71.6,
       "asian_sweep": "NONE"
     },
-    "xray_summary_fa": "مجاورت با FVG معتبر (+13) | تایید فشار اردربوک صرافی (+7)"
+    "xray_summary_fa": "مجاورت با FVG معتبر (+12) | هم‌سو با مومنتوم لیدر BTC (+3)"
   },
   "XRP": {
     "regime": "TRENDING_BEAR",
     "strategy": "SMC_TREND_CONTINUATION",
     "htf_bias": "BEARISH",
-    "adx": 32.31,
+    "adx": 32.14,
     "tradable": true,
-    "current_price": 0.90911,
+    "current_price": 0.91084,
     "candidate_side": "LONG",
-    "confluence_score": 32.8,
+    "confluence_score": 36.62,
     "zone": "DISCOUNT",
     "asian_range": {
       "asian_high": 0.97308,
       "asian_low": 0.94788,
       "asian_sweep": "NONE"
     },
-    "xray_summary_fa": "مجاورت با FVG معتبر (+14) | ناحیه ارزان‌فروشی Discount (+7)"
+    "xray_summary_fa": "مجاورت با FVG معتبر (+12) | ناحیه ارزان‌فروشی Discount (+6) | تایید فشار اردربوک صرافی (+7) | هم‌سو با مومنتوم لیدر BTC (+3)"
   },
   "XAU": {
     "regime": "TRENDING_BEAR",
@@ -73,15 +73,15 @@
     "htf_bias": "BEARISH",
     "adx": 59.87,
     "tradable": true,
-    "current_price": 3535.44,
+    "current_price": 3534.32,
     "candidate_side": "LONG",
-    "confluence_score": 30.48,
+    "confluence_score": 32.89,
     "zone": "DISCOUNT",
     "asian_range": {
       "asian_high": 3555.22,
       "asian_low": 3513.97,
       "asian_sweep": "NONE"
     },
-    "xray_summary_fa": "حضور قیمت در ناحیه FVG دست‌نخورده (+18)"
+    "xray_summary_fa": "مجاورت با FVG معتبر (+16)"
   }
 }
