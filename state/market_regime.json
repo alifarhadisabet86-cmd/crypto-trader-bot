@@ -5,33 +5,33 @@
     "htf_bias": "BEARISH",
     "adx": 41.59,
     "tradable": true,
-    "current_price": 61815.5,
+    "current_price": 61871.6,
     "candidate_side": "SHORT",
-    "confluence_score": 53.26,
+    "confluence_score": 54.84,
     "zone": "DISCOUNT",
     "asian_range": {
       "asian_high": 62632.4,
       "asian_low": 61295.1,
       "asian_sweep": "NONE"
     },
-    "xray_summary_fa": "هم‌راستا با روند ۱ ساعته (+24) | حمایت ساختار ۴ ساعته (+6) | مجاورت با FVG معتبر (+15) | تایید فشار اردربوک صرافی (+7)"
+    "xray_summary_fa": "هم‌راستا با روند ۱ ساعته (+24) | حمایت ساختار ۴ ساعته (+6) | مجاورت با FVG معتبر (+16) | تایید فشار اردربوک صرافی (+7)"
   },
   "ETH": {
     "regime": "TRENDING_BEAR",
     "strategy": "SMC_TREND_CONTINUATION",
     "htf_bias": "BEARISH",
-    "adx": 37.88,
+    "adx": 37.69,
     "tradable": true,
-    "current_price": 1738.72,
+    "current_price": 1742.58,
     "candidate_side": "SHORT",
-    "confluence_score": 52.62,
-    "zone": "DISCOUNT",
+    "confluence_score": 51.82,
+    "zone": "EQUILIBRIUM",
     "asian_range": {
       "asian_high": 1770.4,
       "asian_low": 1718.05,
       "asian_sweep": "NONE"
     },
-    "xray_summary_fa": "هم‌راستا با روند ۱ ساعته (+24) | حمایت ساختار ۴ ساعته (+6) | حضور قیمت در ناحیه FVG دست‌نخورده (+18) | تایید فشار اردربوک صرافی (+7)"
+    "xray_summary_fa": "هم‌راستا با روند ۱ ساعته (+24) | حمایت ساختار ۴ ساعته (+6) | حضور قیمت در ناحیه FVG دست‌نخورده (+18)"
   },
   "SOL": {
     "regime": "TRENDING_BEAR",
@@ -39,16 +39,16 @@
     "htf_bias": "BEARISH",
     "adx": 29.01,
     "tradable": true,
-    "current_price": 72.56,
+    "current_price": 72.74,
     "candidate_side": "SHORT",
-    "confluence_score": 54.86,
-    "zone": "EQUILIBRIUM",
+    "confluence_score": 59.97,
+    "zone": "PREMIUM",
     "asian_range": {
       "asian_high": 73.54,
       "asian_low": 71.6,
       "asian_sweep": "NONE"
     },
-    "xray_summary_fa": "هم‌راستا با روند ۱ ساعته (+22) | حمایت ساختار ۴ ساعته (+6) | مجاورت با FVG معتبر (+16)"
+    "xray_summary_fa": "هم‌راستا با روند ۱ ساعته (+22) | حمایت ساختار ۴ ساعته (+6) | حضور قیمت در ناحیه FVG دست‌نخورده (+18)"
   },
   "XRP": {
     "regime": "RANGING",
@@ -56,16 +56,16 @@
     "htf_bias": "BEARISH",
     "adx": 19.14,
     "tradable": true,
-    "current_price": 0.9657,
+    "current_price": 0.96586,
     "candidate_side": "SHORT",
-    "confluence_score": 47.41,
+    "confluence_score": 49.2,
     "zone": "PREMIUM",
     "asian_range": {
       "asian_high": 0.97308,
       "asian_low": 0.94788,
       "asian_sweep": "NONE"
     },
-    "xray_summary_fa": "ساختار بازگشت به میانگین رنج (+14) | حمایت ساختار ۴ ساعته (+6) | ناحیه گران‌فروشی Premium (+9) | شکار نقدینگی و استاپ‌هانت ۱۵m (+12) | تایید فشار اردربوک صرافی (+7)"
+    "xray_summary_fa": "ساختار بازگشت به میانگین رنج (+14) | حمایت ساختار ۴ ساعته (+6) | مجاورت با FVG معتبر (+16) | ناحیه گران‌فروشی Premium (+9)"
   },
   "XAU": {
     "regime": "TRENDING_BEAR",
@@ -73,15 +73,15 @@
     "htf_bias": "BEARISH",
     "adx": 62.39,
     "tradable": true,
-    "current_price": 3559.08,
-    "candidate_side": "LONG",
-    "confluence_score": 27.01,
+    "current_price": 3556.05,
+    "candidate_side": "SHORT",
+    "confluence_score": 48.19,
     "zone": "DISCOUNT",
     "asian_range": {
       "asian_high": 3620.87,
       "asian_low": 3513.97,
       "asian_sweep": "NONE"
     },
-    "xray_summary_fa": "مجاورت با FVG معتبر (+9) | ناحیه ارزان‌فروشی Discount (+9) | واگرایی پول هوشمند SMT (+6)"
+    "xray_summary_fa": "هم‌راستا با روند ۱ ساعته (+24) | حمایت ساختار ۴ ساعته (+6) | حضور قیمت در ناحیه FVG دست‌نخورده (+18)"
   }
 }
