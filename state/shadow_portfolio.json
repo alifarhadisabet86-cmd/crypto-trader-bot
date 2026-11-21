@@ -71,6 +71,18 @@
       "confluence_score": 46.66,
       "status": "ACTIVE",
       "created_at": "2026-11-21T13:51:00Z"
+    },
+    {
+      "id": "SHD-XAU-22CA63",
+      "coin": "XAU",
+      "side": "SHORT",
+      "entry_price": 3554.3,
+      "stop_loss": 3566.74005,
+      "tp_price": 3504.691,
+      "filter_reason": "LOW_CONFLUENCE_SCORE",
+      "confluence_score": 48.11,
+      "status": "ACTIVE",
+      "created_at": "2026-11-21T14:00:58Z"
     }
   ],
   "resolved_shadows": [
@@ -2676,7 +2688,7 @@
     }
   ],
   "stats": {
-    "total_filtered": 10198,
+    "total_filtered": 10199,
     "saved_from_loss": 6251,
     "missed_winners": 2254,
     "shield_accuracy": 73.5,
@@ -2684,11 +2696,11 @@
   },
   "last_updated": "2026-11-01T18:21:42Z",
   "filter_breakdown": {
-    "LOW_CONFLUENCE_SCORE": 9995,
+    "LOW_CONFLUENCE_SCORE": 9996,
     "TIMEMACHINE_REJECTED": 0,
     "RISK_GUARDIAN_BLOCKED": 36,
     "SPREAD_GUARD_5PCT_BLOCKED": 0,
     "ECONOMIC_NEWS_BLOCKED": 159
   },
-  "updated_at": "2026-11-21T13:51:01Z"
+  "updated_at": "2026-11-21T14:00:59Z"
 }
