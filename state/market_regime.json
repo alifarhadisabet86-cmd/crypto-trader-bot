@@ -5,16 +5,16 @@
     "htf_bias": "BEARISH",
     "adx": 51.63,
     "tradable": true,
-    "current_price": 58987.3,
+    "current_price": 59022.1,
     "candidate_side": "LONG",
-    "confluence_score": 39.51,
+    "confluence_score": 39.28,
     "zone": "DISCOUNT",
     "asian_range": {
       "asian_high": 61994.5,
-      "asian_low": 58943.8,
+      "asian_low": 58889.8,
       "asian_sweep": "ASIAN_LOW_SWEEP_BULL"
     },
-    "xray_summary_fa": "مجاورت با FVG معتبر (+16) | ناحیه ارزان‌فروشی Discount (+10) | شکار نقدینگی سشن آسیا (+11)"
+    "xray_summary_fa": "مجاورت با FVG معتبر (+16) | ناحیه ارزان‌فروشی Discount (+9) | شکار نقدینگی سشن آسیا (+11)"
   },
   "ETH": {
     "regime": "TRENDING_BEAR",
@@ -22,16 +22,16 @@
     "htf_bias": "BEARISH",
     "adx": 48.55,
     "tradable": true,
-    "current_price": 1624.6,
+    "current_price": 1625.94,
     "candidate_side": "LONG",
-    "confluence_score": 34.06,
+    "confluence_score": 32.98,
     "zone": "DISCOUNT",
     "asian_range": {
       "asian_high": 1743.12,
       "asian_low": 1622.57,
       "asian_sweep": "ASIAN_LOW_SWEEP_BULL"
     },
-    "xray_summary_fa": "مجاورت با FVG معتبر (+12) | ناحیه ارزان‌فروشی Discount (+11) | شکار نقدینگی سشن آسیا (+11)"
+    "xray_summary_fa": "مجاورت با FVG معتبر (+11) | ناحیه ارزان‌فروشی Discount (+10) | شکار نقدینگی سشن آسیا (+11)"
   },
   "SOL": {
     "regime": "TRENDING_BEAR",
@@ -56,27 +56,27 @@
     "htf_bias": "BEARISH",
     "adx": 30.88,
     "tradable": true,
-    "current_price": 0.91144,
+    "current_price": 0.91112,
     "candidate_side": "LONG",
-    "confluence_score": 31.69,
+    "confluence_score": 32.34,
     "zone": "DISCOUNT",
     "asian_range": {
       "asian_high": 0.97308,
       "asian_low": 0.91038,
       "asian_sweep": "ASIAN_LOW_SWEEP_BULL"
     },
-    "xray_summary_fa": "مجاورت با FVG معتبر (+9) | ناحیه ارزان‌فروشی Discount (+6) | شکار نقدینگی سشن آسیا (+11)"
+    "xray_summary_fa": "مجاورت با FVG معتبر (+10) | ناحیه ارزان‌فروشی Discount (+6) | شکار نقدینگی سشن آسیا (+11)"
   },
   "XAU": {
     "regime": "TRENDING_BEAR",
     "strategy": "SMC_TREND_CONTINUATION",
     "htf_bias": "BEARISH",
-    "adx": 59.37,
+    "adx": 59.4,
     "tradable": true,
-    "current_price": 3539.96,
+    "current_price": 3537.05,
     "candidate_side": "SHORT",
-    "confluence_score": 43.76,
-    "zone": "EQUILIBRIUM",
+    "confluence_score": 42.8,
+    "zone": "DISCOUNT",
     "asian_range": {
       "asian_high": 3552.88,
       "asian_low": 3513.97,
