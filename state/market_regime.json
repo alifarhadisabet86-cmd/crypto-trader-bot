@@ -3,45 +3,45 @@
     "regime": "RANGING",
     "strategy": "LIQUIDITY_SWEEP_REVERSAL",
     "htf_bias": "BEARISH",
-    "adx": 31.09,
+    "adx": 30.97,
     "tradable": true,
-    "current_price": 60244.0,
+    "current_price": 60230.6,
     "candidate_side": "LONG",
-    "confluence_score": 34.77,
+    "confluence_score": 34.01,
     "zone": "DISCOUNT",
     "asian_range": {
       "asian_high": 57073.1,
       "asian_low": 55565.3,
       "asian_sweep": "NONE"
     },
-    "xray_summary_fa": "ساختار بازگشت به میانگین رنج (+14) | شکار نقدینگی و استاپ‌هانت ۱۵m (+12) | تایید فشار اردربوک صرافی (+6)"
+    "xray_summary_fa": "ساختار بازگشت به میانگین رنج (+14) | شکار نقدینگی و استاپ‌هانت ۱۵m (+12)"
   },
   "ETH": {
     "regime": "RANGING",
     "strategy": "LIQUIDITY_SWEEP_REVERSAL",
     "htf_bias": "BEARISH",
-    "adx": 30.23,
+    "adx": 30.13,
     "tradable": true,
-    "current_price": 1684.46,
+    "current_price": 1684.1,
     "candidate_side": "LONG",
-    "confluence_score": 33.93,
+    "confluence_score": 37.02,
     "zone": "DISCOUNT",
     "asian_range": {
       "asian_high": 1580.1,
       "asian_low": 1538.0,
       "asian_sweep": "NONE"
     },
-    "xray_summary_fa": "ساختار بازگشت به میانگین رنج (+14) | ناحیه ارزان‌فروشی Discount (+10) | شکار نقدینگی و استاپ‌هانت ۱۵m (+12)"
+    "xray_summary_fa": "ساختار بازگشت به میانگین رنج (+14) | ناحیه ارزان‌فروشی Discount (+10) | شکار نقدینگی و استاپ‌هانت ۱۵m (+12) | تایید فشار اردربوک صرافی (+7)"
   },
   "SOL": {
     "regime": "RANGING",
     "strategy": "LIQUIDITY_SWEEP_REVERSAL",
     "htf_bias": "BEARISH",
-    "adx": 38.03,
+    "adx": 37.6,
     "tradable": true,
-    "current_price": 70.41,
+    "current_price": 70.33,
     "candidate_side": "NONE",
-    "confluence_score": 33.09,
+    "confluence_score": 31.41,
     "zone": "DISCOUNT",
     "asian_range": {
       "asian_high": 66.63,
@@ -54,34 +54,34 @@
     "regime": "RANGING",
     "strategy": "LIQUIDITY_SWEEP_REVERSAL",
     "htf_bias": "BEARISH",
-    "adx": 31.43,
+    "adx": 30.89,
     "tradable": true,
-    "current_price": 0.93465,
+    "current_price": 0.93325,
     "candidate_side": "LONG",
-    "confluence_score": 39.0,
+    "confluence_score": 42.43,
     "zone": "PREMIUM",
     "asian_range": {
       "asian_high": 0.88473,
       "asian_low": 0.86772,
       "asian_sweep": "NONE"
     },
-    "xray_summary_fa": "ساختار بازگشت به میانگین رنج (+14) | مجاورت با FVG معتبر (+11) | شکار نقدینگی و استاپ‌هانت ۱۵m (+12)"
+    "xray_summary_fa": "ساختار بازگشت به میانگین رنج (+14) | مجاورت با FVG معتبر (+16) | شکار نقدینگی و استاپ‌هانت ۱۵m (+12)"
   },
   "XAU": {
     "regime": "RANGING",
     "strategy": "LIQUIDITY_SWEEP_REVERSAL",
     "htf_bias": "BEARISH",
-    "adx": 29.05,
+    "adx": 29.17,
     "tradable": true,
-    "current_price": 3552.26,
+    "current_price": 3552.47,
     "candidate_side": "LONG",
-    "confluence_score": 38.84,
+    "confluence_score": 40.63,
     "zone": "DISCOUNT",
     "asian_range": {
       "asian_high": 3520.51,
       "asian_low": 3494.74,
       "asian_sweep": "NONE"
     },
-    "xray_summary_fa": "ساختار بازگشت به میانگین رنج (+14) | مجاورت با FVG معتبر (+15) | ناحیه ارزان‌فروشی Discount (+9)"
+    "xray_summary_fa": "ساختار بازگشت به میانگین رنج (+14) | مجاورت با FVG معتبر (+14) | ناحیه ارزان‌فروشی Discount (+9) | تایید فشار اردربوک صرافی (+6)"
   }
 }
