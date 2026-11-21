@@ -5,16 +5,16 @@
     "htf_bias": "BEARISH",
     "adx": 42.54,
     "tradable": true,
-    "current_price": 58790.8,
+    "current_price": 58797.1,
     "candidate_side": "NONE",
-    "confluence_score": 48.96,
+    "confluence_score": 41.71,
     "zone": "PREMIUM",
     "asian_range": {
       "asian_high": 59240.0,
       "asian_low": 55565.3,
       "asian_sweep": "NONE"
     },
-    "xray_summary_fa": "ساختار بازگشت به میانگین رنج (+14) | حمایت ساختار ۴ ساعته (+6) | ناحیه گران‌فروشی Premium (+12) | حجم تراکنش بالاتر از میانگین (+8) | سشن Killzone فعال (+7)"
+    "xray_summary_fa": "ساختار بازگشت به میانگین رنج (+14) | حمایت ساختار ۴ ساعته (+6) | ناحیه گران‌فروشی Premium (+12) | سشن Killzone فعال (+7)"
   },
   "ETH": {
     "regime": "RANGING",
@@ -22,16 +22,16 @@
     "htf_bias": "BEARISH",
     "adx": 37.86,
     "tradable": true,
-    "current_price": 1665.14,
+    "current_price": 1662.17,
     "candidate_side": "SHORT",
-    "confluence_score": 47.42,
+    "confluence_score": 37.31,
     "zone": "PREMIUM",
     "asian_range": {
       "asian_high": 1629.6,
       "asian_low": 1538.0,
       "asian_sweep": "NONE"
     },
-    "xray_summary_fa": "ساختار بازگشت به میانگین رنج (+14) | حمایت ساختار ۴ ساعته (+6) | ناحیه گران‌فروشی Premium (+12) | شکار نقدینگی و استاپ‌هانت ۱۵m (+12) | حجم تراکنش بالاتر از میانگین (+8) | تایید فشار اردربوک صرافی (+6) | سشن Killzone فعال (+7) | ⚠️ پامپ شارپ لیدر BTC (-10)"
+    "xray_summary_fa": "ساختار بازگشت به میانگین رنج (+14) | حمایت ساختار ۴ ساعته (+6) | ناحیه گران‌فروشی Premium (+12) | شکار نقدینگی و استاپ‌هانت ۱۵m (+12) | سشن Killzone فعال (+7) | ⚠️ پامپ شارپ لیدر BTC (-10)"
   },
   "SOL": {
     "regime": "RANGING",
@@ -39,14 +39,14 @@
     "htf_bias": "BEARISH",
     "adx": 42.8,
     "tradable": true,
-    "current_price": 69.33,
+    "current_price": 69.11,
     "candidate_side": "SHORT",
-    "confluence_score": 48.23,
+    "confluence_score": 44.42,
     "zone": "PREMIUM",
     "asian_range": {
       "asian_high": 69.19,
       "asian_low": 65.17,
-      "asian_sweep": "NONE"
+      "asian_sweep": "ASIAN_HIGH_SWEEP_BEAR"
     },
     "xray_summary_fa": "ساختار بازگشت به میانگین رنج (+14) | حمایت ساختار ۴ ساعته (+6) | ناحیه گران‌فروشی Premium (+12) | شکار نقدینگی و استاپ‌هانت ۱۵m (+12) | سشن Killzone فعال (+7) | ⚠️ پامپ شارپ لیدر BTC (-10)"
   },
@@ -56,9 +56,9 @@
     "htf_bias": "BEARISH",
     "adx": 29.09,
     "tradable": true,
-    "current_price": 0.90598,
+    "current_price": 0.90419,
     "candidate_side": "NONE",
-    "confluence_score": 38.29,
+    "confluence_score": 34.32,
     "zone": "PREMIUM",
     "asian_range": {
       "asian_high": 0.91433,
@@ -73,15 +73,15 @@
     "htf_bias": "BEARISH",
     "adx": 50.63,
     "tradable": true,
-    "current_price": 3534.36,
+    "current_price": 3534.44,
     "candidate_side": "SHORT",
-    "confluence_score": 57.1,
+    "confluence_score": 49.96,
     "zone": "PREMIUM",
     "asian_range": {
       "asian_high": 3542.6,
       "asian_low": 3494.74,
       "asian_sweep": "NONE"
     },
-    "xray_summary_fa": "هم‌راستا با روند ۱ ساعته (+24) | حمایت ساختار ۴ ساعته (+6) | ناحیه گران‌فروشی Premium (+12) | شکار نقدینگی و استاپ‌هانت ۱۵m (+12) | سشن Killzone فعال (+7)"
+    "xray_summary_fa": "هم‌راستا با روند ۱ ساعته (+24) | حمایت ساختار ۴ ساعته (+6) | ناحیه گران‌فروشی Premium (+12) | سشن Killzone فعال (+7)"
   }
 }
