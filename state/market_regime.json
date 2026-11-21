@@ -5,16 +5,16 @@
     "htf_bias": "BEARISH",
     "adx": 51.63,
     "tradable": true,
-    "current_price": 59096.0,
+    "current_price": 59129.9,
     "candidate_side": "LONG",
-    "confluence_score": 34.76,
+    "confluence_score": 32.74,
     "zone": "DISCOUNT",
     "asian_range": {
       "asian_high": 61994.5,
       "asian_low": 58889.8,
       "asian_sweep": "NONE"
     },
-    "xray_summary_fa": "مجاورت با FVG معتبر (+13) | ناحیه ارزان‌فروشی Discount (+8) | تایید فشار اردربوک صرافی (+7)"
+    "xray_summary_fa": "مجاورت با FVG معتبر (+12) | ناحیه ارزان‌فروشی Discount (+8) | تایید فشار اردربوک صرافی (+7)"
   },
   "ETH": {
     "regime": "TRENDING_BEAR",
@@ -22,16 +22,16 @@
     "htf_bias": "BEARISH",
     "adx": 48.55,
     "tradable": true,
-    "current_price": 1626.8,
+    "current_price": 1627.43,
     "candidate_side": "LONG",
-    "confluence_score": 27.44,
+    "confluence_score": 24.38,
     "zone": "DISCOUNT",
     "asian_range": {
       "asian_high": 1743.12,
       "asian_low": 1621.53,
       "asian_sweep": "NONE"
     },
-    "xray_summary_fa": "مجاورت با FVG معتبر (+9) | ناحیه ارزان‌فروشی Discount (+10)"
+    "xray_summary_fa": "مجاورت با FVG معتبر (+7) | ناحیه ارزان‌فروشی Discount (+10)"
   },
   "SOL": {
     "regime": "TRENDING_BEAR",
@@ -39,9 +39,9 @@
     "htf_bias": "BEARISH",
     "adx": 51.92,
     "tradable": true,
-    "current_price": 69.02,
+    "current_price": 69.06,
     "candidate_side": "SHORT",
-    "confluence_score": 60.33,
+    "confluence_score": 60.64,
     "zone": "EQUILIBRIUM",
     "asian_range": {
       "asian_high": 72.92,
@@ -56,16 +56,16 @@
     "htf_bias": "BEARISH",
     "adx": 30.88,
     "tradable": true,
-    "current_price": 0.91099,
+    "current_price": 0.91111,
     "candidate_side": "LONG",
-    "confluence_score": 29.81,
+    "confluence_score": 22.56,
     "zone": "DISCOUNT",
     "asian_range": {
       "asian_high": 0.97308,
-      "asian_low": 0.90973,
+      "asian_low": 0.90934,
       "asian_sweep": "NONE"
     },
-    "xray_summary_fa": "مجاورت با FVG معتبر (+9) | تایید فشار اردربوک صرافی (+7)"
+    "xray_summary_fa": "مجاورت با FVG معتبر (+8)"
   },
   "XAU": {
     "regime": "TRENDING_BEAR",
@@ -73,15 +73,15 @@
     "htf_bias": "BEARISH",
     "adx": 59.4,
     "tradable": true,
-    "current_price": 3538.6,
+    "current_price": 3540.05,
     "candidate_side": "LONG",
-    "confluence_score": 18.57,
+    "confluence_score": 30.62,
     "zone": "EQUILIBRIUM",
     "asian_range": {
       "asian_high": 3552.88,
       "asian_low": 3513.97,
       "asian_sweep": "NONE"
     },
-    "xray_summary_fa": "مجاورت با FVG معتبر (+8)"
+    "xray_summary_fa": "مجاورت با FVG معتبر (+16) | تایید فشار اردربوک صرافی (+7)"
   }
 }
