@@ -5,16 +5,16 @@
     "htf_bias": "BEARISH",
     "adx": 50.76,
     "tradable": true,
-    "current_price": 57409.0,
+    "current_price": 57214.2,
     "candidate_side": "NONE",
-    "confluence_score": 50.0,
+    "confluence_score": 44.35,
     "zone": "DISCOUNT",
     "asian_range": {
       "asian_high": 59240.0,
       "asian_low": 56846.7,
       "asian_sweep": "NONE"
     },
-    "xray_summary_fa": "هم‌راستا با روند ۱ ساعته (+24) | حمایت ساختار ۴ ساعته (+6) | حجم تراکنش بالاتر از میانگین (+8) | تایید فشار اردربوک صرافی (+7)"
+    "xray_summary_fa": "هم‌راستا با روند ۱ ساعته (+24) | حمایت ساختار ۴ ساعته (+6) | حجم تراکنش بالاتر از میانگین (+8)"
   },
   "ETH": {
     "regime": "TRENDING_BEAR",
@@ -22,7 +22,7 @@
     "htf_bias": "BEARISH",
     "adx": 51.16,
     "tradable": true,
-    "current_price": 1575.75,
+    "current_price": 1575.92,
     "candidate_side": "NONE",
     "confluence_score": 40.45,
     "zone": "DISCOUNT",
@@ -39,7 +39,7 @@
     "htf_bias": "BEARISH",
     "adx": 51.91,
     "tradable": true,
-    "current_price": 66.56,
+    "current_price": 66.6,
     "candidate_side": "NONE",
     "confluence_score": 51.28,
     "zone": "DISCOUNT",
@@ -54,18 +54,18 @@
     "regime": "TRENDING_BEAR",
     "strategy": "SMC_TREND_CONTINUATION",
     "htf_bias": "BEARISH",
-    "adx": 34.4,
+    "adx": 34.29,
     "tradable": true,
-    "current_price": 0.88158,
+    "current_price": 0.88207,
     "candidate_side": "NONE",
-    "confluence_score": 54.4,
+    "confluence_score": 50.75,
     "zone": "DISCOUNT",
     "asian_range": {
       "asian_high": 0.91433,
       "asian_low": 0.87261,
       "asian_sweep": "NONE"
     },
-    "xray_summary_fa": "هم‌راستا با روند ۱ ساعته (+23) | حمایت ساختار ۴ ساعته (+6) | حجم تراکنش بالاتر از میانگین (+8) | تایید فشار اردربوک صرافی (+6) | هم‌سو با مومنتوم لیدر BTC (+3)"
+    "xray_summary_fa": "هم‌راستا با روند ۱ ساعته (+23) | حمایت ساختار ۴ ساعته (+6) | حجم تراکنش بالاتر از میانگین (+8) | هم‌سو با مومنتوم لیدر BTC (+3)"
   },
   "XAU": {
     "regime": "TRENDING_BEAR",
@@ -73,15 +73,15 @@
     "htf_bias": "BEARISH",
     "adx": 57.53,
     "tradable": true,
-    "current_price": 3503.69,
+    "current_price": 3507.98,
     "candidate_side": "NONE",
-    "confluence_score": 39.74,
+    "confluence_score": 43.28,
     "zone": "DISCOUNT",
     "asian_range": {
       "asian_high": 3542.6,
       "asian_low": 3501.01,
       "asian_sweep": "NONE"
     },
-    "xray_summary_fa": "هم‌راستا با روند ۱ ساعته (+24) | حمایت ساختار ۴ ساعته (+6) | حجم تراکنش بالاتر از میانگین (+8)"
+    "xray_summary_fa": "هم‌راستا با روند ۱ ساعته (+24) | حمایت ساختار ۴ ساعته (+6) | حجم تراکنش بالاتر از میانگین (+8) | تایید فشار اردربوک صرافی (+7)"
   }
 }
