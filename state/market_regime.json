@@ -3,85 +3,85 @@
     "regime": "TRENDING_BEAR",
     "strategy": "SMC_TREND_CONTINUATION",
     "htf_bias": "BEARISH",
-    "adx": 53.62,
+    "adx": 53.89,
     "tradable": true,
-    "current_price": 56763.1,
-    "candidate_side": "SHORT",
-    "confluence_score": 51.51,
+    "current_price": 55984.5,
+    "candidate_side": "NONE",
+    "confluence_score": 44.35,
     "zone": "DISCOUNT",
     "asian_range": {
       "asian_high": 59240.0,
-      "asian_low": 56365.0,
+      "asian_low": 55565.3,
       "asian_sweep": "NONE"
     },
-    "xray_summary_fa": "هم‌راستا با روند ۱ ساعته (+24) | حمایت ساختار ۴ ساعته (+6) | مجاورت با FVG معتبر (+10) | تایید فشار اردربوک صرافی (+7)"
+    "xray_summary_fa": "هم‌راستا با روند ۱ ساعته (+24) | حمایت ساختار ۴ ساعته (+6) | حجم تراکنش بالاتر از میانگین (+8)"
   },
   "ETH": {
     "regime": "TRENDING_BEAR",
     "strategy": "SMC_TREND_CONTINUATION",
     "htf_bias": "BEARISH",
-    "adx": 53.87,
+    "adx": 54.05,
     "tradable": true,
-    "current_price": 1571.5,
-    "candidate_side": "SHORT",
-    "confluence_score": 46.25,
+    "current_price": 1554.43,
+    "candidate_side": "NONE",
+    "confluence_score": 43.96,
     "zone": "DISCOUNT",
     "asian_range": {
       "asian_high": 1629.6,
-      "asian_low": 1555.02,
+      "asian_low": 1538.0,
       "asian_sweep": "NONE"
     },
-    "xray_summary_fa": "هم‌راستا با روند ۱ ساعته (+24) | حمایت ساختار ۴ ساعته (+6) | مجاورت با FVG معتبر (+11) | هم‌سو با مومنتوم لیدر BTC (+3)"
+    "xray_summary_fa": "هم‌راستا با روند ۱ ساعته (+24) | حمایت ساختار ۴ ساعته (+6) | حجم تراکنش بالاتر از میانگین (+8) | هم‌سو با مومنتوم لیدر BTC (+3)"
   },
   "SOL": {
     "regime": "TRENDING_BEAR",
     "strategy": "SMC_TREND_CONTINUATION",
     "htf_bias": "BEARISH",
-    "adx": 54.25,
+    "adx": 54.43,
     "tradable": true,
-    "current_price": 66.29,
+    "current_price": 65.83,
     "candidate_side": "SHORT",
-    "confluence_score": 55.27,
+    "confluence_score": 57.01,
     "zone": "DISCOUNT",
     "asian_range": {
       "asian_high": 69.19,
-      "asian_low": 65.77,
+      "asian_low": 65.17,
       "asian_sweep": "NONE"
     },
-    "xray_summary_fa": "هم‌راستا با روند ۱ ساعته (+24) | حمایت ساختار ۴ ساعته (+6) | مجاورت با FVG معتبر (+12) | هم‌سو با مومنتوم لیدر BTC (+3)"
+    "xray_summary_fa": "هم‌راستا با روند ۱ ساعته (+24) | حمایت ساختار ۴ ساعته (+6) | مجاورت با FVG معتبر (+6) | حجم تراکنش بالاتر از میانگین (+8) | هم‌سو با مومنتوم لیدر BTC (+3)"
   },
   "XRP": {
     "regime": "TRENDING_BEAR",
     "strategy": "SMC_TREND_CONTINUATION",
     "htf_bias": "BEARISH",
-    "adx": 34.38,
+    "adx": 34.54,
     "tradable": true,
-    "current_price": 0.88143,
+    "current_price": 0.8782,
     "candidate_side": "SHORT",
-    "confluence_score": 55.48,
+    "confluence_score": 59.72,
     "zone": "DISCOUNT",
     "asian_range": {
       "asian_high": 0.91433,
-      "asian_low": 0.87261,
+      "asian_low": 0.86772,
       "asian_sweep": "NONE"
     },
-    "xray_summary_fa": "هم‌راستا با روند ۱ ساعته (+23) | حمایت ساختار ۴ ساعته (+6) | مجاورت با FVG معتبر (+13) | هم‌سو با مومنتوم لیدر BTC (+3)"
+    "xray_summary_fa": "هم‌راستا با روند ۱ ساعته (+23) | حمایت ساختار ۴ ساعته (+6) | مجاورت با FVG معتبر (+10) | حجم تراکنش بالاتر از میانگین (+8) | هم‌سو با مومنتوم لیدر BTC (+3)"
   },
   "XAU": {
     "regime": "TRENDING_BEAR",
     "strategy": "SMC_TREND_CONTINUATION",
     "htf_bias": "BEARISH",
-    "adx": 58.54,
+    "adx": 58.67,
     "tradable": true,
-    "current_price": 3514.19,
+    "current_price": 3506.22,
     "candidate_side": "SHORT",
-    "confluence_score": 51.96,
+    "confluence_score": 49.97,
     "zone": "DISCOUNT",
     "asian_range": {
       "asian_high": 3542.6,
-      "asian_low": 3501.01,
+      "asian_low": 3494.74,
       "asian_sweep": "NONE"
     },
-    "xray_summary_fa": "هم‌راستا با روند ۱ ساعته (+24) | حمایت ساختار ۴ ساعته (+6) | مجاورت با FVG معتبر (+15) | تایید فشار اردربوک صرافی (+6)"
+    "xray_summary_fa": "هم‌راستا با روند ۱ ساعته (+24) | حمایت ساختار ۴ ساعته (+6) | مجاورت با FVG معتبر (+6) | حجم تراکنش بالاتر از میانگین (+8)"
   }
 }
