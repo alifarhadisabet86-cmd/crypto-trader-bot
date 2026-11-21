@@ -10,7 +10,7 @@
     "xray_summary_fa": "هم‌راستا با روند ۱ ساعته (+24) | حمایت ساختار ۴ ساعته (+6) | حضور قیمت در ناحیه FVG دست‌نخورده (+18) | ناحیه گران‌فروشی Premium (+12) | سشن Killzone فعال (+7) | واگرایی پول هوشمند SMT (+6)",
     "slot_type": "STANDARD_SLOT",
     "entry_price": 58556.73,
-    "current_price": 58556.73,
+    "current_price": 58270.3,
     "stop_loss": 59112.144285,
     "initial_stop_loss": 59112.144285,
     "stop_distance": 555.414285,
@@ -26,7 +26,7 @@
     "is_risk_free": false,
     "trailing_active": false,
     "realized_pnl_usdt": -0.0705,
-    "unrealized_pnl_usdt": 0.0,
+    "unrealized_pnl_usdt": 1.72,
     "fees_paid_usdt": 0.0705,
     "opened_at": "2026-11-21T07:11:00Z"
   },
@@ -41,7 +41,7 @@
     "xray_summary_fa": "هم‌راستا با روند ۱ ساعته (+23) | حمایت ساختار ۴ ساعته (+6) | حضور قیمت در ناحیه FVG دست‌نخورده (+18) | ناحیه گران‌فروشی Premium (+9) | تایید فشار اردربوک صرافی (+5) | سشن Killzone فعال (+7) | واگرایی پول هوشمند SMT (+6) | ⚠️ پامپ شارپ لیدر BTC (-10)",
     "slot_type": "STANDARD_SLOT",
     "entry_price": 0.901256,
-    "current_price": 0.901256,
+    "current_price": 0.89786,
     "stop_loss": 0.913863,
     "initial_stop_loss": 0.913863,
     "stop_distance": 0.012607,
@@ -57,7 +57,7 @@
     "is_risk_free": false,
     "trailing_active": false,
     "realized_pnl_usdt": -0.049,
-    "unrealized_pnl_usdt": 0.0,
+    "unrealized_pnl_usdt": 0.92,
     "fees_paid_usdt": 0.049,
     "opened_at": "2026-11-21T07:11:01Z"
   }
