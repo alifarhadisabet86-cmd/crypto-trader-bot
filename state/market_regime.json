@@ -3,35 +3,35 @@
     "regime": "TRENDING_BEAR",
     "strategy": "SMC_TREND_CONTINUATION",
     "htf_bias": "BEARISH",
-    "adx": 22.4,
+    "adx": 22.49,
     "tradable": true,
-    "current_price": 59377.6,
-    "candidate_side": "NONE",
-    "confluence_score": 46.26,
+    "current_price": 59329.4,
+    "candidate_side": "SHORT",
+    "confluence_score": 52.67,
     "zone": "DISCOUNT",
     "asian_range": {
       "asian_high": 60346.2,
-      "asian_low": 59327.4,
+      "asian_low": 59269.8,
       "asian_sweep": "NONE"
     },
-    "xray_summary_fa": "هم‌راستا با روند ۱ ساعته (+20) | حمایت ساختار ۴ ساعته (+6) | حجم تراکنش بالاتر از میانگین (+8) | واگرایی پول هوشمند SMT (+6)"
+    "xray_summary_fa": "هم‌راستا با روند ۱ ساعته (+20) | حمایت ساختار ۴ ساعته (+6) | مجاورت با FVG معتبر (+15) | واگرایی پول هوشمند SMT (+6)"
   },
   "ETH": {
     "regime": "TRENDING_BEAR",
     "strategy": "SMC_TREND_CONTINUATION",
     "htf_bias": "BEARISH",
-    "adx": 20.55,
+    "adx": 20.72,
     "tradable": true,
-    "current_price": 1667.06,
+    "current_price": 1662.38,
     "candidate_side": "SHORT",
-    "confluence_score": 49.29,
+    "confluence_score": 44.87,
     "zone": "DISCOUNT",
     "asian_range": {
       "asian_high": 1689.86,
-      "asian_low": 1663.6,
+      "asian_low": 1660.59,
       "asian_sweep": "NONE"
     },
-    "xray_summary_fa": "هم‌راستا با روند ۱ ساعته (+20) | حمایت ساختار ۴ ساعته (+6) | مجاورت با FVG معتبر (+5) | حجم تراکنش بالاتر از میانگین (+8) | واگرایی پول هوشمند SMT (+6) | هم‌سو با مومنتوم لیدر BTC (+3)"
+    "xray_summary_fa": "هم‌راستا با روند ۱ ساعته (+20) | حمایت ساختار ۴ ساعته (+6) | مجاورت با FVG معتبر (+14) | واگرایی پول هوشمند SMT (+6)"
   },
   "SOL": {
     "regime": "TRENDING_BEAR",
@@ -39,49 +39,49 @@
     "htf_bias": "BEARISH",
     "adx": 20.39,
     "tradable": true,
-    "current_price": 69.44,
+    "current_price": 69.46,
     "candidate_side": "SHORT",
-    "confluence_score": 59.42,
+    "confluence_score": 49.68,
     "zone": "DISCOUNT",
     "asian_range": {
       "asian_high": 70.51,
       "asian_low": 69.29,
       "asian_sweep": "NONE"
     },
-    "xray_summary_fa": "هم‌راستا با روند ۱ ساعته (+20) | حمایت ساختار ۴ ساعته (+6) | مجاورت با FVG معتبر (+7) | حجم تراکنش بالاتر از میانگین (+7) | واگرایی پول هوشمند SMT (+6) | هم‌سو با مومنتوم لیدر BTC (+3)"
+    "xray_summary_fa": "هم‌راستا با روند ۱ ساعته (+20) | حمایت ساختار ۴ ساعته (+6) | مجاورت با FVG معتبر (+8) | واگرایی پول هوشمند SMT (+6)"
   },
   "XRP": {
     "regime": "RANGING",
     "strategy": "LIQUIDITY_SWEEP_REVERSAL",
     "htf_bias": "BEARISH",
-    "adx": 18.46,
+    "adx": 18.54,
     "tradable": true,
-    "current_price": 0.9186,
+    "current_price": 0.91818,
     "candidate_side": "NONE",
-    "confluence_score": 42.05,
+    "confluence_score": 35.75,
     "zone": "DISCOUNT",
     "asian_range": {
       "asian_high": 0.93447,
-      "asian_low": 0.91734,
+      "asian_low": 0.91658,
       "asian_sweep": "NONE"
     },
-    "xray_summary_fa": "ساختار بازگشت به میانگین رنج (+14) | حمایت ساختار ۴ ساعته (+6) | حجم تراکنش بالاتر از میانگین (+8) | واگرایی پول هوشمند SMT (+6) | هم‌سو با مومنتوم لیدر BTC (+3)"
+    "xray_summary_fa": "ساختار بازگشت به میانگین رنج (+14) | حمایت ساختار ۴ ساعته (+6) | واگرایی پول هوشمند SMT (+6)"
   },
   "XAU": {
     "regime": "TRENDING_BEAR",
     "strategy": "SMC_TREND_CONTINUATION",
     "htf_bias": "BEARISH",
-    "adx": 21.17,
+    "adx": 21.63,
     "tradable": true,
-    "current_price": 3541.41,
-    "candidate_side": "NONE",
-    "confluence_score": 39.03,
+    "current_price": 3537.35,
+    "candidate_side": "SHORT",
+    "confluence_score": 37.63,
     "zone": "DISCOUNT",
     "asian_range": {
       "asian_high": 3555.83,
-      "asian_low": 3541.41,
+      "asian_low": 3536.18,
       "asian_sweep": "NONE"
     },
-    "xray_summary_fa": "هم‌راستا با روند ۱ ساعته (+20) | حمایت ساختار ۴ ساعته (+6) | واگرایی پول هوشمند SMT (+6)"
+    "xray_summary_fa": "هم‌راستا با روند ۱ ساعته (+20) | حمایت ساختار ۴ ساعته (+6) | مجاورت با FVG معتبر (+6) | واگرایی پول هوشمند SMT (+6)"
   }
 }
