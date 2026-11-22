@@ -5,16 +5,16 @@
     "htf_bias": "NEUTRAL",
     "adx": 22.87,
     "tradable": true,
-    "current_price": 60660.0,
+    "current_price": 60744.1,
     "candidate_side": "SHORT",
-    "confluence_score": 50.29,
+    "confluence_score": 63.13,
     "zone": "PREMIUM",
     "asian_range": {
       "asian_high": 60346.2,
       "asian_low": 58771.4,
       "asian_sweep": "NONE"
     },
-    "xray_summary_fa": "ساختار بازگشت به میانگین رنج (+14) | ناحیه گران‌فروشی Premium (+8) | شکار نقدینگی و استاپ‌هانت ۱۵m (+12) | حجم تراکنش بالاتر از میانگین (+8) | سشن Killzone فعال (+7)"
+    "xray_summary_fa": "ساختار بازگشت به میانگین رنج (+14) | مجاورت با FVG معتبر (+16) | ناحیه گران‌فروشی Premium (+8) | شکار نقدینگی و استاپ‌هانت ۱۵m (+12) | تایید فشار اردربوک صرافی (+7) | سشن Killzone فعال (+7)"
   },
   "ETH": {
     "regime": "RANGING",
@@ -22,16 +22,16 @@
     "htf_bias": "NEUTRAL",
     "adx": 22.12,
     "tradable": true,
-    "current_price": 1701.77,
+    "current_price": 1706.81,
     "candidate_side": "SHORT",
-    "confluence_score": 44.85,
+    "confluence_score": 39.72,
     "zone": "PREMIUM",
     "asian_range": {
       "asian_high": 1689.86,
       "asian_low": 1648.43,
       "asian_sweep": "NONE"
     },
-    "xray_summary_fa": "ساختار بازگشت به میانگین رنج (+14) | ناحیه گران‌فروشی Premium (+7) | شکار نقدینگی و استاپ‌هانت ۱۵m (+12) | حجم تراکنش بالاتر از میانگین (+8) | سشن Killzone فعال (+7)"
+    "xray_summary_fa": "ساختار بازگشت به میانگین رنج (+14) | ناحیه گران‌فروشی Premium (+9) | شکار نقدینگی و استاپ‌هانت ۱۵m (+12) | سشن Killzone فعال (+7)"
   },
   "SOL": {
     "regime": "RANGING",
@@ -39,16 +39,16 @@
     "htf_bias": "BEARISH",
     "adx": 16.61,
     "tradable": true,
-    "current_price": 70.16,
-    "candidate_side": "LONG",
-    "confluence_score": 50.35,
-    "zone": "EQUILIBRIUM",
+    "current_price": 70.31,
+    "candidate_side": "SHORT",
+    "confluence_score": 62.31,
+    "zone": "PREMIUM",
     "asian_range": {
       "asian_high": 70.51,
       "asian_low": 68.75,
       "asian_sweep": "ASIAN_HIGH_SWEEP_BEAR"
     },
-    "xray_summary_fa": "ساختار بازگشت به میانگین رنج (+14) | حضور قیمت در ناحیه FVG دست‌نخورده (+18) | حجم تراکنش بالاتر از میانگین (+8) | سشن Killzone فعال (+7)"
+    "xray_summary_fa": "ساختار بازگشت به میانگین رنج (+14) | حمایت ساختار ۴ ساعته (+6) | مجاورت با FVG معتبر (+16) | شکار نقدینگی و استاپ‌هانت ۱۵m (+12) | سشن Killzone فعال (+7)"
   },
   "XRP": {
     "regime": "RANGING",
@@ -56,16 +56,16 @@
     "htf_bias": "BEARISH",
     "adx": 15.75,
     "tradable": true,
-    "current_price": 0.92182,
+    "current_price": 0.92424,
     "candidate_side": "LONG",
-    "confluence_score": 62.77,
-    "zone": "DISCOUNT",
+    "confluence_score": 51.07,
+    "zone": "EQUILIBRIUM",
     "asian_range": {
       "asian_high": 0.93447,
       "asian_low": 0.91194,
       "asian_sweep": "ASIAN_HIGH_SWEEP_BEAR"
     },
-    "xray_summary_fa": "ساختار بازگشت به میانگین رنج (+14) | حضور قیمت در ناحیه FVG دست‌نخورده (+18) | ناحیه ارزان‌فروشی Discount (+7) | حجم تراکنش بالاتر از میانگین (+8) | تایید فشار اردربوک صرافی (+6) | سشن Killzone فعال (+7)"
+    "xray_summary_fa": "ساختار بازگشت به میانگین رنج (+14) | مجاورت با FVG معتبر (+16) | تایید فشار اردربوک صرافی (+6) | سشن Killzone فعال (+7)"
   },
   "XAU": {
     "regime": "RANGING",
@@ -73,15 +73,15 @@
     "htf_bias": "BEARISH",
     "adx": 20.57,
     "tradable": true,
-    "current_price": 3551.02,
+    "current_price": 3552.01,
     "candidate_side": "SHORT",
-    "confluence_score": 51.6,
+    "confluence_score": 56.89,
     "zone": "PREMIUM",
     "asian_range": {
       "asian_high": 3555.83,
       "asian_low": 3527.93,
       "asian_sweep": "ASIAN_HIGH_SWEEP_BEAR"
     },
-    "xray_summary_fa": "ساختار بازگشت به میانگین رنج (+14) | حمایت ساختار ۴ ساعته (+6) | ناحیه گران‌فروشی Premium (+8) | شکار نقدینگی و استاپ‌هانت ۱۵m (+12) | حجم تراکنش بالاتر از میانگین (+8) | تایید فشار اردربوک صرافی (+5) | سشن Killzone فعال (+7)"
+    "xray_summary_fa": "ساختار بازگشت به میانگین رنج (+14) | حمایت ساختار ۴ ساعته (+6) | حضور قیمت در ناحیه FVG دست‌نخورده (+18) | ناحیه گران‌فروشی Premium (+8) | شکار نقدینگی و استاپ‌هانت ۱۵m (+12) | سشن Killzone فعال (+7)"
   }
 }
