@@ -5,9 +5,9 @@
     "htf_bias": "NEUTRAL",
     "adx": 20.55,
     "tradable": true,
-    "current_price": 60878.3,
+    "current_price": 60774.4,
     "candidate_side": "NONE",
-    "confluence_score": 28.11,
+    "confluence_score": 30.5,
     "zone": "PREMIUM",
     "asian_range": {
       "asian_high": 60346.2,
@@ -36,19 +36,19 @@
   "SOL": {
     "regime": "RANGING",
     "strategy": "LIQUIDITY_SWEEP_REVERSAL",
-    "htf_bias": "NEUTRAL",
+    "htf_bias": "BEARISH",
     "adx": 17.96,
     "tradable": true,
-    "current_price": 70.57,
+    "current_price": 70.52,
     "candidate_side": "NONE",
-    "confluence_score": 32.91,
+    "confluence_score": 44.46,
     "zone": "PREMIUM",
     "asian_range": {
       "asian_high": 70.51,
       "asian_low": 68.75,
       "asian_sweep": "NONE"
     },
-    "xray_summary_fa": "ساختار بازگشت به میانگین رنج (+14) | سشن Killzone فعال (+7)"
+    "xray_summary_fa": "ساختار بازگشت به میانگین رنج (+14) | حمایت ساختار ۴ ساعته (+6) | ناحیه گران‌فروشی Premium (+12) | سشن Killzone فعال (+7)"
   },
   "XRP": {
     "regime": "RANGING",
@@ -56,9 +56,9 @@
     "htf_bias": "NEUTRAL",
     "adx": 16.98,
     "tradable": true,
-    "current_price": 0.93358,
+    "current_price": 0.93361,
     "candidate_side": "SHORT",
-    "confluence_score": 49.69,
+    "confluence_score": 49.41,
     "zone": "PREMIUM",
     "asian_range": {
       "asian_high": 0.93447,
@@ -73,7 +73,7 @@
     "htf_bias": "BEARISH",
     "adx": 20.82,
     "tradable": true,
-    "current_price": 3554.43,
+    "current_price": 3555.56,
     "candidate_side": "SHORT",
     "confluence_score": 44.12,
     "zone": "PREMIUM",
