@@ -1,44 +1,5 @@
 [
   {
-    "id": "SHD-XAU-A55BEC",
-    "coin": "XAU",
-    "side": "SHORT",
-    "entry_price": 3550.12,
-    "stop_loss": 3562.54542,
-    "tp_price": 3506.686,
-    "filter_reason": "LOW_CONFLUENCE_SCORE",
-    "confluence_score": 54.51,
-    "status": "SAVED_FROM_LOSS",
-    "created_at": "2026-11-21T16:00:55Z",
-    "resolved_at": "2026-11-21T18:50:55Z"
-  },
-  {
-    "id": "SHD-XAU-E05DEB",
-    "coin": "XAU",
-    "side": "SHORT",
-    "entry_price": 3549.61,
-    "stop_loss": 3562.033635,
-    "tp_price": 3506.6605,
-    "filter_reason": "LOW_CONFLUENCE_SCORE",
-    "confluence_score": 54.29,
-    "status": "SAVED_FROM_LOSS",
-    "created_at": "2026-11-21T16:10:58Z",
-    "resolved_at": "2026-11-21T18:50:55Z"
-  },
-  {
-    "id": "SHD-XAU-E8A9A2",
-    "coin": "XAU",
-    "side": "SHORT",
-    "entry_price": 3548.01,
-    "stop_loss": 3560.428035,
-    "tp_price": 3512.29,
-    "filter_reason": "LOW_CONFLUENCE_SCORE",
-    "confluence_score": 52.62,
-    "status": "SAVED_FROM_LOSS",
-    "created_at": "2026-11-21T16:20:58Z",
-    "resolved_at": "2026-11-21T18:50:55Z"
-  },
-  {
     "id": "SHD-XAU-4A1628",
     "coin": "XAU",
     "side": "SHORT",
@@ -2598,5 +2559,44 @@
     "status": "SAVED_FROM_LOSS",
     "created_at": "2026-11-22T08:11:00Z",
     "resolved_at": "2026-11-22T08:20:54Z"
+  },
+  {
+    "id": "SHD-BTC-5BEB35",
+    "coin": "BTC",
+    "side": "SHORT",
+    "entry_price": 59196.5,
+    "stop_loss": 59414.2275,
+    "tp_price": 58695.72675,
+    "filter_reason": "LOW_CONFLUENCE_SCORE",
+    "confluence_score": 53.84,
+    "status": "SAVED_FROM_LOSS",
+    "created_at": "2026-11-22T06:40:55Z",
+    "resolved_at": "2026-11-22T08:30:55Z"
+  },
+  {
+    "id": "SHD-ETH-1E93E1",
+    "coin": "ETH",
+    "side": "SHORT",
+    "entry_price": 1668.82,
+    "stop_loss": 1679.270571,
+    "tp_price": 1644.783687,
+    "filter_reason": "LOW_CONFLUENCE_SCORE",
+    "confluence_score": 50.01,
+    "status": "SAVED_FROM_LOSS",
+    "created_at": "2026-11-22T08:11:00Z",
+    "resolved_at": "2026-11-22T08:30:55Z"
+  },
+  {
+    "id": "SHD-ETH-91BDDE",
+    "coin": "ETH",
+    "side": "SHORT",
+    "entry_price": 1677.7,
+    "stop_loss": 1683.57195,
+    "tp_price": 1653.03781,
+    "filter_reason": "LOW_CONFLUENCE_SCORE",
+    "confluence_score": 56.47,
+    "status": "SAVED_FROM_LOSS",
+    "created_at": "2026-11-22T08:20:54Z",
+    "resolved_at": "2026-11-22T08:30:55Z"
   }
 ]
