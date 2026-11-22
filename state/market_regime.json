@@ -3,62 +3,62 @@
     "regime": "TRENDING_BULL",
     "strategy": "SMC_TREND_CONTINUATION",
     "htf_bias": "NEUTRAL",
-    "adx": 29.73,
+    "adx": 29.55,
     "tradable": true,
-    "current_price": 60966.5,
+    "current_price": 60893.5,
     "candidate_side": "LONG",
-    "confluence_score": 51.0,
+    "confluence_score": 56.16,
     "zone": "DISCOUNT",
     "asian_range": {
       "asian_high": 60046.0,
       "asian_low": 58771.4,
       "asian_sweep": "NONE"
     },
-    "xray_summary_fa": "هم‌راستا با روند ۱ ساعته (+22) | مجاورت با FVG معتبر (+11) | تایید فشار اردربوک صرافی (+7)"
+    "xray_summary_fa": "هم‌راستا با روند ۱ ساعته (+22) | مجاورت با FVG معتبر (+16) | ناحیه ارزان‌فروشی Discount (+7) | حجم تراکنش بالاتر از میانگین (+5)"
   },
   "ETH": {
     "regime": "TRENDING_BULL",
     "strategy": "SMC_TREND_CONTINUATION",
     "htf_bias": "NEUTRAL",
-    "adx": 35.8,
+    "adx": 32.51,
     "tradable": true,
-    "current_price": 1720.02,
+    "current_price": 1716.54,
     "candidate_side": "LONG",
-    "confluence_score": 42.34,
+    "confluence_score": 53.15,
     "zone": "PREMIUM",
     "asian_range": {
       "asian_high": 1685.99,
       "asian_low": 1648.43,
       "asian_sweep": "NONE"
     },
-    "xray_summary_fa": "هم‌راستا با روند ۱ ساعته (+23) | مجاورت با FVG معتبر (+16)"
+    "xray_summary_fa": "هم‌راستا با روند ۱ ساعته (+22) | حضور قیمت در ناحیه FVG دست‌نخورده (+18) | حجم تراکنش بالاتر از میانگین (+8)"
   },
   "SOL": {
     "regime": "TRENDING_BULL",
     "strategy": "SMC_TREND_CONTINUATION",
     "htf_bias": "BEARISH",
-    "adx": 22.13,
+    "adx": 20.75,
     "tradable": true,
-    "current_price": 70.46,
+    "current_price": 70.4,
     "candidate_side": "LONG",
-    "confluence_score": 33.58,
+    "confluence_score": 39.33,
     "zone": "DISCOUNT",
     "asian_range": {
       "asian_high": 70.32,
       "asian_low": 68.75,
       "asian_sweep": "NONE"
     },
-    "xray_summary_fa": "هم‌راستا با روند ۱ ساعته (+20)"
+    "xray_summary_fa": "هم‌راستا با روند ۱ ساعته (+20) | ناحیه ارزان‌فروشی Discount (+7)"
   },
   "XRP": {
     "regime": "RANGING",
     "strategy": "LIQUIDITY_SWEEP_REVERSAL",
     "htf_bias": "BEARISH",
-    "adx": 11.26,
+    "adx": 10.57,
     "tradable": true,
-    "current_price": 0.92575,
+    "current_price": 0.92428,
     "candidate_side": "NONE",
-    "confluence_score": 27.17,
+    "confluence_score": 30.05,
     "zone": "DISCOUNT",
     "asian_range": {
       "asian_high": 0.93174,
@@ -73,15 +73,15 @@
     "htf_bias": "BEARISH",
     "adx": 16.88,
     "tradable": true,
-    "current_price": 3547.7,
+    "current_price": 3546.26,
     "candidate_side": "LONG",
-    "confluence_score": 37.04,
+    "confluence_score": 40.84,
     "zone": "DISCOUNT",
     "asian_range": {
       "asian_high": 3554.87,
       "asian_low": 3527.93,
       "asian_sweep": "NONE"
     },
-    "xray_summary_fa": "ساختار بازگشت به میانگین رنج (+14) | مجاورت با FVG معتبر (+10) | ناحیه ارزان‌فروشی Discount (+9)"
+    "xray_summary_fa": "ساختار بازگشت به میانگین رنج (+14) | مجاورت با FVG معتبر (+16) | ناحیه ارزان‌فروشی Discount (+11)"
   }
 }
