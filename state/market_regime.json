@@ -5,9 +5,9 @@
     "htf_bias": "NEUTRAL",
     "adx": 25.03,
     "tradable": true,
-    "current_price": 60625.5,
+    "current_price": 60739.2,
     "candidate_side": "LONG",
-    "confluence_score": 50.98,
+    "confluence_score": 53.5,
     "zone": "PREMIUM",
     "asian_range": {
       "asian_high": 60346.2,
@@ -22,9 +22,9 @@
     "htf_bias": "NEUTRAL",
     "adx": 25.01,
     "tradable": true,
-    "current_price": 1703.21,
+    "current_price": 1704.57,
     "candidate_side": "LONG",
-    "confluence_score": 47.1,
+    "confluence_score": 46.59,
     "zone": "PREMIUM",
     "asian_range": {
       "asian_high": 1689.86,
@@ -39,16 +39,16 @@
     "htf_bias": "BEARISH",
     "adx": 16.25,
     "tradable": true,
-    "current_price": 70.09,
+    "current_price": 70.22,
     "candidate_side": "SHORT",
-    "confluence_score": 44.95,
-    "zone": "EQUILIBRIUM",
+    "confluence_score": 50.04,
+    "zone": "PREMIUM",
     "asian_range": {
       "asian_high": 70.51,
       "asian_low": 68.75,
       "asian_sweep": "NONE"
     },
-    "xray_summary_fa": "ساختار بازگشت به میانگین رنج (+14) | حمایت ساختار ۴ ساعته (+6) | مجاورت با FVG معتبر (+9) | سشن Killzone فعال (+7)"
+    "xray_summary_fa": "ساختار بازگشت به میانگین رنج (+14) | حمایت ساختار ۴ ساعته (+6) | مجاورت با FVG معتبر (+13) | سشن Killzone فعال (+7)"
   },
   "XRP": {
     "regime": "RANGING",
@@ -56,9 +56,9 @@
     "htf_bias": "BEARISH",
     "adx": 14.32,
     "tradable": true,
-    "current_price": 0.91959,
+    "current_price": 0.92232,
     "candidate_side": "NONE",
-    "confluence_score": 35.66,
+    "confluence_score": 32.42,
     "zone": "DISCOUNT",
     "asian_range": {
       "asian_high": 0.93447,
@@ -73,15 +73,15 @@
     "htf_bias": "BEARISH",
     "adx": 20.01,
     "tradable": true,
-    "current_price": 3552.41,
+    "current_price": 3552.81,
     "candidate_side": "SHORT",
-    "confluence_score": 47.61,
+    "confluence_score": 50.43,
     "zone": "PREMIUM",
     "asian_range": {
       "asian_high": 3555.83,
       "asian_low": 3527.93,
       "asian_sweep": "NONE"
     },
-    "xray_summary_fa": "ساختار بازگشت به میانگین رنج (+14) | حمایت ساختار ۴ ساعته (+6) | مجاورت با FVG معتبر (+15) | ناحیه گران‌فروشی Premium (+8) | سشن Killzone فعال (+7)"
+    "xray_summary_fa": "ساختار بازگشت به میانگین رنج (+14) | حمایت ساختار ۴ ساعته (+6) | مجاورت با FVG معتبر (+16) | ناحیه گران‌فروشی Premium (+9) | سشن Killzone فعال (+7)"
   }
 }
