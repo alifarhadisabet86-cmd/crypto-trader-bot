@@ -1,8 +1,8 @@
 {
   "circuit_breaker": false,
   "weekly_circuit_breaker": false,
-  "daily_drawdown_pct": 0.135,
-  "weekly_drawdown_pct": 0.135,
+  "daily_drawdown_pct": 0.152,
+  "weekly_drawdown_pct": 0.152,
   "active_slots": 1,
-  "updated_at": "2026-11-23T18:10:51Z"
+  "updated_at": "2026-11-23T18:21:06Z"
 }
