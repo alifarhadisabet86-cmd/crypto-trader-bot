@@ -565,18 +565,6 @@
       "created_at": "2026-11-23T21:00:54Z"
     },
     {
-      "id": "SHD-XRP-916CDE",
-      "coin": "XRP",
-      "side": "SHORT",
-      "entry_price": 0.93657,
-      "stop_loss": 0.94213,
-      "tp_price": 0.92684,
-      "filter_reason": "LOW_CONFLUENCE_SCORE",
-      "confluence_score": 46.16,
-      "status": "ACTIVE",
-      "created_at": "2026-11-23T21:10:58Z"
-    },
-    {
       "id": "SHD-XAU-D057A8",
       "coin": "XAU",
       "side": "LONG",
@@ -611,22 +599,33 @@
       "confluence_score": 38.54,
       "status": "ACTIVE",
       "created_at": "2026-11-23T21:20:53Z"
+    },
+    {
+      "id": "SHD-XRP-EDCDE3",
+      "coin": "XRP",
+      "side": "LONG",
+      "entry_price": 0.94194,
+      "stop_loss": 0.933133,
+      "tp_price": 0.978929,
+      "filter_reason": "LOW_CONFLUENCE_SCORE",
+      "confluence_score": 60.56,
+      "status": "ACTIVE",
+      "created_at": "2026-11-23T21:30:55Z"
+    },
+    {
+      "id": "SHD-XAU-47ACF7",
+      "coin": "XAU",
+      "side": "LONG",
+      "entry_price": 3629.93,
+      "stop_loss": 3617.225245,
+      "tp_price": 3680.2895,
+      "filter_reason": "LOW_CONFLUENCE_SCORE",
+      "confluence_score": 36.06,
+      "status": "ACTIVE",
+      "created_at": "2026-11-23T21:30:55Z"
     }
   ],
   "resolved_shadows": [
-    {
-      "id": "SHD-XAU-F5F795",
-      "coin": "XAU",
-      "side": "LONG",
-      "entry_price": 3604.53,
-      "stop_loss": 3591.914145,
-      "tp_price": 3633.546467,
-      "filter_reason": "LOW_CONFLUENCE_SCORE",
-      "confluence_score": 54.24,
-      "status": "MISSED_WINNER",
-      "created_at": "2026-11-23T09:10:57Z",
-      "resolved_at": "2026-11-23T14:01:04Z"
-    },
     {
       "id": "SHD-XRP-ED82C7",
       "coin": "XRP",
@@ -3213,22 +3212,35 @@
       "status": "SAVED_FROM_LOSS",
       "created_at": "2026-11-23T20:31:01Z",
       "resolved_at": "2026-11-23T21:20:53Z"
+    },
+    {
+      "id": "SHD-XRP-916CDE",
+      "coin": "XRP",
+      "side": "SHORT",
+      "entry_price": 0.93657,
+      "stop_loss": 0.94213,
+      "tp_price": 0.92684,
+      "filter_reason": "LOW_CONFLUENCE_SCORE",
+      "confluence_score": 46.16,
+      "status": "SAVED_FROM_LOSS",
+      "created_at": "2026-11-23T21:10:58Z",
+      "resolved_at": "2026-11-23T21:30:55Z"
     }
   ],
   "stats": {
-    "total_filtered": 11341,
-    "saved_from_loss": 6973,
+    "total_filtered": 11343,
+    "saved_from_loss": 6974,
     "missed_winners": 2452,
-    "shield_accuracy": 73.98,
-    "evaluated_count": 9425
+    "shield_accuracy": 73.99,
+    "evaluated_count": 9426
   },
   "last_updated": "2026-11-01T18:21:42Z",
   "filter_breakdown": {
-    "LOW_CONFLUENCE_SCORE": 11138,
+    "LOW_CONFLUENCE_SCORE": 11140,
     "TIMEMACHINE_REJECTED": 0,
     "RISK_GUARDIAN_BLOCKED": 36,
     "SPREAD_GUARD_5PCT_BLOCKED": 0,
     "ECONOMIC_NEWS_BLOCKED": 159
   },
-  "updated_at": "2026-11-23T21:20:53Z"
+  "updated_at": "2026-11-23T21:30:56Z"
 }
