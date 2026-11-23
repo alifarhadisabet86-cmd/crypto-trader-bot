@@ -3,85 +3,85 @@
     "regime": "TRENDING_BULL",
     "strategy": "SMC_TREND_CONTINUATION",
     "htf_bias": "NEUTRAL",
-    "adx": 31.36,
+    "adx": 30.46,
     "tradable": true,
-    "current_price": 61269.1,
-    "candidate_side": "LONG",
-    "confluence_score": 44.88,
+    "current_price": 61294.6,
+    "candidate_side": "NONE",
+    "confluence_score": 31.13,
     "zone": "PREMIUM",
     "asian_range": {
-      "asian_high": 59667.1,
+      "asian_high": 61323.0,
       "asian_low": 58771.4,
-      "asian_sweep": "NONE"
+      "asian_sweep": "ASIAN_HIGH_SWEEP_BEAR"
     },
-    "xray_summary_fa": "هم‌راستا با روند ۱ ساعته (+22) | مجاورت با FVG معتبر (+16) | واگرایی پول هوشمند SMT (+6)"
+    "xray_summary_fa": "هم‌راستا با روند ۱ ساعته (+22) | واگرایی پول هوشمند SMT (+6)"
   },
   "ETH": {
     "regime": "TRENDING_BULL",
     "strategy": "SMC_TREND_CONTINUATION",
     "htf_bias": "NEUTRAL",
-    "adx": 35.09,
+    "adx": 32.26,
     "tradable": true,
-    "current_price": 1722.56,
-    "candidate_side": "SHORT",
-    "confluence_score": 36.3,
+    "current_price": 1725.45,
+    "candidate_side": "NONE",
+    "confluence_score": 32.11,
     "zone": "PREMIUM",
     "asian_range": {
-      "asian_high": 1671.76,
+      "asian_high": 1726.35,
       "asian_low": 1648.43,
-      "asian_sweep": "NONE"
+      "asian_sweep": "ASIAN_HIGH_SWEEP_BEAR"
     },
-    "xray_summary_fa": "حضور قیمت در ناحیه FVG دست‌نخورده (+18) | ناحیه گران‌فروشی Premium (+10) | واگرایی پول هوشمند SMT (+6)"
+    "xray_summary_fa": "هم‌راستا با روند ۱ ساعته (+22) | واگرایی پول هوشمند SMT (+6)"
   },
   "SOL": {
-    "regime": "TRENDING_BULL",
-    "strategy": "SMC_TREND_CONTINUATION",
+    "regime": "RANGING",
+    "strategy": "LIQUIDITY_SWEEP_REVERSAL",
     "htf_bias": "NEUTRAL",
-    "adx": 22.19,
+    "adx": 15.53,
     "tradable": true,
-    "current_price": 70.62,
-    "candidate_side": "NONE",
-    "confluence_score": 33.42,
+    "current_price": 70.77,
+    "candidate_side": "SHORT",
+    "confluence_score": 48.42,
     "zone": "PREMIUM",
     "asian_range": {
-      "asian_high": 69.84,
+      "asian_high": 70.77,
       "asian_low": 68.75,
       "asian_sweep": "NONE"
     },
-    "xray_summary_fa": "هم‌راستا با روند ۱ ساعته (+20) | واگرایی پول هوشمند SMT (+6)"
+    "xray_summary_fa": "ساختار بازگشت به میانگین رنج (+14) | ناحیه گران‌فروشی Premium (+12) | شکار نقدینگی و استاپ‌هانت ۱۵m (+12) | واگرایی پول هوشمند SMT (+6)"
   },
   "XRP": {
     "regime": "RANGING",
     "strategy": "LIQUIDITY_SWEEP_REVERSAL",
     "htf_bias": "BEARISH",
-    "adx": 13.51,
+    "adx": 10.0,
     "tradable": true,
-    "current_price": 0.92802,
-    "candidate_side": "NONE",
-    "confluence_score": 41.64,
+    "current_price": 0.92827,
+    "candidate_side": "SHORT",
+    "confluence_score": 49.31,
     "zone": "PREMIUM",
     "asian_range": {
-      "asian_high": 0.92325,
+      "asian_high": 0.92965,
       "asian_low": 0.91194,
-      "asian_sweep": "NONE"
+      "asian_sweep": "ASIAN_HIGH_SWEEP_BEAR"
     },
-    "xray_summary_fa": "ساختار بازگشت به میانگین رنج (+14) | حمایت ساختار ۴ ساعته (+6) | ناحیه گران‌فروشی Premium (+10) | واگرایی پول هوشمند SMT (+6)"
+    "xray_summary_fa": "ساختار بازگشت به میانگین رنج (+14) | حمایت ساختار ۴ ساعته (+6) | ناحیه گران‌فروشی Premium (+11) | شکار نقدینگی و استاپ‌هانت ۱۵m (+12) | واگرایی پول هوشمند SMT (+6)"
   },
   "XAU": {
     "regime": "RANGING",
     "strategy": "LIQUIDITY_SWEEP_REVERSAL",
     "htf_bias": "BEARISH",
-    "adx": 27.16,
+    "adx": 27.58,
     "tradable": true,
-    "current_price": 3570.99,
+    "current_price": 3577.9,
     "candidate_side": "SHORT",
-    "confluence_score": 47.39,
+    "confluence_score": 48.36,
     "zone": "PREMIUM",
     "asian_range": {
-      "asian_high": 3539.22,
+      "asian_high": 3578.06,
       "asian_low": 3528.66,
-      "asian_sweep": "NONE"
+      "asian_sweep": "ASIAN_HIGH_SWEEP_BEAR"
     },
-    "xray_summary_fa": "ساختار بازگشت به میانگین رنج (+14) | حمایت ساختار ۴ ساعته (+6) | ناحیه گران‌فروشی Premium (+9) | شکار نقدینگی و استاپ‌هانت ۱۵m (+12) | تایید فشار اردربوک صرافی (+7) | واگرایی پول هوشمند SMT (+6)"
+    "xray_summary_fa": "ساختار بازگشت به میانگین رنج (+14) | حمایت ساختار ۴ ساعته (+6) | ناحیه گران‌فروشی Premium (+12) | شکار نقدینگی سشن آسیا (+11) | تایید فشار اردربوک صرافی (+7) | واگرایی پول هوشمند SMT (+6)"
   }
 }
