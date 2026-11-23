@@ -3,60 +3,60 @@
     "regime": "TRENDING_BULL",
     "strategy": "SMC_TREND_CONTINUATION",
     "htf_bias": "NEUTRAL",
-    "adx": 30.57,
+    "adx": 31.05,
     "tradable": true,
-    "current_price": 61152.5,
-    "candidate_side": "LONG",
-    "confluence_score": 38.01,
+    "current_price": 61259.1,
+    "candidate_side": "NONE",
+    "confluence_score": 25.76,
     "zone": "PREMIUM",
     "asian_range": {
       "asian_high": 61472.8,
       "asian_low": 58771.4,
       "asian_sweep": "NONE"
     },
-    "xray_summary_fa": "هم‌راستا با روند ۱ ساعته (+22) | مجاورت با FVG معتبر (+7) | واگرایی پول هوشمند SMT (+6)"
+    "xray_summary_fa": "هم‌راستا با روند ۱ ساعته (+22)"
   },
   "ETH": {
     "regime": "TRENDING_BULL",
     "strategy": "SMC_TREND_CONTINUATION",
     "htf_bias": "NEUTRAL",
-    "adx": 32.2,
+    "adx": 32.91,
     "tradable": true,
-    "current_price": 1716.89,
-    "candidate_side": "LONG",
-    "confluence_score": 38.4,
-    "zone": "DISCOUNT",
+    "current_price": 1719.23,
+    "candidate_side": "NONE",
+    "confluence_score": 30.64,
+    "zone": "EQUILIBRIUM",
     "asian_range": {
       "asian_high": 1727.28,
       "asian_low": 1648.43,
       "asian_sweep": "NONE"
     },
-    "xray_summary_fa": "هم‌راستا با روند ۱ ساعته (+22) | ناحیه ارزان‌فروشی Discount (+8) | واگرایی پول هوشمند SMT (+6)"
+    "xray_summary_fa": "هم‌راستا با روند ۱ ساعته (+23)"
   },
   "SOL": {
     "regime": "RANGING",
     "strategy": "LIQUIDITY_SWEEP_REVERSAL",
-    "htf_bias": "BEARISH",
-    "adx": 10.98,
+    "htf_bias": "NEUTRAL",
+    "adx": 9.94,
     "tradable": true,
-    "current_price": 70.54,
+    "current_price": 70.63,
     "candidate_side": "SHORT",
-    "confluence_score": 46.47,
+    "confluence_score": 46.82,
     "zone": "PREMIUM",
     "asian_range": {
       "asian_high": 70.9,
       "asian_low": 68.75,
       "asian_sweep": "NONE"
     },
-    "xray_summary_fa": "ساختار بازگشت به میانگین رنج (+14) | حمایت ساختار ۴ ساعته (+6) | ناحیه گران‌فروشی Premium (+7) | شکار نقدینگی و استاپ‌هانت ۱۵m (+12) | واگرایی پول هوشمند SMT (+6)"
+    "xray_summary_fa": "ساختار بازگشت به میانگین رنج (+14) | ناحیه گران‌فروشی Premium (+10) | شکار نقدینگی و استاپ‌هانت ۱۵m (+12) | واگرایی پول هوشمند SMT (+6)"
   },
   "XRP": {
     "regime": "RANGING",
     "strategy": "LIQUIDITY_SWEEP_REVERSAL",
     "htf_bias": "BEARISH",
-    "adx": 10.36,
+    "adx": 18.8,
     "tradable": true,
-    "current_price": 0.92166,
+    "current_price": 0.92265,
     "candidate_side": "NONE",
     "confluence_score": 31.56,
     "zone": "DISCOUNT",
@@ -71,17 +71,17 @@
     "regime": "RANGING",
     "strategy": "LIQUIDITY_SWEEP_REVERSAL",
     "htf_bias": "BEARISH",
-    "adx": 21.18,
+    "adx": 20.79,
     "tradable": true,
-    "current_price": 3571.23,
+    "current_price": 3569.87,
     "candidate_side": "NONE",
-    "confluence_score": 35.55,
+    "confluence_score": 34.78,
     "zone": "PREMIUM",
     "asian_range": {
       "asian_high": 3578.06,
       "asian_low": 3528.66,
       "asian_sweep": "NONE"
     },
-    "xray_summary_fa": "ساختار بازگشت به میانگین رنج (+14) | حمایت ساختار ۴ ساعته (+6) | ناحیه گران‌فروشی Premium (+10) | واگرایی پول هوشمند SMT (+6)"
+    "xray_summary_fa": "ساختار بازگشت به میانگین رنج (+14) | حمایت ساختار ۴ ساعته (+6) | ناحیه گران‌فروشی Premium (+9) | واگرایی پول هوشمند SMT (+6)"
   }
 }
