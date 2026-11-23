@@ -5,13 +5,13 @@
     "htf_bias": "NEUTRAL",
     "adx": 30.52,
     "tradable": true,
-    "current_price": 61199.8,
+    "current_price": 61120.9,
     "candidate_side": "NONE",
-    "confluence_score": 37.63,
+    "confluence_score": 38.38,
     "zone": "DISCOUNT",
     "asian_range": {
       "asian_high": 61953.6,
-      "asian_low": 60470.0,
+      "asian_low": 60611.5,
       "asian_sweep": "NONE"
     },
     "xray_summary_fa": "ساختار بازگشت به میانگین رنج (+14) | ناحیه ارزان‌فروشی Discount (+12) | واگرایی پول هوشمند SMT (+6)"
@@ -20,35 +20,35 @@
     "regime": "RANGING",
     "strategy": "LIQUIDITY_SWEEP_REVERSAL",
     "htf_bias": "BEARISH",
-    "adx": 30.98,
+    "adx": 30.72,
     "tradable": true,
-    "current_price": 1711.04,
-    "candidate_side": "NONE",
-    "confluence_score": 26.05,
+    "current_price": 1707.68,
+    "candidate_side": "LONG",
+    "confluence_score": 39.77,
     "zone": "DISCOUNT",
     "asian_range": {
       "asian_high": 1752.65,
-      "asian_low": 1700.0,
-      "asian_sweep": "NONE"
+      "asian_low": 1705.83,
+      "asian_sweep": "ASIAN_LOW_SWEEP_BULL"
     },
-    "xray_summary_fa": "ساختار بازگشت به میانگین رنج (+14) | حمایت ساختار ۴ ساعته (+6)"
+    "xray_summary_fa": "ساختار بازگشت به میانگین رنج (+14) | ناحیه ارزان‌فروشی Discount (+12) | شکار نقدینگی سشن آسیا (+11) | واگرایی پول هوشمند SMT (+6)"
   },
   "SOL": {
     "regime": "RANGING",
     "strategy": "LIQUIDITY_SWEEP_REVERSAL",
     "htf_bias": "NEUTRAL",
-    "adx": 32.43,
+    "adx": 32.07,
     "tradable": true,
-    "current_price": 72.14,
-    "candidate_side": "LONG",
-    "confluence_score": 47.25,
+    "current_price": 71.76,
+    "candidate_side": "SHORT",
+    "confluence_score": 33.89,
     "zone": "DISCOUNT",
     "asian_range": {
       "asian_high": 72.25,
-      "asian_low": 69.9,
+      "asian_low": 70.25,
       "asian_sweep": "ASIAN_HIGH_SWEEP_BEAR"
     },
-    "xray_summary_fa": "ساختار بازگشت به میانگین رنج (+14) | ناحیه ارزان‌فروشی Discount (+12) | شکار نقدینگی و استاپ‌هانت ۱۵m (+12) | واگرایی پول هوشمند SMT (+6)"
+    "xray_summary_fa": "ساختار بازگشت به میانگین رنج (+14) | مجاورت با FVG معتبر (+4) | شکار نقدینگی سشن آسیا (+11)"
   },
   "XRP": {
     "regime": "RANGING",
@@ -56,30 +56,30 @@
     "htf_bias": "BEARISH",
     "adx": 23.14,
     "tradable": true,
-    "current_price": 0.93783,
+    "current_price": 0.93548,
     "candidate_side": "SHORT",
-    "confluence_score": 37.48,
+    "confluence_score": 46.25,
     "zone": "DISCOUNT",
     "asian_range": {
       "asian_high": 0.94262,
-      "asian_low": 0.91319,
+      "asian_low": 0.91559,
       "asian_sweep": "ASIAN_HIGH_SWEEP_BEAR"
     },
-    "xray_summary_fa": "ساختار بازگشت به میانگین رنج (+14) | حمایت ساختار ۴ ساعته (+6) | مجاورت با FVG معتبر (+6) | شکار نقدینگی سشن آسیا (+11)"
+    "xray_summary_fa": "ساختار بازگشت به میانگین رنج (+14) | حمایت ساختار ۴ ساعته (+6) | مجاورت با FVG معتبر (+15) | شکار نقدینگی سشن آسیا (+11)"
   },
   "XAU": {
     "regime": "TRENDING_BULL",
     "strategy": "SMC_TREND_CONTINUATION",
     "htf_bias": "NEUTRAL",
-    "adx": 44.35,
+    "adx": 44.36,
     "tradable": true,
-    "current_price": 3629.8,
+    "current_price": 3630.11,
     "candidate_side": "LONG",
-    "confluence_score": 39.41,
+    "confluence_score": 40.56,
     "zone": "DISCOUNT",
     "asian_range": {
       "asian_high": 3620.06,
-      "asian_low": 3574.6,
+      "asian_low": 3583.75,
       "asian_sweep": "NONE"
     },
     "xray_summary_fa": "هم‌راستا با روند ۱ ساعته (+24) | ناحیه ارزان‌فروشی Discount (+9) | واگرایی پول هوشمند SMT (+6)"
