@@ -1,44 +1,5 @@
 [
   {
-    "id": "SHD-XAU-A1EDAA",
-    "coin": "XAU",
-    "side": "LONG",
-    "entry_price": 3543.14,
-    "stop_loss": 3530.73901,
-    "tp_price": 3564.841733,
-    "filter_reason": "LOW_CONFLUENCE_SCORE",
-    "confluence_score": 37.78,
-    "status": "MISSED_WINNER",
-    "created_at": "2026-11-22T21:20:53Z",
-    "resolved_at": "2026-11-22T23:11:02Z"
-  },
-  {
-    "id": "SHD-XAU-3B2901",
-    "coin": "XAU",
-    "side": "LONG",
-    "entry_price": 3546.63,
-    "stop_loss": 3534.216795,
-    "tp_price": 3568.353109,
-    "filter_reason": "LOW_CONFLUENCE_SCORE",
-    "confluence_score": 38.02,
-    "status": "MISSED_WINNER",
-    "created_at": "2026-11-22T21:50:59Z",
-    "resolved_at": "2026-11-22T23:11:02Z"
-  },
-  {
-    "id": "SHD-XAU-A925D2",
-    "coin": "XAU",
-    "side": "LONG",
-    "entry_price": 3547.7,
-    "stop_loss": 3535.28305,
-    "tp_price": 3569.429662,
-    "filter_reason": "LOW_CONFLUENCE_SCORE",
-    "confluence_score": 37.04,
-    "status": "MISSED_WINNER",
-    "created_at": "2026-11-22T22:00:56Z",
-    "resolved_at": "2026-11-22T23:11:02Z"
-  },
-  {
     "id": "SHD-XAU-682853",
     "coin": "XAU",
     "side": "LONG",
@@ -2598,5 +2559,44 @@
     "status": "SAVED_FROM_LOSS",
     "created_at": "2026-11-23T09:50:59Z",
     "resolved_at": "2026-11-23T10:11:00Z"
+  },
+  {
+    "id": "SHD-BTC-4F7951",
+    "coin": "BTC",
+    "side": "LONG",
+    "entry_price": 61587.3,
+    "stop_loss": 61329.917143,
+    "tp_price": 62179.280571,
+    "filter_reason": "LOW_CONFLUENCE_SCORE",
+    "confluence_score": 51.07,
+    "status": "SAVED_FROM_LOSS",
+    "created_at": "2026-11-23T09:10:57Z",
+    "resolved_at": "2026-11-23T10:51:03Z"
+  },
+  {
+    "id": "SHD-BTC-5D986E",
+    "coin": "BTC",
+    "side": "LONG",
+    "entry_price": 61678.8,
+    "stop_loss": 61328.358571,
+    "tp_price": 62484.815287,
+    "filter_reason": "LOW_CONFLUENCE_SCORE",
+    "confluence_score": 43.97,
+    "status": "SAVED_FROM_LOSS",
+    "created_at": "2026-11-23T09:30:57Z",
+    "resolved_at": "2026-11-23T10:51:03Z"
+  },
+  {
+    "id": "SHD-BTC-7151DE",
+    "coin": "BTC",
+    "side": "LONG",
+    "entry_price": 61606.0,
+    "stop_loss": 61326.801429,
+    "tp_price": 62248.156713,
+    "filter_reason": "LOW_CONFLUENCE_SCORE",
+    "confluence_score": 47.15,
+    "status": "SAVED_FROM_LOSS",
+    "created_at": "2026-11-23T09:40:58Z",
+    "resolved_at": "2026-11-23T10:51:03Z"
   }
 ]
