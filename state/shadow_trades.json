@@ -1,18 +1,5 @@
 [
   {
-    "id": "SHD-XAU-F13244",
-    "coin": "XAU",
-    "side": "LONG",
-    "entry_price": 3542.14,
-    "stop_loss": 3529.74251,
-    "tp_price": 3563.835607,
-    "filter_reason": "LOW_CONFLUENCE_SCORE",
-    "confluence_score": 33.71,
-    "status": "MISSED_WINNER",
-    "created_at": "2026-11-22T21:10:58Z",
-    "resolved_at": "2026-11-22T23:11:02Z"
-  },
-  {
     "id": "SHD-XAU-A1EDAA",
     "coin": "XAU",
     "side": "LONG",
@@ -2598,5 +2585,18 @@
     "status": "SAVED_FROM_LOSS",
     "created_at": "2026-11-23T09:40:58Z",
     "resolved_at": "2026-11-23T09:50:59Z"
+  },
+  {
+    "id": "SHD-XRP-E51B72",
+    "coin": "XRP",
+    "side": "SHORT",
+    "entry_price": 0.93684,
+    "stop_loss": 0.940119,
+    "tp_price": 0.923068,
+    "filter_reason": "LOW_CONFLUENCE_SCORE",
+    "confluence_score": 66.35,
+    "status": "SAVED_FROM_LOSS",
+    "created_at": "2026-11-23T09:50:59Z",
+    "resolved_at": "2026-11-23T10:11:00Z"
   }
 ]
