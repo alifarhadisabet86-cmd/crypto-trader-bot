@@ -3,85 +3,85 @@
     "regime": "TRENDING_BEAR",
     "strategy": "SMC_TREND_CONTINUATION",
     "htf_bias": "BEARISH",
-    "adx": 22.05,
+    "adx": 22.87,
     "tradable": true,
-    "current_price": 59659.7,
+    "current_price": 59449.1,
     "candidate_side": "SHORT",
-    "confluence_score": 48.78,
+    "confluence_score": 45.87,
     "zone": "DISCOUNT",
     "asian_range": {
       "asian_high": 61675.6,
       "asian_low": 59456.4,
-      "asian_sweep": "ASIAN_LOW_SWEEP_BULL"
+      "asian_sweep": "NONE"
     },
-    "xray_summary_fa": "هم‌راستا با روند ۱ ساعته (+20) | حمایت ساختار ۴ ساعته (+6) | مجاورت با FVG معتبر (+10) | سشن Killzone فعال (+7) | واگرایی پول هوشمند SMT (+6)"
+    "xray_summary_fa": "هم‌راستا با روند ۱ ساعته (+21) | حمایت ساختار ۴ ساعته (+6) | مجاورت با FVG معتبر (+5) | تایید فشار اردربوک صرافی (+7) | سشن Killzone فعال (+7)"
   },
   "ETH": {
-    "regime": "RANGING",
-    "strategy": "LIQUIDITY_SWEEP_REVERSAL",
+    "regime": "TRENDING_BEAR",
+    "strategy": "SMC_TREND_CONTINUATION",
     "htf_bias": "BEARISH",
-    "adx": 19.11,
+    "adx": 20.16,
     "tradable": true,
-    "current_price": 1675.19,
-    "candidate_side": "LONG",
-    "confluence_score": 37.27,
+    "current_price": 1670.53,
+    "candidate_side": "SHORT",
+    "confluence_score": 42.19,
     "zone": "DISCOUNT",
     "asian_range": {
       "asian_high": 1721.68,
       "asian_low": 1669.06,
       "asian_sweep": "ASIAN_LOW_SWEEP_BULL"
     },
-    "xray_summary_fa": "ساختار بازگشت به میانگین رنج (+14) | ناحیه ارزان‌فروشی Discount (+10) | شکار نقدینگی و استاپ‌هانت ۱۵m (+12) | سشن Killzone فعال (+7)"
+    "xray_summary_fa": "هم‌راستا با روند ۱ ساعته (+20) | حمایت ساختار ۴ ساعته (+6) | مجاورت با FVG معتبر (+10) | سشن Killzone فعال (+7)"
   },
   "SOL": {
     "regime": "TRENDING_BEAR",
     "strategy": "SMC_TREND_CONTINUATION",
     "htf_bias": "BEARISH",
-    "adx": 30.2,
+    "adx": 30.27,
     "tradable": true,
-    "current_price": 69.25,
+    "current_price": 69.11,
     "candidate_side": "SHORT",
-    "confluence_score": 59.54,
+    "confluence_score": 55.33,
     "zone": "DISCOUNT",
     "asian_range": {
       "asian_high": 72.68,
       "asian_low": 70.13,
       "asian_sweep": "NONE"
     },
-    "xray_summary_fa": "هم‌راستا با روند ۱ ساعته (+22) | حمایت ساختار ۴ ساعته (+6) | مجاورت با FVG معتبر (+16) | سشن Killzone فعال (+7) | واگرایی پول هوشمند SMT (+6)"
+    "xray_summary_fa": "هم‌راستا با روند ۱ ساعته (+22) | حمایت ساختار ۴ ساعته (+6) | مجاورت با FVG معتبر (+14) | سشن Killzone فعال (+7)"
   },
   "XRP": {
     "regime": "TRENDING_BEAR",
     "strategy": "SMC_TREND_CONTINUATION",
     "htf_bias": "BEARISH",
-    "adx": 22.17,
+    "adx": 26.56,
     "tradable": true,
-    "current_price": 0.91406,
+    "current_price": 0.91281,
     "candidate_side": "SHORT",
-    "confluence_score": 55.61,
+    "confluence_score": 50.5,
     "zone": "DISCOUNT",
     "asian_range": {
       "asian_high": 0.96146,
       "asian_low": 0.93234,
       "asian_sweep": "NONE"
     },
-    "xray_summary_fa": "هم‌راستا با روند ۱ ساعته (+20) | حمایت ساختار ۴ ساعته (+6) | مجاورت با FVG معتبر (+14) | سشن Killzone فعال (+7) | واگرایی پول هوشمند SMT (+6)"
+    "xray_summary_fa": "هم‌راستا با روند ۱ ساعته (+21) | حمایت ساختار ۴ ساعته (+6) | مجاورت با FVG معتبر (+12) | سشن Killzone فعال (+7)"
   },
   "XAU": {
     "regime": "RANGING",
     "strategy": "LIQUIDITY_SWEEP_REVERSAL",
     "htf_bias": "BEARISH",
-    "adx": 36.47,
+    "adx": 38.24,
     "tradable": true,
-    "current_price": 3565.94,
-    "candidate_side": "LONG",
-    "confluence_score": 38.29,
+    "current_price": 3557.63,
+    "candidate_side": "NONE",
+    "confluence_score": 28.7,
     "zone": "DISCOUNT",
     "asian_range": {
       "asian_high": 3669.78,
       "asian_low": 3616.03,
       "asian_sweep": "NONE"
     },
-    "xray_summary_fa": "ساختار بازگشت به میانگین رنج (+14) | ناحیه ارزان‌فروشی Discount (+12) | شکار نقدینگی و استاپ‌هانت ۱۵m (+12) | سشن Killzone فعال (+7)"
+    "xray_summary_fa": "ساختار بازگشت به میانگین رنج (+14) | حمایت ساختار ۴ ساعته (+6) | سشن Killzone فعال (+7)"
   }
 }
