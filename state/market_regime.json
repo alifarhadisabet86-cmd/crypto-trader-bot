@@ -3,85 +3,85 @@
     "regime": "RANGING",
     "strategy": "LIQUIDITY_SWEEP_REVERSAL",
     "htf_bias": "NEUTRAL",
-    "adx": 31.71,
+    "adx": 28.12,
     "tradable": true,
-    "current_price": 61233.3,
+    "current_price": 61245.7,
     "candidate_side": "NONE",
-    "confluence_score": 43.07,
+    "confluence_score": 38.17,
     "zone": "DISCOUNT",
     "asian_range": {
       "asian_high": 61821.5,
       "asian_low": 61067.0,
       "asian_sweep": "NONE"
     },
-    "xray_summary_fa": "ساختار بازگشت به میانگین رنج (+14) | ناحیه ارزان‌فروشی Discount (+12) | تایید فشار اردربوک صرافی (+7) | واگرایی پول هوشمند SMT (+6)"
+    "xray_summary_fa": "ساختار بازگشت به میانگین رنج (+14) | ناحیه ارزان‌فروشی Discount (+12) | واگرایی پول هوشمند SMT (+6)"
   },
   "ETH": {
     "regime": "RANGING",
     "strategy": "LIQUIDITY_SWEEP_REVERSAL",
     "htf_bias": "BEARISH",
-    "adx": 31.51,
+    "adx": 29.21,
     "tradable": true,
-    "current_price": 1709.77,
-    "candidate_side": "NONE",
-    "confluence_score": 25.19,
+    "current_price": 1710.05,
+    "candidate_side": "LONG",
+    "confluence_score": 39.62,
     "zone": "DISCOUNT",
     "asian_range": {
       "asian_high": 1737.49,
-      "asian_low": 1723.68,
-      "asian_sweep": "NONE"
+      "asian_low": 1709.87,
+      "asian_sweep": "ASIAN_LOW_SWEEP_BULL"
     },
-    "xray_summary_fa": "ساختار بازگشت به میانگین رنج (+14) | حمایت ساختار ۴ ساعته (+6) | تایید فشار اردربوک صرافی (+5)"
+    "xray_summary_fa": "ساختار بازگشت به میانگین رنج (+14) | ناحیه ارزان‌فروشی Discount (+12) | شکار نقدینگی سشن آسیا (+11) | واگرایی پول هوشمند SMT (+6)"
   },
   "SOL": {
     "regime": "RANGING",
     "strategy": "LIQUIDITY_SWEEP_REVERSAL",
     "htf_bias": "NEUTRAL",
-    "adx": 30.48,
+    "adx": 28.63,
     "tradable": true,
-    "current_price": 71.97,
-    "candidate_side": "SHORT",
-    "confluence_score": 32.55,
+    "current_price": 71.94,
+    "candidate_side": "NONE",
+    "confluence_score": 41.62,
     "zone": "DISCOUNT",
     "asian_range": {
       "asian_high": 72.25,
       "asian_low": 71.17,
-      "asian_sweep": "ASIAN_HIGH_SWEEP_BEAR"
+      "asian_sweep": "NONE"
     },
-    "xray_summary_fa": "ساختار بازگشت به میانگین رنج (+14) | مجاورت با FVG معتبر (+4) | شکار نقدینگی سشن آسیا (+11)"
+    "xray_summary_fa": "ساختار بازگشت به میانگین رنج (+14) | ناحیه ارزان‌فروشی Discount (+12) | واگرایی پول هوشمند SMT (+6)"
   },
   "XRP": {
     "regime": "RANGING",
     "strategy": "LIQUIDITY_SWEEP_REVERSAL",
-    "htf_bias": "BEARISH",
-    "adx": 21.98,
+    "htf_bias": "NEUTRAL",
+    "adx": 21.97,
     "tradable": true,
-    "current_price": 0.93858,
+    "current_price": 0.93971,
     "candidate_side": "SHORT",
-    "confluence_score": 47.4,
+    "confluence_score": 37.0,
     "zone": "DISCOUNT",
     "asian_range": {
       "asian_high": 0.94262,
       "asian_low": 0.93139,
       "asian_sweep": "ASIAN_HIGH_SWEEP_BEAR"
     },
-    "xray_summary_fa": "ساختار بازگشت به میانگین رنج (+14) | حمایت ساختار ۴ ساعته (+6) | مجاورت با FVG معتبر (+16) | شکار نقدینگی سشن آسیا (+11)"
+    "xray_summary_fa": "ساختار بازگشت به میانگین رنج (+14) | مجاورت با FVG معتبر (+8) | شکار نقدینگی سشن آسیا (+11)"
   },
   "XAU": {
-    "regime": "RANGING",
-    "strategy": "LIQUIDITY_SWEEP_REVERSAL",
+    "regime": "TRENDING_BULL",
+    "strategy": "SMC_TREND_CONTINUATION",
     "htf_bias": "NEUTRAL",
-    "adx": 41.37,
+    "adx": 39.22,
     "tradable": true,
-    "current_price": 3616.9,
-    "candidate_side": "SHORT",
-    "confluence_score": 32.05,
+    "current_price": 3628.31,
+    "candidate_side": "LONG",
+    "confluence_score": 48.98,
     "zone": "DISCOUNT",
     "asian_range": {
-      "asian_high": 3620.06,
-      "asian_low": 3595.92,
-      "asian_sweep": "ASIAN_HIGH_SWEEP_BEAR"
+      "asian_high": 3628.31,
+      "asian_low": 3598.38,
+      "asian_sweep": "NONE"
     },
-    "xray_summary_fa": "ساختار بازگشت به میانگین رنج (+14) | مجاورت با FVG معتبر (+8) | شکار نقدینگی سشن آسیا (+11)"
+    "xray_summary_fa": "هم‌راستا با روند ۱ ساعته (+24) | ناحیه ارزان‌فروشی Discount (+12) | شکار نقدینگی و استاپ‌هانت ۱۵m (+12) | واگرایی پول هوشمند SMT (+6)"
   }
 }
