@@ -1,18 +1,5 @@
 [
   {
-    "id": "SHD-ETH-EB2441",
-    "coin": "ETH",
-    "side": "SHORT",
-    "entry_price": 1672.17,
-    "stop_loss": 1678.587429,
-    "tp_price": 1657.409913,
-    "filter_reason": "LOW_CONFLUENCE_SCORE",
-    "confluence_score": 44.49,
-    "status": "MISSED_WINNER",
-    "created_at": "2026-11-25T00:30:56Z",
-    "resolved_at": "2026-11-25T01:41:04Z"
-  },
-  {
     "id": "SHD-ETH-560DE3",
     "coin": "ETH",
     "side": "SHORT",
@@ -2598,5 +2585,18 @@
     "status": "SAVED_FROM_LOSS",
     "created_at": "2026-11-25T09:50:56Z",
     "resolved_at": "2026-11-25T10:10:54Z"
+  },
+  {
+    "id": "SHD-BTC-C8C480",
+    "coin": "BTC",
+    "side": "LONG",
+    "entry_price": 59090.8,
+    "stop_loss": 58867.966428,
+    "tp_price": 59714.475,
+    "filter_reason": "LOW_CONFLUENCE_SCORE",
+    "confluence_score": 39.72,
+    "status": "SAVED_FROM_LOSS",
+    "created_at": "2026-11-25T10:00:58Z",
+    "resolved_at": "2026-11-25T11:10:58Z"
   }
 ]
