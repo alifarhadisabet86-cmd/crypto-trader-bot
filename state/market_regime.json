@@ -3,85 +3,85 @@
     "regime": "TRENDING_BEAR",
     "strategy": "SMC_TREND_CONTINUATION",
     "htf_bias": "BEARISH",
-    "adx": 24.81,
+    "adx": 24.32,
     "tradable": true,
-    "current_price": 59391.6,
+    "current_price": 59611.4,
     "candidate_side": "SHORT",
-    "confluence_score": 57.04,
-    "zone": "DISCOUNT",
+    "confluence_score": 59.46,
+    "zone": "EQUILIBRIUM",
     "asian_range": {
       "asian_high": 59828.2,
       "asian_low": 58946.2,
       "asian_sweep": "NONE"
     },
-    "xray_summary_fa": "هم‌راستا با روند ۱ ساعته (+21) | حمایت ساختار ۴ ساعته (+6) | مجاورت با FVG معتبر (+9) | حجم تراکنش بالاتر از میانگین (+8) | تایید فشار اردربوک صرافی (+7)"
+    "xray_summary_fa": "هم‌راستا با روند ۱ ساعته (+21) | حمایت ساختار ۴ ساعته (+6) | مجاورت با FVG معتبر (+16) | تایید فشار اردربوک صرافی (+7)"
   },
   "ETH": {
     "regime": "TRENDING_BEAR",
     "strategy": "SMC_TREND_CONTINUATION",
     "htf_bias": "BEARISH",
-    "adx": 24.35,
+    "adx": 23.84,
     "tradable": true,
-    "current_price": 1661.84,
+    "current_price": 1669.46,
     "candidate_side": "SHORT",
-    "confluence_score": 52.15,
-    "zone": "DISCOUNT",
+    "confluence_score": 32.1,
+    "zone": "EQUILIBRIUM",
     "asian_range": {
       "asian_high": 1680.01,
       "asian_low": 1649.45,
       "asian_sweep": "NONE"
     },
-    "xray_summary_fa": "هم‌راستا با روند ۱ ساعته (+21) | حمایت ساختار ۴ ساعته (+6) | مجاورت با FVG معتبر (+16) | حجم تراکنش بالاتر از میانگین (+8)"
+    "xray_summary_fa": "هم‌راستا با روند ۱ ساعته (+21) | حمایت ساختار ۴ ساعته (+6) | مجاورت با FVG معتبر (+11) | ⚠️ پامپ شارپ لیدر BTC (-10)"
   },
   "SOL": {
     "regime": "TRENDING_BEAR",
     "strategy": "SMC_TREND_CONTINUATION",
     "htf_bias": "BEARISH",
-    "adx": 30.28,
+    "adx": 29.21,
     "tradable": true,
-    "current_price": 69.01,
+    "current_price": 69.61,
     "candidate_side": "SHORT",
-    "confluence_score": 62.82,
-    "zone": "DISCOUNT",
+    "confluence_score": 51.65,
+    "zone": "PREMIUM",
     "asian_range": {
       "asian_high": 69.91,
       "asian_low": 68.51,
       "asian_sweep": "NONE"
     },
-    "xray_summary_fa": "هم‌راستا با روند ۱ ساعته (+22) | حمایت ساختار ۴ ساعته (+6) | مجاورت با FVG معتبر (+16) | حجم تراکنش بالاتر از میانگین (+8)"
+    "xray_summary_fa": "هم‌راستا با روند ۱ ساعته (+22) | حمایت ساختار ۴ ساعته (+6) | مجاورت با FVG معتبر (+15) | ناحیه گران‌فروشی Premium (+9) | ⚠️ پامپ شارپ لیدر BTC (-10)"
   },
   "XRP": {
     "regime": "TRENDING_BEAR",
     "strategy": "SMC_TREND_CONTINUATION",
     "htf_bias": "BEARISH",
-    "adx": 20.94,
+    "adx": 20.43,
     "tradable": true,
-    "current_price": 0.9192,
+    "current_price": 0.92318,
     "candidate_side": "SHORT",
-    "confluence_score": 69.05,
-    "zone": "EQUILIBRIUM",
+    "confluence_score": 35.36,
+    "zone": "PREMIUM",
     "asian_range": {
       "asian_high": 0.92533,
       "asian_low": 0.91098,
       "asian_sweep": "NONE"
     },
-    "xray_summary_fa": "هم‌راستا با روند ۱ ساعته (+20) | حمایت ساختار ۴ ساعته (+6) | حضور قیمت در ناحیه FVG دست‌نخورده (+18) | حجم تراکنش بالاتر از میانگین (+6) | تایید فشار اردربوک صرافی (+7)"
+    "xray_summary_fa": "هم‌راستا با روند ۱ ساعته (+20) | حمایت ساختار ۴ ساعته (+6) | ناحیه گران‌فروشی Premium (+9) | ⚠️ پامپ شارپ لیدر BTC (-10)"
   },
   "XAU": {
     "regime": "TRENDING_BEAR",
     "strategy": "SMC_TREND_CONTINUATION",
     "htf_bias": "BEARISH",
-    "adx": 35.27,
+    "adx": 36.15,
     "tradable": true,
-    "current_price": 3551.82,
-    "candidate_side": "SHORT",
-    "confluence_score": 53.77,
-    "zone": "PREMIUM",
+    "current_price": 3550.56,
+    "candidate_side": "LONG",
+    "confluence_score": 18.11,
+    "zone": "EQUILIBRIUM",
     "asian_range": {
       "asian_high": 3567.56,
       "asian_low": 3530.6,
       "asian_sweep": "NONE"
     },
-    "xray_summary_fa": "هم‌راستا با روند ۱ ساعته (+23) | حمایت ساختار ۴ ساعته (+6) | شکار نقدینگی و استاپ‌هانت ۱۵m (+12) | حجم تراکنش بالاتر از میانگین (+5) | تایید فشار اردربوک صرافی (+5)"
+    "xray_summary_fa": "مجاورت با FVG معتبر (+9)"
   }
 }
