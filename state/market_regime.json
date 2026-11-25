@@ -3,69 +3,69 @@
     "regime": "RANGING",
     "strategy": "LIQUIDITY_SWEEP_REVERSAL",
     "htf_bias": "NEUTRAL",
-    "adx": 28.04,
+    "adx": 28.3,
     "tradable": true,
-    "current_price": 60147.3,
-    "candidate_side": "NONE",
-    "confluence_score": 33.14,
+    "current_price": 60102.2,
+    "candidate_side": "SHORT",
+    "confluence_score": 51.05,
     "zone": "PREMIUM",
     "asian_range": {
       "asian_high": 59828.2,
       "asian_low": 58946.2,
       "asian_sweep": "NONE"
     },
-    "xray_summary_fa": "ساختار بازگشت به میانگین رنج (+14) | تایید فشار اردربوک صرافی (+7) | سشن Killzone فعال (+7)"
+    "xray_summary_fa": "ساختار بازگشت به میانگین رنج (+14) | ناحیه گران‌فروشی Premium (+12) | شکار نقدینگی و استاپ‌هانت ۱۵m (+12) | تایید فشار اردربوک صرافی (+7) | سشن Killzone فعال (+7)"
   },
   "ETH": {
     "regime": "RANGING",
     "strategy": "LIQUIDITY_SWEEP_REVERSAL",
     "htf_bias": "NEUTRAL",
-    "adx": 29.43,
+    "adx": 29.59,
     "tradable": true,
-    "current_price": 1691.01,
-    "candidate_side": "NONE",
-    "confluence_score": 28.17,
+    "current_price": 1689.63,
+    "candidate_side": "SHORT",
+    "confluence_score": 42.26,
     "zone": "PREMIUM",
     "asian_range": {
       "asian_high": 1680.01,
       "asian_low": 1649.45,
       "asian_sweep": "NONE"
     },
-    "xray_summary_fa": "ساختار بازگشت به میانگین رنج (+14) | سشن Killzone فعال (+7) | هم‌سو با مومنتوم لیدر BTC (+3)"
+    "xray_summary_fa": "ساختار بازگشت به میانگین رنج (+14) | ناحیه گران‌فروشی Premium (+12) | شکار نقدینگی و استاپ‌هانت ۱۵m (+12) | سشن Killzone فعال (+7)"
   },
   "SOL": {
     "regime": "RANGING",
     "strategy": "LIQUIDITY_SWEEP_REVERSAL",
     "htf_bias": "NEUTRAL",
-    "adx": 30.73,
+    "adx": 30.96,
     "tradable": true,
-    "current_price": 70.58,
+    "current_price": 70.55,
     "candidate_side": "SHORT",
-    "confluence_score": 40.77,
+    "confluence_score": 51.83,
     "zone": "PREMIUM",
     "asian_range": {
       "asian_high": 69.91,
       "asian_low": 68.37,
       "asian_sweep": "NONE"
     },
-    "xray_summary_fa": "ساختار بازگشت به میانگین رنج (+14) | ناحیه گران‌فروشی Premium (+12) | شکار نقدینگی و استاپ‌هانت ۱۵m (+12) | سشن Killzone فعال (+7) | ⚠️ پامپ شارپ لیدر BTC (-10)"
+    "xray_summary_fa": "ساختار بازگشت به میانگین رنج (+14) | ناحیه گران‌فروشی Premium (+12) | شکار نقدینگی و استاپ‌هانت ۱۵m (+12) | تایید فشار اردربوک صرافی (+5) | سشن Killzone فعال (+7)"
   },
   "XRP": {
     "regime": "RANGING",
     "strategy": "LIQUIDITY_SWEEP_REVERSAL",
     "htf_bias": "NEUTRAL",
-    "adx": 24.85,
+    "adx": 24.97,
     "tradable": true,
-    "current_price": 0.94389,
+    "current_price": 0.94132,
     "candidate_side": "NONE",
-    "confluence_score": 32.43,
+    "confluence_score": 29.56,
     "zone": "PREMIUM",
     "asian_range": {
       "asian_high": 0.92533,
       "asian_low": 0.91098,
       "asian_sweep": "NONE"
     },
-    "xray_summary_fa": "ساختار بازگشت به میانگین رنج (+14) | سشن Killzone فعال (+7) | هم‌سو با مومنتوم لیدر BTC (+3)"
+    "xray_summary_fa": "ساختار بازگشت به میانگین رنج (+14) | سشن Killzone فعال (+7)"
   },
   "XAU": {
     "regime": "RANGING",
@@ -73,15 +73,15 @@
     "htf_bias": "BEARISH",
     "adx": 33.69,
     "tradable": true,
-    "current_price": 3545.49,
-    "candidate_side": "SHORT",
-    "confluence_score": 44.95,
+    "current_price": 3547.5,
+    "candidate_side": "NONE",
+    "confluence_score": 42.25,
     "zone": "PREMIUM",
     "asian_range": {
       "asian_high": 3567.56,
       "asian_low": 3520.0,
       "asian_sweep": "NONE"
     },
-    "xray_summary_fa": "ساختار بازگشت به میانگین رنج (+14) | حمایت ساختار ۴ ساعته (+6) | ناحیه گران‌فروشی Premium (+12) | شکار نقدینگی و استاپ‌هانت ۱۵m (+12) | سشن Killzone فعال (+7)"
+    "xray_summary_fa": "ساختار بازگشت به میانگین رنج (+14) | حمایت ساختار ۴ ساعته (+6) | ناحیه گران‌فروشی Premium (+12) | تایید فشار اردربوک صرافی (+6) | سشن Killzone فعال (+7)"
   }
 }
