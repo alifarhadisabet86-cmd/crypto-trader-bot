@@ -5,16 +5,16 @@
     "htf_bias": "NEUTRAL",
     "adx": 22.23,
     "tradable": true,
-    "current_price": 60540.8,
+    "current_price": 60538.5,
     "candidate_side": "SHORT",
-    "confluence_score": 34.7,
+    "confluence_score": 39.93,
     "zone": "EQUILIBRIUM",
     "asian_range": {
       "asian_high": 61615.2,
       "asian_low": 60374.6,
       "asian_sweep": "NONE"
     },
-    "xray_summary_fa": "حضور قیمت در ناحیه FVG دست‌نخورده (+18) | سشن Killzone فعال (+7)"
+    "xray_summary_fa": "حضور قیمت در ناحیه FVG دست‌نخورده (+18) | تایید فشار اردربوک صرافی (+7) | سشن Killzone فعال (+7)"
   },
   "ETH": {
     "regime": "TRENDING_BULL",
@@ -22,26 +22,26 @@
     "htf_bias": "NEUTRAL",
     "adx": 22.86,
     "tradable": true,
-    "current_price": 1696.15,
+    "current_price": 1694.17,
     "candidate_side": "LONG",
-    "confluence_score": 41.19,
+    "confluence_score": 36.45,
     "zone": "PREMIUM",
     "asian_range": {
       "asian_high": 1729.75,
       "asian_low": 1690.57,
       "asian_sweep": "ASIAN_LOW_SWEEP_BULL"
     },
-    "xray_summary_fa": "هم‌راستا با روند ۱ ساعته (+21) | شکار نقدینگی سشن آسیا (+11) | تایید فشار اردربوک صرافی (+7) | سشن Killzone فعال (+7)"
+    "xray_summary_fa": "هم‌راستا با روند ۱ ساعته (+21) | شکار نقدینگی سشن آسیا (+11) | سشن Killzone فعال (+7)"
   },
   "SOL": {
     "regime": "TRENDING_BULL",
     "strategy": "SMC_TREND_CONTINUATION",
     "htf_bias": "NEUTRAL",
-    "adx": 22.01,
+    "adx": 21.9,
     "tradable": true,
     "current_price": 71.16,
     "candidate_side": "LONG",
-    "confluence_score": 41.81,
+    "confluence_score": 41.99,
     "zone": "PREMIUM",
     "asian_range": {
       "asian_high": 71.9,
@@ -54,11 +54,11 @@
     "regime": "TRENDING_BULL",
     "strategy": "SMC_TREND_CONTINUATION",
     "htf_bias": "NEUTRAL",
-    "adx": 21.6,
+    "adx": 21.71,
     "tradable": true,
-    "current_price": 0.9534,
+    "current_price": 0.95357,
     "candidate_side": "LONG",
-    "confluence_score": 54.62,
+    "confluence_score": 55.99,
     "zone": "PREMIUM",
     "asian_range": {
       "asian_high": 0.96379,
@@ -71,17 +71,17 @@
     "regime": "RANGING",
     "strategy": "LIQUIDITY_SWEEP_REVERSAL",
     "htf_bias": "BEARISH",
-    "adx": 13.69,
+    "adx": 13.23,
     "tradable": true,
-    "current_price": 3559.75,
+    "current_price": 3560.65,
     "candidate_side": "NONE",
-    "confluence_score": 31.57,
+    "confluence_score": 30.9,
     "zone": "DISCOUNT",
     "asian_range": {
       "asian_high": 3602.9,
       "asian_low": 3550.48,
       "asian_sweep": "NONE"
     },
-    "xray_summary_fa": "ساختار بازگشت به میانگین رنج (+14) | حمایت ساختار ۴ ساعته (+6) | تایید فشار اردربوک صرافی (+5) | سشن Killzone فعال (+7)"
+    "xray_summary_fa": "ساختار بازگشت به میانگین رنج (+14) | حمایت ساختار ۴ ساعته (+6) | سشن Killzone فعال (+7)"
   }
 }
