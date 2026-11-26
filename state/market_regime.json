@@ -5,67 +5,67 @@
     "htf_bias": "NEUTRAL",
     "adx": 25.02,
     "tradable": true,
-    "current_price": 61073.1,
-    "candidate_side": "SHORT",
-    "confluence_score": 53.82,
+    "current_price": 60814.7,
+    "candidate_side": "NONE",
+    "confluence_score": 28.75,
     "zone": "PREMIUM",
     "asian_range": {
       "asian_high": 61615.2,
       "asian_low": 58958.4,
       "asian_sweep": "NONE"
     },
-    "xray_summary_fa": "ساختار بازگشت به میانگین رنج (+14) | ناحیه گران‌فروشی Premium (+12) | شکار نقدینگی و استاپ‌هانت ۱۵m (+12) | حجم تراکنش بالاتر از میانگین (+8) | تایید فشار اردربوک صرافی (+7)"
+    "xray_summary_fa": "ساختار بازگشت به میانگین رنج (+14) | تایید فشار اردربوک صرافی (+7)"
   },
   "ETH": {
     "regime": "RANGING",
     "strategy": "LIQUIDITY_SWEEP_REVERSAL",
     "htf_bias": "NEUTRAL",
-    "adx": 26.57,
+    "adx": 25.45,
     "tradable": true,
-    "current_price": 1708.21,
+    "current_price": 1704.17,
     "candidate_side": "NONE",
-    "confluence_score": 30.74,
+    "confluence_score": 23.62,
     "zone": "PREMIUM",
     "asian_range": {
       "asian_high": 1729.75,
       "asian_low": 1653.02,
       "asian_sweep": "NONE"
     },
-    "xray_summary_fa": "ساختار بازگشت به میانگین رنج (+14) | حجم تراکنش بالاتر از میانگین (+8) | هم‌سو با مومنتوم لیدر BTC (+3)"
+    "xray_summary_fa": "ساختار بازگشت به میانگین رنج (+14)"
   },
   "SOL": {
     "regime": "RANGING",
     "strategy": "LIQUIDITY_SWEEP_REVERSAL",
     "htf_bias": "NEUTRAL",
-    "adx": 29.39,
+    "adx": 28.75,
     "tradable": true,
-    "current_price": 71.21,
+    "current_price": 71.09,
     "candidate_side": "NONE",
-    "confluence_score": 35.01,
+    "confluence_score": 24.63,
     "zone": "PREMIUM",
     "asian_range": {
       "asian_high": 71.9,
       "asian_low": 68.37,
       "asian_sweep": "NONE"
     },
-    "xray_summary_fa": "ساختار بازگشت به میانگین رنج (+14) | حجم تراکنش بالاتر از میانگین (+8) | هم‌سو با مومنتوم لیدر BTC (+3)"
+    "xray_summary_fa": "ساختار بازگشت به میانگین رنج (+14)"
   },
   "XRP": {
-    "regime": "TRENDING_BULL",
-    "strategy": "SMC_TREND_CONTINUATION",
+    "regime": "RANGING",
+    "strategy": "LIQUIDITY_SWEEP_REVERSAL",
     "htf_bias": "NEUTRAL",
     "adx": 25.47,
     "tradable": true,
-    "current_price": 0.94432,
-    "candidate_side": "LONG",
-    "confluence_score": 51.63,
+    "current_price": 0.94227,
+    "candidate_side": "SHORT",
+    "confluence_score": 43.97,
     "zone": "PREMIUM",
     "asian_range": {
       "asian_high": 0.95323,
       "asian_low": 0.91481,
       "asian_sweep": "NONE"
     },
-    "xray_summary_fa": "هم‌راستا با روند ۱ ساعته (+21) | مجاورت با FVG معتبر (+15) | حجم تراکنش بالاتر از میانگین (+8) | هم‌سو با مومنتوم لیدر BTC (+3)"
+    "xray_summary_fa": "ساختار بازگشت به میانگین رنج (+14) | ناحیه گران‌فروشی Premium (+12) | شکار نقدینگی و استاپ‌هانت ۱۵m (+12)"
   },
   "XAU": {
     "regime": "RANGING",
@@ -73,15 +73,15 @@
     "htf_bias": "NEUTRAL",
     "adx": 26.53,
     "tradable": true,
-    "current_price": 3577.59,
+    "current_price": 3570.43,
     "candidate_side": "SHORT",
-    "confluence_score": 52.89,
+    "confluence_score": 40.5,
     "zone": "PREMIUM",
     "asian_range": {
       "asian_high": 3578.64,
       "asian_low": 3520.0,
-      "asian_sweep": "ASIAN_HIGH_SWEEP_BEAR"
+      "asian_sweep": "NONE"
     },
-    "xray_summary_fa": "ساختار بازگشت به میانگین رنج (+14) | حضور قیمت در ناحیه FVG دست‌نخورده (+18) | ناحیه گران‌فروشی Premium (+12) | شکار نقدینگی سشن آسیا (+11)"
+    "xray_summary_fa": "ساختار بازگشت به میانگین رنج (+14) | مجاورت با FVG معتبر (+10) | ناحیه گران‌فروشی Premium (+12)"
   }
 }
