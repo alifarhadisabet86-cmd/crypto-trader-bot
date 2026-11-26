@@ -3,85 +3,85 @@
     "regime": "RANGING",
     "strategy": "LIQUIDITY_SWEEP_REVERSAL",
     "htf_bias": "NEUTRAL",
-    "adx": 25.02,
+    "adx": 25.41,
     "tradable": true,
-    "current_price": 60502.6,
+    "current_price": 60477.0,
     "candidate_side": "SHORT",
-    "confluence_score": 50.43,
+    "confluence_score": 46.22,
     "zone": "PREMIUM",
     "asian_range": {
       "asian_high": 61615.2,
       "asian_low": 59001.0,
       "asian_sweep": "NONE"
     },
-    "xray_summary_fa": "ساختار بازگشت به میانگین رنج (+14) | مجاورت با FVG معتبر (+13) | ناحیه گران‌فروشی Premium (+10) | شکار نقدینگی و استاپ‌هانت ۱۵m (+12)"
+    "xray_summary_fa": "ساختار بازگشت به میانگین رنج (+14) | مجاورت با FVG معتبر (+16) | ناحیه گران‌فروشی Premium (+9)"
   },
   "ETH": {
     "regime": "RANGING",
     "strategy": "LIQUIDITY_SWEEP_REVERSAL",
     "htf_bias": "NEUTRAL",
-    "adx": 25.45,
+    "adx": 27.93,
     "tradable": true,
-    "current_price": 1695.49,
+    "current_price": 1695.83,
     "candidate_side": "SHORT",
-    "confluence_score": 49.59,
+    "confluence_score": 40.48,
     "zone": "PREMIUM",
     "asian_range": {
       "asian_high": 1729.75,
       "asian_low": 1653.02,
       "asian_sweep": "NONE"
     },
-    "xray_summary_fa": "ساختار بازگشت به میانگین رنج (+14) | مجاورت با FVG معتبر (+14) | ناحیه گران‌فروشی Premium (+8) | شکار نقدینگی و استاپ‌هانت ۱۵m (+12) | هم‌سو با مومنتوم لیدر BTC (+3)"
+    "xray_summary_fa": "ساختار بازگشت به میانگین رنج (+14) | مجاورت با FVG معتبر (+14) | ناحیه گران‌فروشی Premium (+8)"
   },
   "SOL": {
     "regime": "RANGING",
     "strategy": "LIQUIDITY_SWEEP_REVERSAL",
     "htf_bias": "NEUTRAL",
-    "adx": 28.48,
+    "adx": 31.92,
     "tradable": true,
-    "current_price": 70.78,
+    "current_price": 70.75,
     "candidate_side": "SHORT",
-    "confluence_score": 61.72,
+    "confluence_score": 50.14,
     "zone": "PREMIUM",
     "asian_range": {
       "asian_high": 71.9,
       "asian_low": 68.37,
       "asian_sweep": "NONE"
     },
-    "xray_summary_fa": "ساختار بازگشت به میانگین رنج (+14) | مجاورت با FVG معتبر (+15) | ناحیه گران‌فروشی Premium (+12) | شکار نقدینگی و استاپ‌هانت ۱۵m (+12) | هم‌سو با مومنتوم لیدر BTC (+3)"
+    "xray_summary_fa": "ساختار بازگشت به میانگین رنج (+14) | مجاورت با FVG معتبر (+14) | ناحیه گران‌فروشی Premium (+11)"
   },
   "XRP": {
-    "regime": "RANGING",
-    "strategy": "LIQUIDITY_SWEEP_REVERSAL",
+    "regime": "TRENDING_BULL",
+    "strategy": "SMC_TREND_CONTINUATION",
     "htf_bias": "NEUTRAL",
-    "adx": 25.47,
+    "adx": 26.01,
     "tradable": true,
-    "current_price": 0.94045,
-    "candidate_side": "SHORT",
-    "confluence_score": 64.66,
+    "current_price": 0.93958,
+    "candidate_side": "LONG",
+    "confluence_score": 50.66,
     "zone": "PREMIUM",
     "asian_range": {
       "asian_high": 0.95323,
       "asian_low": 0.91481,
       "asian_sweep": "NONE"
     },
-    "xray_summary_fa": "ساختار بازگشت به میانگین رنج (+14) | مجاورت با FVG معتبر (+15) | ناحیه گران‌فروشی Premium (+12) | شکار نقدینگی و استاپ‌هانت ۱۵m (+12) | تایید فشار اردربوک صرافی (+5) | هم‌سو با مومنتوم لیدر BTC (+3)"
+    "xray_summary_fa": "هم‌راستا با روند ۱ ساعته (+21) | حضور قیمت در ناحیه FVG دست‌نخورده (+18)"
   },
   "XAU": {
     "regime": "RANGING",
     "strategy": "LIQUIDITY_SWEEP_REVERSAL",
-    "htf_bias": "NEUTRAL",
-    "adx": 26.27,
+    "htf_bias": "BEARISH",
+    "adx": 24.74,
     "tradable": true,
-    "current_price": 3562.84,
+    "current_price": 3552.0,
     "candidate_side": "SHORT",
-    "confluence_score": 48.86,
+    "confluence_score": 47.44,
     "zone": "PREMIUM",
     "asian_range": {
       "asian_high": 3578.64,
       "asian_low": 3520.0,
       "asian_sweep": "NONE"
     },
-    "xray_summary_fa": "ساختار بازگشت به میانگین رنج (+14) | مجاورت با FVG معتبر (+15) | ناحیه گران‌فروشی Premium (+12) | تایید فشار اردربوک صرافی (+6)"
+    "xray_summary_fa": "ساختار بازگشت به میانگین رنج (+14) | حمایت ساختار ۴ ساعته (+6) | مجاورت با FVG معتبر (+11) | ناحیه گران‌فروشی Premium (+11) | تایید فشار اردربوک صرافی (+7)"
   }
 }
