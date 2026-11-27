@@ -5,16 +5,16 @@
     "htf_bias": "NEUTRAL",
     "adx": 15.46,
     "tradable": true,
-    "current_price": 60757.2,
-    "candidate_side": "SHORT",
-    "confluence_score": 45.59,
-    "zone": "PREMIUM",
+    "current_price": 60673.7,
+    "candidate_side": "LONG",
+    "confluence_score": 45.91,
+    "zone": "EQUILIBRIUM",
     "asian_range": {
       "asian_high": 60900.0,
       "asian_low": 60479.1,
       "asian_sweep": "NONE"
     },
-    "xray_summary_fa": "ساختار بازگشت به میانگین رنج (+14) | حضور قیمت در ناحیه FVG دست‌نخورده (+18) | ناحیه گران‌فروشی Premium (+7)"
+    "xray_summary_fa": "ساختار بازگشت به میانگین رنج (+14) | مجاورت با FVG معتبر (+16) | حجم تراکنش بالاتر از میانگین (+6)"
   },
   "ETH": {
     "regime": "RANGING",
@@ -22,16 +22,16 @@
     "htf_bias": "NEUTRAL",
     "adx": 16.8,
     "tradable": true,
-    "current_price": 1701.85,
+    "current_price": 1698.62,
     "candidate_side": "SHORT",
-    "confluence_score": 43.7,
+    "confluence_score": 44.2,
     "zone": "PREMIUM",
     "asian_range": {
       "asian_high": 1704.37,
       "asian_low": 1686.86,
       "asian_sweep": "NONE"
     },
-    "xray_summary_fa": "ساختار بازگشت به میانگین رنج (+14) | حضور قیمت در ناحیه FVG دست‌نخورده (+18) | ناحیه گران‌فروشی Premium (+9)"
+    "xray_summary_fa": "ساختار بازگشت به میانگین رنج (+14) | مجاورت با FVG معتبر (+16) | تایید فشار اردربوک صرافی (+7)"
   },
   "SOL": {
     "regime": "RANGING",
@@ -39,16 +39,16 @@
     "htf_bias": "NEUTRAL",
     "adx": 16.36,
     "tradable": true,
-    "current_price": 71.48,
+    "current_price": 71.37,
     "candidate_side": "SHORT",
-    "confluence_score": 51.18,
+    "confluence_score": 48.71,
     "zone": "PREMIUM",
     "asian_range": {
       "asian_high": 71.58,
       "asian_low": 70.91,
       "asian_sweep": "NONE"
     },
-    "xray_summary_fa": "ساختار بازگشت به میانگین رنج (+14) | حضور قیمت در ناحیه FVG دست‌نخورده (+18) | ناحیه گران‌فروشی Premium (+10)"
+    "xray_summary_fa": "ساختار بازگشت به میانگین رنج (+14) | حضور قیمت در ناحیه FVG دست‌نخورده (+18) | ناحیه گران‌فروشی Premium (+8)"
   },
   "XRP": {
     "regime": "RANGING",
@@ -56,16 +56,16 @@
     "htf_bias": "NEUTRAL",
     "adx": 17.54,
     "tradable": true,
-    "current_price": 0.94787,
+    "current_price": 0.94763,
     "candidate_side": "NONE",
-    "confluence_score": 31.11,
+    "confluence_score": 37.26,
     "zone": "DISCOUNT",
     "asian_range": {
       "asian_high": 0.96188,
       "asian_low": 0.94206,
       "asian_sweep": "NONE"
     },
-    "xray_summary_fa": "ساختار بازگشت به میانگین رنج (+14) | ناحیه ارزان‌فروشی Discount (+7)"
+    "xray_summary_fa": "ساختار بازگشت به میانگین رنج (+14) | ناحیه ارزان‌فروشی Discount (+7) | تایید فشار اردربوک صرافی (+7)"
   },
   "XAU": {
     "regime": "RANGING",
@@ -73,15 +73,15 @@
     "htf_bias": "NEUTRAL",
     "adx": 9.7,
     "tradable": true,
-    "current_price": 3571.78,
-    "candidate_side": "LONG",
-    "confluence_score": 43.61,
+    "current_price": 3568.73,
+    "candidate_side": "SHORT",
+    "confluence_score": 47.87,
     "zone": "PREMIUM",
     "asian_range": {
       "asian_high": 3582.42,
       "asian_low": 3552.0,
       "asian_sweep": "NONE"
     },
-    "xray_summary_fa": "ساختار بازگشت به میانگین رنج (+14) | مجاورت با FVG معتبر (+15) | شکار نقدینگی و استاپ‌هانت ۱۵m (+12)"
+    "xray_summary_fa": "ساختار بازگشت به میانگین رنج (+14) | ناحیه گران‌فروشی Premium (+12) | شکار نقدینگی و استاپ‌هانت ۱۵m (+12) | حجم تراکنش بالاتر از میانگین (+8)"
   }
 }
