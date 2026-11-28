@@ -384,14 +384,14 @@
   },
   "last_updated": "2026-11-01T18:21:42Z",
   "daily_start_balance_usdt": 958.6276,
-  "last_reset_date": "2026-11-27",
+  "last_reset_date": "2026-11-28",
   "weekly_start_balance_usdt": 973.918,
   "weekly_pnl_usdt": -15.2905,
   "weekly_circuit_breaker": false,
   "last_reset_week": "2026-W48",
   "paper_gate_target": 50,
   "paper_gate_unlocked": true,
-  "updated_at": "2026-11-27T23:51:03Z",
+  "updated_at": "2026-11-28T00:01:01Z",
   "trading_mode": "PAPER",
   "closed_trades": [
     {
